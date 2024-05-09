@@ -8,6 +8,7 @@ import {
   Form,
   Input,
   InputNumber,
+  InputPassword,
   notification,
   Select,
 } from "../../../../components";
@@ -17,16 +18,20 @@ import * as yup from "yup";
 import { useFormUtils } from "../../../../hooks";
 import { useAuthentication, useGlobalData } from "../../../../providers";
 import { assign, capitalize } from "lodash";
-import { Roles, ApiErrors } from "../../../../data-list";
-import { useApiUserPost, useApiUserPut } from "../../../../api";
-import moment from "moment";
+import { Roles } from "../../../../data-list";
+import {
+  apiErrorNotification,
+  getApiErrorResponse,
+  useApiUserPost,
+  useApiUserPut,
+} from "../../../../api";
 
 export const UserIntegration = () => {
   const { authUser } = useAuthentication();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
-  const { putUser, putUserResponse, putUserLoading } = useApiUserPut();
+  const { postUser, postUserLoading } = useApiUserPost();
+  const { putUser, putUserLoading } = useApiUserPut();
 
   const { rolesAcls, users } = useGlobalData();
 
@@ -41,44 +46,23 @@ export const UserIntegration = () => {
     setUser(_user);
   }, []);
 
-  const onSubmitSaveUser = async (formData) => {
+  const saveUser = async (formData) => {
     try {
       const _user = mapUserToApi(formData);
 
-      await saveUser(_user);
+      userId === "new" ? await postUser(_user) : await putUser(_user);
 
-      notification({ type: "success" });
+      notification({
+        type: "success",
+        title: "¡El usuario se guardó correctamente!",
+      });
 
-      onGoBack();
+      return onGoBack();
     } catch (e) {
-      console.log("ErrorSaveUser: ", e);
-      const errorParse = JSON.parse(e.message);
-
-      ApiErrors?.[errorParse.data]
-        ? notification({ type: "warning", title: ApiErrors[errorParse.data] })
-        : notification({ type: "error" });
+      const errorResponse = await getApiErrorResponse(e);
+      apiErrorNotification(errorResponse);
     }
   };
-
-  const saveUser = async (user) => {
-    userId === "new" ? await postUser(user) : await putUser(user);
-
-    const responseStatus = postUserResponse.ok || putUserResponse.ok;
-
-    if (!responseStatus) {
-      throw new Error(JSON.stringify(postUserResponse));
-    }
-  };
-
-  const getOtherRoles = (otherRoleCodes = []) =>
-    Roles.filter((role) =>
-      otherRoleCodes.find((_role) => _role === role?.code)
-    ).map((role) => ({
-      code: role?.code,
-      name: role.name,
-      imgUrl: role.imgUrl,
-      updateAt: moment().format("YYYY-MM-DD HH:mm:ss"),
-    }));
 
   const mapUserToApi = (formData) =>
     assign(
@@ -90,6 +74,7 @@ export const UserIntegration = () => {
         paternalSurname: formData.paternalSurname.toLowerCase(),
         maternalSurname: formData.maternalSurname.toLowerCase(),
         email: formData.email.toLowerCase(),
+        password: formData.password,
         dni: formData.dni,
         phone: {
           prefix: "+51",
@@ -99,7 +84,7 @@ export const UserIntegration = () => {
           "/home",
           "/profile",
         ],
-        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.cip}|${authUser.dni}`,
+        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.dni}`,
       }
     );
 
@@ -108,20 +93,21 @@ export const UserIntegration = () => {
   return (
     <User
       user={user}
-      onSubmitSaveUser={onSubmitSaveUser}
+      onSaveUser={saveUser}
       onGoBack={onGoBack}
       isSavingUser={postUserLoading || putUserLoading}
     />
   );
 };
 
-const User = ({ user, onSubmitSaveUser, onGoBack, isSavingUser }) => {
+const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
   const schema = yup.object({
     roleCode: yup.string().required(),
     firstName: yup.string().required(),
     paternalSurname: yup.string().required(),
     maternalSurname: yup.string().required(),
     email: yup.string().email().required(),
+    password: yup.string().required(),
     dni: yup
       .string()
       .min(8)
@@ -159,12 +145,13 @@ const User = ({ user, onSubmitSaveUser, onGoBack, isSavingUser }) => {
       paternalSurname: user?.paternalSurname || "",
       maternalSurname: user?.maternalSurname || "",
       email: user?.email || "",
+      password: user?.password || "",
       dni: user?.dni || "",
       phoneNumber: user?.phone?.number || "",
     });
   };
 
-  const submitSaveUser = (formData) => onSubmitSaveUser(formData);
+  const onSubmit = (formData) => onSaveUser(formData);
 
   return (
     <Row gutter={[16, 16]}>
@@ -172,7 +159,7 @@ const User = ({ user, onSubmitSaveUser, onGoBack, isSavingUser }) => {
         <Title level={3}>Usuario</Title>
       </Col>
       <Col span={24}>
-        <Form onSubmit={handleSubmit(submitSaveUser)}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Row gutter={[16, 16]}>
             <Col span={24}>
               <Controller
@@ -257,6 +244,23 @@ const User = ({ user, onSubmitSaveUser, onGoBack, isSavingUser }) => {
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     label="Email"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24}>
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <InputPassword
+                    label="Contraseña"
                     name={name}
                     value={value}
                     onChange={onChange}
