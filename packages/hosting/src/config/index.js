@@ -5,7 +5,7 @@ export { default as yup } from "./yup.json";
 
 const hostName = window.location.hostname;
 
-const hostsProduction = ["korekenke-prod.web.app"];
+const hostsProduction = ["practice-system.web.app"];
 
 export const currentEnvironment = includes(hostsProduction, hostName)
   ? "production"

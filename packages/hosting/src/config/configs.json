@@ -39,7 +39,7 @@
     "publicHostingUrl": "-",
     "publicStorageUrl": "-",
     "buckets": {
-      "documents": "gs://practicesystem-documents"
+      "documents": "gs://practice-system-documents"
     },
     "apiUrl": "https://practice-system.web.app/api"
   },
@@ -57,7 +57,7 @@
     "publicHostingUrl": "-",
     "publicStorageUrl": "-",
     "buckets": {
-      "documents": "gs://practicesystem-documents"
+      "documents": "gs://practice-system-documents"
     },
     "apiUrl": "https://practice-system.web.app/api"
   }
