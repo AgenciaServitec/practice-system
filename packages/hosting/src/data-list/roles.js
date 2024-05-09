@@ -16,7 +16,7 @@ export const Roles = [
   {
     code: "user",
     name: "Usuario",
-    initialPathname: "/home",
+    initialPathname: "/profile",
     imgUrl:
       "https://storage.googleapis.com/korekenke-prod.appspot.com/resources/user.webp",
   },

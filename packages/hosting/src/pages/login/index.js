@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormUtils } from "../../hooks";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useAuthentication } from "../../providers";
 import { Card, Layout } from "antd";
 import { mediaQuery } from "../../styles";
@@ -20,7 +20,7 @@ export const LoginIntegration = () => {
   const onNavigateToHomePage = () => navigate("/home");
 
   useMemo(() => {
-    authUser && onNavigateToHomePage();
+    authUser && navigate(authUser?.role?.initialPathname || "/home");
   }, [authUser]);
 
   const onSubmit = async ({ email, password }) =>
@@ -112,11 +112,16 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
 };
 
 const Container = styled(Layout)`
-  height: 100vh;
-  background: linear-gradient(to bottom, #006ae5, #363a45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${({ theme }) => css`
+    height: 100vh;
+    background: radial-gradient(
+      ${theme.colors.primary},
+      ${theme.colors.secondary}
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `}
 `;
 
 const CardStyled = styled(Card)`

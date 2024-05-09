@@ -31,6 +31,15 @@ export const Router = () => {
         />
         <Route
           exact
+          path="home"
+          element={
+            <AdminLayout>
+              <A.Users />
+            </AdminLayout>
+          }
+        />
+        <Route
+          exact
           path="default-roles-acls"
           element={
             <AdminLayout>

@@ -1,16 +1,12 @@
-import React, { cloneElement, useState } from "react";
+import React, { cloneElement } from "react";
 import { Layout, Space, theme } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowLeft,
-  faArrowsRotate,
-  faBars,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { LogoPrimary, PhotoNoFound } from "../../images";
 import { mediaQuery } from "../../styles";
-import { capitalize, orderBy } from "lodash";
-import { Divider, Dropdown } from "../ui";
+import { capitalize } from "lodash";
+import { Dropdown } from "../ui";
 import { Link } from "react-router-dom";
 import { Roles } from "../../data-list";
 
@@ -24,24 +20,11 @@ export const HeaderLayout = ({
   openDropdown,
   onOpenDropdown,
   onNavigateTo,
-  onChangeDefaultRole,
   onLogout,
 }) => {
   const { token } = useToken();
-  const [isVisibleMoreRoles, setIsVisibleMoreRoles] = useState(false);
 
-  const onSetIsVisibleMoreRoles = () =>
-    setIsVisibleMoreRoles(!isVisibleMoreRoles);
-
-  const defaultRole = Roles.find(
-    (role) => role?.code === user?.defaultRoleCode
-  );
-
-  const lastRole = orderBy(
-    (user?.otherRoles || []).filter((role) => role.code !== defaultRole.code),
-    "updateAt",
-    "desc"
-  )?.[0];
+  const defaultRole = Roles.find((role) => role?.code === user?.roleCode);
 
   const items = [
     {
@@ -103,86 +86,6 @@ export const HeaderLayout = ({
           onOpenChange={onOpenDropdown}
           dropdownRender={(menu) => (
             <div style={contentStyle}>
-              {lastRole && (
-                <>
-                  <ItemDefaultRole>
-                    {!isVisibleMoreRoles ? (
-                      <>
-                        <div className="wrapper-default-roles">
-                          <div className="selected-role item-role">
-                            <img
-                              src={user?.profilePhoto?.thumbUrl || PhotoNoFound}
-                              alt="Role seleccionado"
-                            />
-                            <div className="text-role">
-                              <strong>{defaultRole.name}</strong>
-                            </div>
-                          </div>
-                          <div className="last-role item-role">
-                            <div
-                              className="item-img"
-                              onClick={() => onChangeDefaultRole(lastRole)}
-                            >
-                              <FontAwesomeIcon
-                                icon={faArrowsRotate}
-                                type="light"
-                                className="icon-rotate"
-                              />
-                              <img
-                                src={lastRole.imgUrl}
-                                alt="Role seleccionado"
-                              />
-                            </div>
-                            <div className="text-role">
-                              <strong>{lastRole.name}</strong>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="item-show-more-roles">
-                          <span onClick={() => onSetIsVisibleMoreRoles(false)}>
-                            Ver todos los roles
-                          </span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="wrapper-go-back">
-                          <span onClick={() => onSetIsVisibleMoreRoles()}>
-                            <FontAwesomeIcon icon={faArrowLeft} /> Regresar
-                          </span>
-                        </div>
-                        <div className="wrapper-more-roles">
-                          <ul>
-                            {user.otherRoles.map((role, index) => (
-                              <li
-                                key={index}
-                                className="item-role"
-                                onClick={() => {
-                                  onSetIsVisibleMoreRoles();
-                                  return onChangeDefaultRole(role);
-                                }}
-                              >
-                                <img
-                                  src={role.imgUrl}
-                                  alt="Role seleccionado"
-                                />
-                                <div className="text-role">
-                                  <strong>{role.name}</strong>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </>
-                    )}
-                  </ItemDefaultRole>
-                  <Divider
-                    style={{
-                      margin: 0,
-                    }}
-                  />
-                </>
-              )}
               {cloneElement(menu, {
                 style: {
                   boxShadow: "none",
@@ -204,132 +107,6 @@ export const HeaderLayout = ({
     </HeaderContainer>
   );
 };
-
-const ItemDefaultRole = styled.div`
-  display: grid;
-  gap: 1em;
-  padding: 1em;
-  width: 20em;
-
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  .wrapper-default-roles {
-    width: 100%;
-    border-radius: 1em;
-    background: aliceblue;
-    padding: 0.5em 0.1em;
-    display: flex;
-    justify-content: space-between;
-    gap: 1em;
-
-    .item-role {
-      width: 4em;
-      cursor: pointer;
-    }
-
-    .selected-role {
-      display: grid;
-      place-items: center;
-
-      img {
-        width: 2.2em;
-        height: 2.2em;
-        border-radius: 50%;
-      }
-
-      .text-role {
-        line-height: 1;
-        text-align: center;
-        font-size: 0.6em;
-      }
-    }
-
-    .last-role {
-      display: grid;
-      place-items: center;
-
-      .item-img {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .icon-rotate {
-          position: absolute;
-          font-size: 2.2em;
-          z-index: 200;
-          animation: spin 10s linear infinite;
-        }
-
-        img {
-          width: 1.5em;
-          height: 1.5em;
-          border-radius: 50%;
-          z-index: 300;
-        }
-      }
-
-      .text-role {
-        line-height: 1;
-        text-align: center;
-        font-size: 0.6em;
-      }
-    }
-  }
-
-  .item-show-more-roles {
-    color: dodgerblue;
-    span {
-      cursor: pointer;
-    }
-  }
-
-  .wrapper-go-back {
-    color: dodgerblue;
-    span {
-      cursor: pointer;
-    }
-  }
-  .wrapper-more-roles {
-    ul {
-      list-style: none;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      gap: 0.4em;
-
-      .item-role {
-        display: grid;
-        place-items: center;
-        gap: 0.5em;
-        cursor: pointer;
-        padding: 0.3em;
-        border-radius: 0.4em;
-        width: 4.2em;
-
-        &:hover {
-          background: #c3ddf6;
-        }
-
-        img {
-          width: 1.7em;
-          height: 1.7em;
-          border-radius: 50%;
-        }
-
-        .text-role {
-          line-height: 1;
-          text-align: center;
-          font-size: 0.6em;
-        }
-      }
-    }
-  }
-`;
 
 const HeaderContainer = styled(Header)`
   background: #fff !important;

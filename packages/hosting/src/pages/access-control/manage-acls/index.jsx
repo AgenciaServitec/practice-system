@@ -2,11 +2,15 @@ import React, { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { firestore } from "../../firebase";
-import { querySnapshotToArray } from "../../firebase/firestore";
-import { acls, Roles } from "../../data-list";
+import { firestore } from "../../../firebase";
+import { querySnapshotToArray } from "../../../firebase/firestore";
+import { acls, Roles } from "../../../data-list";
 import { useNavigate } from "react-router-dom";
-import { useAsync, useDefaultFirestoreProps, useFormUtils } from "../../hooks";
+import {
+  useAsync,
+  useDefaultFirestoreProps,
+  useFormUtils,
+} from "../../../hooks";
 import { capitalize, difference, flatten, map, union } from "lodash";
 import {
   Acl,
@@ -18,11 +22,11 @@ import {
   RadioGroup,
   Select,
   Title,
-} from "../../components";
+} from "../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import { filterAcl, mapAcls } from "../../utils";
-import { useGlobalData } from "../../providers";
+import { filterAcl, mapAcls } from "../../../utils";
+import { useGlobalData } from "../../../providers";
 
 const ACTION = {
   add: {
@@ -75,7 +79,7 @@ export const ManageAclsIntegration = () => {
     const usersQuerySnapshot = await firestore
       .collection("users")
       .where("isDeleted", "==", false)
-      .where("defaultRoleCode", "==", formData.roleCode)
+      .where("roleCode", "==", formData.roleCode)
       .get();
 
     return querySnapshotToArray(usersQuerySnapshot);
@@ -292,98 +296,6 @@ const ManageAcls = ({
               </Col>
               <Col span={24}>
                 <Controller
-                  name="acls.entities"
-                  defaultValue={[]}
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CheckboxGroup
-                      label="Núcleos"
-                      options={map(filterAcl("entities"), (item, itemKey) => ({
-                        label: item,
-                        value: itemKey,
-                      }))}
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24}>
-                <Controller
-                  name="acls.departments"
-                  defaultValue={[]}
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CheckboxGroup
-                      label="Departamentos"
-                      options={map(
-                        filterAcl("departments"),
-                        (item, itemKey) => ({
-                          label: item,
-                          value: itemKey,
-                        })
-                      )}
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24}>
-                <Controller
-                  name="acls.offices"
-                  defaultValue={[]}
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CheckboxGroup
-                      label="Oficinas"
-                      options={map(filterAcl("offices"), (item, itemKey) => ({
-                        label: item,
-                        value: itemKey,
-                      }))}
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24}>
-                <Controller
-                  name="acls.sections"
-                  defaultValue={[]}
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CheckboxGroup
-                      label="Secciones"
-                      options={map(
-                        {
-                          ...filterAcl("sections"),
-                        },
-                        (item, itemKey) => ({
-                          label: item,
-                          value: itemKey,
-                        })
-                      )}
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24}>
-                <Controller
                   name="acls.profile"
                   defaultValue={[]}
                   control={control}
@@ -414,58 +326,6 @@ const ManageAcls = ({
                       options={map(
                         {
                           ...filterAcl("users"),
-                        },
-                        (item, itemKey) => ({
-                          label: item,
-                          value: itemKey,
-                        })
-                      )}
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24}>
-                <Controller
-                  name="acls.correspondences"
-                  defaultValue={[]}
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CheckboxGroup
-                      label="Correspondencias"
-                      options={map(
-                        {
-                          ...filterAcl("correspondences"),
-                        },
-                        (item, itemKey) => ({
-                          label: item,
-                          value: itemKey,
-                        })
-                      )}
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24}>
-                <Controller
-                  name="acls.inscriptions"
-                  defaultValue={[]}
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <CheckboxGroup
-                      label="Inscripciones"
-                      options={map(
-                        {
-                          ...filterAcl("inscriptions"),
                         },
                         (item, itemKey) => ({
                           label: item,

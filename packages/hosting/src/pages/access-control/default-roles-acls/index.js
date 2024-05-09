@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { firestore } from "../../firebase";
-import { Roles } from "../../data-list";
-import { useAcl, useAsync } from "../../hooks";
+import { firestore } from "../../../firebase";
+import { Roles } from "../../../data-list";
+import { useAcl, useAsync } from "../../../hooks";
 import { assign, get } from "lodash";
-import { Acl, Button, List, notification } from "../../components";
+import { Acl, Button, List, notification } from "../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import { useGlobalData } from "../../providers";
+import { useGlobalData } from "../../../providers";
 
 export const DefaultRolesAclsIntegration = () => {
   const navigate = useNavigate();

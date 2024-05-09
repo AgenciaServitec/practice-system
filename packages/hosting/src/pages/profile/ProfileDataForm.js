@@ -5,18 +5,12 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useFormUtils } from "../../hooks";
-import {
-  Button,
-  Form,
-  Input,
-  notification,
-  RadioGroup,
-  Upload,
-} from "../../components";
+import { Button, Form, Input, notification, Upload } from "../../components";
 import { useAuthentication } from "../../providers";
 import { useApiUserPut } from "../../api";
 import { assign } from "lodash";
 import { ApiErrors } from "../../data-list";
+import { v4 as uuidv4 } from "uuid";
 
 export const ProfileDataForm = () => {
   const { authUser } = useAuthentication();
@@ -29,12 +23,6 @@ export const ProfileDataForm = () => {
     maternalSurname: yup.string().required(),
     email: yup.string().email().required(),
     phoneNumber: yup.string().min(9).max(9).required(),
-    cip: yup
-      .string()
-      .min(9)
-      .max(9)
-      .required()
-      .transform((value) => (value === null ? "" : value)),
     dni: yup
       .string()
       .min(8)
@@ -86,9 +74,7 @@ export const ProfileDataForm = () => {
       paternalSurname: authUser?.paternalSurname || "",
       email: authUser?.email || "",
       phoneNumber: authUser?.phone?.number || "",
-      cip: authUser?.cip || "",
       dni: authUser?.dni || "",
-      cgi: authUser?.cgi || false,
     });
   };
 
@@ -109,12 +95,13 @@ export const ProfileDataForm = () => {
             name="profilePhoto"
             render={({ field: { onChange, value, onBlur, name } }) => (
               <Upload
-                label="Foto personal"
+                label="Foto"
                 accept="image/*"
                 resize="313x370"
                 buttonText="Subir foto"
                 value={value}
                 name={name}
+                fileName={`profile-foto-${uuidv4()}`}
                 filePath={`users/${authUser.id}/profile`}
                 onChange={(file) => onChange(file)}
                 required={required(name)}
@@ -204,63 +191,19 @@ export const ProfileDataForm = () => {
             )}
           />
         </Col>
-        <Col span={24} md={12}>
-          <Controller
-            name="cip"
-            control={control}
-            render={({ field: { onChange, name, value } }) => (
-              <Input
-                label="CIP"
-                name={name}
-                onChange={onChange}
-                value={value}
-                error={error(name)}
-                helperText={errorMessage(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={12}>
+        <Col span={24}>
           <Controller
             name="phoneNumber"
             control={control}
             render={({ field: { onChange, name, value } }) => (
               <Input
-                label="N° Celular"
+                label="Teléfono"
                 type="number"
                 name={name}
                 onChange={onChange}
                 value={value}
                 error={error(name)}
                 helperText={errorMessage(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={12}>
-          <Controller
-            name="cgi"
-            control={control}
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="Perteneces a discapacitados, CGI? "
-                animation={false}
-                onChange={onChange}
-                value={value}
-                name={name}
-                error={error(name)}
-                helperText={errorMessage(name)}
-                required={required(name)}
-                options={[
-                  {
-                    label: "SI",
-                    value: true,
-                  },
-                  {
-                    label: "NO",
-                    value: false,
-                  },
-                ]}
               />
             )}
           />

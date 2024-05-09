@@ -4,7 +4,6 @@ import Col from "antd/lib/col";
 import Title from "antd/lib/typography/Title";
 import { Acl, Tabs } from "../../components";
 import { ProfileDataForm } from "./ProfileDataForm";
-import { ProfileImagesForm } from "./ProfileImagesForm";
 import { ProfileInformation } from "./ProfileInformation";
 import { useAuthentication } from "../../providers";
 
@@ -14,12 +13,8 @@ const items = [
     label: "Editar perfil",
     children: <ProfileDataForm />,
   },
-  {
-    key: "2",
-    label: "Imagen DNI, CIP y firma",
-    children: <ProfileImagesForm />,
-  },
 ];
+
 export const Profile = () => {
   const { authUser } = useAuthentication();
 

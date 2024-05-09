@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { firestore } from "../../../firebase";
+import { firestore } from "../../../../firebase";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,8 +7,8 @@ import {
   useAsync,
   useDefaultFirestoreProps,
   useFormUtils,
-} from "../../../hooks";
-import { Roles } from "../../../data-list";
+} from "../../../../hooks";
+import { Roles } from "../../../../data-list";
 import { assign, capitalize, flatten, isEmpty, map, uniq } from "lodash";
 import {
   Acl,
@@ -19,12 +19,12 @@ import {
   notification,
   Select,
   Title,
-} from "../../../components";
+} from "../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { useNavigate, useParams } from "react-router-dom";
-import { filterAcl, mapAcls } from "../../../utils";
-import { useGlobalData } from "../../../providers";
+import { filterAcl, mapAcls } from "../../../../utils";
+import { useGlobalData } from "../../../../providers";
 
 export const RoleAclIntegration = () => {
   const navigate = useNavigate();
@@ -233,95 +233,6 @@ const RoleAcl = ({
           </Col>
           <Col span={24}>
             <Controller
-              name="acls.entities"
-              defaultValue={[]}
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <CheckboxGroup
-                  label="Núcleos"
-                  options={map(filterAcl("entities"), (item, itemKey) => ({
-                    label: item,
-                    value: itemKey,
-                  }))}
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                />
-              )}
-            />
-          </Col>
-          <Col span={24}>
-            <Controller
-              name="acls.departments"
-              defaultValue={[]}
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <CheckboxGroup
-                  label="Departamentos"
-                  options={map(filterAcl("departments"), (item, itemKey) => ({
-                    label: item,
-                    value: itemKey,
-                  }))}
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                />
-              )}
-            />
-          </Col>
-          <Col span={24}>
-            <Controller
-              name="acls.offices"
-              defaultValue={[]}
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <CheckboxGroup
-                  label="Oficinas"
-                  options={map(filterAcl("offices"), (item, itemKey) => ({
-                    label: item,
-                    value: itemKey,
-                  }))}
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                />
-              )}
-            />
-          </Col>
-          <Col span={24}>
-            <Controller
-              name="acls.sections"
-              defaultValue={[]}
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <CheckboxGroup
-                  label="Secciones"
-                  options={map(
-                    {
-                      ...filterAcl("sections"),
-                    },
-                    (item, itemKey) => ({
-                      label: item,
-                      value: itemKey,
-                    })
-                  )}
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                />
-              )}
-            />
-          </Col>
-          <Col span={24}>
-            <Controller
               name="acls.profile"
               defaultValue={[]}
               control={control}
@@ -352,58 +263,6 @@ const RoleAcl = ({
                   options={map(
                     {
                       ...filterAcl("users"),
-                    },
-                    (item, itemKey) => ({
-                      label: item,
-                      value: itemKey,
-                    })
-                  )}
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                />
-              )}
-            />
-          </Col>
-          <Col span={24}>
-            <Controller
-              name="acls.correspondences"
-              defaultValue={[]}
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <CheckboxGroup
-                  label="Correspondencias"
-                  options={map(
-                    {
-                      ...filterAcl("correspondences"),
-                    },
-                    (item, itemKey) => ({
-                      label: item,
-                      value: itemKey,
-                    })
-                  )}
-                  name={name}
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                />
-              )}
-            />
-          </Col>
-          <Col span={24}>
-            <Controller
-              name="acls.inscriptions"
-              defaultValue={[]}
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <CheckboxGroup
-                  label="Inscripciones"
-                  options={map(
-                    {
-                      ...filterAcl("inscriptions"),
                     },
                     (item, itemKey) => ({
                       label: item,

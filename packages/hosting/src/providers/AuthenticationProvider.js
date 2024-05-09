@@ -131,7 +131,7 @@ const isAuthUserError = (data) =>
   isObject(data) && "type" in data && data.type === "error";
 
 const findAuthUserRole = (user) =>
-  Roles.find((role) => role.code === user.defaultRoleCode);
+  Roles.find((role) => role.code === user.roleCode);
 
 const findAuthUserPathnames = (user) =>
   (user?.acls || []).map((acl) => acl.split("#")[0]);

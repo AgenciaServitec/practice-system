@@ -4,15 +4,10 @@ import { Acl, IconAction } from "../../../components";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
 import moment from "moment";
-import { Roles, DegreesArmy } from "../../../data-list";
+import { Roles } from "../../../data-list";
 
 export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
   const findRole = (roleCode) => Roles.find((role) => role.code === roleCode);
-
-  const findDegree = (degreeCode) =>
-    DegreesArmy.flatMap((degreeArmy) => degreeArmy.options).find(
-      (degree) => degree.value === degreeCode
-    );
 
   const columns = [
     {
@@ -27,37 +22,38 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
         ),
     },
     {
-      title: "Grado",
-      dataIndex: "degree",
-      key: "degree",
-      render: (_, user) => capitalize(findDegree(user?.degree)?.label || ""),
-    },
-    {
-      title: "CIP",
-      dataIndex: "cip",
-      key: "cip",
-      render: (_, user) => capitalize(user?.cip || ""),
-    },
-    {
       title: "Rol",
-      dataIndex: "defaultRoleCode",
-      key: "defaultRoleCode",
-      render: (_, user) => findRole(user?.defaultRoleCode)?.name || "",
+      dataIndex: "roleCode",
+      key: "roleCode",
+      render: (_, user) => findRole(user?.roleCode)?.name || "",
+    },
+    {
+      title: "DNI",
+      dataIndex: "dni",
+      key: "dni",
+      render: (_, user) => user?.dni || "",
+    },
+    {
+      title: "Teléfono",
+      dataIndex: "phoneNumber",
+      key: "phoneNumber",
+      render: (_, user) =>
+        user?.phone ? `${user.phone.prefix} ${user.phone.number}` : "",
     },
     {
       title: "Estado",
       dataIndex: "status",
       key: "status",
-      render: (_) => (
+      render: (_, user) => (
         <Space>
           <span>
-            <Tag color="yellow">Registrado</Tag>
+            <Tag color="yellow">{user?.status}</Tag>
           </span>
         </Space>
       ),
     },
     {
-      title: "Fecha de Creación",
+      title: "Fecha creación",
       dataIndex: "createAt",
       key: "createAt",
       render: (_, user) =>
