@@ -18,12 +18,17 @@ export const postUser = async (
   try {
     const _isEmailExists = await isEmailExists(user?.email);
 
-    if (_isEmailExists) res.status(412).send("email_already_exists").end();
+    if (_isEmailExists) {
+      res.status(412).send("email_already_exists").end();
+      return;
+    }
 
     const _isPhoneNumberExists = await isPhoneNumberExists(user?.phone.number);
 
-    if (_isPhoneNumberExists)
+    if (_isPhoneNumberExists) {
       res.status(412).send("phone_number_already_exists").end();
+      return;
+    }
 
     const userId = firestore.collection("users").doc().id;
 
