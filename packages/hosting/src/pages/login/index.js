@@ -1,16 +1,25 @@
 import React, { useMemo } from "react";
 import Title from "antd/es/typography/Title";
-import { Button, Form, Input, InputPassword } from "../../components";
+import {
+  Button,
+  Card,
+  Carousel,
+  Form,
+  Input,
+  InputPassword,
+  Layout,
+} from "../../components";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormUtils } from "../../hooks";
 import styled, { css } from "styled-components";
 import { useAuthentication } from "../../providers";
-import { Card, Layout } from "antd";
 import { mediaQuery } from "../../styles";
-import { LogoPrimary } from "../../images";
+import { Bg1, Bg2, Bg3, Bg4, Bg5, Bg6, LogoPrimary } from "../../images";
 import { useNavigate } from "react-router";
+
+const ImagesCarousel = [Bg1, Bg2, Bg3, Bg4, Bg5, Bg6];
 
 export const LoginIntegration = () => {
   const navigate = useNavigate();
@@ -53,6 +62,7 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
 
   return (
     <Container>
+      <Carousel images={ImagesCarousel} />
       <CardStyled>
         <div className="logo" style={{ display: "grid", placeItems: "center" }}>
           <img
@@ -111,25 +121,23 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
   );
 };
 
-const Container = styled(Layout)`
-  ${({ theme }) => css`
-    height: 100vh;
-    background: radial-gradient(
-      ${theme.colors.primary},
-      ${theme.colors.secondary}
-    );
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `}
+const Container = styled.div`
+  height: auto;
+  position: relative;
 `;
 
 const CardStyled = styled(Card)`
   width: 90%;
+  position: absolute;
+  margin: auto;
+  top: 10%;
+  right: 5%;
 
   ${mediaQuery.minMobile} {
     width: 450px;
-    padding: 1rem;
+    margin: 70px;
+    top: 12%;
+    right: 3%;
   }
 
   img {

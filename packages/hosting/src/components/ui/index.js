@@ -17,6 +17,7 @@ import {
   Divider,
   Empty,
   Image,
+  Carousel as CarouselAntd,
 } from "antd";
 
 export * from "./component-container";
@@ -53,6 +54,7 @@ export * from "./AlignmentWrapper";
 export * from "./table";
 export * from "./InputCode";
 export * from "./Acl";
+export * from "./Carousel";
 
 export { default as Legend } from "./Legend";
 
@@ -78,4 +80,5 @@ export {
   Divider,
   Empty,
   Image,
+  CarouselAntd,
 };
