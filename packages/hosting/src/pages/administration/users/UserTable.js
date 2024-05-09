@@ -34,6 +34,12 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
       render: (_, user) => user?.dni || "",
     },
     {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (_, user) => user?.email || "",
+    },
+    {
       title: "Teléfono",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
