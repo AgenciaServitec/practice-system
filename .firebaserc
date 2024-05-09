@@ -1,0 +1,22 @@
+{
+  "projects": {
+    "default": "practice-system",
+    "dev": "practice-system-dev"
+  },
+  "targets": {
+    "practice-system": {
+      "hosting": {
+        "app": [
+          "practice-system"
+        ]
+      }
+    },
+    "practice-system-dev": {
+      "hosting": {
+        "app": [
+          "practice-system-dev"
+        ]
+      }
+    }
+  }
+}
