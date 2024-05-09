@@ -10,24 +10,19 @@ interface Role {
 interface User extends DefaultFirestoreProps {
   id: string;
   acls: string[];
-  defaultRoleCode: string;
-  otherRoles?: Role[];
+  roleCode: string;
   firstName: string;
   paternalSurname: string;
   maternalSurname: string;
   email: string | null;
-  cip: string;
   dni: string;
   phone: {
     prefix: string;
     number: string;
   };
   password?: string | null;
-  degree: string;
-  cgi: string;
   iAcceptPrivacyPolicies: boolean;
   profilePhoto?: Image;
-  cipPhoto?: Image;
   dniPhoto?: Image;
   signaturePhoto?: Image;
   address?: boolean;
@@ -44,13 +39,12 @@ interface User extends DefaultFirestoreProps {
 }
 
 interface FamilyMember {
-  age: number;
-  cciiffs: string;
-  dni: string;
-  firstName: string;
   id: string;
+  firstName: string;
   maternalSurname: string;
   paternalSurname: string;
+  age: number;
+  dni: string;
   relationship: string;
 }
 
