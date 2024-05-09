@@ -9,5 +9,9 @@
   "/users": "Menu: Usuarios",
   "/users/new": "Agregar usuario",
   "/users/:userId": "Editar usuario",
-  "/users#delete": "Eliminar usuario"
+  "/users#delete": "Eliminar usuario",
+  "/practices": "Menu: Prácticas",
+  "/practices/new": "Agregar prácticas",
+  "/practices/:userId": "Editar prácticas",
+  "/practices#delete": "Eliminar prácticas"
 }

@@ -4,6 +4,7 @@ import { AdminLayout } from "../components/layout/AdminLayout";
 import { PrivateRoute } from "./PrivateRoute";
 import * as A from "../pages";
 import { Page404 } from "../pages/404";
+import {ProcedureIntegration, Procedures} from "../pages";
 
 export const Router = () => {
   return (
@@ -71,6 +72,23 @@ export const Router = () => {
           element={
             <AdminLayout>
               <A.Profile />
+            </AdminLayout>
+          }
+        />
+          <Route
+          exact
+          path="practices"
+          element={
+            <AdminLayout>
+              <A.Practices />
+            </AdminLayout>
+          }
+        /><Route
+          exact
+          path="practices/:practiceId"
+          element={
+            <AdminLayout>
+              <A.PracticeIntegration />
             </AdminLayout>
           }
         />
