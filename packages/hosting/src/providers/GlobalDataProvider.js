@@ -6,37 +6,12 @@ import { notification, Spinner } from "../components";
 import { orderBy } from "lodash";
 
 const GlobalDataContext = createContext({
+  rolesAcls: [],
   users: [],
-  correspondences: [],
 });
 
 export const GlobalDataProvider = ({ children }) => {
   const { authUser } = useAuthentication();
-
-  const [entities = [], entitiesLoading, entitiesError] = useCollectionData(
-    authUser
-      ? firestore.collection("entities").where("isDeleted", "==", false)
-      : null
-  );
-
-  const [departments = [], departmentsLoading, departmentsError] =
-    useCollectionData(
-      authUser
-        ? firestore.collection("departments").where("isDeleted", "==", false)
-        : null
-    );
-
-  const [sections = [], sectionsLoading, sectionsError] = useCollectionData(
-    authUser
-      ? firestore.collection("sections").where("isDeleted", "==", false)
-      : null
-  );
-
-  const [offices = [], officesLoading, officesError] = useCollectionData(
-    authUser
-      ? firestore.collection("offices").where("isDeleted", "==", false)
-      : null
-  );
 
   const [rolesAcls = [], rolesAclsLoading, rolesAclsError] = useCollectionData(
     authUser ? firestore.collection("roles-acls") : null
@@ -48,29 +23,9 @@ export const GlobalDataProvider = ({ children }) => {
       : null
   );
 
-  const [correspondences = [], correspondencesLoading, correspondencesError] =
-    useCollectionData(
-      firestore.collection("correspondences").where("isDeleted", "==", false) ||
-        null
-    );
+  const error = rolesAclsError || usersError;
 
-  const error =
-    entitiesError ||
-    rolesAclsError ||
-    usersError ||
-    correspondencesError ||
-    departmentsError ||
-    sectionsError ||
-    officesError;
-
-  const loading =
-    entitiesLoading ||
-    rolesAclsLoading ||
-    usersLoading ||
-    correspondencesLoading ||
-    departmentsLoading ||
-    sectionsLoading ||
-    officesLoading;
+  const loading = rolesAclsLoading || usersLoading;
 
   useEffect(() => {
     error && notification({ type: "error" });
@@ -81,17 +36,8 @@ export const GlobalDataProvider = ({ children }) => {
   return (
     <GlobalDataContext.Provider
       value={{
-        entities,
-        departments,
-        sections,
         rolesAcls,
-        offices,
         users: orderBy(users, (user) => [user.createAt], ["desc"]),
-        correspondences: orderBy(
-          correspondences,
-          (document) => [document.createAt],
-          ["desc"]
-        ),
       }}
     >
       {children}
