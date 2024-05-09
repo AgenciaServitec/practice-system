@@ -13,6 +13,7 @@ import {
   faNetworkWired,
   faUsers,
   faUsersCog,
+  faFilePen
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { includes } from "lodash";
@@ -85,6 +86,15 @@ export const DrawerLayout = ({
           isVisible: existPageAclsInAclsOfUser(["/users"]),
           onClick: () => {
             onNavigateTo("/users");
+            onSetIsVisibleDrawer(false);
+          },
+        },{
+          label: "Prácticas",
+          key: "practices",
+          icon: <FontAwesomeIcon icon={faFilePen} size="lg" />,
+          isVisible: existPageAclsInAclsOfUser(["/practices"]),
+          onClick: () => {
+            onNavigateTo("/practices");
             onSetIsVisibleDrawer(false);
           },
         },
