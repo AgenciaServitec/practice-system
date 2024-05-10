@@ -1,16 +1,24 @@
 import React from "react";
-import TimePickerAntd from "antd/lib/time-picker";
 import { ComponentContainer } from "./component-container";
+import { TimePickerAntd } from "./index";
+import moment from "dayjs";
+import styled from "styled-components";
 
 export const TimePicker = ({
   value,
-  disabled,
-  required,
+  required = false,
+  hidden = false,
+  isMobile = false,
   error,
   label,
-  variant = "filled",
-  helperText,
+  format = "HH:mm",
+  variant = "outlined",
+  placeholder = "",
+  disabled,
   animation,
+  bgColor,
+  size = null,
+  onChange,
   ...props
 }) => {
   const Container = ComponentContainer[variant];
@@ -19,20 +27,55 @@ export const TimePicker = ({
     <Container
       value={value}
       required={required}
-      disabled={disabled}
+      hidden={hidden}
       error={error}
       label={label}
+      disabled={disabled}
       animation={animation}
-      helperText={helperText}
+      bgColor={bgColor}
     >
-      <TimePickerAntd
-        disabled={disabled}
-        bordered={false}
-        size="large"
-        placeholder=""
-        value={value}
-        {...props}
-      />
+      <WrapperItem>
+        {isMobile ? (
+          <input
+            type="time"
+            className="timepicker-mobile"
+            placeholder={placeholder}
+            autoComplete="chrome-off"
+            value={value}
+            disabled={disabled}
+            onChange={(e) => onChange(e.target.value)}
+            required={required}
+          />
+        ) : (
+          <TimePickerAntd
+            variant="borderless"
+            autoComplete="chrome-off"
+            defaultOpenValue={moment("00:00", "HH:mm")}
+            format={format}
+            size={size ? size : isMobile ? "middle" : "large"}
+            placeholder={placeholder}
+            value={value}
+            disabled={disabled}
+            allowClear={!disabled}
+            onChange={onChange}
+            {...props}
+          />
+        )}
+      </WrapperItem>
     </Container>
   );
 };
+
+const WrapperItem = styled.div`
+  width: 100%;
+  height: auto;
+  .timepicker-mobile {
+    background: #fff;
+    width: 100%;
+    height: 2.3em;
+    border: none;
+    margin: 0.1em 0;
+    padding: 0 0.69em;
+    outline: none;
+  }
+`;

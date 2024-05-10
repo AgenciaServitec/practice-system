@@ -18,6 +18,7 @@ import {
   Empty,
   Image,
   Carousel as CarouselAntd,
+  TimePicker as TimePickerAntd,
 } from "antd";
 
 export * from "./component-container";
@@ -55,6 +56,7 @@ export * from "./table";
 export * from "./InputCode";
 export * from "./Acl";
 export * from "./Carousel";
+export * from "./TimePicker";
 
 export { default as Legend } from "./Legend";
 
@@ -81,4 +83,5 @@ export {
   Empty,
   Image,
   CarouselAntd,
+  TimePickerAntd,
 };
