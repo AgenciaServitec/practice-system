@@ -4,6 +4,7 @@ import { AdminLayout } from "../components/layout/AdminLayout";
 import { PrivateRoute } from "./PrivateRoute";
 import * as A from "../pages";
 import { Page404 } from "../pages/404";
+import { Sheets } from "../pages/administration/practices/sheets";
 
 export const Router = () => {
   return (
@@ -91,6 +92,11 @@ export const Router = () => {
               <A.PracticeIntegration />
             </AdminLayout>
           }
+        />
+        <Route
+          exact
+          path="practices/:practiceId/sheets"
+          element={<A.Sheets />}
         />
       </Route>
       <Route path="*" element={<Page404 />} />
