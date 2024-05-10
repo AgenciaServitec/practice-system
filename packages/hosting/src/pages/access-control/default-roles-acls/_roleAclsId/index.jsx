@@ -277,7 +277,8 @@ const RoleAcl = ({
                 />
               )}
             />
-          </Col><Col span={24}>
+          </Col>
+          <Col span={24}>
             <Controller
               name="acls.practices"
               defaultValue={[]}
