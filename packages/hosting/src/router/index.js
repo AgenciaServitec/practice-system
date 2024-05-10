@@ -74,6 +74,24 @@ export const Router = () => {
             </AdminLayout>
           }
         />
+        <Route
+          exact
+          path="practices"
+          element={
+            <AdminLayout>
+              <A.Practices />
+            </AdminLayout>
+          }
+        />
+        <Route
+          exact
+          path="practices/:practiceId"
+          element={
+            <AdminLayout>
+              <A.PracticeIntegration />
+            </AdminLayout>
+          }
+        />
       </Route>
       <Route path="*" element={<Page404 />} />
     </Routes>

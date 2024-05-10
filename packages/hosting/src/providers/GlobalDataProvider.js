@@ -23,9 +23,15 @@ export const GlobalDataProvider = ({ children }) => {
       : null
   );
 
-  const error = rolesAclsError || usersError;
+  const [practices = [], practicesLoading, practicesError] = useCollectionData(
+    authUser
+      ? firestore.collection("practices").where("isDeleted", "==", false)
+      : null
+  );
 
-  const loading = rolesAclsLoading || usersLoading;
+  const error = rolesAclsError || usersError || practicesError;
+
+  const loading = rolesAclsLoading || usersLoading || practicesLoading;
 
   useEffect(() => {
     error && notification({ type: "error" });
@@ -36,6 +42,7 @@ export const GlobalDataProvider = ({ children }) => {
   return (
     <GlobalDataContext.Provider
       value={{
+        practices,
         rolesAcls,
         users: orderBy(users, (user) => [user.createAt], ["desc"]),
       }}

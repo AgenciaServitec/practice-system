@@ -1,81 +1,42 @@
 import React from "react";
+import TimePickerAntd from "antd/lib/time-picker";
 import { ComponentContainer } from "./component-container";
-import { TimePickerAntd } from "./index";
-import moment from "dayjs";
-import styled from "styled-components";
+import moment from "moment/moment";
 
 export const TimePicker = ({
-  value,
+  value = undefined,
+  disabled = false,
   required = false,
-  hidden = false,
-  isMobile = false,
-  error,
+  error = false,
   label,
-  format = "HH:mm",
-  variant = "outlined",
-  placeholder = "",
-  disabled,
+  variant = "filled",
+  helperText,
   animation,
-  bgColor,
-  size = null,
-  onChange,
   ...props
 }) => {
   const Container = ComponentContainer[variant];
+
+  value = value instanceof Date ? moment(value) : value;
 
   return (
     <Container
       value={value}
       required={required}
-      hidden={hidden}
+      disabled={disabled}
       error={error}
       label={label}
-      disabled={disabled}
       animation={animation}
-      bgColor={bgColor}
+      helperText={helperText}
     >
-      <WrapperItem>
-        {isMobile ? (
-          <input
-            type="time"
-            className="timepicker-mobile"
-            placeholder={placeholder}
-            autoComplete="chrome-off"
-            value={value}
-            disabled={disabled}
-            onChange={(e) => onChange(e.target.value)}
-            required={required}
-          />
-        ) : (
-          <TimePickerAntd
-            variant="borderless"
-            autoComplete="chrome-off"
-            defaultOpenValue={moment("00:00", "HH:mm")}
-            format={format}
-            size={size ? size : isMobile ? "middle" : "large"}
-            placeholder={placeholder}
-            value={value}
-            disabled={disabled}
-            allowClear={!disabled}
-            onChange={onChange}
-            {...props}
-          />
-        )}
-      </WrapperItem>
+      <TimePickerAntd
+        disabled={disabled}
+        format="HH:mm"
+        variant="borderless"
+        size="large"
+        placeholder=""
+        value={value}
+        {...props}
+      />
     </Container>
   );
 };
-
-const WrapperItem = styled.div`
-  width: 100%;
-  height: auto;
-  .timepicker-mobile {
-    background: #fff;
-    width: 100%;
-    height: 2.3em;
-    border: none;
-    margin: 0.1em 0;
-    padding: 0 0.69em;
-    outline: none;
-  }
-`;
