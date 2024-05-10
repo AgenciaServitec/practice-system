@@ -34,7 +34,7 @@ export const Router = () => {
           path="home"
           element={
             <AdminLayout>
-              <A.Users />
+              <A.HomeIntegration />
             </AdminLayout>
           }
         />
