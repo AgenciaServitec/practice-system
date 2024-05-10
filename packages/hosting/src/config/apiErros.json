@@ -10,5 +10,13 @@
   "user/user_does_not_exist": {
     "title": "El usuario no existe!",
     "description": "El usuario especificado no existe."
+  },
+  "user/email_already_exists": {
+    "title": "El email ya está registrado",
+    "description": "El email especificado ya existe."
+  },
+  "user/phone_number_already_exists": {
+    "title": "El teléfono ya está registrado",
+    "description": "El teléfono especificado ya existe."
   }
 }
