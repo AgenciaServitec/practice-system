@@ -12,6 +12,6 @@
   "/users#delete": "Eliminar usuario",
   "/practices": "Menu: Prácticas",
   "/practices/new": "Agregar prácticas",
-  "/practices/:userId": "Editar prácticas",
+  "/practices/:practiceId": "Editar prácticas",
   "/practices#delete": "Eliminar prácticas"
 }

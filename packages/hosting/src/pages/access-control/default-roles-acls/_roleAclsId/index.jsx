@@ -277,7 +277,8 @@ const RoleAcl = ({
                 />
               )}
             />
-          </Col><Col span={24}>
+          </Col>
+          <Col span={24}>
             <Controller
               name="acls.practices"
               defaultValue={[]}
@@ -285,15 +286,10 @@ const RoleAcl = ({
               render={({ field: { onChange, value, name } }) => (
                 <CheckboxGroup
                   label="Prácticas"
-                  options={map(
-                    {
-                      ...filterAcl("practices"),
-                    },
-                    (item, itemKey) => ({
-                      label: item,
-                      value: itemKey,
-                    })
-                  )}
+                  options={map(filterAcl("practices"), (item, itemKey) => ({
+                    label: item,
+                    value: itemKey,
+                  }))}
                   name={name}
                   value={value}
                   onChange={onChange}
