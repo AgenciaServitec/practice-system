@@ -277,6 +277,31 @@ const RoleAcl = ({
                 />
               )}
             />
+          </Col><Col span={24}>
+            <Controller
+              name="acls.practices"
+              defaultValue={[]}
+              control={control}
+              render={({ field: { onChange, value, name } }) => (
+                <CheckboxGroup
+                  label="Prácticas"
+                  options={map(
+                    {
+                      ...filterAcl("practices"),
+                    },
+                    (item, itemKey) => ({
+                      label: item,
+                      value: itemKey,
+                    })
+                  )}
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
           </Col>
           <Col span={24}>
             <Controller
