@@ -30,16 +30,17 @@ export const UserIntegration = () => {
   const { authUser } = useAuthentication();
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { postUser, postUserLoading } = useApiUserPost();
-  const { putUser, putUserLoading } = useApiUserPut();
+  const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
+  const { putUser, putUserResponse, putUserLoading } = useApiUserPut();
 
   const { rolesAcls, users } = useGlobalData();
 
   const [user, setUser] = useState({});
 
+  const isNew = userId === "new";
+
   useEffect(() => {
-    const _user =
-      userId === "new" ? {} : users.find((user) => user.id === userId);
+    const _user = isNew ? {} : users.find((user) => user.id === userId);
 
     if (!_user) return navigate(-1);
 
@@ -50,7 +51,11 @@ export const UserIntegration = () => {
     try {
       const _user = mapUserToApi(formData);
 
-      userId === "new" ? await postUser(_user) : await putUser(_user);
+      const response = isNew ? await postUser(_user) : await putUser(_user);
+
+      if (isNew ? !postUserResponse.ok : !putUserResponse.ok) {
+        throw new Error(response);
+      }
 
       notification({
         type: "success",

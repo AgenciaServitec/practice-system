@@ -5,23 +5,20 @@ import apiErrors from "../config/apiErros.json";
 export const getApiErrorResponse = async (response) => {
   try {
     if (isResponse(response)) {
-      const responseText = await response.text();
       try {
-        return JSON.parse(responseText);
+        return response.message;
       } catch (e) {
-        return responseText;
+        return response;
       }
     }
   } catch (e) {
-    return;
+    console.error(e);
+    return response;
   }
 };
 
-export const apiErrorNotification = (response) => {
-  isApiError(response)
-    ? notificationApiError(response.key)
-    : notification({ type: "error" });
-};
+export const apiErrorNotification = (response) =>
+  response ? notificationApiError(response) : notification({ type: "error" });
 
 const notificationApiError = (key) => {
   const titleDefault = apiErrors["default.title"];
@@ -29,11 +26,9 @@ const notificationApiError = (key) => {
 
   notification({
     type: "warning",
-    title: apiErrors[key ? `${key}.title` : titleDefault],
-    description: apiErrors[key ? `${key}.description` : descriptionDefault],
+    title: apiErrors[key ? key : titleDefault]?.title,
+    description: apiErrors[key ? key : descriptionDefault]?.description,
   });
 };
 
-export const isApiError = (data) => isObject(data) && "isApiError" in data;
-
-export const isResponse = (data) => isObject(data) && "text" in data;
+export const isResponse = (data) => isObject(data) && "message" in data;
