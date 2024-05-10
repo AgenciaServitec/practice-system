@@ -3,7 +3,6 @@ import { Space, Table, Tag } from "antd";
 import { Acl, IconAction } from "../../../components";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
-import { Roles } from "../../../data-list";
 import { capitalize } from "lodash";
 
 export const PracticeTable = ({
