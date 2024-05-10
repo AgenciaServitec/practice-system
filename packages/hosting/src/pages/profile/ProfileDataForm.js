@@ -13,7 +13,6 @@ import {
   useApiUserPut,
 } from "../../api";
 import { assign } from "lodash";
-import { ApiErrors } from "../../data-list";
 import { v4 as uuidv4 } from "uuid";
 
 export const ProfileDataForm = () => {
