@@ -1,0 +1,64 @@
+{
+  "common": {
+    "title": "Practice system",
+    "contactData": {
+      "emails": {
+        "sales": "practicesystem@gmail.com"
+      },
+      "numbers": {
+        "phone": ["123 456 789"],
+        "wsp": ["123 456 789"]
+      },
+      "socialLinks": {
+        "facebook": "#",
+        "instagram": "#",
+        "whatsapp": "#",
+        "tiktok": "#",
+        "email": "mailto:#"
+      },
+      "directions": {
+        "local1": "Chorrillos - Lima - Perú"
+      },
+      "poweredBy": {
+        "name": "Agencia servitec",
+        "webUrl": "https://agenciaservitec.com"
+      }
+    }
+  },
+  "development": {
+    "version": "0.0.1",
+    "firebaseApp": {
+      "apiKey": "AIzaSyANklbO98SeQ5xZ5IO-qEQF_-8E3w1WM8I",
+      "authDomain": "practice-system.firebaseapp.com",
+      "projectId": "practice-system",
+      "storageBucket": "practice-system.appspot.com",
+      "messagingSenderId": "25943851657",
+      "appId": "1:25943851657:web:f5996eee1b1ab5bce03c58",
+      "measurementId": "G-KCCJ52G76R"
+    },
+    "publicHostingUrl": "-",
+    "publicStorageUrl": "-",
+    "buckets": {
+      "documents": "gs://practice-system-documents"
+    },
+    "apiUrl": "https://practice-system.web.app/api"
+  },
+  "production": {
+    "version": "0.0.1",
+    "firebaseApp": {
+      "apiKey": "AIzaSyANklbO98SeQ5xZ5IO-qEQF_-8E3w1WM8I",
+      "authDomain": "practice-system.firebaseapp.com",
+      "projectId": "practice-system",
+      "storageBucket": "practice-system.appspot.com",
+      "messagingSenderId": "25943851657",
+      "appId": "1:25943851657:web:f5996eee1b1ab5bce03c58",
+      "measurementId": "G-KCCJ52G76R"
+    },
+    "publicHostingUrl": "-",
+    "publicStorageUrl": "-",
+    "buckets": {
+      "documents": "gs://practice-system-documents"
+    },
+    "apiUrl": "https://practice-system.web.app/api"
+  }
+}

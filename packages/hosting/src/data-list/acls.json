@@ -1,0 +1,17 @@
+{
+  "/home": "Menu Inicio",
+  "/default-roles-acls": "Menu: Roles con Acls",
+  "/default-roles-acls/new": "Agregar rol acls",
+  "/default-roles-acls/:roleAclsId": "Editar rol acls",
+  "/default-roles-acls#delete": "Eliminar rol acls",
+  "/manage-acls": "Menu: Administrardor acls",
+  "/profile": "Menu: Perfil",
+  "/users": "Menu: Usuarios",
+  "/users/new": "Agregar usuario",
+  "/users/:userId": "Editar usuario",
+  "/users#delete": "Eliminar usuario",
+  "/practices": "Menu: Prácticas",
+  "/practices/new": "Agregar prácticas",
+  "/practices/:practiceId": "Editar prácticas",
+  "/practices#delete": "Eliminar prácticas"
+}
