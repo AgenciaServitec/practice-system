@@ -3,13 +3,11 @@ import styled from "styled-components";
 import {
   faClockRotateLeft,
   faFile,
-  faGears,
-  faHome,
   faLock,
   faQrcode,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Title, Text } from "../../components";
+import { Text, Title } from "../../components";
 
 export const HomeIntegration = () => {
   return (
