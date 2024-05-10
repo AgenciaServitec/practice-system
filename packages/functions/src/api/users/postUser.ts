@@ -19,14 +19,14 @@ export const postUser = async (
     const _isEmailExists = await isEmailExists(user?.email);
 
     if (_isEmailExists) {
-      res.status(412).send("email_already_exists").end();
+      res.status(412).send("user/email_already_exists").end();
       return;
     }
 
     const _isPhoneNumberExists = await isPhoneNumberExists(user?.phone.number);
 
     if (_isPhoneNumberExists) {
-      res.status(412).send("phone_number_already_exists").end();
+      res.status(412).send("user/phone_number_already_exists").end();
       return;
     }
 
