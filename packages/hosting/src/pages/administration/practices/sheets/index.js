@@ -1,5 +1,14 @@
 import React from "react";
+import { PDF } from "./PDF";
+import { PdfRegistrationPractices } from "./PdfRegistrationPractices";
+import { Sheet } from "./Sheet";
 
 export const Sheets = () => {
-  return <h1>Hola</h1>;
+  return (
+    <PDF>
+      <Sheet layout="portrait">
+        <PdfRegistrationPractices />
+      </Sheet>
+    </PDF>
+  );
 };
