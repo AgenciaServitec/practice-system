@@ -13,5 +13,6 @@
   "/practices": "Menu: Prácticas",
   "/practices/new": "Agregar prácticas",
   "/practices/:practiceId": "Editar prácticas",
-  "/practices#delete": "Eliminar prácticas"
+  "/practices#delete": "Eliminar prácticas",
+  "/practices/:practiceId/sheets": "Ver Pdf"
 }
