@@ -6,6 +6,7 @@ export * from "./administration/users";
 export * from "./administration/users/_userId";
 export * from "./administration/practices";
 export * from "./administration/practices/_practiceId";
+export * from "./administration/practices/sheets";
 export * from "./access-control/default-roles-acls";
 export * from "./access-control/default-roles-acls/_roleAclsId";
 export * from "./access-control/manage-acls";
