@@ -1,6 +1,7 @@
 import React from "react";
 import { LogoGilda } from "../../../../images";
 import styled from "styled-components";
+
 export const PdfRegistrationPractices = () => {
   const currentYear = new Date().getFullYear();
 
@@ -12,10 +13,10 @@ export const PdfRegistrationPractices = () => {
           &quot;GILDA LILIANA BALLIVIÁN ROSADO&quot;
         </h2>
         <img src={LogoGilda} alt="" style={{ margin: "40px" }} />
-        <Carrera>
+        <Career>
           <h2>AREA ACADÉMICA PROFESIONAL</h2>
           <h2>COMPUTACIÓN E INFORMÁTICA</h2>
-        </Carrera>
+        </Career>
         <h3 style={{ marginTop: "10px", marginBottom: "50px" }}>
           CARPETA DE PRACTICAS PRE PROFESIONALES
         </h3>
@@ -50,7 +51,7 @@ const Details = styled.div`
   margin-top: 20px;
   margin-bottom: 50px;
 `;
-const Carrera = styled.div`
+const Career = styled.div`
   padding: 1em;
   border: 3px solid #000;
   width: 470px;
