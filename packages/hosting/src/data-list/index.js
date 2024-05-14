@@ -7,4 +7,5 @@ export { default as CivilStatus } from "./civilStatus.json";
 export { default as Genders } from "./genders.json";
 export { default as Relationships } from "./relationships.json";
 export { default as Modules } from "./modules.json";
+export { default as CompanyStatus } from "./companyStatus.json";
 export * from "./roles";

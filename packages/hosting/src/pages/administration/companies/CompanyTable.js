@@ -2,6 +2,8 @@ import React from "react";
 import { Space, Table, Tag } from "antd";
 import { Acl, IconAction } from "../../../components";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { CompanyStatus } from "../../../data-list";
+import { orderBy } from "lodash";
 
 export const CompanyTable = ({
   onEditCompany,
@@ -37,13 +39,17 @@ export const CompanyTable = ({
       title: "Estado",
       dataIndex: "status",
       key: "status",
-      render: (_, company) => (
-        <Space>
-          <span>
-            <Tag color="yellow">{company?.status}</Tag>
-          </span>
-        </Space>
-      ),
+      render: (_, company) => {
+        const status = CompanyStatus?.[company?.status];
+
+        return (
+          <Space>
+            <span>
+              <Tag color={status?.color}>{status?.value || ""}</Tag>
+            </span>
+          </Space>
+        );
+      },
     },
     {
       title: "Acciones",
