@@ -3,7 +3,6 @@ import { Space, Table, Tag } from "antd";
 import { Acl, IconAction } from "../../../components";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { CompanyStatus } from "../../../data-list";
-import { orderBy } from "lodash";
 
 export const CompanyTable = ({
   onEditCompany,
