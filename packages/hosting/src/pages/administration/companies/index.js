@@ -38,7 +38,7 @@ export const Companies = () => {
 
   const onConfirmRemoveCompany = async (company) =>
     modalConfirm({
-      content: "El documento se eliminará",
+      content: "La empresa se eliminará",
       onOk: async () => {
         await onDeleteCompany(company);
       },
