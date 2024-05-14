@@ -1,5 +1,6 @@
 import { get } from "./fetchApi";
 import { environmentConfig } from "../../config";
+import { isEmpty } from "lodash";
 
 type Response = CompanyDataApi;
 
@@ -9,13 +10,17 @@ interface Props {
 
 const { token } = environmentConfig["apis-net-pe"];
 
-export const getCompanyDataByRuc = async ({ ruc }: Props) => {
-  const { data } = await get<Response>(`/ruc?numero=${ruc}`, {
+export const getCompanyDataByRuc = async ({
+  ruc,
+}: Props): Promise<CompanyData | null> => {
+  const { data } = await get<Response | undefined>(`/ruc?numero=${ruc}`, {
     headers: {
       "Content-type": "application/json",
       Authorization: token,
     },
   });
+
+  if (isEmpty(data)) return null;
 
   return mapCompanyData(data);
 };

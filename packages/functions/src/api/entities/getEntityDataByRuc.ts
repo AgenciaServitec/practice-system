@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { getCompanyDataByRuc } from "../../client-api/apis-net-pe";
+import { isEmpty } from "lodash";
 
 interface Params {
   ruc: string;
@@ -20,6 +21,11 @@ export const getEntityDataByRuc = async (
 
   try {
     const entityData = await getCompanyDataByRuc({ ruc: ruc });
+
+    if (isEmpty(entityData)) {
+      res.status(412).send("entities/not_found_company_by_ruc").end();
+      return;
+    }
 
     res.send(entityData).end();
   } catch (error) {
