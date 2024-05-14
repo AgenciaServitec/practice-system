@@ -6,3 +6,4 @@ export { default as Bg3 } from "./webp/bg3.webp";
 export { default as Bg4 } from "./webp/bg4.webp";
 export { default as Bg5 } from "./webp/bg5.webp";
 export { default as Bg6 } from "./webp/bg6.webp";
+export { default as LogoGilda } from "./webp/logogilda.webp";
