@@ -21,10 +21,12 @@ import {
   updateCompany,
 } from "../../../../firebase/collections/companies";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useApiCompanyDataByRucGet } from "../../../../api";
 
 export const CompanyIntegration = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
+  const { getCompanyDataByRuc } = useApiCompanyDataByRucGet();
   const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
   const { companies } = useGlobalData();
   const [company, setCompany] = useState({});
@@ -93,6 +95,8 @@ export const CompanyIntegration = () => {
 
   const { required, error } = useFormUtils({ errors, schema });
 
+  const fetchCompanyByRuc = async () => await getCompanyDataByRuc(watch("ruc"));
+
   const mapCompany = (formData) => ({
     ...company,
     ruc: formData?.ruc,
@@ -113,13 +117,15 @@ export const CompanyIntegration = () => {
   });
 
   useEffect(() => {
-    resetForm();
-  }, [company]);
+    const _company = watch("ruc").length > 10 && fetchCompanyByRuc();
+    console.log(_company);
+    resetForm(_company);
+  }, [company, watch("ruc")]);
 
-  const resetForm = () => {
+  const resetForm = (_company) => {
     reset({
       ruc: company?.ruc || "",
-      name: company?.name || "",
+      name: company?.name ? company?.name : _company?.socialReason || "",
       phone: company?.phone || "",
       region: company?.region || "",
       province: company?.province || "",
