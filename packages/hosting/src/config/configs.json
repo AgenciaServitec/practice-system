@@ -41,7 +41,7 @@
     "buckets": {
       "documents": "gs://practice-system-documents"
     },
-    "apiUrl": "http://127.0.0.1:5001/practice-system/us-central1/api"
+    "apiUrl": "https://practice-system.web.app/api"
   },
   "production": {
     "version": "0.0.1",
