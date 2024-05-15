@@ -1,13 +1,13 @@
 import React from "react";
 import { PDF } from "./PDF";
-import { PdfRegistrationPractices } from "./PdfRegistrationPractices";
+import { PracticesSheet1 } from "./PracticesSheet1";
 import { Sheet } from "./Sheet";
 
 export const Sheets = () => {
   return (
     <PDF>
       <Sheet layout="portrait">
-        <PdfRegistrationPractices />
+        <PracticesSheet1 />
       </Sheet>
     </PDF>
   );

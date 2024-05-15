@@ -2,16 +2,16 @@ import React from "react";
 import { LogoGilda } from "../../../../images";
 import styled from "styled-components";
 
-export const PdfRegistrationPractices = () => {
+export const PracticesSheet1 = () => {
   const currentYear = new Date().getFullYear();
 
   return (
     <>
       <Container>
         <h2>INSTITUTO DE EDUCACIÓN SUPERIOR TECNOLÓGICO PÚBLICO</h2>
-        <h2 style={{ textDecoration: "underline" }}>
+        <h1 style={{ textDecoration: "underline" }}>
           &quot;GILDA LILIANA BALLIVIÁN ROSADO&quot;
-        </h2>
+        </h1>
         <img src={LogoGilda} alt="" style={{ margin: "40px" }} />
         <Career>
           <h2>AREA ACADÉMICA PROFESIONAL</h2>
@@ -21,10 +21,18 @@ export const PdfRegistrationPractices = () => {
           CARPETA DE PRACTICAS PRE PROFESIONALES
         </h3>
         <Details>
-          <h4>ESTUDIANTE:</h4>
-          <h4>CÓDIGO DE MATRÍCULA:</h4>
-          <h4>TURNO:</h4>
-          <h4>AÑO DE INGRESO:</h4>
+          <div className="atributes">
+            <h4>ESTUDIANTE</h4>
+            <h4>CÓDIGO DE MATRÍCULA</h4>
+            <h4>TURNO</h4>
+            <h4>AÑO DE INGRESO</h4>
+          </div>
+          <div className="info">
+            <h4>: LUCIANO WILLY RAUL EFFIO MENDOZA</h4>
+            <h4>: 20192939</h4>
+            <h4>: DIURNO</h4>
+            <h4>: 2023</h4>
+          </div>
         </Details>
         <h1 style={{ fontSize: "60px" }}>{currentYear}</h1>
       </Container>
@@ -33,26 +41,35 @@ export const PdfRegistrationPractices = () => {
 };
 
 const Container = styled.div`
+  padding-top: 3em;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   > h2 {
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
+  }
+
+  > h1 {
+    font-size: xx-large;
   }
 `;
 
 const Details = styled.div`
-  width: 500px;
+  width: 580px;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   margin-top: 20px;
   margin-bottom: 50px;
+
+  .atributes {
+    margin-right: 40px;
+  }
 `;
 const Career = styled.div`
   padding: 1em;
+  margin: 1em;
   border: 3px solid #000;
   width: 470px;
   border-left: none;

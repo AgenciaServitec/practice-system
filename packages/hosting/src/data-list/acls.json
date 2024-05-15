@@ -14,5 +14,9 @@
   "/practices/new": "Agregar prácticas",
   "/practices/:practiceId": "Editar prácticas",
   "/practices#delete": "Eliminar prácticas",
-  "/practices/:practiceId/sheets": "Ver Pdf"
+  "/practices/:practiceId/sheets": "Ver Pdf",
+  "/companies": "Menu: Empresas",
+  "/companies/new": "Agregar Empresa",
+  "/companies/:companyId": "Editar empresa",
+  "/companies#delete": "Eliminar empresa"
 }
