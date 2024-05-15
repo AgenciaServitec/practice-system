@@ -3,8 +3,6 @@ import { LogoGilda } from "../../../../images";
 import styled from "styled-components";
 
 export const PracticesSheet1 = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <>
       <Container>
@@ -34,7 +32,7 @@ export const PracticesSheet1 = () => {
             <h4>: 2023</h4>
           </div>
         </Details>
-        <h1 style={{ fontSize: "60px" }}>{currentYear}</h1>
+        <h1 style={{ fontSize: "60px" }}>{new Date().getFullYear()}</h1>
       </Container>
     </>
   );
