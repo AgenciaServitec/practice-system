@@ -1,17 +1,15 @@
 import React from "react";
 import { LogoServitec, QR } from "../../../../images";
 import styled from "styled-components";
+import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEarthAmerica,
+  faEnvelope,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const PracticesSheet2 = () => {
-  // Obtener la fecha
-  const currentDate = new Date();
-  // Formatear la fecha
-  const formattedDate = currentDate.toLocaleDateString("es-PE", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-
   return (
     <>
       <Container>
@@ -61,7 +59,7 @@ export const PracticesSheet2 = () => {
             </text>
           </div>
           <div className="body__date">
-            <span>Chorrillos,{formattedDate}</span>
+            <span>Chorrillos,{moment().format("DD MMMM YYYY")}</span>
           </div>
         </div>
         <div className="footer">
@@ -79,12 +77,18 @@ export const PracticesSheet2 = () => {
               </strong>
             </span>
             <span>
+              <FontAwesomeIcon icon={faPhone} />
+              &nbsp; &nbsp;
               <strong>941934829 / 923849242 </strong>
             </span>
             <span>
+              <FontAwesomeIcon icon={faEnvelope} />
+              &nbsp; &nbsp;
               <strong>gerencia@servitecperu.com </strong>
             </span>
             <span>
+              <FontAwesomeIcon icon={faEarthAmerica} />
+              &nbsp; &nbsp;
               <strong>www.servitec-peru.com </strong>
             </span>
           </div>
