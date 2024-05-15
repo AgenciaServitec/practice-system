@@ -4,7 +4,6 @@ import { AdminLayout } from "../components/layout/AdminLayout";
 import { PrivateRoute } from "./PrivateRoute";
 import * as A from "../pages";
 import { Page404 } from "../pages/404";
-import { Sheets } from "../pages/administration/practices/sheets";
 
 export const Router = () => {
   return (
@@ -99,6 +98,24 @@ export const Router = () => {
           element={<A.Sheets />}
         />
       </Route>
+      <Route
+        exact
+        path="companies"
+        element={
+          <AdminLayout>
+            <A.Companies />
+          </AdminLayout>
+        }
+      />
+      <Route
+        exact
+        path="companies/:companyId"
+        element={
+          <AdminLayout>
+            <A.CompanyIntegration />
+          </AdminLayout>
+        }
+      />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );

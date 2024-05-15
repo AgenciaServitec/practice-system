@@ -18,5 +18,9 @@
   "user/phone_number_already_exists": {
     "title": "El teléfono ya está registrado",
     "description": "El teléfono especificado ya existe."
+  },
+  "entities/not_found_company_by_ruc": {
+    "title": "La empresa no existe",
+    "description": "No existe una empresa con este RUC."
   }
 }
