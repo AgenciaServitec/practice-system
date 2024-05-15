@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoServitec } from "../../../../images";
+import { LogoServitec, QR } from "../../../../images";
 import styled from "styled-components";
 
 export const PracticesSheet2 = () => {
@@ -15,7 +15,15 @@ export const PracticesSheet2 = () => {
   return (
     <>
       <Container>
-        <img src={LogoServitec} alt="servitec" />
+        <div className="images">
+          <div className="images__servitec">
+            <img src={LogoServitec} alt="" />
+          </div>
+          <div className="images__qr">
+            <img src={QR} alt="" />
+          </div>
+        </div>
+
         <div className="header">
           <div className="header__title">
             <h3>REPRESENTANTE LEGAL DE LA EMPRESA</h3>
@@ -38,7 +46,7 @@ export const PracticesSheet2 = () => {
             <text>
               Que el Sr. <strong>García Chillcce Litman Ever</strong>, alumno de
               este Instituto de Educación Superior Tecnológico Público “GILDA
-              LILIANA BALLIVIAN ROSADO”, en la Carrera Profesional de
+              LILIANA BALLIVIAN ROSADO”, en la Carrera Profesional de{" "}
               <strong>Computación e Informática</strong> ha realizado
               satisfactoriamente sus Prácticas Pre-Profesionales, referente al{" "}
               <strong>
@@ -52,10 +60,33 @@ export const PracticesSheet2 = () => {
               los fines que estime conveniente.{" "}
             </text>
           </div>
+          <div className="body__date">
+            <span>Chorrillos,{formattedDate}</span>
+          </div>
         </div>
         <div className="footer">
-          <div className="footer__date">
-            <text>Chorrillos,{formattedDate}</text>
+          <div className="footer__firma">
+            <text>
+              <strong>Firme y Sello del representante de la Empresa </strong>
+            </text>
+            <text>Ing. Roberto Alcides Mendoza Perca</text>
+          </div>
+          <div className="footer__company">
+            <span>
+              <strong>
+                Av. Defensores del Morro (ex. Huaylas) 1350 N° 266 Chorrillos -
+                Lima{" "}
+              </strong>
+            </span>
+            <span>
+              <strong>941934829 / 923849242 </strong>
+            </span>
+            <span>
+              <strong>gerencia@servitecperu.com </strong>
+            </span>
+            <span>
+              <strong>www.servitec-peru.com </strong>
+            </span>
           </div>
         </div>
       </Container>
@@ -66,9 +97,23 @@ export const PracticesSheet2 = () => {
 const Description = styled.div``;
 
 const Container = styled.div`
-  img {
-    width: 320px;
-    height: 130px;
+  .images {
+    display: flex;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    &__servitec {
+      width: 300px;
+      height: 140px;
+      margin-right: 22em;
+    }
+    &__qr {
+      align-content: flex-end;
+      width: 100px;
+      height: 100px;
+    }
   }
 
   .header {
@@ -85,7 +130,7 @@ const Container = styled.div`
     }
   }
   .body {
-    margin-bottom: 4em;
+    margin-bottom: 7em;
     &__title {
       text-align: center;
       margin-bottom: 2em;
@@ -104,12 +149,30 @@ const Container = styled.div`
         line-height: 1.5em;
       }
     }
-    .footer {
+    &__date {
       text-align: center;
-      &__date {
-        width: 45em;
-        margin: auto;
-      }
+      margin-top: 4em;
+      margin-bottom: 4em;
+    }
+  }
+  .footer {
+    &__firma {
+      margin: auto;
+      text-align: center;
+      width: 326px;
+      border-top: 3px solid #000;
+      padding-top: 1em;
+    }
+    &__company {
+      height: 300px;
+      padding: 1em;
+      width: auto;
+      background: darkgrey;
+      margin-top: 6em;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      line-height: 120%;
     }
   }
 `;
