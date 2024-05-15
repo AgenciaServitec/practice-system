@@ -1,0 +1,10 @@
+{
+  "active": {
+    "value": "Activo",
+    "color": "green"
+  },
+  "inactive": {
+    "value": "Inactivo",
+    "color": "red"
+  }
+}

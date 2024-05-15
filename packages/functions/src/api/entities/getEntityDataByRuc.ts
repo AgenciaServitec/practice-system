@@ -1,29 +1,29 @@
 import { NextFunction, Request, Response } from "express";
-import { getPersonDataByDni } from "../../client-api/apis-net-pe";
+import { getCompanyDataByRuc } from "../../client-api/apis-net-pe";
 import { isEmpty } from "lodash";
 
 interface Params {
-  dni: string;
+  ruc: string;
 }
 
-export const getEntityDataByDni = async (
+export const getEntityDataByRuc = async (
   req: Request<Params, unknown, unknown, unknown>,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   const {
-    params: { dni },
+    params: { ruc },
   } = req;
 
-  console.log("「Get entity data」Initialize", dni, {
+  console.log("「Get company data」Initialize", ruc, {
     params: req.params,
   });
 
   try {
-    const entityData = await getPersonDataByDni({ dni });
+    const entityData = await getCompanyDataByRuc({ ruc: ruc });
 
     if (isEmpty(entityData)) {
-      res.status(412).send("entities/not_found_company_by_ruc").end();
+      res.status(412).send("entities/not_found_entity_by_dni").end();
       return;
     }
 

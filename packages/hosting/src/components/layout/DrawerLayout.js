@@ -14,6 +14,7 @@ import {
   faUsers,
   faUsersCog,
   faFilePen,
+  faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { includes } from "lodash";
@@ -96,6 +97,16 @@ export const DrawerLayout = ({
           isVisible: existPageAclsInAclsOfUser(["/practices"]),
           onClick: () => {
             onNavigateTo("/practices");
+            onSetIsVisibleDrawer(false);
+          },
+        },
+        {
+          label: "Empresas",
+          key: "companies",
+          icon: <FontAwesomeIcon icon={faBuilding} size="lg" />,
+          isVisible: existPageAclsInAclsOfUser(["/companies"]),
+          onClick: () => {
+            onNavigateTo("/companies");
             onSetIsVisibleDrawer(false);
           },
         },
