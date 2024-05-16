@@ -1,34 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import { useAuthentication, useGlobalData } from "../../providers";
+import { useAuthentication } from "../../providers";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import {
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  InputPassword,
-  notification,
-  RadioGroup,
-  Title,
-} from "../../components";
-import { Controller, useForm } from "react-hook-form";
+import { RadioGroup, Title } from "../../components";
 import { Link } from "react-router-dom";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormUtils } from "../../hooks";
 import { RegisterUser } from "./RegisterUser";
 import { RegisterCompany } from "./RegisterCompany";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
-  const { users, companies } = useGlobalData();
   const [type, setType] = useState("person");
-  const [company, setCompany] = useState({});
-  const [person, setPerson] = useState({});
 
   const onNavigateTo = (url) => navigate(url);
 

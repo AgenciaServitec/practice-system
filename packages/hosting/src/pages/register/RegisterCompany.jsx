@@ -19,7 +19,7 @@ import {
 } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { capitalize, isObject } from "lodash";
+import { capitalize } from "lodash";
 import { useAuthentication } from "../../providers";
 
 export const RegisterCompany = ({ type }) => {
@@ -31,7 +31,6 @@ export const RegisterCompany = ({ type }) => {
   } = useApiCompanyDataByRucGet();
   const { loginWithEmailAndPassword } = useAuthentication();
 
-  const [loadingEntity, setLoadingEntity] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const schema = yup.object({
@@ -54,7 +53,6 @@ export const RegisterCompany = ({ type }) => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
     watch,
     setValue,
   } = useForm({ resolver: yupResolver(schema) });
@@ -72,7 +70,7 @@ export const RegisterCompany = ({ type }) => {
     status: formData.status,
     representative: formData.representative.toLowerCase(),
     category: formData.category.toLowerCase(),
-    webSite: formData.webSite.toLowerCase(),
+    webSite: (formData?.webSite || "").toLowerCase(),
     phone: {
       prefix: "+51",
       number: formData.phoneNumber,
@@ -86,9 +84,8 @@ export const RegisterCompany = ({ type }) => {
       setLoading(true);
 
       const user = mapCompany(formData);
-      console.log({ user });
+
       const response = await postUser(user);
-      console.log({ response });
 
       if (!postUserResponse.ok) {
         throw new Error(response);
@@ -122,7 +119,6 @@ export const RegisterCompany = ({ type }) => {
     if (existsRuc) {
       (async () => {
         try {
-          setLoadingEntity(true);
           const response = await getCompanyDataByRuc(watch("ruc"));
 
           if (!getCompanyDataByRucResponse.ok) {
@@ -133,16 +129,13 @@ export const RegisterCompany = ({ type }) => {
         } catch (e) {
           const errorResponse = await getApiErrorResponse(e);
           apiErrorNotification(errorResponse);
-
           companyResetFields(null);
-        } finally {
-          setLoadingEntity(false);
         }
       })();
     }
   }, [watch("ruc")]);
 
-  const onSubmit = (formData) => onSaveCompany(formData);
+  const onSubmit = async (formData) => await onSaveCompany(formData);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -159,7 +152,11 @@ export const RegisterCompany = ({ type }) => {
             error={error(name)}
             helperText={errorMessage(name)}
             required={required(name)}
-            suffix={loadingEntity && <FontAwesomeIcon icon={faSpinner} spin />}
+            suffix={
+              getCompanyDataByRucLoading && (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              )
+            }
           />
         )}
       />
