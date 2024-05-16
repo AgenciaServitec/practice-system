@@ -217,6 +217,8 @@ export const PracticesSheet5 = () => {
 };
 
 const Container = styled.div`
+  font-size: 14px;
+
   .task-box {
     width: fit-content;
     margin: auto;
