@@ -1,4 +1,9 @@
-type RoleCode = "super_admin" | "admin" | "functionary" | "user";
+type RoleCode =
+  | "super_admin"
+  | "admin"
+  | "academic_supervisor"
+  | "company_representative"
+  | "user";
 
 interface Role {
   code: RoleCode;
@@ -9,32 +14,32 @@ interface Role {
 
 interface User extends DefaultFirestoreProps {
   id: string;
+  type: "person" | "company";
   acls: string[];
-  roleCode: string;
-  firstName: string;
-  paternalSurname: string;
-  maternalSurname: string;
-  email: string | null;
-  dni: string;
+  roleCode: RoleCode;
+  email: string;
+  password: string;
+  profilePhoto?: Image;
+  dniPhoto?: Image;
+  dni?: string;
+  firstName?: string;
+  paternalSurname?: string;
+  maternalSurname?: string;
   phone: {
     prefix: string;
     number: string;
   };
-  password?: string | null;
+  ruc?: string;
+  socialReason?: string;
+  region?: string;
+  province?: string;
+  district?: string;
+  address?: string;
+  status?: "active" | "inactive";
+  representative?: string;
+  category?: string;
+  website?: string;
   iAcceptPrivacyPolicies: boolean;
-  profilePhoto?: Image;
-  dniPhoto?: Image;
-  signaturePhoto?: Image;
-  address?: boolean;
-  civilStatus?: boolean;
-  houseLocation?: string;
-  placeBirth?: string;
-  urbanization?: string;
-  emergencyCellPhone?: {
-    prefix: string;
-    number: string;
-  };
-  familyMembers?: FamilyMember[];
   updateBy: string;
 }
 
