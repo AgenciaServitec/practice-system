@@ -18,6 +18,7 @@ import { useAuthentication } from "../../providers";
 import { mediaQuery } from "../../styles";
 import { Bg1, Bg2, Bg3, Bg4, Bg5, Bg6, LogoPrimary } from "../../images";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const ImagesCarousel = [Bg1, Bg2, Bg3, Bg4, Bg5, Bg6];
 
@@ -115,6 +116,9 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
           >
             LOGIN
           </Button>
+          <span>
+            ¿No tienes una cuenta? <Link to="/register">Registrarme</Link>
+          </span>
         </Form>
       </CardStyled>
     </Container>

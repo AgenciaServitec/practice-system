@@ -19,8 +19,16 @@
     "title": "El teléfono ya está registrado",
     "description": "El teléfono especificado ya existe."
   },
-  "entities/not_found_company_by_ruc": {
+  "user/dni_already_exists": {
+    "title": "El Dni ya está registrado",
+    "description": "El Dni especificado ya existe."
+  },
+  "user/ruc_already_exists": {
+    "title": "El Ruc ya está registrado",
+    "description": "El Ruc especificado ya existe."
+  },
+  "entities/not_found_entity_by_ruc": {
     "title": "La empresa no existe",
-    "description": "No existe una empresa con este RUC."
+    "description": "No se pudo encontrar la empresa por el RUC ingresado, intenta verificar que este correcto o ingrese los datos manualmente."
   }
 }
