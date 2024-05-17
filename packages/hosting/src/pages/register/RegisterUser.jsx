@@ -4,7 +4,6 @@ import {
   Button,
   Form,
   Input,
-  InputNumber,
   InputPassword,
   notification,
 } from "../../components";
@@ -22,7 +21,7 @@ import { useAuthentication } from "../../providers";
 import { capitalize } from "lodash";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-export const RegisterUser = () => {
+export const RegisterUser = ({ type }) => {
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
   const {
     getPersonDataByDni,
@@ -53,6 +52,7 @@ export const RegisterUser = () => {
   const { required, error, errorMessage } = useFormUtils({ errors, schema });
 
   const mapUser = (formData) => ({
+    type: type,
     dni: formData.dni,
     names: formData.names,
     paternalSurname: formData.paternalSurname,
@@ -73,9 +73,6 @@ export const RegisterUser = () => {
 
       const response = await postUser(user);
 
-      console.log({ response });
-      console.log({ postUserResponse });
-
       if (!postUserResponse.ok) {
         throw new Error(response);
       }
@@ -95,9 +92,9 @@ export const RegisterUser = () => {
   };
 
   const userResetFields = (user) => {
-    setValue("names", capitalize(user?.nombres || ""));
-    setValue("paternalSurname", capitalize(user?.apellidoPaterno || ""));
-    setValue("maternalSurname", capitalize(user?.apellidoMaterno || ""));
+    setValue("names", capitalize(user?.names || ""));
+    setValue("paternalSurname", capitalize(user?.paternalSurname || ""));
+    setValue("maternalSurname", capitalize(user?.maternalSurname || ""));
   };
 
   useEffect(() => {

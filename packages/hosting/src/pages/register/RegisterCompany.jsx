@@ -46,7 +46,7 @@ export const RegisterCompany = ({ type }) => {
     webSite: yup.string(),
     phoneNumber: yup.string().min(9).max(9).required(),
     email: yup.string().email().required(),
-    password: yup.string().required(),
+    password: yup.string().min(6).required(),
   });
 
   const {
