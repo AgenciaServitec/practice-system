@@ -1,4 +1,4 @@
-interface PersonData {
+interface PersonDataApi {
   razonSocial: string;
   tipoDocumento: string;
   numeroDocumento: string;
@@ -24,6 +24,13 @@ interface PersonData {
   apellidoPaterno: string;
   apellidoMaterno: string;
   nombres: string;
+}
+
+interface PersonData {
+  documentNumber: string;
+  names: string;
+  paternalSurname: string;
+  maternalSurname: string;
 }
 
 interface CompanyDataApi {

@@ -8,7 +8,7 @@ import { useApi } from "./useApi";
 // }
 
 export const useApiPersonDataByDniGet = () => {
-  const { loading, get, response } = useApi("/entities/dni");
+  const { loading, get, response } = useApi("/consult/dni");
 
   const getPersonDataByDni = useCallback(
     async (dni = "") => {

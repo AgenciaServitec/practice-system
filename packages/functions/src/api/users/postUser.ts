@@ -16,11 +16,34 @@ export const postUser = async (
   });
 
   try {
+    if (isEmpty(user.type)) {
+      res.status(412).send("user/not_found_type_user").end();
+      return;
+    }
+
     const _isEmailExists = await isEmailExists(user?.email);
 
     if (_isEmailExists) {
       res.status(412).send("user/email_already_exists").end();
       return;
+    }
+
+    if (user.type === "person") {
+      const _isDniExists = await isDniExists(user?.dni);
+
+      if (_isDniExists) {
+        res.status(412).send("user/dni_already_exists").end();
+        return;
+      }
+    }
+
+    if (user.type === "company") {
+      const _isRucExists = await isRucExists(user?.ruc);
+
+      if (_isRucExists) {
+        res.status(412).send("user/ruc_already_exists").end();
+        return;
+      }
     }
 
     const _isPhoneNumberExists = await isPhoneNumberExists(user?.phone.number);
@@ -69,7 +92,7 @@ const addUserAuth = async (user: User): Promise<void> => {
   });
 };
 
-const isEmailExists = async (email: string | null): Promise<boolean> => {
+const isEmailExists = async (email: string): Promise<boolean> => {
   const users = await fetchCollection<User>(
     firestore
       .collection("users")
@@ -80,14 +103,34 @@ const isEmailExists = async (email: string | null): Promise<boolean> => {
   return !isEmpty(users);
 };
 
-const isPhoneNumberExists = async (
-  phoneNumber: string | null
-): Promise<boolean> => {
+const isPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
   const users = await fetchCollection<User>(
     firestore
       .collection("users")
       .where("isDeleted", "==", false)
       .where("phone.number", "==", phoneNumber)
+  );
+
+  return !isEmpty(users);
+};
+
+const isDniExists = async (dni?: string): Promise<boolean> => {
+  const users = await fetchCollection<User>(
+    firestore
+      .collection("users")
+      .where("isDeleted", "==", false)
+      .where("dni", "==", dni)
+  );
+
+  return !isEmpty(users);
+};
+
+const isRucExists = async (ruc?: string): Promise<boolean> => {
+  const users = await fetchCollection<User>(
+    firestore
+      .collection("users")
+      .where("isDeleted", "==", false)
+      .where("ruc", "==", ruc)
   );
 
   return !isEmpty(users);

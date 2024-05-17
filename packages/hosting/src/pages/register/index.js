@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import Steps from "antd/lib/steps";
-import { mediaQuery } from "../../styles";
-import { AccessData } from "./AccessData";
-import { PersonalInformation } from "./PersonalInformation";
-import { PrivacyPolicies } from "./PrivacyPolicies";
 import { useAuthentication } from "../../providers";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import { RadioGroup, Title } from "../../components";
+import { Link } from "react-router-dom";
+import { RegisterUser } from "./RegisterUser";
+import { RegisterCompany } from "./RegisterCompany";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
-
-  const [currentStep, setCurrentStep] = useState(0);
+  const [type, setType] = useState("person");
 
   const onNavigateTo = (url) => navigate(url);
 
@@ -20,55 +20,50 @@ export const RegisterIntegration = () => {
     authUser && onNavigateTo("/home");
   }, [authUser]);
 
-  const next = () => {
-    setCurrentStep(currentStep + 1);
-  };
-  const prev = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  const steps = [
-    {
-      title: "Datos de Accesso",
-      description: "Paso 1",
-    },
-    {
-      title: "Datos Personales",
-      description: "Paso 2",
-    },
-    {
-      title: "Registrarse",
-      description: "Paso 3",
-    },
-  ];
-
-  const items = steps.map((item) => ({
-    key: item.title,
-    title: item.title,
-  }));
-
   return (
     <Container>
       <div className="content-wrapper">
-        <div className="wrapper-steps">
-          <Steps
-            current={currentStep}
-            items={items}
-            labelPlacement="vertical"
-          />
-        </div>
         <div className="content-step-wrapper">
-          {currentStep === 0 && (
-            <AccessData next={next} currentStep={currentStep} />
-          )}
-          {currentStep === 1 && (
-            <PersonalInformation
-              prev={prev}
-              next={next}
-              currentStep={currentStep}
-            />
-          )}
-          {currentStep === 2 && <PrivacyPolicies prev={prev} />}
+          <Row gutter={[16, 16]}>
+            <Col span={24} className="title-login">
+              <Title level={3}>Registro</Title>
+            </Col>
+            <Col span={24}>
+              <RadioGroup
+                label="Tipo de Usuario"
+                value={type}
+                options={[
+                  {
+                    label: "Persona",
+                    value: "person",
+                  },
+                  {
+                    label: "Empresa",
+                    value: "company",
+                  },
+                ]}
+                optionType="button"
+                buttonStyle="solid"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                onChange={(e) => setType(e.target.value)}
+              />
+            </Col>
+            <Col span={24}>
+              {type === "person" ? (
+                <RegisterUser type={type} />
+              ) : (
+                <RegisterCompany type={type} />
+              )}
+            </Col>
+            <Col span={24}>
+              <span>
+                ¿Ya tienes una cuenta? <Link to="/">Inicio sesión</Link>
+              </span>
+            </Col>
+          </Row>
         </div>
       </div>
     </Container>
@@ -89,23 +84,21 @@ const Container = styled.div`
     padding: 3em 1em;
   }
 
-  .wrapper-steps {
-    padding: 0;
-    .ant-steps-item-title {
-      line-height: 17px !important;
-      font-size: 12px;
-    }
-    ${mediaQuery.minTablet} {
-      padding: 0 1.5em;
-    }
-  }
-
   .content-step-wrapper {
     width: auto;
     height: auto;
     padding: 1.7rem;
     border-radius: 1em;
     background: ${({ theme }) => theme.colors.white};
-    margin-top: 3em;
+  }
+
+  .title-login {
+    display: flex;
+    justify-content: center;
+    color: ${({ theme }) => theme.colors.primary};
+
+    h3 {
+      color: inherit;
+    }
   }
 `;
