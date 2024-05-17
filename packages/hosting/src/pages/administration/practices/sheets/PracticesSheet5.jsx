@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../images";
-import moment from "moment";
 
 export const PracticesSheet5 = () => {
   return (
@@ -30,21 +29,21 @@ export const PracticesSheet5 = () => {
               <li>
                 <span> 1.</span>
                 <span>
-                  Apellidos y Nombres del practicante:{" "}
+                  Apellidos y Nombres del practicante:
                   <strong>Aguirre Vizalote Monica Luz </strong>
                 </span>
               </li>
               <li>
                 <span> 2.</span>
                 <span>
-                  Carrera Profesional:{" "}
+                  Carrera Profesional:
                   <strong>Computacion e Informatica </strong>
                 </span>
               </li>
               <li>
                 <span> 3.</span>
                 <span>
-                  Modulo Tecnico Profesional N° 1:{" "}
+                  Modulo Tecnico Profesional N° 1:
                   <strong>
                     Gestion de soporte tecnico, Seguridad y Tecnologia de la
                     informacion y comunicacion
@@ -61,7 +60,7 @@ export const PracticesSheet5 = () => {
                 <span> 5.</span>
                 <span>
                   Periodo de Evaluación:
-                  <strong>20/06/2023 / 23/09/2023</strong> Total de horas{" "}
+                  <strong>20/06/2023 / 23/09/2023</strong> Total de horas
                   <strong> 320 Horas</strong>
                 </span>
               </li>
@@ -76,7 +75,7 @@ export const PracticesSheet5 = () => {
               <li>
                 <span>7.</span>
                 <span>
-                  Giro de la Empresa o Institución:{" "}
+                  Giro de la Empresa o Institución:
                   <strong>VENTA DE INSUMOS QUIMICOS </strong>
                 </span>
               </li>
@@ -117,7 +116,6 @@ export const PracticesSheet5 = () => {
                 <span>
                   <div className="item-grid">
                     <div>
-                      {" "}
                       Oficina: <strong> X</strong>
                     </div>
                     <div>Taller:</div>
@@ -147,7 +145,7 @@ export const PracticesSheet5 = () => {
               <li>
                 <span> 11.</span>
                 <span>
-                  Horario de practicas: <strong>14:00 pm a 20:00 pm </strong>{" "}
+                  Horario de practicas: <strong>14:00 pm a 20:00 pm </strong>
                 </span>
               </li>
               <li>
