@@ -9,9 +9,11 @@ import {
   notification,
 } from "../../../components";
 import { Divider } from "antd";
+import Tabs from "antd/lib/tabs";
 import { useAuthentication, useGlobalData } from "../../../providers";
 import { useNavigate } from "react-router";
 import { UsersTable } from "./UserTable";
+import { CompaniesTable } from "./CompaniesTable";
 import { useApiUserPatch } from "../../../api";
 import { assign } from "lodash";
 
@@ -22,6 +24,9 @@ export const Users = () => {
   const { authUser } = useAuthentication();
   const { users } = useGlobalData();
   const { patchUser, patchUserResponse } = useApiUserPatch();
+
+  const _users = users.filter((user) => user.type === "person");
+  const _companies = users.filter((user) => user.type === "company");
 
   const navigateTo = (userId) => {
     const url = `/users/${userId}`;
@@ -56,6 +61,43 @@ export const Users = () => {
       },
     });
 
+  const onChange = (key) => {
+    console.log(key);
+  };
+
+  const items = [
+    {
+      key: 1,
+      label: "Personas",
+      children: (
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <UsersTable
+              users={_users}
+              onEditUser={onEditUser}
+              onConfirmRemoveUser={onConfirmRemoveUser}
+            />
+          </Col>
+        </Row>
+      ),
+    },
+    {
+      key: 2,
+      label: "Empresas",
+      children: (
+        <Row gutter={[16, 0]}>
+          <Col span={24}>
+            <CompaniesTable
+              companies={_companies}
+              onEditUser={onEditUser}
+              onConfirmRemoveUser={onConfirmRemoveUser}
+            />
+          </Col>
+        </Row>
+      ),
+    },
+  ];
+
   return (
     <Acl redirect name="/users">
       <Row gutter={[16, 16]}>
@@ -71,11 +113,7 @@ export const Users = () => {
           <Title level={3}>Usuarios</Title>
         </Col>
         <Col span={24}>
-          <UsersTable
-            users={users}
-            onEditUser={onEditUser}
-            onConfirmRemoveUser={onConfirmRemoveUser}
-          />
+          <Tabs defaultActiveKey="1" items={items} />
         </Col>
       </Row>
     </Acl>
