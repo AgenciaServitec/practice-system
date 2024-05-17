@@ -224,11 +224,6 @@ const Container = styled.div`
     border: 1px solid black;
     text-align: center;
   }
-  .column {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
 
   .header {
     text-align: center;
