@@ -1,7 +1,7 @@
 import { get } from "./fetchApi";
 import { environmentConfig } from "../../config";
 
-type Response = PersonData;
+type Response = PersonDataApi;
 
 interface Props {
   dni: string;
@@ -26,6 +26,9 @@ export const getPersonDataByDni = async ({
   }
 };
 
-const mapPersonData = (personData: PersonData): PersonData => ({
-  ...personData,
+const mapPersonData = (personData: PersonDataApi): PersonData => ({
+  documentNumber: personData?.numeroDocumento || "",
+  names: personData?.nombres || "",
+  paternalSurname: personData?.apellidoPaterno || "",
+  maternalSurname: personData?.apellidoMaterno || "",
 });

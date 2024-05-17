@@ -16,6 +16,11 @@ export const postUser = async (
   });
 
   try {
+    if (isEmpty(user.type)) {
+      res.status(412).send("user/not_found_type_user").end();
+      return;
+    }
+
     const _isEmailExists = await isEmailExists(user?.email);
 
     if (_isEmailExists) {
