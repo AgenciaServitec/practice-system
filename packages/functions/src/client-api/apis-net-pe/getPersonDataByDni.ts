@@ -28,7 +28,7 @@ export const getPersonDataByDni = async ({
 
 const mapPersonData = (personData: PersonDataApi): PersonData => ({
   documentNumber: personData?.numeroDocumento || "",
-  names: personData?.nombres || "",
+  firstName: personData?.nombres || "",
   paternalSurname: personData?.apellidoPaterno || "",
   maternalSurname: personData?.apellidoMaterno || "",
 });
