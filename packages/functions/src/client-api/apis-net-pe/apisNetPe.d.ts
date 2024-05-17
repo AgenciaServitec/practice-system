@@ -28,7 +28,7 @@ interface PersonDataApi {
 
 interface PersonData {
   documentNumber: string;
-  names: string;
+  firstName: string;
   paternalSurname: string;
   maternalSurname: string;
 }

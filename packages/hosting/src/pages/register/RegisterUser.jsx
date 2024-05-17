@@ -33,7 +33,7 @@ export const RegisterUser = ({ type }) => {
 
   const schema = yup.object({
     dni: yup.number().required(),
-    names: yup.string().required(),
+    firstName: yup.string().required(),
     paternalSurname: yup.string().required(),
     maternalSurname: yup.string().required(),
     phoneNumber: yup.string().min(9).max(9).required(),
@@ -54,7 +54,7 @@ export const RegisterUser = ({ type }) => {
   const mapUser = (formData) => ({
     type: type,
     dni: formData.dni,
-    names: formData.names,
+    firstName: formData.firstName,
     paternalSurname: formData.paternalSurname,
     maternalSurname: formData.maternalSurname,
     phone: {
@@ -68,6 +68,8 @@ export const RegisterUser = ({ type }) => {
   const onSaveUser = async (formData) => {
     try {
       setLoading(true);
+
+      console.log(formData);
 
       const user = mapUser(formData);
 
@@ -90,9 +92,9 @@ export const RegisterUser = ({ type }) => {
       setLoading(false);
     }
   };
-
+  1;
   const userResetFields = (user) => {
-    setValue("names", capitalize(user?.names || ""));
+    setValue("firstName", capitalize(user?.firstName || ""));
     setValue("paternalSurname", capitalize(user?.paternalSurname || ""));
     setValue("maternalSurname", capitalize(user?.maternalSurname || ""));
   };
@@ -144,7 +146,7 @@ export const RegisterUser = ({ type }) => {
         )}
       />
       <Controller
-        name="names"
+        name="firstName"
         control={control}
         render={({ field: { onChange, value, name } }) => (
           <Input
