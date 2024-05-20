@@ -13,11 +13,6 @@ export const PracticesSheet7 = () => {
           <div className="header__institute">
             <h5>INSTITUTO DE EDUCACIÓN SUPERIOR TECNOLÓGICO PÚBLICO</h5>
             <h5>&quot;GILDA LILIANA BALLIVIÁN ROSADO&quot;</h5>
-            <p className="signature">
-              <strong>Firma y Sello del gerente general</strong>
-              <br />
-              <strong>Lozada Yntuscca Orlando Roberto</strong>
-            </p>
           </div>
         </div>
         <div className="body">
@@ -212,10 +207,6 @@ export const PracticesSheet7 = () => {
 
 const Container = styled.div`
   font-size: 14px;
-  .signature {
-    text-align: center;
-    margin-top: 2em;
-  }
 
   .rbody__title {
     margin-left: 20em;
