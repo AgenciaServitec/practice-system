@@ -16,6 +16,7 @@ import { UsersTable } from "./UserTable";
 import { CompaniesTable } from "./CompaniesTable";
 import { useApiUserPatch } from "../../../api";
 import { assign } from "lodash";
+import { useQueryString } from "../../../hooks";
 
 const { Title } = Typography;
 
@@ -24,6 +25,7 @@ export const Users = () => {
   const { authUser } = useAuthentication();
   const { users } = useGlobalData();
   const { patchUser, patchUserResponse } = useApiUserPatch();
+  const [usersType, setUsersType] = useQueryString("usersType", "persons");
 
   const _users = users.filter((user) => user.type === "person");
   const _companies = users.filter((user) => user.type === "company");
@@ -63,11 +65,12 @@ export const Users = () => {
 
   const onChange = (key) => {
     console.log(key);
+    setUsersType(key);
   };
 
   const items = [
     {
-      key: 1,
+      key: "persons",
       label: "Personas",
       children: (
         <Row gutter={[16, 16]}>
@@ -82,7 +85,7 @@ export const Users = () => {
       ),
     },
     {
-      key: 2,
+      key: "companies",
       label: "Empresas",
       children: (
         <Row gutter={[16, 0]}>
@@ -113,7 +116,11 @@ export const Users = () => {
           <Title level={3}>Usuarios</Title>
         </Col>
         <Col span={24}>
-          <Tabs defaultActiveKey="1" items={items} />
+          <Tabs
+            defaultActiveKey={usersType}
+            items={items}
+            onChange={onChange}
+          />
         </Col>
       </Row>
     </Acl>

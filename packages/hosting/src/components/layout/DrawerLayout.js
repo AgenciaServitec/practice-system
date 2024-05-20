@@ -72,13 +72,7 @@ export const DrawerLayout = ({
       label: "Administración",
       key: "manager",
       icon: <FontAwesomeIcon icon={faGears} size="lg" />,
-      isVisible: existPageAclsInAclsOfUser([
-        "/users",
-        "/entities",
-        "/departments",
-        "/sections",
-        "/offices",
-      ]),
+      isVisible: existPageAclsInAclsOfUser(["/users", "/practices"]),
       children: [
         {
           label: "Usuarios",
@@ -100,83 +94,6 @@ export const DrawerLayout = ({
             onSetIsVisibleDrawer(false);
           },
         },
-        {
-          label: "Empresas",
-          key: "companies",
-          icon: <FontAwesomeIcon icon={faBuilding} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/companies"]),
-          onClick: () => {
-            onNavigateTo("/companies");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-        {
-          label: "Núcleos",
-          key: "entities",
-          icon: <FontAwesomeIcon icon={faNetworkWired} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/entities"]),
-          onClick: () => {
-            onNavigateTo("/entities");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-        {
-          label: "Departamentos",
-          key: "departments",
-          icon: <FontAwesomeIcon icon={faBuildingUser} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/departments"]),
-          onClick: () => {
-            onNavigateTo("/departments");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-        {
-          label: "Secciones",
-          key: "sections",
-          icon: <FontAwesomeIcon icon={faComputer} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/sections"]),
-          onClick: () => {
-            onNavigateTo("/sections");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-        {
-          label: "Oficinas",
-          key: "offices",
-          icon: <FontAwesomeIcon icon={faBriefcase} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/offices"]),
-          onClick: () => {
-            onNavigateTo("/offices");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-      ],
-    },
-    {
-      label: "Correspondencias",
-      key: "correspondences",
-      icon: <FontAwesomeIcon icon={faFileAlt} size="lg" />,
-      isVisible: existPageAclsInAclsOfUser(["/correspondences"]),
-      onClick: () => {
-        onNavigateTo("/correspondences");
-        onSetIsVisibleDrawer(false);
-      },
-    },
-    {
-      label: "Inscripciones",
-      key: "inscriptions",
-      icon: <FontAwesomeIcon icon={faIdCard} size="lg" />,
-      isVisible: existPageAclsInAclsOfUser(["/inscriptions"]),
-      children: [
-        {
-          key: "military-circle",
-          label: "Circulo Militar",
-          isVisible: existPageAclsInAclsOfUser(["/inscriptions/cmsts"]),
-          onClick: () => {
-            onNavigateTo("/inscriptions/cmsts");
-            onSetIsVisibleDrawer(false);
-          },
-        },
       ],
     },
   ];
@@ -194,7 +111,7 @@ export const DrawerLayout = ({
   };
 
   return (
-    <DrawerContainer
+    <Drawer
       key="right"
       title={
         <div style={{ width: "100%", textAlign: "right" }}>
@@ -215,21 +132,6 @@ export const DrawerLayout = ({
         mode="inline"
         items={filterByRoleCode(items)}
       />
-    </DrawerContainer>
+    </Drawer>
   );
 };
-
-const DrawerContainer = styled(Drawer)`
-  //background: #fff;
-  //.ant-drawer-wrapper-body {
-  //  background: #fff !important;
-  //  .ant-drawer-body {
-  //    padding: 0 !important;
-  //    background: #fff !important;
-  //  }
-  //}
-  //.ant-drawer-content-wrapper {
-  //  width: 100% !important;
-  //  background: #fff;
-  //}
-`;

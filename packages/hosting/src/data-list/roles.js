@@ -5,13 +5,23 @@ export const Roles = [
     initialPathname: "/home",
   },
   {
+    code: "admin",
+    name: "Admin",
+    initialPathname: "/home",
+  },
+  {
     code: "company",
     name: "Empresa",
     initialPathname: "/home",
   },
   {
-    code: "evaluator",
-    name: "Evaluador",
+    code: "academic_supervisor",
+    name: "Supervisor Académico",
+    initialPathname: "/home",
+  },
+  {
+    code: "academic_coordinator",
+    name: "Coordinador Académico",
     initialPathname: "/home",
   },
   {

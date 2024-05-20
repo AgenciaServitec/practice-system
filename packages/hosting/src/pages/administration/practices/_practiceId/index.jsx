@@ -31,9 +31,29 @@ export const PracticeIntegration = () => {
   const navigate = useNavigate();
   const { practiceId } = useParams();
   const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
-  const { practices } = useGlobalData();
+  const { practices, users } = useGlobalData();
   const [practice, setPractice] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const usersSupervisorAcademicView = users
+    .filter((user) => user.roleCode === "academic_supervisor")
+    .map((user) => ({
+      label: `${capitalize(user.paternalSurname)} ${capitalize(
+        user.maternalSurname
+      )} ${capitalize(user.firstName)}`,
+      value: user.id,
+    }));
+
+  console.log(usersSupervisorAcademicView);
+
+  const usersCoordinatorAcademicView = users
+    .filter((user) => user.roleCode === "academic_coordinator")
+    .map((user) => ({
+      label: `${capitalize(user.paternalSurname)} ${capitalize(
+        user.maternalSurname
+      )} ${capitalize(user.firstName)}`,
+      value: user.id,
+    }));
 
   const onGoBack = () => navigate(-1);
 
@@ -117,8 +137,8 @@ export const PracticeIntegration = () => {
     entryTime: moment(formData?.entryTime).format("HH:mm:ss"),
     departureTime: moment(formData?.departureTime).format("HH:mm:ss"),
     practiceArea: formData?.practiceArea.toLowerCase(),
-    academicSupervisor: formData?.academicSupervisor.toLowerCase(),
-    academicAreaCoordinator: formData?.academicAreaCoordinator.toLowerCase(),
+    academicSupervisor: formData?.academicSupervisor,
+    academicAreaCoordinator: formData?.academicAreaCoordinator,
   });
 
   useEffect(() => {
@@ -145,9 +165,14 @@ export const PracticeIntegration = () => {
         ? moment(practice?.departureTime, "HH:mm:ss")
         : undefined,
       practiceArea: practice?.practiceArea || "",
-      academicSupervisor: capitalize(practice?.academicSupervisor) || "",
+      academicSupervisor:
+        usersSupervisorAcademicView.find(
+          (user) => user.value === practice?.academicSupervisor
+        )?.label || "",
       academicAreaCoordinator:
-        capitalize(practice?.academicAreaCoordinator) || "",
+        usersCoordinatorAcademicView.find(
+          (user) => user.value === practice?.academicAreaCoordinator
+        )?.label || "",
     });
   };
   const onSubmit = (formData) => SavePractice(formData);
@@ -371,11 +396,11 @@ export const PracticeIntegration = () => {
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
-                  <Input
+                  <Select
                     label="Supervisor(a) Académico(a)"
-                    name={name}
                     value={value}
                     onChange={onChange}
+                    options={usersSupervisorAcademicView}
                     error={error(name)}
                     required={required(name)}
                   />
@@ -388,11 +413,11 @@ export const PracticeIntegration = () => {
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
-                  <Input
+                  <Select
                     label="Coordinador(a) del Área Académica"
-                    name={name}
                     value={value}
                     onChange={onChange}
+                    options={usersCoordinatorAcademicView}
                     error={error(name)}
                     required={required(name)}
                   />

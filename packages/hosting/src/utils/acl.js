@@ -17,7 +17,7 @@ export const mapAcls = (acls = []) => ({
   manageAcls: filterMapAcl(acls, "manage-acls"),
   profile: filterMapAcl(acls, "profile"),
   users: [...filterMapAcl(acls, "users")],
-  practices: [...filterMapAcl(acls, "practices")],
+  practices: filterMapAcl(acls, "practices"),
   companies: [...filterMapAcl(acls, "companies")],
 });
 
