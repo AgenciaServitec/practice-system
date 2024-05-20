@@ -2,7 +2,8 @@ type RoleCode =
   | "super_admin"
   | "admin"
   | "academic_supervisor"
-  | "company_representative"
+  | "academic_coordinator"
+  | "company"
   | "user";
 
 interface Role {

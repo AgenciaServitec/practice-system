@@ -74,7 +74,7 @@ const addUser = async (user: User): Promise<void> => {
     .set(
       assignCreateProps({
         ...user,
-        roleCode: "user",
+        roleCode: user.type === "company" ? "company" : "user",
         acls: ["/home", "/profile"],
         status: "registered",
       })

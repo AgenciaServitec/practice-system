@@ -19,8 +19,6 @@ export interface DocumentDelete {
   isDeleted?: boolean; // only true;
 }
 
-export type RoleCode = "super_admin" | "admin" | "user";
-
 export interface _Image {
   createAt: admin.firestore.Timestamp;
   name: string;
