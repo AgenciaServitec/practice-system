@@ -44,8 +44,6 @@ export const PracticeIntegration = () => {
       value: user.id,
     }));
 
-  console.log(usersSupervisorAcademicView);
-
   const usersCoordinatorAcademicView = users
     .filter((user) => user.roleCode === "academic_coordinator")
     .map((user) => ({

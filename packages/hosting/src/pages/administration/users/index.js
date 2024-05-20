@@ -27,9 +27,6 @@ export const Users = () => {
   const { patchUser, patchUserResponse } = useApiUserPatch();
   const [usersType, setUsersType] = useQueryString("usersType", "persons");
 
-  const _users = users.filter((user) => user.type === "person");
-  const _companies = users.filter((user) => user.type === "company");
-
   const navigateTo = (userId) => {
     const url = `/users/${userId}`;
     navigate(url);
@@ -64,7 +61,6 @@ export const Users = () => {
     });
 
   const onChange = (key) => {
-    console.log(key);
     setUsersType(key);
   };
 
@@ -76,7 +72,7 @@ export const Users = () => {
         <Row gutter={[16, 16]}>
           <Col span={24}>
             <UsersTable
-              users={_users}
+              users={users.filter((user) => user.type === "person")}
               onEditUser={onEditUser}
               onConfirmRemoveUser={onConfirmRemoveUser}
             />
@@ -91,7 +87,7 @@ export const Users = () => {
         <Row gutter={[16, 0]}>
           <Col span={24}>
             <CompaniesTable
-              companies={_companies}
+              companies={users.filter((user) => user.type === "company")}
               onEditUser={onEditUser}
               onConfirmRemoveUser={onConfirmRemoveUser}
             />
