@@ -3,7 +3,6 @@ import {
   Button,
   Form,
   Input,
-  InputPassword,
   notification,
   Select,
   Title,
@@ -23,14 +22,13 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useApiCompanyDataByRucGet } from "../../../../api";
 import { capitalize } from "lodash";
-import { CompanyStatus } from "../../../../data-list";
 
 export const CompanyIntegration = () => {
   const { companyId } = useParams();
   const navigate = useNavigate();
   const { getCompanyDataByRuc } = useApiCompanyDataByRucGet();
   const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
-  const { companies } = useGlobalData();
+  const { companies, users } = useGlobalData();
   const [company, setCompany] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -69,20 +67,17 @@ export const CompanyIntegration = () => {
 
   const schema = yup.object({
     ruc: yup.string().min(11).max(11).required(),
-    name: yup.string().required(),
-    phone: yup.string().min(9).max(9).required(),
+    socialReason: yup.string().required(),
     region: yup.string().required(),
     province: yup.string().required(),
     district: yup.string().required(),
     email: yup.string().email().required(),
     address: yup.string().required(),
-    boss: yup.string().required(),
-    representative: yup.string().required(),
     category: yup.string().required(),
     webSite: yup.string().required(),
-    user: yup.string().email().required(),
-    password: yup.string().required(),
     status: yup.string().required(),
+    membersIds: yup.array().of(yup.string()).required(),
+    representativeId: yup.string().required(),
   });
 
   const {
@@ -101,20 +96,17 @@ export const CompanyIntegration = () => {
   const mapCompany = (formData) => ({
     ...company,
     ruc: formData?.ruc,
-    name: formData?.name,
-    phone: formData?.phone,
+    socialReason: formData?.socialReason,
     region: formData?.region,
     province: formData?.province,
     district: formData?.district,
     email: formData?.email,
     address: formData?.address,
-    boss: formData?.boss,
-    representative: formData?.representative,
     category: formData?.category,
     webSite: formData?.webSite,
-    user: formData?.user,
-    password: formData?.password,
     status: formData?.status === "activo" ? "active" : "inactive",
+    membersIds: formData?.membersIds,
+    representativeId: formData?.representativeId,
   });
 
   const fetchCompanyByRuc = async () => await getCompanyDataByRuc(watch("ruc"));
@@ -125,7 +117,7 @@ export const CompanyIntegration = () => {
       (async () => {
         const company = await fetchCompanyByRuc(watch("ruc"));
 
-        setValue("name", capitalize(company?.socialReason));
+        setValue("socialReason", capitalize(company?.socialReason));
         setValue("region", capitalize(company?.department));
         setValue("province", capitalize(company?.province));
         setValue("province", capitalize(company?.province));
@@ -143,23 +135,19 @@ export const CompanyIntegration = () => {
   const resetForm = (_company) => {
     reset({
       ruc: company?.ruc || "",
-      name: company?.name || "",
-      phone: company?.phone || "",
+      socialReason: company?.socialReason || "",
       region: company?.region || "",
       province: company?.province || "",
       district: company?.district || "",
       email: company?.email || "",
       address: company?.address || "",
-      boss: company?.boss || "",
-      representative: company?.representative || "",
       category: company?.category || "",
       webSite: company?.webSite || "",
-      user: company?.user || "",
-      password: company?.password || "",
       status: company?.status || "",
+      membersIds: company?.membersIds || null,
+      representativeId: company?.representativeId || "",
     });
   };
-
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
@@ -185,9 +173,9 @@ export const CompanyIntegration = () => {
                 )}
               />
             </Col>
-            <Col span={24} md={15}>
+            <Col span={24} md={19}>
               <Controller
-                name="name"
+                name="socialReason"
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
@@ -197,23 +185,6 @@ export const CompanyIntegration = () => {
                     value={value}
                     onChange={onChange}
                     disabled
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={4}>
-              <Controller
-                name="phone"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="N° Teléfono"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
                     error={error(name)}
                     required={required(name)}
                   />
@@ -307,40 +278,6 @@ export const CompanyIntegration = () => {
             </Col>
           </Row>
           <Row gutter={[16, 16]}>
-            <Col span={24} md={6}>
-              <Controller
-                name="boss"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="Jefe"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={6}>
-              <Controller
-                name="representative"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="Representante"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
             <Col span={24} md={12}>
               <Controller
                 name="category"
@@ -358,7 +295,7 @@ export const CompanyIntegration = () => {
                 )}
               />
             </Col>
-            <Col span={24} md={10}>
+            <Col span={24} md={12}>
               <Controller
                 name="webSite"
                 control={control}
@@ -366,40 +303,6 @@ export const CompanyIntegration = () => {
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     label="Sitio Web"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={5}>
-              <Controller
-                name="user"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="Usuario (Email)"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={5}>
-              <Controller
-                name="password"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <InputPassword
-                    label="Contraseña"
                     name={name}
                     value={value}
                     onChange={onChange}
@@ -434,6 +337,70 @@ export const CompanyIntegration = () => {
                     ]}
                   />
                 )}
+              />
+            </Col>
+            <Col span={24} md={10}>
+              <Controller
+                name="membersIds"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <Select
+                    label="IDs de Miembros"
+                    mode="multiple"
+                    name={name}
+                    value={value}
+                    onChange={(value) => {
+                      if (
+                        !value.find(
+                          (val) => val === watch("representativeId")
+                        ) &&
+                        value.length > 0
+                      ) {
+                        setValue("representativeId", value[0]);
+                      }
+
+                      if (value.length <= 0) {
+                        setValue("representativeId", "");
+                      }
+
+                      return onChange(value);
+                    }}
+                    error={error(name)}
+                    required={required(name)}
+                    options={users.map((user) => ({
+                      label: `${user.firstName} ${user.paternalSurname} ${user.maternalSurname}`,
+                      value: user.id,
+                    }))}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24} md={10}>
+              <Controller
+                name="representativeId"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => {
+                  return (
+                    <Select
+                      label="ID del Representante"
+                      name={name}
+                      value={value}
+                      onChange={onChange}
+                      error={error(name)}
+                      required={required(name)}
+                      options={users
+                        .filter((user) =>
+                          (watch("membersIds") || []).includes(user.id)
+                        )
+                        .map((user) => ({
+                          label: `${user.firstName} ${user.paternalSurname} ${user.maternalSurname}`,
+                          value: user.id,
+                        }))}
+                    />
+                  );
+                }}
               />
             </Col>
           </Row>
