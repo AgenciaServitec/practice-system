@@ -24,12 +24,13 @@ import {
   getPracticesId,
   updatePractice,
 } from "../../../../firebase/collections";
-import { useGlobalData } from "../../../../providers";
+import { useAuthentication, useGlobalData } from "../../../../providers";
 import { capitalize } from "lodash";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
   const { practiceId } = useParams();
+  const { authUser } = useAuthentication();
   const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
   const { practices, users } = useGlobalData();
   const [practice, setPractice] = useState({});
@@ -50,6 +51,13 @@ export const PracticeIntegration = () => {
       label: `${capitalize(user.paternalSurname)} ${capitalize(
         user.maternalSurname
       )} ${capitalize(user.firstName)}`,
+      value: user.id,
+    }));
+
+  const companiesView = users
+    .filter((user) => user.roleCode === "company")
+    .map((user) => ({
+      label: capitalize(user.socialReason),
       value: user.id,
     }));
 
@@ -86,7 +94,9 @@ export const PracticeIntegration = () => {
   };
 
   const schema = yup.object({
+    practitionerId: yup.string(),
     moduleNumber: yup.number().required(),
+    companyId: yup.string().required(),
     name: yup.string(),
     task: yup.string().required(),
     hours: yup.number().required(),
@@ -96,8 +106,8 @@ export const PracticeIntegration = () => {
     entryTime: yup.date().required(),
     departureTime: yup.date().required(),
     practiceArea: yup.string().required(),
-    academicSupervisor: yup.string().required(),
-    academicAreaCoordinator: yup.string().required(),
+    academicSupervisorId: yup.string().required(),
+    academicCoordinatorId: yup.string().required(),
   });
 
   const {
@@ -124,7 +134,9 @@ export const PracticeIntegration = () => {
 
   const mapPractice = (formData) => ({
     ...practice,
+    practitionerId: authUser?.id,
     moduleNumber: formData?.moduleNumber,
+    companyId: formData?.companyId,
     name: formData?.name.toLowerCase(),
     status: "pending",
     task: formData?.task.toLowerCase(),
@@ -135,8 +147,8 @@ export const PracticeIntegration = () => {
     entryTime: moment(formData?.entryTime).format("HH:mm:ss"),
     departureTime: moment(formData?.departureTime).format("HH:mm:ss"),
     practiceArea: formData?.practiceArea.toLowerCase(),
-    academicSupervisor: formData?.academicSupervisor,
-    academicAreaCoordinator: formData?.academicAreaCoordinator,
+    academicSupervisorId: formData?.academicSupervisorId,
+    academicCoordinatorId: formData?.academicCoordinatorId,
   });
 
   useEffect(() => {
@@ -147,6 +159,9 @@ export const PracticeIntegration = () => {
     reset({
       moduleNumber: practice.moduleNumber || "",
       name: capitalize(practice?.name) || "",
+      companyId:
+        companiesView.find((user) => user.value === practice?.companyId)
+          ?.label || "",
       task: capitalize(practice?.task) || "",
       hours: practice?.hours || "",
       startDate: practice?.startDate
@@ -163,13 +178,13 @@ export const PracticeIntegration = () => {
         ? moment(practice?.departureTime, "HH:mm:ss")
         : undefined,
       practiceArea: practice?.practiceArea || "",
-      academicSupervisor:
+      academicSupervisorId:
         usersSupervisorAcademicView.find(
-          (user) => user.value === practice?.academicSupervisor
+          (user) => user.value === practice?.academicSupervisorId
         )?.label || "",
-      academicAreaCoordinator:
+      academicCoordinatorId:
         usersCoordinatorAcademicView.find(
-          (user) => user.value === practice?.academicAreaCoordinator
+          (user) => user.value === practice?.academicCoordinatorId
         )?.label || "",
     });
   };
@@ -225,6 +240,23 @@ export const PracticeIntegration = () => {
                     value={value}
                     onChange={onChange}
                     disabled
+                    error={error(name)}
+                    required={required(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24}>
+              <Controller
+                name="companyId"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <Select
+                    label="Empresa"
+                    value={value}
+                    onChange={onChange}
+                    options={companiesView}
                     error={error(name)}
                     required={required(name)}
                   />
@@ -390,7 +422,7 @@ export const PracticeIntegration = () => {
             </Col>
             <Col span={24} md={8}>
               <Controller
-                name="academicSupervisor"
+                name="academicSupervisorId"
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
@@ -407,7 +439,7 @@ export const PracticeIntegration = () => {
             </Col>
             <Col span={24} md={8}>
               <Controller
-                name="academicAreaCoordinator"
+                name="academicCoordinatorId"
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
