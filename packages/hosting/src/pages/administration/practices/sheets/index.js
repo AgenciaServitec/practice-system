@@ -9,6 +9,7 @@ import { PracticesSheet5 } from "./PracticesSheet5";
 import { PracticesSheet6 } from "./PracticesSheet6";
 import { PracticesSheet7 } from "./PracticesSheet7";
 import { PracticesSheet8 } from "./PracticesSheet8";
+import { PracticesSheet9 } from "./PracticesSheet9";
 
 export const Sheets = () => {
   return (
@@ -36,6 +37,9 @@ export const Sheets = () => {
       </Sheet>
       <Sheet layout="portrait">
         <PracticesSheet8 />
+      </Sheet>
+      <Sheet layout="portrait">
+        <PracticesSheet9 />
       </Sheet>
     </PDF>
   );
