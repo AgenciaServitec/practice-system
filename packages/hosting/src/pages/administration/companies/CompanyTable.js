@@ -18,22 +18,42 @@ export const CompanyTable = ({
     },
     {
       title: "Razón Social",
-      dataIndex: "name",
-      key: "name",
-      render: (_, company) => company?.name || "",
+      dataIndex: "socialReason",
+      key: "socialReason",
+      render: (_, company) => company?.socialReason || "",
+    },
+
+    {
+      title: "Región",
+      dataIndex: "region",
+      key: "region",
+      render: (_, company) => company?.region || "",
     },
     {
-      title: "Correo",
-      dataIndex: "email",
-      key: "email",
-      render: (_, company) => company?.email || "",
+      title: "Provincia",
+      dataIndex: "province",
+      key: "province",
+      render: (_, company) => company?.province || "",
     },
     {
-      title: "Teléfono",
-      dataIndex: "phone",
-      key: "phone",
-      render: (_, company) => company?.phone || "",
+      title: "Distrito",
+      dataIndex: "district",
+      key: "district",
+      render: (_, company) => company?.district || "",
     },
+    {
+      title: "Dirección",
+      dataIndex: "address",
+      key: "address",
+      render: (_, company) => company?.address || "",
+    },
+    {
+      title: "Rubro",
+      dataIndex: "category",
+      key: "category",
+      render: (_, company) => company?.category || "",
+    },
+
     {
       title: "Estado",
       dataIndex: "status",
@@ -50,6 +70,19 @@ export const CompanyTable = ({
         );
       },
     },
+    {
+      title: "Sitio Web",
+      dataIndex: "webSite",
+      key: "webSite",
+      render: (_, company) => company?.webSite || "",
+    },
+    {
+      title: "Correo",
+      dataIndex: "email",
+      key: "email",
+      render: (_, company) => company?.email || "",
+    },
+
     {
       title: "Acciones",
       key: "actions",
