@@ -18,8 +18,9 @@ export const PracticesSheet5 = () => {
         <div className="body">
           <div className="body__title">
             <h3>ANEXO 4</h3>
-            <h4>INFORME VALORATIVO DE EVALUACIÓN DE PRÁCTICAS PRE -</h4>
-            <h4>PROFESIONALES</h4>
+            <h5>
+              INFORME VALORATIVO DE EVALUACIÓN DE PRÁCTICAS PRE-PROFESIONALES
+            </h5>
           </div>
           <div className="body__subtitle1">
             <h5>I. DATOS PERSONALES: </h5>
@@ -116,35 +117,30 @@ export const PracticesSheet5 = () => {
                 <span>Lugares de Practica:&nbsp;</span>
               </li>
               <li>
-                <span></span>
-                <span>
-                  <div className="item-grid">
-                    <div>
-                      Oficina: <strong> X</strong>
-                    </div>
-                    <div>Taller:</div>
-                  </div>
-                </span>
-              </li>
-              <li>
-                <span></span>
-                <span>
-                  <div className="item-grid">
-                    <div> Laboratorio:</div>
-
-                    <div>Granja o Campo:</div>
-                  </div>
-                </span>
-              </li>
-              <li>
-                <span></span>
-                <span>
-                  <div className="item-grid">
-                    <div> Almacen:</div>
-
-                    <div>Otros:</div>
-                  </div>
-                </span>
+                <div className="center_work">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Oficina</td>
+                        <td>X</td>
+                        <td>Taller</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Laboratorio</td>
+                        <td></td>
+                        <td>Granja o Campo</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>Almacén</td>
+                        <td></td>
+                        <td>Otros</td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </li>
               <li>
                 <span> 11.</span>
@@ -281,6 +277,25 @@ const Container = styled.div`
           }
           .jutify {
             text-align: justify;
+          }
+
+          .center_work {
+            margin: auto;
+            padding-left: 4em;
+
+            table {
+              font-size: 12px;
+              margin: 1em;
+              width: 400px;
+              border-collapse: collapse;
+              text-align: center;
+
+              td {
+                width: 50px;
+                border: 1px solid black;
+                padding: 2px;
+              }
+            }
           }
         }
       }
