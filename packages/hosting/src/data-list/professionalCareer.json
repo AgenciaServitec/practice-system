@@ -1,0 +1,34 @@
+[
+  {
+    "label": "Gestión Administrativa",
+    "value": "administrativeManagement"
+  },
+  {
+    "label": "Contabilidad",
+    "value": "accounting"
+  },
+  {
+    "label": "Desarrollo de Sistemas de Información",
+    "value": "informationSystemsDevelopment"
+  },
+  {
+    "label": "Construcción Civil",
+    "value": "civilConstruction"
+  },
+  {
+    "label": "Electrónica Industrial",
+    "value": "industrialElectronics"
+  },
+  {
+    "label": "Electricidad Industrial",
+    "value": "industrialElectricity"
+  },
+  {
+    "label": "Mecánica de Producción Industrial",
+    "value": "industrialProductionMechanics"
+  },
+  {
+    "label": "Mecatrónica Automotriz",
+    "value": "automotiveMechatronics"
+  }
+]

@@ -5,6 +5,7 @@ import { faEdit, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { capitalize } from "lodash";
 import { useNavigate } from "react-router";
+import { useAuthentication } from "../../../providers";
 
 export const PracticeTable = ({
   practices,
@@ -17,24 +18,23 @@ export const PracticeTable = ({
 
   const columns = [
     {
-      title: "Fecha creación",
+      title: "Fecha de Creación",
       dataIndex: "createAt",
       key: "createAt",
       render: (_, practice) =>
         moment(practice?.createAt.toDate()).format("DD/MM/YYYY HH:mm"),
     },
     {
-      title: "N° de Módulo",
-      dataIndex: "moduleNumber",
-      align: "center",
-      key: "moduleNumber",
-      render: (_, practice) => practice?.moduleNumber || "",
-    },
-    {
       title: "Nombre del Módulo",
       dataIndex: "name",
       key: "name",
       render: (_, practice) => capitalize(practice?.name) || "",
+    },
+    {
+      title: "N° de Módulo",
+      dataIndex: "moduleNumber",
+      key: "moduleNumber",
+      render: (_, practice) => practice?.moduleNumber || "",
     },
     {
       title: "Estado",
@@ -89,3 +89,4 @@ export const PracticeTable = ({
     />
   );
 };
+``;

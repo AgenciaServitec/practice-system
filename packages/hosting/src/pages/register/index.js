@@ -60,7 +60,7 @@ export const RegisterIntegration = () => {
             </Col>
             <Col span={24}>
               <span>
-                ¿Ya tienes una cuenta? <Link to="/">Inicio sesión</Link>
+                ¿Ya tienes una cuenta? <Link to="/">Iniciar sesión</Link>
               </span>
             </Col>
           </Row>

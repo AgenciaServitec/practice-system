@@ -9,14 +9,11 @@ import {
   notification,
 } from "../../../components";
 import { Divider } from "antd";
-import Tabs from "antd/lib/tabs";
 import { useAuthentication, useGlobalData } from "../../../providers";
 import { useNavigate } from "react-router";
 import { UsersTable } from "./UserTable";
-import { CompaniesTable } from "./CompaniesTable";
 import { useApiUserPatch } from "../../../api";
 import { assign } from "lodash";
-import { useQueryString } from "../../../hooks";
 
 const { Title } = Typography;
 
@@ -25,7 +22,6 @@ export const Users = () => {
   const { authUser } = useAuthentication();
   const { users } = useGlobalData();
   const { patchUser, patchUserResponse } = useApiUserPatch();
-  const [usersType, setUsersType] = useQueryString("usersType", "persons");
 
   const navigateTo = (userId) => {
     const url = `/users/${userId}`;
@@ -60,43 +56,6 @@ export const Users = () => {
       },
     });
 
-  const onChange = (key) => {
-    setUsersType(key);
-  };
-
-  const items = [
-    {
-      key: "persons",
-      label: "Personas",
-      children: (
-        <Row gutter={[16, 16]}>
-          <Col span={24}>
-            <UsersTable
-              users={users.filter((user) => user.type === "person")}
-              onEditUser={onEditUser}
-              onConfirmRemoveUser={onConfirmRemoveUser}
-            />
-          </Col>
-        </Row>
-      ),
-    },
-    {
-      key: "companies",
-      label: "Empresas",
-      children: (
-        <Row gutter={[16, 0]}>
-          <Col span={24}>
-            <CompaniesTable
-              companies={users.filter((user) => user.type === "company")}
-              onEditUser={onEditUser}
-              onConfirmRemoveUser={onConfirmRemoveUser}
-            />
-          </Col>
-        </Row>
-      ),
-    },
-  ];
-
   return (
     <Acl redirect name="/users">
       <Row gutter={[16, 16]}>
@@ -112,10 +71,10 @@ export const Users = () => {
           <Title level={3}>Usuarios</Title>
         </Col>
         <Col span={24}>
-          <Tabs
-            defaultActiveKey={usersType}
-            items={items}
-            onChange={onChange}
+          <UsersTable
+            users={users}
+            onEditUser={onEditUser}
+            onConfirmRemoveUser={onConfirmRemoveUser}
           />
         </Col>
       </Row>
