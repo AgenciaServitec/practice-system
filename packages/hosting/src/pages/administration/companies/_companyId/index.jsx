@@ -198,7 +198,7 @@ const Company = ({
       <Col span={24}>
         <Form onSubmit={handleSubmit(onSubmitSaveCompany)}>
           <Row gutter={[16, 16]}>
-            <Col span={24} md={5}>
+            <Col span={24} md={7}>
               <Controller
                 name="ruc"
                 control={control}
@@ -211,11 +211,12 @@ const Company = ({
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
+                    disabled={!isNew}
                   />
                 )}
               />
             </Col>
-            <Col span={24} md={19}>
+            <Col span={24} md={17}>
               <Controller
                 name="socialReason"
                 control={control}
@@ -226,9 +227,9 @@ const Company = ({
                     name={name}
                     value={value}
                     onChange={onChange}
-                    disabled
                     error={error(name)}
                     required={required(name)}
+                    disabled
                   />
                 )}
               />
