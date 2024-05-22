@@ -15,8 +15,6 @@ export const PracticesSheet2 = ({
   company,
   representativeCompany,
 }) => {
-  console.log({ company, representativeCompany });
-
   return (
     <>
       <Container>
