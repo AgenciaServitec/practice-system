@@ -18,21 +18,15 @@ export const CompanyTable = ({
     },
     {
       title: "Razón Social",
-      dataIndex: "name",
-      key: "name",
-      render: (_, company) => company?.name || "",
+      dataIndex: "socialReason",
+      key: "socialReason",
+      render: (_, company) => company?.socialReason || "",
     },
     {
-      title: "Correo",
-      dataIndex: "email",
-      key: "email",
-      render: (_, company) => company?.email || "",
-    },
-    {
-      title: "Teléfono",
-      dataIndex: "phone",
-      key: "phone",
-      render: (_, company) => company?.phone || "",
+      title: "Rubro",
+      dataIndex: "category",
+      key: "category",
+      render: (_, company) => company?.category || "",
     },
     {
       title: "Estado",
@@ -49,6 +43,12 @@ export const CompanyTable = ({
           </Space>
         );
       },
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      render: (_, company) => company?.email || "",
     },
     {
       title: "Acciones",

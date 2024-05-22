@@ -8,4 +8,5 @@ export { default as Genders } from "./genders.json";
 export { default as Relationships } from "./relationships.json";
 export { default as Modules } from "./modules.json";
 export { default as CompanyStatus } from "./companyStatus.json";
-export * from "./roles";
+export { default as ProfessionalCareer } from "./professionalCareer.json";
+export { default as Roles } from "./roles";
