@@ -10,8 +10,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const PracticesSheet2 = ({ practice, practitioner, company }) => {
-  console.log({ practice, practitioner, company });
-
   return (
     <>
       <Container>
@@ -45,9 +43,11 @@ export const PracticesSheet2 = ({ practice, practitioner, company }) => {
             <h5>EL QUE SUSCRIBE, HACE CONSTAR LOS SIGUIENTE:</h5>
             <text>
               Que el Sr.&nbsp;
-              <strong>
-                {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
-              </strong>
+              <span className="capitalize">
+                <strong>
+                  {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
+                </strong>
+              </span>
               , alumno de este Instituto de Educación Superior Tecnológico
               Público “GILDA LILIANA BALLIVIAN ROSADO”, en la Carrera
               Profesional de <strong>Computación e Informática</strong> ha
@@ -110,8 +110,6 @@ export const PracticesSheet2 = ({ practice, practitioner, company }) => {
   );
 };
 
-const Description = styled.div``;
-
 const Container = styled.div`
   .images {
     display: flex;
@@ -145,6 +143,7 @@ const Container = styled.div`
       text-align: center;
     }
   }
+
   .body {
     margin-bottom: 7em;
     &__title {
@@ -164,6 +163,10 @@ const Container = styled.div`
         font-size: medium;
         line-height: 1.5em;
       }
+
+      .capitalize {
+        text-transform: capitalize;
+      }
     }
     &__date {
       text-align: center;
@@ -171,6 +174,7 @@ const Container = styled.div`
       margin-bottom: 4em;
     }
   }
+
   .footer {
     &__firma {
       margin: auto;

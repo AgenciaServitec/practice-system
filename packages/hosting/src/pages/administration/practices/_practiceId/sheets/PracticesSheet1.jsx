@@ -3,8 +3,6 @@ import { LogoGilda } from "../../../../../images";
 import styled from "styled-components";
 
 export const PracticesSheet1 = ({ practice, practitioner, company }) => {
-  console.log({ practice, practitioner, company });
-
   return (
     <>
       <Container>
@@ -30,7 +28,9 @@ export const PracticesSheet1 = ({ practice, practitioner, company }) => {
           <div className="info">
             <h4>
               :&nbsp;
-              {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
+              <span className="capitalize">
+                {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
+              </span>
             </h4>
             <h4>: 20192939</h4>
             <h4>: DIURNO</h4>
@@ -68,6 +68,12 @@ const Details = styled.div`
 
   .atributes {
     margin-right: 40px;
+  }
+
+  .info {
+    .capitalize {
+      text-transform: capitalize;
+    }
   }
 `;
 const Career = styled.div`
