@@ -2,7 +2,7 @@ import React from "react";
 import { LogoGilda } from "../../../../../images";
 import styled from "styled-components";
 
-export const PracticesSheet1 = ({ practice, practitioner, company }) => {
+export const PracticesSheet1 = ({ practice, practitioner }) => {
   return (
     <>
       <Container>

@@ -19,8 +19,9 @@ export const Sheets = () => {
 
   const { practices, users, companies } = useGlobalData();
   const [practice, setPractice] = useState({});
-  const [practitioner, setPractitioner] = useState({});
   const [company, setCompany] = useState({});
+  const [practitioner, setPractitioner] = useState({});
+  const [representativeCompany, setRepresentativeCompany] = useState({});
 
   const onGoBack = () => navigate(-1);
 
@@ -29,17 +30,22 @@ export const Sheets = () => {
 
     if (!_practice) return onGoBack();
 
-    const _practitioner = users.find(
-      (user) => user.id === _practice.practitionerId
-    );
-
     const _company = companies.find(
       (company) => company.id === _practice.companyId
     );
 
+    const _practitioner = users.find(
+      (user) => user.id === _practice.practitionerId
+    );
+
+    const _representativeCompany = users.find(
+      (user) => user.id === _company.representativeId
+    );
+
     setPractice(_practice);
-    setPractitioner(_practitioner);
     setCompany(_company);
+    setPractitioner(_practitioner);
+    setRepresentativeCompany(_representativeCompany);
   }, [practiceId]);
 
   return (
@@ -47,8 +53,8 @@ export const Sheets = () => {
       <Sheet layout="portrait">
         <PracticesSheet1
           practice={practice}
-          practitioner={practitioner}
           company={company}
+          practitioner={practitioner}
         />
       </Sheet>
       <Sheet layout="portrait">
@@ -56,6 +62,7 @@ export const Sheets = () => {
           practice={practice}
           practitioner={practitioner}
           company={company}
+          representativeCompany={representativeCompany}
         />
       </Sheet>
       <Sheet layout="portrait">

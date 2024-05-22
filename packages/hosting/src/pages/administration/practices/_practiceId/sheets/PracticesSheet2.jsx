@@ -9,7 +9,14 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const PracticesSheet2 = ({ practice, practitioner, company }) => {
+export const PracticesSheet2 = ({
+  practice,
+  practitioner,
+  company,
+  representativeCompany,
+}) => {
+  console.log({ company, representativeCompany });
+
   return (
     <>
       <Container>
@@ -25,7 +32,7 @@ export const PracticesSheet2 = ({ practice, practitioner, company }) => {
         <div className="header">
           <div className="header__title">
             <h3>REPRESENTANTE LEGAL DE LA EMPRESA</h3>
-            <h3>SERVITEC PERU GROUP E.I.R.L.</h3>
+            <h3>{`${company.socialReason}`}</h3>
           </div>
           <div className="header__legend">
             <h4>
@@ -71,7 +78,9 @@ export const PracticesSheet2 = ({ practice, practitioner, company }) => {
             </text>
           </div>
           <div className="body__date">
-            <span>Chorrillos,&nbsp;{moment().format("DD MMMM YYYY")}</span>
+            <span>
+              Chorrillos,&nbsp;{moment().format("DD [de] MMMM [del] YYYY")}
+            </span>
           </div>
         </div>
         <div className="footer">
@@ -79,29 +88,26 @@ export const PracticesSheet2 = ({ practice, practitioner, company }) => {
             <text>
               <strong>Firme y Sello del representante de la Empresa </strong>
             </text>
-            <text>Ing. Roberto Alcides Mendoza Perca</text>
+            <span>{`${representativeCompany.firstName} ${representativeCompany.paternalSurname} ${representativeCompany.maternalSurname}`}</span>
           </div>
           <div className="footer__company">
-            <span>
-              <strong>
-                Av. Defensores del Morro (ex. Huaylas) 1350 N° 266 Chorrillos -
-                Lima{" "}
-              </strong>
+            <span className="address">
+              <strong>{`${company.address}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faPhone} />
               &nbsp; &nbsp;
-              <strong>941934829 / 923849242 </strong>
+              <strong>{`${company.phone}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEnvelope} />
               &nbsp; &nbsp;
-              <strong>gerencia@servitecperu.com </strong>
+              <strong>{`${company.email}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEarthAmerica} />
               &nbsp; &nbsp;
-              <strong>www.servitec-peru.com </strong>
+              <strong>{`${company.webSite}`}</strong>
             </span>
           </div>
         </div>
@@ -134,6 +140,7 @@ const Container = styled.div`
     margin-bottom: 70px;
     &__title {
       text-align: center;
+      text-transform: uppercase;
       h3 {
         margin: 0;
       }
@@ -182,6 +189,10 @@ const Container = styled.div`
       width: 326px;
       border-top: 3px solid #000;
       padding-top: 1em;
+
+      span {
+        text-transform: capitalize;
+      }
     }
     &__company {
       height: 300px;
@@ -192,7 +203,11 @@ const Container = styled.div`
       text-align: center;
       display: flex;
       flex-direction: column;
-      line-height: 120%;
+      line-height: 140%;
+
+      .address {
+        text-transform: capitalize;
+      }
     }
   }
 `;
