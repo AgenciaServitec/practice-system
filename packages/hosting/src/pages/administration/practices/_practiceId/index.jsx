@@ -12,6 +12,7 @@ import { InitialPracticeFormIntegration } from "./InitialForm";
 import {
   addPractice,
   getPracticesId,
+  practicesRef,
   updatePractice,
 } from "../../../../firebase/collections";
 import { useNavigate, useParams } from "react-router";
@@ -24,11 +25,13 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Annex2Integration } from "./annex2";
 import { capitalize } from "lodash";
-import { Annex4Integration } from "./annex4";
-import { Annex6Integration } from "./annex6";
-import { Annex3Integration } from "./annex3";
+import {
+  Annex2Integration,
+  Annex3Integration,
+  Annex4Integration,
+  Annex6Integration,
+} from "./annexs";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -64,9 +67,18 @@ export const PracticeIntegration = () => {
   }, []);
 
   const savePractice = async (practice) => {
-    isNew
-      ? await addPractice(assignCreateProps(practice))
-      : await updatePractice(practice.id, assignUpdateProps(practice));
+    if (isNew) {
+      ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
+        practicesRef.doc(practice.id).collection("annexs").doc(annex).set({
+          id: annex,
+        });
+      });
+
+      await addPractice(assignCreateProps(practice));
+      return;
+    }
+
+    await updatePractice(practice.id, assignUpdateProps(practice));
   };
 
   const onConfirmModuleApproved = () =>
@@ -182,9 +194,10 @@ export const PracticeIntegration = () => {
         </Col>
         <Col>
           <InitialPracticeFormIntegration
+            isNew={isNew}
             practice={practice}
-            user={authUser}
             users={users}
+            user={authUser}
             practitioner={practitioner}
             companies={companies}
             company={company}
@@ -193,48 +206,52 @@ export const PracticeIntegration = () => {
         </Col>
       </Row>
       <br />
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <Card title="Anexos">
-            <Collapse
-              defaultActiveKey={["1"]}
-              bordered={false}
-              expandIconPosition="end"
-              accordion
-              size="large"
-              expandIcon={({ isActive }) => (
-                <FontAwesomeIcon
-                  icon={isActive ? faMinus : faPlus}
-                  style={{ fontSize: "1.2em" }}
+      {!isNew && (
+        <>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Card title="Anexos">
+                <Collapse
+                  defaultActiveKey={["1"]}
+                  bordered={false}
+                  expandIconPosition="end"
+                  accordion
+                  size="large"
+                  expandIcon={({ isActive }) => (
+                    <FontAwesomeIcon
+                      icon={isActive ? faMinus : faPlus}
+                      style={{ fontSize: "1.2em" }}
+                    />
+                  )}
+                  items={getItems(panelStyle)}
+                  style={{
+                    background: "transparent",
+                  }}
                 />
-              )}
-              items={getItems(panelStyle)}
-              style={{
-                background: "transparent",
-              }}
-            />
-          </Card>
-        </Col>
-      </Row>
-      <br />
-      <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={12} md={10} lg={8}>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            block
-            onClick={() => onConfirmModuleApproved()}
-          >
-            Aprobar el modulo completo
-          </Button>
-        </Col>
-        <Col span={24} sm={12} md={10} lg={5}>
-          <Button type="primary" size="large" block htmlType="submit">
-            Modulo revisado
-          </Button>
-        </Col>
-      </Row>
+              </Card>
+            </Col>
+          </Row>
+          <br />
+          <Row justify="end" gutter={[16, 16]}>
+            <Col span={24} sm={12} md={10} lg={8}>
+              <Button
+                type="primary"
+                danger
+                size="large"
+                block
+                onClick={() => onConfirmModuleApproved()}
+              >
+                Aprobar el modulo completo
+              </Button>
+            </Col>
+            <Col span={24} sm={12} md={10} lg={5}>
+              <Button type="primary" size="large" block htmlType="submit">
+                Modulo revisado
+              </Button>
+            </Col>
+          </Row>
+        </>
+      )}
     </>
   );
 };

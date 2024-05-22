@@ -7,14 +7,17 @@ import {
   modalConfirm,
   notification,
   Title,
-} from "../../../../../components";
+} from "../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDefaultFirestoreProps, useFormUtils } from "../../../../../hooks";
-import { firestore } from "../../../../../firebase";
+import {
+  useDefaultFirestoreProps,
+  useFormUtils,
+} from "../../../../../../hooks";
+import { firestore } from "../../../../../../firebase";
 
 export const Sheet1Integration = ({ practice }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();

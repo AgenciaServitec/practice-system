@@ -20,21 +20,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { capitalize } from "lodash";
 import { fullName } from "../../../../utils";
+import { useNavigate } from "react-router";
 
 export const InitialPracticeFormIntegration = ({
+  isNew,
   practice,
-  user,
   users,
+  user,
   practitioner,
   companies,
   company,
   onSavePractice,
 }) => {
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
+
+  const onNavigateGoTo = (pathname) => navigate(pathname);
 
   const mapPractice = (formData) => ({
     ...practice,
-    practitionerId: practitioner?.id,
+    practitionerId: isNew ? user.id : practitioner?.id,
     moduleNumber: formData?.moduleNumber,
     companyId: formData?.companyId,
     name: formData?.name.toLowerCase(),
@@ -49,7 +55,6 @@ export const InitialPracticeFormIntegration = ({
     endDate: formData?.endDate
       ? moment(formData?.endDate, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY HH:mm")
       : null,
-    supervisor: formData?.supervisor.toLowerCase(),
     entryTime: formData?.entryTime
       ? moment(formData.entryTime, "HH:mm:ss").format("HH:mm:ss")
       : null,
@@ -59,7 +64,9 @@ export const InitialPracticeFormIntegration = ({
     practiceArea: formData?.practiceArea.toLowerCase(),
     academicCoordinatorId: formData?.academicCoordinatorId,
     academicSupervisorId: formData?.academicSupervisorId,
-    companyRepresentativeId: formData?.companyRepresentativeId,
+    companyRepresentativeId:
+      companies.find((company) => company.id === formData.companyId)
+        ?.representativeId || null,
   });
 
   const saveInitialForm = async (formData) => {
@@ -68,7 +75,10 @@ export const InitialPracticeFormIntegration = ({
       const _practice = mapPractice(formData);
 
       onSavePractice(_practice);
+
       notification({ type: "success" });
+
+      onNavigateGoTo(`/practices/${_practice.id}`);
     } catch (e) {
       console.error("ErrorSavePractice: ", e);
       notification({ type: "error" });
@@ -79,6 +89,7 @@ export const InitialPracticeFormIntegration = ({
 
   return (
     <InitialPracticeForm
+      isNew={isNew}
       practice={practice}
       users={users}
       companies={companies}
@@ -90,6 +101,7 @@ export const InitialPracticeFormIntegration = ({
 };
 
 const InitialPracticeForm = ({
+  isNew,
   practice,
   users,
   companies,
@@ -109,9 +121,7 @@ const InitialPracticeForm = ({
     departureTime: yup.date().required(),
     practiceArea: yup.string().required(),
     academicCoordinatorId: yup.string().required(),
-    practitionerId: yup.string(),
     academicSupervisorId: yup.string().required(),
-    companyRepresentativeId: yup.string().required(),
   });
 
   const {
@@ -126,6 +136,8 @@ const InitialPracticeForm = ({
   });
 
   const { required, error } = useFormUtils({ errors, schema });
+
+  console.log({ errors });
 
   useEffect(() => {
     watch("moduleNumber") &&
@@ -162,7 +174,8 @@ const InitialPracticeForm = ({
       practiceArea: practice?.practiceArea || "",
       academicCoordinatorId: practice?.academicCoordinatorId || "",
       academicSupervisorId: practice?.academicSupervisorId || "",
-      companyRepresentativeId: practice?.companyRepresentativeId || "",
+      companyRepresentativeId:
+        practice?.companyRepresentativeId || company?.representativeId || "",
     });
   };
 
@@ -275,7 +288,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={4}>
+            <Col span={24} md={5}>
               <Controller
                 name="startDate"
                 control={control}
@@ -292,7 +305,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={4}>
+            <Col span={24} md={5}>
               <Controller
                 name="endDate"
                 control={control}
@@ -309,24 +322,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={4}>
-              <Controller
-                name="supervisor"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Input
-                    label="Supervisor(a)"
-                    name={name}
-                    value={value}
-                    onChange={onChange}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={4}>
+            <Col span={24} md={5}>
               <Controller
                 name="entryTime"
                 control={control}
@@ -343,7 +339,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={4}>
+            <Col span={24} md={5}>
               <Controller
                 name="departureTime"
                 control={control}
@@ -360,7 +356,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={8}>
+            <Col span={24} md={6}>
               <Controller
                 name="practiceArea"
                 control={control}
@@ -391,6 +387,10 @@ const InitialPracticeForm = ({
                         label: "Almacén",
                         value: "store",
                       },
+                      {
+                        label: "Otro",
+                        value: "other",
+                      },
                     ]}
                     error={error(name)}
                     required={required(name)}
@@ -398,14 +398,14 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={16}>
+            <Col span={24} md={9}>
               <Controller
                 name="academicCoordinatorId"
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
-                    label="Coordinador(a) del Área Académica"
+                    label="Coordinador(a) Académico(a)"
                     value={value}
                     onChange={onChange}
                     options={users
@@ -422,7 +422,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={12}>
+            <Col span={24} md={9}>
               <Controller
                 name="academicSupervisorId"
                 control={control}
@@ -434,28 +434,6 @@ const InitialPracticeForm = ({
                     onChange={onChange}
                     options={users
                       .filter((user) => user.roleCode === "academic_supervisor")
-                      .map((user) => ({
-                        label: fullName(user),
-                        value: user.id,
-                      }))}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={12}>
-              <Controller
-                name="companyRepresentativeId"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Select
-                    label="Representante de empresa"
-                    value={value}
-                    onChange={onChange}
-                    options={users
-                      .filter((user) => user.id === company?.representativeId)
                       .map((user) => ({
                         label: fullName(user),
                         value: user.id,
@@ -479,7 +457,7 @@ const InitialPracticeForm = ({
             {/*    Cancelar*/}
             {/*  </Button>*/}
             {/*</Col>*/}
-            <Col xs={24} sm={6} md={4}>
+            <Col xs={24} md={8}>
               <Button
                 type="primary"
                 size="large"
@@ -487,7 +465,7 @@ const InitialPracticeForm = ({
                 htmlType="submit"
                 loading={loading}
               >
-                Guardar
+                {isNew ? "Crear Practica" : "Actualizar"}
               </Button>
             </Col>
           </Row>
