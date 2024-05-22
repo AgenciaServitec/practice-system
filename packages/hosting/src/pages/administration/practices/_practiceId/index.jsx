@@ -203,7 +203,7 @@ export const PracticeIntegration = () => {
         </Col>
       </Row>
       <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={6} md={6}>
+        <Col span={24} sm={12} md={10} lg={8}>
           <Button
             type="primary"
             danger
@@ -214,7 +214,7 @@ export const PracticeIntegration = () => {
             Aprobar el modulo completo
           </Button>
         </Col>
-        <Col span={24} sm={6} md={4}>
+        <Col span={24} sm={12} md={10} lg={5}>
           <Button type="primary" size="large" block htmlType="submit">
             Modulo revisado
           </Button>

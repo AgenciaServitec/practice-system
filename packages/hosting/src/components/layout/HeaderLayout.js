@@ -95,7 +95,7 @@ export const HeaderLayout = ({
         >
           <Space key="user-avatar" align="center">
             <h4>{capitalize((user?.firstName || "").split(" ")[0] || "")}</h4>
-            <span>({defaultRole.name})</span>
+            <span>({defaultRole?.name})</span>
             <img
               src={user?.profilePhoto?.thumbUrl || PhotoNoFound}
               alt="user"
