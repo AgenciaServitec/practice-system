@@ -34,11 +34,7 @@ const Sheet1 = () => {
 
   const {
     formState: { errors },
-    handleSubmit,
     control,
-    reset,
-    watch,
-    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });

@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  DatePicker,
-  Form,
-  Input,
-  Select,
-  TimePicker,
-  Title,
-} from "../../../../components";
+import { Form, Input, Title } from "../../../../components";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
 import { Controller, useForm } from "react-hook-form";
@@ -22,11 +15,7 @@ export const Anexo3 = () => {
 
   const {
     formState: { errors },
-    handleSubmit,
     control,
-    reset,
-    watch,
-    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });

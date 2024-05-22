@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import { IconAction, notification, Title } from "../../../../components";
+import { IconAction, Title } from "../../../../components";
 import { InitialPracticeFormIntegration } from "./InitialForm";
 import {
   addPractice,
@@ -18,7 +18,7 @@ import {
   faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Anexo2, Anexo2Integration } from "./anexo2";
+import { Anexo2Integration } from "./anexo2";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
