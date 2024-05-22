@@ -25,7 +25,6 @@ export const Sheets = () => {
   const onGoBack = () => navigate(-1);
 
   useEffect(() => {
-    if (!practiceId) return;
     const _practice = practices.find((practice) => practice.id === practiceId);
 
     if (!_practice) return onGoBack();
