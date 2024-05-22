@@ -13,12 +13,13 @@ import { useAuthentication, useGlobalData } from "../../../../providers";
 import { useDefaultFirestoreProps } from "../../../../hooks";
 import { Collapse, Space } from "antd";
 import {
-  faArrowDown,
   faArrowLeft,
-  faArrowRight,
+  faMinus,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Anexo2Integration } from "./anexo2";
+import { capitalize } from "lodash";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -62,7 +63,11 @@ export const PracticeIntegration = () => {
   const getItems = () => [
     {
       key: "1",
-      label: "Información",
+      label: (
+        <Col span={24}>
+          <Title level={4}>Información inicial</Title>
+        </Col>
+      ),
       children: (
         <InitialPracticeFormIntegration
           practice={practice}
@@ -73,10 +78,15 @@ export const PracticeIntegration = () => {
           onSavePractice={savePractice}
         />
       ),
+      style: panelStyle,
     },
     {
       key: "2",
-      label: "Anexo 2",
+      label: (
+        <Col span={24}>
+          <Title level={4}>Anexo 2</Title>
+        </Col>
+      ),
       children: (
         <Anexo2Integration
           practice={practice}
@@ -87,8 +97,16 @@ export const PracticeIntegration = () => {
           onSavePractice={savePractice}
         />
       ),
+      style: panelStyle,
     },
   ];
+
+  const panelStyle = {
+    background: "rgba(0, 0, 0, 0.02)",
+    marginBottom: "1em",
+    borderRadius: "1em",
+    border: "none",
+  };
 
   return (
     <>
@@ -100,23 +118,31 @@ export const PracticeIntegration = () => {
               styled={{ color: (theme) => theme.colors.primary }}
               onClick={() => onGoBack()}
             />
-            <Title level={3}>Registro de Prácticas Pre-Profesionales</Title>
+            <Title level={3}>
+              Modulo {practice.moduleNumber}: {capitalize(practice.name)}
+            </Title>
           </Space>
         </Col>
       </Row>
+      <br />
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Title level={3}>Información</Title>
-        </Col>
-        <Col span={24}></Col>
-        <Col span={24}>
           <Collapse
-            bordered={false}
             defaultActiveKey={["1"]}
+            bordered={false}
+            expandIconPosition="end"
+            accordion
+            size="large"
             expandIcon={({ isActive }) => (
-              <FontAwesomeIcon icon={isActive ? faArrowDown : faArrowRight} />
+              <FontAwesomeIcon
+                icon={isActive ? faMinus : faPlus}
+                style={{ fontSize: "1.2em" }}
+              />
             )}
-            items={getItems()}
+            items={getItems(panelStyle)}
+            style={{
+              background: "transparent",
+            }}
           />
         </Col>
       </Row>
