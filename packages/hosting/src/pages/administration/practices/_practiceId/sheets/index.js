@@ -42,8 +42,6 @@ export const Sheets = () => {
     setCompany(_company);
   }, [practiceId]);
 
-  console.log({ practice, practitioner, company });
-
   return (
     <PDF>
       <Sheet layout="portrait">
