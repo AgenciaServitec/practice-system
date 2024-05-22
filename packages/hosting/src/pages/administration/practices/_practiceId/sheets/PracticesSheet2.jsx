@@ -9,7 +9,9 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const PracticesSheet2 = () => {
+export const PracticesSheet2 = ({ practice, practitioner, company }) => {
+  console.log({ practice, practitioner, company });
+
   return (
     <>
       <Container>
@@ -42,24 +44,34 @@ export const PracticesSheet2 = () => {
           <div className="body__description">
             <h5>EL QUE SUSCRIBE, HACE CONSTAR LOS SIGUIENTE:</h5>
             <text>
-              Que el Sr. <strong>García Chillcce Litman Ever</strong>, alumno de
-              este Instituto de Educación Superior Tecnológico Público “GILDA
-              LILIANA BALLIVIAN ROSADO”, en la Carrera Profesional de{" "}
-              <strong>Computación e Informática</strong> ha realizado
-              satisfactoriamente sus Prácticas Pre-Profesionales, referente al{" "}
+              Que el Sr.&nbsp;
               <strong>
-                MÓDULO N°1: Gestión de soporte técnico, seguridad y tecnologías
-                de la información y comunicación, con un total de 276 horas
+                {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
               </strong>
-              , efectuadas en el periodo del 02 de septiembre del 2022 al 11 de
-              noviembre del 2022.
-              <p></p>
+              , alumno de este Instituto de Educación Superior Tecnológico
+              Público “GILDA LILIANA BALLIVIAN ROSADO”, en la Carrera
+              Profesional de <strong>Computación e Informática</strong> ha
+              realizado satisfactoriamente sus Prácticas Pre-Profesionales,
+              referente al{" "}
+              <strong>
+                MÓDULO N°{`${practice.moduleNumber}`}: {`${practice.name}`}, con
+                un total de {`${practice.hours}`} horas
+              </strong>
+              , efectuadas en el periodo del{" "}
+              {moment(practice.startDate, "DD/MM/YYYY").format(
+                "DD [de] MMMM [del] YYYY"
+              )}
+              &nbsp;al&nbsp;
+              {moment(practice.endDate, "DD/MM/YYYY").format(
+                "DD [de] MMMM [del] YYYY"
+              )}
+              .<p></p>
               Se expide la presente constancia a solicitud del interesado, para
               los fines que estime conveniente.{" "}
             </text>
           </div>
           <div className="body__date">
-            <span>Chorrillos,{moment().format("DD MMMM YYYY")}</span>
+            <span>Chorrillos,&nbsp;{moment().format("DD MMMM YYYY")}</span>
           </div>
         </div>
         <div className="footer">
