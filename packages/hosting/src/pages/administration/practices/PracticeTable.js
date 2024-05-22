@@ -17,23 +17,24 @@ export const PracticeTable = ({
 
   const columns = [
     {
-      title: "Fecha de Creación",
+      title: "Fecha creación",
       dataIndex: "createAt",
       key: "createAt",
       render: (_, practice) =>
         moment(practice?.createAt.toDate()).format("DD/MM/YYYY HH:mm"),
     },
     {
+      title: "N° de Módulo",
+      dataIndex: "moduleNumber",
+      align: "center",
+      key: "moduleNumber",
+      render: (_, practice) => practice?.moduleNumber || "",
+    },
+    {
       title: "Nombre del Módulo",
       dataIndex: "name",
       key: "name",
       render: (_, practice) => capitalize(practice?.name) || "",
-    },
-    {
-      title: "N° de Módulo",
-      dataIndex: "moduleNumber",
-      key: "moduleNumber",
-      render: (_, practice) => practice?.moduleNumber || "",
     },
     {
       title: "Estado",
@@ -88,4 +89,3 @@ export const PracticeTable = ({
     />
   );
 };
-``;
