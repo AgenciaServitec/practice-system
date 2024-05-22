@@ -45,7 +45,7 @@ const Sheet1 = () => {
     <Form>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Title level={4}>Datos de la Empresa o Institución</Title>
+          <Title level={5}>I. DATOS DE LA EMPRESA O INSTITUCIÓN</Title>
         </Col>
         <Col span={24}>
           <Controller
@@ -150,7 +150,7 @@ const Sheet1 = () => {
           />
         </Col>
         <Col span={24}>
-          <Title level={4}>Datos del Practicante</Title>
+          <Title level={5}>II. DATOS DEL PRACTICANTE</Title>
         </Col>
         <Col span={24} md={8}>
           <Controller
@@ -272,7 +272,9 @@ const Sheet1 = () => {
           />
         </Col>
         <Col span={24}>
-          <Title level={4}>La Empresa o Institución ofrece lo siguiente</Title>
+          <Title level={5}>
+            III. LA EMPRESA O INSTITUCIÓN OFRECE LO SIGUIENTE
+          </Title>
         </Col>
         <Col span={24} md={4}>
           <Controller

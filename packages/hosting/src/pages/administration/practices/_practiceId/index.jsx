@@ -24,10 +24,11 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Anexo2Integration } from "./anexo2";
+import { Annex2Integration } from "./annex2";
 import { capitalize } from "lodash";
 import { Annex4Integration } from "./annex4";
 import { Annex6Integration } from "./annex6";
+import { Annex3Integration } from "./annex3";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -83,7 +84,26 @@ export const PracticeIntegration = () => {
         </Col>
       ),
       children: (
-        <Anexo2Integration
+        <Annex2Integration
+          practice={practice}
+          user={authUser}
+          users={users}
+          practitioner={practitioner}
+          company={company}
+          onSavePractice={savePractice}
+        />
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "annex3",
+      label: (
+        <Col span={24}>
+          <Title level={4}>Anexo 3</Title>
+        </Col>
+      ),
+      children: (
+        <Annex3Integration
           practice={practice}
           user={authUser}
           users={users}
