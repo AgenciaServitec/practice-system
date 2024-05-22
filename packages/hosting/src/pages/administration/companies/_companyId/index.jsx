@@ -32,9 +32,8 @@ export const CompanyIntegration = () => {
   const [company, setCompany] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const onGoBack = () => navigate(-1);
-
   const isNew = companyId === "new";
+  const onGoBack = () => navigate(-1);
 
   useEffect(() => {
     const _company = isNew
@@ -45,6 +44,22 @@ export const CompanyIntegration = () => {
 
     setCompany(_company);
   }, []);
+
+  const mapCompany = (formData) => ({
+    ...company,
+    ruc: formData?.ruc,
+    socialReason: formData?.socialReason,
+    region: formData?.region,
+    province: formData?.province,
+    district: formData?.district,
+    email: formData?.email,
+    address: formData?.address,
+    category: formData?.category,
+    webSite: formData?.webSite,
+    status: formData?.status === "activo" ? "active" : "inactive",
+    membersIds: formData?.membersIds,
+    representativeId: formData?.representativeId,
+  });
 
   const saveCompany = async (formData) => {
     try {
@@ -65,6 +80,28 @@ export const CompanyIntegration = () => {
     }
   };
 
+  return (
+    <Company
+      isNew={isNew}
+      users={users}
+      company={company}
+      getCompanyDataByRuc={getCompanyDataByRuc}
+      loading={loading}
+      onGoBack={onGoBack}
+      onSaveCompany={saveCompany}
+    />
+  );
+};
+
+const Company = ({
+  isNew,
+  users,
+  company,
+  getCompanyDataByRuc,
+  loading,
+  onGoBack,
+  onSaveCompany,
+}) => {
   const schema = yup.object({
     ruc: yup.string().min(11).max(11).required(),
     socialReason: yup.string().required(),
@@ -76,7 +113,7 @@ export const CompanyIntegration = () => {
     category: yup.string().required(),
     webSite: yup.string().required(),
     status: yup.string().required(),
-    membersIds: yup.array().of(yup.string()).required(),
+    membersIds: yup.array().required(),
     representativeId: yup.string().required(),
   });
 
@@ -93,37 +130,39 @@ export const CompanyIntegration = () => {
 
   const { required, error } = useFormUtils({ errors, schema });
 
-  const mapCompany = (formData) => ({
-    ...company,
-    ruc: formData?.ruc,
-    socialReason: formData?.socialReason,
-    region: formData?.region,
-    province: formData?.province,
-    district: formData?.district,
-    email: formData?.email,
-    address: formData?.address,
-    category: formData?.category,
-    webSite: formData?.webSite,
-    status: formData?.status === "activo" ? "active" : "inactive",
-    membersIds: formData?.membersIds,
-    representativeId: formData?.representativeId,
-  });
-
-  const fetchCompanyByRuc = async () => await getCompanyDataByRuc(watch("ruc"));
-
   useEffect(() => {
-    const existsRuc = watch("ruc").length === 11;
-    if (existsRuc || !isNew) {
+    if (watch("ruc").length === 11) {
       (async () => {
-        const company = await fetchCompanyByRuc(watch("ruc"));
+        const companyResponse = await getCompanyDataByRuc(watch("ruc"));
 
-        setValue("socialReason", capitalize(company?.socialReason));
-        setValue("region", capitalize(company?.department));
-        setValue("province", capitalize(company?.province));
-        setValue("province", capitalize(company?.province));
-        setValue("district", capitalize(company?.district));
-        setValue("address", capitalize(company?.address));
-        setValue("status", capitalize(company?.status));
+        setValue(
+          "socialReason",
+          capitalize(company?.socialReason || companyResponse?.socialReason)
+        );
+        setValue(
+          "region",
+          capitalize(company?.department || companyResponse?.department)
+        );
+        setValue(
+          "province",
+          capitalize(company?.province || companyResponse?.province)
+        );
+        setValue(
+          "province",
+          capitalize(company?.province || companyResponse?.province)
+        );
+        setValue(
+          "district",
+          capitalize(company?.district || companyResponse?.district)
+        );
+        setValue(
+          "address",
+          capitalize(company?.address || companyResponse?.address)
+        );
+        setValue(
+          "status",
+          capitalize(company?.status || companyResponse?.status)
+        );
       })();
     }
   }, [watch("ruc")]);
@@ -148,13 +187,16 @@ export const CompanyIntegration = () => {
       representativeId: company?.representativeId || "",
     });
   };
+
+  const onSubmitSaveCompany = (formData) => onSaveCompany(formData);
+
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
-        <Title level={3}>Registro del Evaluador y Empresa</Title>
+        <Title level={3}>Empresa</Title>
       </Col>
       <Col span={24}>
-        <Form onSubmit={handleSubmit(saveCompany)}>
+        <Form onSubmit={handleSubmit(onSubmitSaveCompany)}>
           <Row gutter={[16, 16]}>
             <Col span={24} md={5}>
               <Controller
@@ -346,7 +388,7 @@ export const CompanyIntegration = () => {
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
-                    label="IDs de Miembros"
+                    label="Miembros"
                     mode="multiple"
                     name={name}
                     value={value}
@@ -384,7 +426,7 @@ export const CompanyIntegration = () => {
                 render={({ field: { onChange, value, name } }) => {
                   return (
                     <Select
-                      label="ID del Representante"
+                      label="Representante"
                       name={name}
                       value={value}
                       onChange={onChange}

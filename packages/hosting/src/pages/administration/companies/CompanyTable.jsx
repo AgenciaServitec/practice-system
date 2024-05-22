@@ -22,38 +22,12 @@ export const CompanyTable = ({
       key: "socialReason",
       render: (_, company) => company?.socialReason || "",
     },
-
-    {
-      title: "Región",
-      dataIndex: "region",
-      key: "region",
-      render: (_, company) => company?.region || "",
-    },
-    {
-      title: "Provincia",
-      dataIndex: "province",
-      key: "province",
-      render: (_, company) => company?.province || "",
-    },
-    {
-      title: "Distrito",
-      dataIndex: "district",
-      key: "district",
-      render: (_, company) => company?.district || "",
-    },
-    {
-      title: "Dirección",
-      dataIndex: "address",
-      key: "address",
-      render: (_, company) => company?.address || "",
-    },
     {
       title: "Rubro",
       dataIndex: "category",
       key: "category",
       render: (_, company) => company?.category || "",
     },
-
     {
       title: "Estado",
       dataIndex: "status",
@@ -71,18 +45,11 @@ export const CompanyTable = ({
       },
     },
     {
-      title: "Sitio Web",
-      dataIndex: "webSite",
-      key: "webSite",
-      render: (_, company) => company?.webSite || "",
-    },
-    {
-      title: "Correo",
+      title: "Email",
       dataIndex: "email",
       key: "email",
       render: (_, company) => company?.email || "",
     },
-
     {
       title: "Acciones",
       key: "actions",

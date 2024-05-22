@@ -1,20 +1,13 @@
 import React from "react";
 import { Drawer, Menu } from "antd";
-import styled from "styled-components";
 import { version } from "../../firebase";
 import {
   faBriefcase,
-  faBuildingUser,
-  faComputer,
-  faFileAlt,
+  faFilePen,
   faGears,
   faHome,
-  faIdCard,
-  faNetworkWired,
   faUsers,
   faUsersCog,
-  faFilePen,
-  faBuilding,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { includes } from "lodash";
@@ -87,7 +80,7 @@ export const DrawerLayout = ({
         {
           label: "Empresas",
           key: "companies",
-          icon: <FontAwesomeIcon icon={faUsers} size="lg" />,
+          icon: <FontAwesomeIcon icon={faBriefcase} size="lg" />,
           isVisible: existPageAclsInAclsOfUser(["/companies"]),
           onClick: () => {
             onNavigateTo("/companies");
