@@ -21,9 +21,7 @@ export const Practices = () => {
   const { assignDeleteProps } = useDefaultFirestoreProps();
 
   const navigateTo = (practiceId) => navigate(`/practices/${practiceId}`);
-
   const onAddPractice = () => navigate("new");
-
   const onEditPractice = (practiceId) => navigateTo(practiceId);
 
   const onDeletePractice = async (practice) => {

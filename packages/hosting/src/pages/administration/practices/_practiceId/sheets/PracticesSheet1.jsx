@@ -1,8 +1,9 @@
 import React from "react";
-import { LogoGilda } from "../../../../images";
+import { LogoGilda } from "../../../../../images";
 import styled from "styled-components";
+import { fullName } from "../../../../../utils";
 
-export const PracticesSheet1 = () => {
+export const PracticesSheet1 = ({ practice, practitioner }) => {
   return (
     <>
       <Container>
@@ -26,7 +27,10 @@ export const PracticesSheet1 = () => {
             <h4>AÑO DE INGRESO</h4>
           </div>
           <div className="info">
-            <h4>: LUCIANO WILLY RAUL EFFIO MENDOZA</h4>
+            <h4>
+              :&nbsp;
+              <span className="capitalize">{fullName(practitioner)}</span>
+            </h4>
             <h4>: 20192939</h4>
             <h4>: DIURNO</h4>
             <h4>: 2023</h4>
@@ -63,6 +67,12 @@ const Details = styled.div`
 
   .atributes {
     margin-right: 40px;
+  }
+
+  .info {
+    .capitalize {
+      text-transform: capitalize;
+    }
   }
 `;
 const Career = styled.div`

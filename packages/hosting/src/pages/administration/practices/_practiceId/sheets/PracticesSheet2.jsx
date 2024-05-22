@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoServitec, QR } from "../../../../images";
+import { LogoServitec, QR } from "../../../../../images";
 import styled from "styled-components";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,12 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const PracticesSheet2 = () => {
+export const PracticesSheet2 = ({
+  practice,
+  practitioner,
+  company,
+  representativeCompany,
+}) => {
   return (
     <>
       <Container>
@@ -25,7 +30,7 @@ export const PracticesSheet2 = () => {
         <div className="header">
           <div className="header__title">
             <h3>REPRESENTANTE LEGAL DE LA EMPRESA</h3>
-            <h3>SERVITEC PERU GROUP E.I.R.L.</h3>
+            <h3>{`${company.socialReason}`}</h3>
           </div>
           <div className="header__legend">
             <h4>
@@ -42,24 +47,38 @@ export const PracticesSheet2 = () => {
           <div className="body__description">
             <h5>EL QUE SUSCRIBE, HACE CONSTAR LOS SIGUIENTE:</h5>
             <text>
-              Que el Sr. <strong>García Chillcce Litman Ever</strong>, alumno de
-              este Instituto de Educación Superior Tecnológico Público “GILDA
-              LILIANA BALLIVIAN ROSADO”, en la Carrera Profesional de{" "}
-              <strong>Computación e Informática</strong> ha realizado
-              satisfactoriamente sus Prácticas Pre-Profesionales, referente al{" "}
+              Que el Sr.&nbsp;
+              <span className="capitalize">
+                <strong>
+                  {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
+                </strong>
+              </span>
+              , alumno de este Instituto de Educación Superior Tecnológico
+              Público “GILDA LILIANA BALLIVIAN ROSADO”, en la Carrera
+              Profesional de <strong>Computación e Informática</strong> ha
+              realizado satisfactoriamente sus Prácticas Pre-Profesionales,
+              referente al{" "}
               <strong>
-                MÓDULO N°1: Gestión de soporte técnico, seguridad y tecnologías
-                de la información y comunicación, con un total de 276 horas
+                MÓDULO N°{`${practice.moduleNumber}`}: {`${practice.name}`}, con
+                un total de {`${practice.hours}`} horas
               </strong>
-              , efectuadas en el periodo del 02 de septiembre del 2022 al 11 de
-              noviembre del 2022.
-              <p></p>
+              , efectuadas en el periodo del{" "}
+              {moment(practice.startDate, "DD/MM/YYYY").format(
+                "DD [de] MMMM [del] YYYY"
+              )}
+              &nbsp;al&nbsp;
+              {moment(practice.endDate, "DD/MM/YYYY").format(
+                "DD [de] MMMM [del] YYYY"
+              )}
+              .<p></p>
               Se expide la presente constancia a solicitud del interesado, para
               los fines que estime conveniente.{" "}
             </text>
           </div>
           <div className="body__date">
-            <span>Chorrillos,{moment().format("DD MMMM YYYY")}</span>
+            <span>
+              Chorrillos,&nbsp;{moment().format("DD [de] MMMM [del] YYYY")}
+            </span>
           </div>
         </div>
         <div className="footer">
@@ -67,29 +86,26 @@ export const PracticesSheet2 = () => {
             <text>
               <strong>Firme y Sello del representante de la Empresa </strong>
             </text>
-            <text>Ing. Roberto Alcides Mendoza Perca</text>
+            <span>{`${representativeCompany.firstName} ${representativeCompany.paternalSurname} ${representativeCompany.maternalSurname}`}</span>
           </div>
           <div className="footer__company">
-            <span>
-              <strong>
-                Av. Defensores del Morro (ex. Huaylas) 1350 N° 266 Chorrillos -
-                Lima{" "}
-              </strong>
+            <span className="address">
+              <strong>{`${company.address}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faPhone} />
               &nbsp; &nbsp;
-              <strong>941934829 / 923849242 </strong>
+              <strong>{`${company.phone}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEnvelope} />
               &nbsp; &nbsp;
-              <strong>gerencia@servitecperu.com </strong>
+              <strong>{`${company.email}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEarthAmerica} />
               &nbsp; &nbsp;
-              <strong>www.servitec-peru.com </strong>
+              <strong>{`${company.webSite}`}</strong>
             </span>
           </div>
         </div>
@@ -97,8 +113,6 @@ export const PracticesSheet2 = () => {
     </>
   );
 };
-
-const Description = styled.div``;
 
 const Container = styled.div`
   .images {
@@ -124,6 +138,7 @@ const Container = styled.div`
     margin-bottom: 70px;
     &__title {
       text-align: center;
+      text-transform: uppercase;
       h3 {
         margin: 0;
       }
@@ -133,6 +148,7 @@ const Container = styled.div`
       text-align: center;
     }
   }
+
   .body {
     margin-bottom: 7em;
     &__title {
@@ -152,6 +168,10 @@ const Container = styled.div`
         font-size: medium;
         line-height: 1.5em;
       }
+
+      .capitalize {
+        text-transform: capitalize;
+      }
     }
     &__date {
       text-align: center;
@@ -159,6 +179,7 @@ const Container = styled.div`
       margin-bottom: 4em;
     }
   }
+
   .footer {
     &__firma {
       margin: auto;
@@ -166,6 +187,10 @@ const Container = styled.div`
       width: 326px;
       border-top: 3px solid #000;
       padding-top: 1em;
+
+      span {
+        text-transform: capitalize;
+      }
     }
     &__company {
       height: 300px;
@@ -176,7 +201,11 @@ const Container = styled.div`
       text-align: center;
       display: flex;
       flex-direction: column;
-      line-height: 120%;
+      line-height: 140%;
+
+      .address {
+        text-transform: capitalize;
+      }
     }
   }
 `;
