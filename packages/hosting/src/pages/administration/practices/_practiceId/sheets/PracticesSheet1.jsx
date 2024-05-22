@@ -1,6 +1,7 @@
 import React from "react";
 import { LogoGilda } from "../../../../../images";
 import styled from "styled-components";
+import { fullName } from "../../../../../utils";
 
 export const PracticesSheet1 = ({ practice, practitioner }) => {
   return (
@@ -28,9 +29,7 @@ export const PracticesSheet1 = ({ practice, practitioner }) => {
           <div className="info">
             <h4>
               :&nbsp;
-              <span className="capitalize">
-                {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
-              </span>
+              <span className="capitalize">{fullName(practitioner)}</span>
             </h4>
             <h4>: 20192939</h4>
             <h4>: DIURNO</h4>
