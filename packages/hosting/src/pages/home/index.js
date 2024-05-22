@@ -1,16 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  faClockRotateLeft,
-  faFile,
+  faBuilding,
+  faUser,
   faLock,
-  faQrcode,
+  faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Text, Title } from "../../components";
 import { Col, Row } from "antd";
+import { Link } from "react-router-dom";
+import { useAuthentication, useGlobalData } from "../../providers";
 
 export const HomeIntegration = () => {
+  const { authUser } = useAuthentication();
+  const { practices } = useGlobalData();
+
+  const practicesOfUser = practices.filter(
+    (practice) => practice.practitionerId === authUser.id
+  );
+
   return (
     <Container>
       <Row gutter={[16, 16]}>
@@ -23,38 +32,55 @@ export const HomeIntegration = () => {
           <div className="cards-wrapper">
             <CardStyled>
               <div className="icon">
-                <FontAwesomeIcon icon={faFile} size="5x" />
+                <FontAwesomeIcon icon={faUser} size="5x" />
               </div>
               <div className="texts">
-                <Title level={3}>BENEFICIOS:</Title>
+                <Title level={3}>Nombre de usuario logeado:</Title>
                 <ul className="list">
-                  <li>1. Facilidad de Trámite</li>
-                  <li>2. Acceso en cualquier dispositivo</li>
-                  <li>3. Impresión y PDF</li>
+                  <li>
+                    <Link to="/profile">1. Perfil</Link>
+                  </li>
+                  <li>
+                    2. Mis practicas
+                    <ul className="list">
+                      {practicesOfUser.map((practice) => (
+                        <li key={practice.id}>
+                          <Link to={`/practices/${practice.id}`}>
+                            {practice.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
                 </ul>
               </div>
             </CardStyled>
             <CardStyled>
               <div className="icon">
-                <FontAwesomeIcon icon={faQrcode} size="5x" />
+                <FontAwesomeIcon icon={faUserGraduate} size="5x" />
               </div>
               <div className="texts">
-                <Title level={3}>QR ÚNICO:</Title>
-                <Text>
-                  Cada trámite cuenta con un QR único, para evitar documentos
-                  falsos
-                </Text>
+                <Title level={3}>Practicantes:</Title>
+                <ul className="list">
+                  <li>
+                    <Link to="/users?roleCode=user">
+                      1. Lista de practicantes
+                    </Link>
+                  </li>{" "}
+                </ul>
               </div>
             </CardStyled>
             <CardStyled>
               <div className="icon">
-                <FontAwesomeIcon icon={faClockRotateLeft} size="5x" />
+                <FontAwesomeIcon icon={faBuilding} size="5x" />
               </div>
               <div className="texts">
-                <Title level={3}>TIEMPO:</Title>
-                <Text>
-                  Tus trámites de manera virtual, evitando horas de hacer fila
-                </Text>
+                <Title level={3}>Empresas:</Title>
+                <ul className="list">
+                  <li>
+                    <Link to="/companies">1. Lista de empresas</Link>
+                  </li>
+                </ul>
               </div>
             </CardStyled>
             <CardStyled>
