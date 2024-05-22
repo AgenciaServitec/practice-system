@@ -7,13 +7,12 @@ import {
   Form,
   Input,
   InputPassword,
-  Layout,
 } from "../../components";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormUtils } from "../../hooks";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useAuthentication } from "../../providers";
 import { mediaQuery } from "../../styles";
 import { Bg1, Bg2, Bg3, Bg4, Bg5, Bg6, LogoPrimary } from "../../images";
@@ -71,6 +70,9 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
             src={LogoPrimary}
             alt="Practice system logo"
           />
+          <Title align="center" level={5} style={{ margin: "0" }}>
+            Gilda Liliana Ballivián Rosado
+          </Title>
         </div>
         <Title align="center" level={2}>
           Practice system
@@ -140,12 +142,12 @@ const CardStyled = styled(Card)`
   ${mediaQuery.minMobile} {
     width: 450px;
     margin: 70px;
-    top: 12%;
+    top: 15%;
     right: 3%;
   }
 
   img {
-    width: 3.5em;
+    width: 9em;
     height: auto;
     object-fit: contain;
     cursor: pointer;

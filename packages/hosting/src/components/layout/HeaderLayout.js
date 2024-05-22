@@ -10,7 +10,6 @@ import { Dropdown } from "../ui";
 import { Link } from "react-router-dom";
 import { Roles } from "../../data-list";
 
-const { Header } = Layout;
 const { useToken } = theme;
 
 export const HeaderLayout = ({
@@ -61,8 +60,8 @@ export const HeaderLayout = ({
           <div>
             <img
               src={LogoPrimary}
-              width={40}
-              alt="Korekenke"
+              width={60}
+              alt="practice system"
               onClick={() => onNavigateTo("/home")}
               className="logo-img"
             />
@@ -108,7 +107,7 @@ export const HeaderLayout = ({
   );
 };
 
-const HeaderContainer = styled(Header)`
+const HeaderContainer = styled(Layout.Header)`
   background: #fff !important;
   position: sticky;
   top: 1px;

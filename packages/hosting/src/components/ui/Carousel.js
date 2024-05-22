@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export const Carousel = ({ images = [] }) => {
   return (
-    <Container autoplay dots={false}>
+    <Container autoplay dots={false} fade>
       {images.map((image, index) => (
         <div key={index} className="carousel-img">
           <img src={image} alt="" />
