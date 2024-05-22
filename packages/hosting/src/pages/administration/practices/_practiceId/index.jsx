@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import { IconAction, Title } from "../../../../components";
+import {
+  Button,
+  IconAction,
+  modalConfirm,
+  notification,
+  Title,
+} from "../../../../components";
 import { InitialPracticeFormIntegration } from "./InitialForm";
 import {
   addPractice,
@@ -20,6 +26,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Anexo2Integration } from "./anexo2";
 import { capitalize } from "lodash";
+import { Annex4Integration } from "./annex4";
+import { Annex6Integration } from "./annex6";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -60,9 +68,15 @@ export const PracticeIntegration = () => {
       : await updatePractice(practice.id, assignUpdateProps(practice));
   };
 
+  const onConfirmModuleApproved = () =>
+    modalConfirm({
+      title: "¿Estás seguro de que quieres aprobar el modulo completo?",
+      onOk: () => notification({ type: "success" }),
+    });
+
   const getItems = () => [
     {
-      key: "1",
+      key: "annex1",
       label: (
         <Col span={24}>
           <Title level={4}>Información inicial</Title>
@@ -81,7 +95,7 @@ export const PracticeIntegration = () => {
       style: panelStyle,
     },
     {
-      key: "2",
+      key: "annex2",
       label: (
         <Col span={24}>
           <Title level={4}>Anexo 2</Title>
@@ -89,6 +103,44 @@ export const PracticeIntegration = () => {
       ),
       children: (
         <Anexo2Integration
+          practice={practice}
+          user={authUser}
+          users={users}
+          practitioner={practitioner}
+          company={company}
+          onSavePractice={savePractice}
+        />
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "annex4",
+      label: (
+        <Col span={24}>
+          <Title level={4}>Anexo 4</Title>
+        </Col>
+      ),
+      children: (
+        <Annex4Integration
+          practice={practice}
+          user={authUser}
+          users={users}
+          practitioner={practitioner}
+          company={company}
+          onSavePractice={savePractice}
+        />
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "annex6",
+      label: (
+        <Col span={24}>
+          <Title level={4}>Anexo 6</Title>
+        </Col>
+      ),
+      children: (
+        <Annex6Integration
           practice={practice}
           user={authUser}
           users={users}
@@ -148,6 +200,24 @@ export const PracticeIntegration = () => {
               background: "transparent",
             }}
           />
+        </Col>
+      </Row>
+      <Row justify="end" gutter={[16, 16]}>
+        <Col span={24} sm={6} md={6}>
+          <Button
+            type="primary"
+            danger
+            size="large"
+            block
+            onClick={() => onConfirmModuleApproved()}
+          >
+            Aprobar el modulo completo
+          </Button>
+        </Col>
+        <Col span={24} sm={6} md={4}>
+          <Button type="primary" size="large" block htmlType="submit">
+            Modulo revisado
+          </Button>
         </Col>
       </Row>
     </>
