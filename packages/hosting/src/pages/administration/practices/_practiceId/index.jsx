@@ -119,7 +119,11 @@ export const PracticeIntegration = () => {
               onClick={() => onGoBack()}
             />
             <Title level={3}>
-              Modulo {practice.moduleNumber}: {capitalize(practice.name)}
+              {!isNew
+                ? `Modulo ${practice.moduleNumber}: ${capitalize(
+                    practice.name
+                  )}`
+                : "Registro de Prácticas Pre-Profesionales"}
             </Title>
           </Space>
         </Col>
