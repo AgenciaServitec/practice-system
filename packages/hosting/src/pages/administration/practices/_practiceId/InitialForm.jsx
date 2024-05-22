@@ -7,6 +7,7 @@ import {
   DatePicker,
   Form,
   Input,
+  InputNumber,
   notification,
   Select,
   TextArea,
@@ -18,32 +19,47 @@ import { Modules } from "../../../../data-list";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { capitalize } from "lodash";
+import { fullName } from "../../../../utils";
 
 export const InitialPracticeFormIntegration = ({
   practice,
   user,
   users,
+  practitioner,
+  companies,
+  company,
   onSavePractice,
 }) => {
   const [loading, setLoading] = useState(false);
 
   const mapPractice = (formData) => ({
     ...practice,
-    practitionerId: user?.id,
+    practitionerId: practitioner?.id,
     moduleNumber: formData?.moduleNumber,
     companyId: formData?.companyId,
     name: formData?.name.toLowerCase(),
     status: "pending",
     task: formData?.task.toLowerCase(),
     hours: +formData?.hours,
-    startDate: moment(formData?.startDate).format("DD/MM/YYYY HH:mm"),
-    endDate: moment(formData?.endDate).format("DD/MM/YYYY HH:mm"),
+    startDate: formData?.startDate
+      ? moment(formData.startDate, "DD/MM/YYYY HH:mm").format(
+          "DD/MM/YYYY HH:mm"
+        )
+      : null,
+    endDate: formData?.endDate
+      ? moment(formData?.endDate, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY HH:mm")
+      : null,
     supervisor: formData?.supervisor.toLowerCase(),
-    entryTime: moment(formData?.entryTime).format("HH:mm:ss"),
-    departureTime: moment(formData?.departureTime).format("HH:mm:ss"),
+    entryTime: formData?.entryTime
+      ? moment(formData.entryTime, "HH:mm:ss").format("HH:mm:ss")
+      : null,
+    departureTime: formData?.departureTime
+      ? moment(formData.departureTime, "HH:mm:ss").format("HH:mm:ss")
+      : null,
     practiceArea: formData?.practiceArea.toLowerCase(),
-    academicSupervisorId: formData?.academicSupervisorId,
     academicCoordinatorId: formData?.academicCoordinatorId,
+    academicSupervisorId: formData?.academicSupervisorId,
+    companyRepresentativeId: formData?.companyRepresentativeId,
   });
 
   const saveInitialForm = async (formData) => {
@@ -65,6 +81,8 @@ export const InitialPracticeFormIntegration = ({
     <InitialPracticeForm
       practice={practice}
       users={users}
+      companies={companies}
+      company={company}
       loading={loading}
       onSaveInitialForm={saveInitialForm}
     />
@@ -74,24 +92,26 @@ export const InitialPracticeFormIntegration = ({
 const InitialPracticeForm = ({
   practice,
   users,
+  companies,
+  company,
   loading,
   onSaveInitialForm,
 }) => {
   const schema = yup.object({
-    practitionerId: yup.string(),
     moduleNumber: yup.number().required(),
+    name: yup.string().required(),
     companyId: yup.string().required(),
-    name: yup.string(),
     task: yup.string().required(),
     hours: yup.number().required(),
     startDate: yup.date().required(),
     endDate: yup.date().required(),
-    supervisor: yup.string().required(),
     entryTime: yup.date().required(),
     departureTime: yup.date().required(),
     practiceArea: yup.string().required(),
-    academicSupervisorId: yup.string().required(),
     academicCoordinatorId: yup.string().required(),
+    practitionerId: yup.string(),
+    academicSupervisorId: yup.string().required(),
+    companyRepresentativeId: yup.string().required(),
   });
 
   const {
@@ -123,19 +143,16 @@ const InitialPracticeForm = ({
   const resetForm = () => {
     reset({
       moduleNumber: practice.moduleNumber || "",
-      name: capitalize(practice?.name) || "",
-      companyId:
-        companiesView.find((user) => user.value === practice?.companyId)
-          ?.label || "",
-      task: capitalize(practice?.task) || "",
-      hours: practice?.hours || "",
+      name: capitalize(practice?.name || ""),
+      companyId: practice?.companyId || "",
+      task: capitalize(practice?.task || ""),
+      hours: practice?.hours || 0,
       startDate: practice?.startDate
         ? moment(practice?.startDate, "DD/MM/YYYY HH:mm")
         : undefined,
       endDate: practice?.endDate
         ? moment(practice?.endDate, "DD/MM/YYYY HH:mm")
         : undefined,
-      supervisor: capitalize(practice?.supervisor) || "",
       entryTime: practice?.entryTime
         ? moment(practice?.entryTime, "HH:mm:ss")
         : undefined,
@@ -143,41 +160,11 @@ const InitialPracticeForm = ({
         ? moment(practice?.departureTime, "HH:mm:ss")
         : undefined,
       practiceArea: practice?.practiceArea || "",
-      academicSupervisorId:
-        usersSupervisorAcademicView.find(
-          (user) => user.value === practice?.academicSupervisorId
-        )?.label || "",
-      academicCoordinatorId:
-        usersCoordinatorAcademicView.find(
-          (user) => user.value === practice?.academicCoordinatorId
-        )?.label || "",
+      academicCoordinatorId: practice?.academicCoordinatorId || "",
+      academicSupervisorId: practice?.academicSupervisorId || "",
+      companyRepresentativeId: practice?.companyRepresentativeId || "",
     });
   };
-
-  const usersSupervisorAcademicView = users
-    .filter((user) => user.roleCode === "academic_supervisor")
-    .map((user) => ({
-      label: `${capitalize(user.paternalSurname)} ${capitalize(
-        user.maternalSurname
-      )} ${capitalize(user.firstName)}`,
-      value: user.id,
-    }));
-
-  const usersCoordinatorAcademicView = users
-    .filter((user) => user.roleCode === "academic_coordinator")
-    .map((user) => ({
-      label: `${capitalize(user.paternalSurname)} ${capitalize(
-        user.maternalSurname
-      )} ${capitalize(user.firstName)}`,
-      value: user.id,
-    }));
-
-  const companiesView = users
-    .filter((user) => user.roleCode === "company")
-    .map((user) => ({
-      label: capitalize(user.socialReason),
-      value: user.id,
-    }));
 
   const onSubmit = (formData) => onSaveInitialForm(formData);
 
@@ -244,7 +231,10 @@ const InitialPracticeForm = ({
                     label="Empresa"
                     value={value}
                     onChange={onChange}
-                    options={companiesView}
+                    options={companies.map((user) => ({
+                      label: capitalize(user.socialReason),
+                      value: user.id,
+                    }))}
                     error={error(name)}
                     required={required(name)}
                   />
@@ -274,7 +264,7 @@ const InitialPracticeForm = ({
                 control={control}
                 defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
-                  <Input
+                  <InputNumber
                     label="Horas"
                     name={name}
                     value={value}
@@ -408,24 +398,7 @@ const InitialPracticeForm = ({
                 )}
               />
             </Col>
-            <Col span={24} md={8}>
-              <Controller
-                name="academicSupervisorId"
-                control={control}
-                defaultValue=""
-                render={({ field: { onChange, value, name } }) => (
-                  <Select
-                    label="Supervisor(a) Académico(a)"
-                    value={value}
-                    onChange={onChange}
-                    options={usersSupervisorAcademicView}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24} md={8}>
+            <Col span={24} md={16}>
               <Controller
                 name="academicCoordinatorId"
                 control={control}
@@ -435,7 +408,58 @@ const InitialPracticeForm = ({
                     label="Coordinador(a) del Área Académica"
                     value={value}
                     onChange={onChange}
-                    options={usersCoordinatorAcademicView}
+                    options={users
+                      .filter(
+                        (user) => user.roleCode === "academic_coordinator"
+                      )
+                      .map((user) => ({
+                        label: fullName(user),
+                        value: user.id,
+                      }))}
+                    error={error(name)}
+                    required={required(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24} md={12}>
+              <Controller
+                name="academicSupervisorId"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <Select
+                    label="Supervisor(a) Académico(a)"
+                    value={value}
+                    onChange={onChange}
+                    options={users
+                      .filter((user) => user.roleCode === "academic_supervisor")
+                      .map((user) => ({
+                        label: fullName(user),
+                        value: user.id,
+                      }))}
+                    error={error(name)}
+                    required={required(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24} md={12}>
+              <Controller
+                name="companyRepresentativeId"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <Select
+                    label="Representante de empresa"
+                    value={value}
+                    onChange={onChange}
+                    options={users
+                      .filter((user) => user.id === company?.representativeId)
+                      .map((user) => ({
+                        label: fullName(user),
+                        value: user.id,
+                      }))}
                     error={error(name)}
                     required={required(name)}
                   />

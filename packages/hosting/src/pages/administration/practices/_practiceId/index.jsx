@@ -17,7 +17,7 @@ import {
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../../providers";
 import { useDefaultFirestoreProps } from "../../../../hooks";
-import { Collapse, Space } from "antd";
+import { Card, Collapse, Space } from "antd";
 import {
   faArrowLeft,
   faMinus,
@@ -75,25 +75,6 @@ export const PracticeIntegration = () => {
     });
 
   const getItems = () => [
-    {
-      key: "annex1",
-      label: (
-        <Col span={24}>
-          <Title level={4}>Información inicial</Title>
-        </Col>
-      ),
-      children: (
-        <InitialPracticeFormIntegration
-          practice={practice}
-          user={authUser}
-          users={users}
-          practitioner={practitioner}
-          company={company}
-          onSavePractice={savePractice}
-        />
-      ),
-      style: panelStyle,
-    },
     {
       key: "annex2",
       label: (
@@ -179,29 +160,43 @@ export const PracticeIntegration = () => {
             </Title>
           </Space>
         </Col>
+        <Col>
+          <InitialPracticeFormIntegration
+            practice={practice}
+            user={authUser}
+            users={users}
+            practitioner={practitioner}
+            companies={companies}
+            company={company}
+            onSavePractice={savePractice}
+          />
+        </Col>
       </Row>
       <br />
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Collapse
-            defaultActiveKey={["1"]}
-            bordered={false}
-            expandIconPosition="end"
-            accordion
-            size="large"
-            expandIcon={({ isActive }) => (
-              <FontAwesomeIcon
-                icon={isActive ? faMinus : faPlus}
-                style={{ fontSize: "1.2em" }}
-              />
-            )}
-            items={getItems(panelStyle)}
-            style={{
-              background: "transparent",
-            }}
-          />
+          <Card title="Anexos">
+            <Collapse
+              defaultActiveKey={["1"]}
+              bordered={false}
+              expandIconPosition="end"
+              accordion
+              size="large"
+              expandIcon={({ isActive }) => (
+                <FontAwesomeIcon
+                  icon={isActive ? faMinus : faPlus}
+                  style={{ fontSize: "1.2em" }}
+                />
+              )}
+              items={getItems(panelStyle)}
+              style={{
+                background: "transparent",
+              }}
+            />
+          </Card>
         </Col>
       </Row>
+      <br />
       <Row justify="end" gutter={[16, 16]}>
         <Col span={24} sm={12} md={10} lg={8}>
           <Button

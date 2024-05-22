@@ -22,6 +22,7 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useApiCompanyDataByRucGet } from "../../../../api";
 import { capitalize } from "lodash";
+import { fullName } from "../../../../utils";
 
 export const CompanyIntegration = () => {
   const { companyId } = useParams();
@@ -56,7 +57,7 @@ export const CompanyIntegration = () => {
     address: formData?.address,
     category: formData?.category,
     webSite: formData?.webSite,
-    status: formData?.status === "activo" ? "active" : "inactive",
+    status: formData?.status,
     membersIds: formData?.membersIds,
     representativeId: formData?.representativeId,
   });
@@ -159,10 +160,7 @@ const Company = ({
           "address",
           capitalize(company?.address || companyResponse?.address)
         );
-        setValue(
-          "status",
-          capitalize(company?.status || companyResponse?.status)
-        );
+        setValue("status", company?.status || companyResponse?.status);
       })();
     }
   }, [watch("ruc")]);
@@ -182,7 +180,7 @@ const Company = ({
       address: company?.address || "",
       category: company?.category || "",
       webSite: company?.webSite || "",
-      status: company?.status || "",
+      status: company?.status || "inactive",
       membersIds: company?.membersIds || null,
       representativeId: company?.representativeId || "",
     });
@@ -412,7 +410,7 @@ const Company = ({
                     error={error(name)}
                     required={required(name)}
                     options={users.map((user) => ({
-                      label: `${user.firstName} ${user.paternalSurname} ${user.maternalSurname}`,
+                      label: fullName(user),
                       value: user.id,
                     }))}
                   />
@@ -438,7 +436,7 @@ const Company = ({
                           (watch("membersIds") || []).includes(user.id)
                         )
                         .map((user) => ({
-                          label: `${user.firstName} ${user.paternalSurname} ${user.maternalSurname}`,
+                          label: fullName(user),
                           value: user.id,
                         }))}
                     />
