@@ -44,9 +44,9 @@ export const HomeIntegration = () => {
                     2. Mis practicas
                     <ul className="list">
                       {practicesOfUser.map((practice) => (
-                        <li key={practice.id}>
+                        <li key={practice.id} className="capitalize">
                           <Link to={`/practices/${practice.id}`}>
-                            {practice.name}
+                            Modulo {practice.moduleNumber} : {practice.name}
                           </Link>
                         </li>
                       ))}
@@ -105,6 +105,10 @@ const Container = styled.div`
   .centered {
     display: flex;
     justify-content: center;
+  }
+
+  .capitalize {
+    text-transform: capitalize;
   }
 
   .cards-wrapper {
