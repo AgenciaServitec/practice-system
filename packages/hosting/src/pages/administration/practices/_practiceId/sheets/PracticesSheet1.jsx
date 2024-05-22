@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoGilda } from "../../../../images";
+import { LogoGilda } from "../../../../../images";
 import styled from "styled-components";
 
 export const PracticesSheet1 = () => {

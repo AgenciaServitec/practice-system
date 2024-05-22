@@ -1,5 +1,5 @@
 import React from "react";
-import { LogoServitec, QR } from "../../../../images";
+import { LogoServitec, QR } from "../../../../../images";
 import styled from "styled-components";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
