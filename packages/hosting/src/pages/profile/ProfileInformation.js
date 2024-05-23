@@ -40,13 +40,13 @@ export const ProfileInformation = ({ user }) => {
           <DescriptionItem title="DNI" content={user?.dni || ""} />
         </Col>
         <Col span={24} md={12}>
-          <DescriptionItem title="CIP" content={user?.cip} />
+          <DescriptionItem
+            title="Teléfono"
+            content={`${user?.phone.prefix} ${user?.phone.number}`}
+          />
         </Col>
         <Col span={24} md={12}>
           <DescriptionItem title="Email" content={user?.email} />
-        </Col>
-        <Col span={24} md={12}>
-          <DescriptionItem title="Celular" content={user?.phone?.number} />
         </Col>
       </Row>
     </Container>
