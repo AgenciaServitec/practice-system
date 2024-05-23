@@ -21,7 +21,7 @@ import { useAuthentication } from "../../providers";
 import { capitalize } from "lodash";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-export const RegisterUser = ({ type }) => {
+export const RegisterUser = ({ roleCode }) => {
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
   const {
     getPersonDataByDni,
@@ -52,7 +52,7 @@ export const RegisterUser = ({ type }) => {
   const { required, error, errorMessage } = useFormUtils({ errors, schema });
 
   const mapUser = (formData) => ({
-    type: type,
+    roleCode: roleCode, //user
     dni: formData.dni,
     firstName: formData.firstName,
     paternalSurname: formData.paternalSurname,
@@ -69,12 +69,7 @@ export const RegisterUser = ({ type }) => {
     try {
       setLoading(true);
 
-      console.log(formData);
-
-      const user = mapUser(formData);
-
-      const response = await postUser(user);
-
+      const response = await postUser(mapUser(formData));
       if (!postUserResponse.ok) {
         throw new Error(response);
       }
@@ -84,7 +79,7 @@ export const RegisterUser = ({ type }) => {
         title: "¡El usuario se guardó correctamente!",
       });
 
-      loginWithEmailAndPassword(formData.email, formData.password);
+      await loginWithEmailAndPassword(formData.email, formData.password);
     } catch (e) {
       const errorResponse = await getApiErrorResponse(e);
       apiErrorNotification(errorResponse);
@@ -92,7 +87,7 @@ export const RegisterUser = ({ type }) => {
       setLoading(false);
     }
   };
-  1;
+
   const userResetFields = (user) => {
     setValue("firstName", capitalize(user?.firstName || ""));
     setValue("paternalSurname", capitalize(user?.paternalSurname || ""));

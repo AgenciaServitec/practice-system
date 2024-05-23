@@ -7,6 +7,7 @@ import {
   Input,
   InputPassword,
   notification,
+  Select,
 } from "../../components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormUtils } from "../../hooks";
@@ -23,8 +24,9 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
 import { useAuthentication } from "../../providers";
 import { Space } from "antd";
+import { BusinessPosition } from "../../data-list";
 
-export const RegisterRepresentativeCompanyIntegration = ({ type }) => {
+export const RegisterRepresentativeCompanyIntegration = ({ roleCode }) => {
   const { loginWithEmailAndPassword } = useAuthentication();
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
   const {
@@ -42,18 +44,21 @@ export const RegisterRepresentativeCompanyIntegration = ({ type }) => {
   const [loadingRegister, setLoadingRegister] = useState(false);
 
   const mapUser = (formData) => ({
-    type: type,
+    roleCode: roleCode, //company_representative
     dni: formData.dni,
-    firstName: formData.firstName,
-    paternalSurname: formData.paternalSurname,
-    maternalSurname: formData.maternalSurname,
+    firstName: formData.firstName.toLowerCase(),
+    paternalSurname: formData.paternalSurname.toLowerCase(),
+    maternalSurname: formData.maternalSurname.toLowerCase(),
     phone: {
       prefix: "+51",
       number: formData.phoneNumber,
     },
-    email: formData.email,
+    email: formData.email.toLowerCase(),
     password: formData.password,
-    ruc: formData?.companyRuc,
+    companyRepresentative: {
+      ruc: company.ruc,
+      businessPosition: formData?.businessPosition,
+    },
   });
 
   const onSaveUser = async (formData) => {
@@ -110,14 +115,15 @@ const RegisterCompanyRepresentative = ({
   onSaveUser,
 }) => {
   const schema = yup.object({
-    dni: yup.number().required(),
+    dni: yup.string().min(8).max(8).required(),
     firstName: yup.string().required(),
     paternalSurname: yup.string().required(),
     maternalSurname: yup.string().required(),
     phoneNumber: yup.string().min(9).max(9).required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
-    companyRuc: yup.number().required(),
+    companyRuc: yup.string().min(11).max(11).required(),
+    businessPosition: yup.string().required(),
   });
 
   const {
@@ -151,6 +157,7 @@ const RegisterCompanyRepresentative = ({
           const errorResponse = await getApiErrorResponse(e);
           apiErrorNotification(errorResponse);
           onSetCompany(null);
+          setValue("companyRuc", "");
         }
       })();
     }
@@ -173,6 +180,8 @@ const RegisterCompanyRepresentative = ({
           userResetFields(null);
         }
       })();
+    } else {
+      userResetFields(null);
     }
   }, [watch("dni")]);
 
@@ -312,13 +321,39 @@ const RegisterCompanyRepresentative = ({
           />
         )}
       />
-      {company && watch("companyRuc") && (
-        <ComponentContainer.group label="Empresa">
-          <Space direction="vertical">
-            <h5>{company.socialReason}</h5>
-            <h5>{company.ruc}</h5>
-          </Space>
-        </ComponentContainer.group>
+      {company && watch("companyRuc").length === 11 && (
+        <>
+          <ComponentContainer.group label="Empresa">
+            <Space
+              wrap
+              style={{ display: "flex", justifyContent: "start", gap: "1.5em" }}
+            >
+              <span>
+                Razón social: <h5>{company.socialReason}</h5>
+              </span>
+              <span>
+                RUC:
+                <h5>{company.ruc}</h5>
+              </span>
+            </Space>
+          </ComponentContainer.group>
+          <Controller
+            name="businessPosition"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <Select
+                label="Cargo en la empresa"
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error(name)}
+                helperText={errorMessage(name)}
+                required={required(name)}
+                options={BusinessPosition}
+              />
+            )}
+          />
+        </>
       )}
       <Button
         block

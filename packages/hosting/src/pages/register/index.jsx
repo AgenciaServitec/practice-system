@@ -12,7 +12,7 @@ import { RegisterRepresentativeCompanyIntegration } from "./RegisterRepresentati
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
-  const [type, setType] = useState("practitioner");
+  const [roleCode, setRoleCode] = useState("user");
 
   const onNavigateTo = (url) => navigate(url);
 
@@ -31,11 +31,11 @@ export const RegisterIntegration = () => {
             <Col span={24}>
               <RadioGroup
                 label="Tipo de Usuario"
-                value={type}
+                value={roleCode}
                 options={[
                   {
                     label: "Practicante",
-                    value: "practitioner",
+                    value: "user",
                   },
                   {
                     label: "Representante de empresa",
@@ -48,14 +48,14 @@ export const RegisterIntegration = () => {
                   display: "flex",
                   justifyContent: "center",
                 }}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => setRoleCode(e.target.value)}
               />
             </Col>
             <Col span={24}>
-              {type === "practitioner" ? (
-                <RegisterUser type={type} />
+              {roleCode === "user" ? (
+                <RegisterUser roleCode={roleCode} />
               ) : (
-                <RegisterRepresentativeCompanyIntegration type={type} />
+                <RegisterRepresentativeCompanyIntegration roleCode={roleCode} />
               )}
             </Col>
             <Col span={24}>
