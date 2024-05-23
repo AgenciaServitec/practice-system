@@ -78,5 +78,9 @@
   {
     "label": "Director de Logística",
     "value": "director_de_logística"
+  },
+  {
+    "label": "Otro",
+    "value": "other"
   }
 ]
