@@ -23,7 +23,7 @@ export const getEntityDataByDni = async (
     const entityData = await getPersonDataByDni({ dni });
 
     if (isEmpty(entityData)) {
-      res.status(412).send("entities/not_found_company_by_ruc").end();
+      res.status(412).send("consults/not_found_entity_by_dni").end();
       return;
     }
 
