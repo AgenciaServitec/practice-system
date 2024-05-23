@@ -7,12 +7,12 @@ import Col from "antd/lib/col";
 import { RadioGroup, Title } from "../../components";
 import { Link } from "react-router-dom";
 import { RegisterUser } from "./RegisterUser";
-import { RegisterCompany } from "./RegisterCompany";
+import { RegisterRepresentativeCompanyIntegration } from "./RegisterRepresentativeCompanyIntegration";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
-  const [type, setType] = useState("person");
+  const [type, setType] = useState("practitioner");
 
   const onNavigateTo = (url) => navigate(url);
 
@@ -34,12 +34,12 @@ export const RegisterIntegration = () => {
                 value={type}
                 options={[
                   {
-                    label: "Persona",
-                    value: "person",
+                    label: "Practicante",
+                    value: "practitioner",
                   },
                   {
-                    label: "Empresa",
-                    value: "company",
+                    label: "Representante de empresa",
+                    value: "company_representative",
                   },
                 ]}
                 optionType="button"
@@ -52,10 +52,10 @@ export const RegisterIntegration = () => {
               />
             </Col>
             <Col span={24}>
-              {type === "person" ? (
+              {type === "practitioner" ? (
                 <RegisterUser type={type} />
               ) : (
-                <RegisterCompany type={type} />
+                <RegisterRepresentativeCompanyIntegration type={type} />
               )}
             </Col>
             <Col span={24}>
