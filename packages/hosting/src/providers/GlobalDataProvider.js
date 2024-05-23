@@ -8,6 +8,8 @@ import { orderBy } from "lodash";
 const GlobalDataContext = createContext({
   rolesAcls: [],
   users: [],
+  practices: [],
+  companies: [],
 });
 
 export const GlobalDataProvider = ({ children }) => {
@@ -50,14 +52,14 @@ export const GlobalDataProvider = ({ children }) => {
   return (
     <GlobalDataContext.Provider
       value={{
+        rolesAcls: orderBy(rolesAcls, (roleAcls) => [roleAcls.name], ["desc"]),
+        users: orderBy(users, (user) => [user.createAt], ["desc"]),
         companies: orderBy(companies, (company) => [company.createAt], [
           "desc",
         ]),
         practices: orderBy(practices, (practice) => [practice.createAt], [
           "desc",
         ]),
-        rolesAcls: orderBy(rolesAcls, (roleAcls) => [roleAcls.name], ["desc"]),
-        users: orderBy(users, (user) => [user.createAt], ["desc"]),
       }}
     >
       {children}
