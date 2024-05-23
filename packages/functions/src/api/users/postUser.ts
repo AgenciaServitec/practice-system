@@ -1,12 +1,17 @@
-import { auth, fetchCollection, firestore } from "../../_firebase";
-import { defaultFirestoreProps } from "../../utils";
+import {
+  auth,
+  fetchCollection,
+  fetchDocument,
+  firestore,
+} from "../../_firebase";
 import { NextFunction, Request, Response } from "express";
 import { isEmpty } from "lodash";
 import { getCompanyDataByRuc } from "../../client-api/apis-net-pe";
 import assert from "assert";
+import { postUserMapping } from "./mappings";
+import { postCompanyMapping } from "../companies/mappings";
 
-interface UserBody extends User {
-  type: "practitioner" | "company_representative";
+export interface UserBody extends User {
   ruc?: string;
 }
 
@@ -46,7 +51,7 @@ export const postUser = async (
 
     const userId = firestore.collection("users").doc().id;
 
-    if (user.type === "company_representative" && !isEmpty(user?.ruc)) {
+    if (user.roleCode === "company_representative" && !isEmpty(user?.ruc)) {
       assert(user.ruc, "Missing ruc!");
 
       const _isCompanyExists = await isCompanyExists(user.ruc);
@@ -61,11 +66,22 @@ export const postUser = async (
         return;
       }
 
-      await addCompany(mapCompany(company, userId));
+      await addCompany(postCompanyMapping(company, userId));
     }
 
+    //get acls of user by roleCode
+    const roleAcls = await fetchDocument<RoleAcls>(
+      firestore.collection("roles-acls").doc(user.roleCode)
+    );
+
     await addUserAuth({ ...user, id: userId });
-    await addUser({ ...user, id: userId });
+    await addUser(
+      postUserMapping({
+        ...user,
+        id: userId,
+        acls: roleAcls?.acls || ["/profile", "/home", "/practices"],
+      })
+    );
 
     res.sendStatus(200).end();
   } catch (error) {
@@ -74,45 +90,12 @@ export const postUser = async (
   }
 };
 
-const mapCompany = (company: CompanyData, userId: string): Company => {
-  const { assignCreateProps } = defaultFirestoreProps();
-
-  return assignCreateProps({
-    id: firestore.collection("companies").doc().id,
-    ruc: company.ruc,
-    socialReason: company?.socialReason,
-    department: company?.department,
-    province: company?.province,
-    district: company?.district,
-    address: company?.address,
-    email: "",
-    category: "",
-    webSite: "",
-    status: company?.status === "ACTIVO" ? "active" : "inactive",
-    membersIds: [userId],
-    representativeId: userId,
-    isDeleted: false,
-  });
-};
-
 const addCompany = async (company: Company): Promise<void> => {
   await firestore.collection("companies").doc(company.id).set(company);
 };
 
 const addUser = async (user: User): Promise<void> => {
-  const { assignCreateProps } = defaultFirestoreProps();
-
-  await firestore
-    .collection("users")
-    .doc(user.id)
-    .set(
-      assignCreateProps({
-        ...user,
-        roleCode: "user",
-        acls: ["/home", "/profile"],
-        status: "registered",
-      })
-    );
+  await firestore.collection("users").doc(user.id).set(user);
 };
 
 const addUserAuth = async (user: User): Promise<void> => {

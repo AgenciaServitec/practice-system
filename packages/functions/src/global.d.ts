@@ -13,6 +13,26 @@ interface Role {
   updateAt: string;
 }
 
+interface RoleAcls extends DefaultFirestoreProps {
+  id: string;
+  acls: string[];
+  roleCode: string;
+}
+
+//for user
+interface PractitionerData {
+  tuitionId: string | null;
+  studentShift: "diurno" | "nocturno";
+  semester: number;
+  academicYear: number;
+}
+
+//for company_representative
+interface CompanyRepresentative {
+  ruc: string;
+  businessPosition: string;
+}
+
 interface User extends DefaultFirestoreProps {
   id: string;
   acls: string[];
@@ -20,7 +40,6 @@ interface User extends DefaultFirestoreProps {
   email: string;
   password: string;
   profilePhoto?: Image;
-  dniPhoto?: Image;
   dni: string;
   firstName: string;
   paternalSurname: string;
@@ -30,7 +49,9 @@ interface User extends DefaultFirestoreProps {
     number: string;
   };
   iAcceptPrivacyPolicies: boolean;
-  updateBy: string;
+  //conditional data by roleCode
+  practitionerData?: PractitionerData;
+  companyRepresentative?: CompanyRepresentative;
 }
 
 interface Image {
