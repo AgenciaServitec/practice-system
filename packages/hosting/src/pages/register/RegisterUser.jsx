@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Button,
+  DatePicker,
   Form,
   Input,
   InputPassword,
   notification,
+  Select,
 } from "../../components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormUtils } from "../../hooks";
@@ -39,6 +41,10 @@ export const RegisterUser = ({ roleCode }) => {
     phoneNumber: yup.string().min(9).max(9).required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
+    tuitionId: yup.string().required(),
+    studentShift: yup.string().required(),
+    semester: yup.number().required(),
+    academicYear: yup.number().required(),
   });
 
   const {
@@ -63,6 +69,12 @@ export const RegisterUser = ({ roleCode }) => {
     },
     email: formData.email,
     password: formData.password,
+    practitionerData: {
+      tuitionId: formData.tuitionId,
+      studentShift: formData.studentShift,
+      semester: formData.semester,
+      academicYear: formData.academicYear,
+    },
   });
 
   const onSaveUser = async (formData) => {
@@ -221,6 +233,107 @@ export const RegisterUser = ({ roleCode }) => {
         render={({ field: { onChange, value, name } }) => (
           <InputPassword
             label="Contraseña"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+          />
+        )}
+      />
+      <Controller
+        name="tuitionId"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Input
+            label="Código de matricula"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+          />
+        )}
+      />
+      <Controller
+        name="studentShift"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Select
+            label="Turno"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+            options={[
+              {
+                label: "Diurno",
+                value: "diurno",
+              },
+              {
+                label: "Nocturno",
+                value: "nocturno",
+              },
+            ]}
+          />
+        )}
+      />
+      <Controller
+        name="semester"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Select
+            label="Semestre"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+            options={[
+              {
+                label: "I",
+                value: "I",
+              },
+              {
+                label: "II",
+                value: "II",
+              },
+              {
+                label: "III",
+                value: "III",
+              },
+              {
+                label: "IV",
+                value: "IV",
+              },
+              {
+                label: "V",
+                value: "V",
+              },
+              {
+                label: "VI",
+                value: "VI",
+              },
+              {
+                label: "VI",
+                value: "VI",
+              },
+            ]}
+          />
+        )}
+      />
+      <Controller
+        name="academicYear"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <DatePicker
+            label="Año Académico"
+            format="YYYY"
             onChange={onChange}
             value={value}
             name={name}

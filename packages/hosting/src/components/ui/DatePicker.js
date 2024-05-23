@@ -14,8 +14,10 @@ export const DatePicker = ({
   dataTestId,
   label,
   variant = "filled",
+  format = "DD/MM/YYYY",
   allowClear = true,
   onChange,
+  ...props
 }) => {
   const Container = ComponentContainer[variant];
 
@@ -34,7 +36,7 @@ export const DatePicker = ({
     >
       <AntdDatePicker
         size="large"
-        format="DD/MM/YYYY"
+        format={format}
         value={value}
         disabled={disabled}
         name={name}
@@ -42,6 +44,7 @@ export const DatePicker = ({
         onChange={onChange}
         allowClear={allowClear}
         variant="borderless"
+        {...props}
       />
     </Container>
   );

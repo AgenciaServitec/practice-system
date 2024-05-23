@@ -9,7 +9,7 @@
   },
   "consults/not_found_entity_by_ruc": {
     "title": "No se encontro resultados",
-    "description": "No se pudo encontrar la empresa con el RUC ingresado, intenta verificar que este correcto o ingrese los datos manualmente."
+    "description": "No se pudo encontrar la empresa con el RUC ingresado, intenta verificar que este correcto o comunicate con soporte."
   },
   "user/user_exists": {
     "title": "El usuario ya existe!",
