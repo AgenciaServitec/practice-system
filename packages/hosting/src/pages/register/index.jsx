@@ -7,7 +7,7 @@ import Col from "antd/lib/col";
 import { RadioGroup, Title } from "../../components";
 import { Link } from "react-router-dom";
 import { RegisterUser } from "./RegisterUser";
-import { RegisterRepresentativeCompanyIntegration } from "./RegisterRepresentativeCompanyIntegration";
+import { RegisterRepresentativeCompanyIntegration } from "./RegisterRepresentativeCompany";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
