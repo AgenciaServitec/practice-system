@@ -21,6 +21,7 @@ import { useDefaultFirestoreProps } from "../../../../hooks";
 import { Card, Collapse, Space } from "antd";
 import {
   faArrowLeft,
+  faFilePdf,
   faMinus,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
@@ -32,6 +33,7 @@ import {
   Annex4Integration,
   Annex6Integration,
 } from "./annexs";
+import styled from "styled-components";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -64,7 +66,7 @@ export const PracticeIntegration = () => {
     setPractice(_practice);
     setPractitioner(_practitioner);
     setCompany(_company);
-  }, []);
+  }, [practiceId]);
 
   const savePractice = async (practice) => {
     if (isNew) {
@@ -174,14 +176,14 @@ export const PracticeIntegration = () => {
   };
 
   return (
-    <>
+    <Container>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Space>
+          <div className="header-wrapper">
             <IconAction
               icon={faArrowLeft}
               styled={{ color: (theme) => theme.colors.primary }}
-              onClick={() => onGoBack()}
+              onClick={() => navigate("/practices")}
             />
             <Title level={3}>
               {!isNew
@@ -190,7 +192,17 @@ export const PracticeIntegration = () => {
                   )}`
                 : "Registro de Prácticas Pre-Profesionales"}
             </Title>
-          </Space>
+            {isNew ? (
+              <div />
+            ) : (
+              <IconAction
+                icon={faFilePdf}
+                styled={{ color: (theme) => theme.colors.error }}
+                onClick={() => navigate(`/practices/${practice.id}/sheets`)}
+                tooltipTitle="Ver pdf"
+              />
+            )}
+          </div>
         </Col>
         <Col>
           <InitialPracticeFormIntegration
@@ -252,6 +264,15 @@ export const PracticeIntegration = () => {
           </Row>
         </>
       )}
-    </>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  .header-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5em;
+  }
+`;
