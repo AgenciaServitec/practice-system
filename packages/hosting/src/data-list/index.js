@@ -9,4 +9,5 @@ export { default as Relationships } from "./relationships.json";
 export { default as Modules } from "./modules.json";
 export { default as CompanyStatus } from "./companyStatus.json";
 export { default as ProfessionalCareer } from "./professionalCareer.json";
+export { default as PracticeArea } from "./practiceArea.json";
 export { default as Roles } from "./roles";

@@ -12,7 +12,6 @@ export const Annex2Integration = ({
   users,
   practitioner,
   company,
-  onSavePractice,
 }) => {
   return (
     <Annex2
@@ -21,19 +20,11 @@ export const Annex2Integration = ({
       users={users}
       practitioner={practitioner}
       company={company}
-      onSavePractice={onSavePractice}
     />
   );
 };
 
-const Annex2 = ({
-  practice,
-  user,
-  users,
-  practitioner,
-  company,
-  onSavePractice,
-}) => {
+const Annex2 = ({ practice, user, users, practitioner, company }) => {
   return (
     <ContainerRow>
       <Col span={24}>
@@ -46,7 +37,6 @@ const Annex2 = ({
               users={users}
               practitioner={practitioner}
               company={company}
-              onSavePractice={onSavePractice}
             />
           </Space>
         </div>

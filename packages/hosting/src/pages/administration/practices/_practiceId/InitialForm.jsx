@@ -137,8 +137,6 @@ const InitialPracticeForm = ({
 
   const { required, error } = useFormUtils({ errors, schema });
 
-  console.log({ errors });
-
   useEffect(() => {
     watch("moduleNumber") &&
       setValue(

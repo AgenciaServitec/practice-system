@@ -1,0 +1,17 @@
+{
+  "office": {
+    "name": "Oficina"
+  },
+  "workshop": {
+    "name": "Taller"
+  },
+  "laboratory": {
+    "name": "Laboratorio"
+  },
+  "farm": {
+    "name": "Granja"
+  },
+  "store": {
+    "name": "Almacén"
+  }
+}
