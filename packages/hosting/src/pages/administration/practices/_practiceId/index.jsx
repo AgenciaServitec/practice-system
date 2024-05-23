@@ -18,7 +18,7 @@ import {
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../../providers";
 import { useDefaultFirestoreProps } from "../../../../hooks";
-import { Card, Collapse, Space } from "antd";
+import { Card, Collapse } from "antd";
 import {
   faArrowLeft,
   faFilePdf,
