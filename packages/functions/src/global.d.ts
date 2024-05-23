@@ -60,3 +60,19 @@ interface Correspondence extends DefaultFirestoreProps {
   photos: Image[];
   files: Archive[];
 }
+
+interface Company extends DefaultFirestoreProps {
+  id: string;
+  ruc: string;
+  socialReason: string;
+  department: string;
+  province: string;
+  district: string;
+  address: string;
+  email: string;
+  category: string;
+  webSite: string;
+  status: "active" | "inactive";
+  membersIds: string[];
+  representativeId: string;
+}
