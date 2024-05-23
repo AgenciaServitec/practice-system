@@ -8,7 +8,7 @@ import { useApi } from "./useApi";
 // }
 
 export const useApiCompanyDataByRucGet = () => {
-  const { loading, get, response } = useApi("/consult/ruc");
+  const { loading, get, response } = useApi("/consults/ruc");
 
   const getCompanyDataByRuc = useCallback(
     async (ruc = "") => {
