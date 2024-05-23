@@ -1,28 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
-  DatePicker,
   Form,
   Input,
-  Select,
-  TimePicker,
   Title,
   modalConfirm,
   notification,
-} from "../../../../../components";
+} from "../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDefaultFirestoreProps, useFormUtils } from "../../../../../hooks";
+import {
+  useDefaultFirestoreProps,
+  useFormUtils,
+} from "../../../../../../hooks";
 import moment from "moment";
-import { firestore } from "../../../../../firebase";
+import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
-import { PracticeArea } from "../../../../../data-list";
+import { PracticeArea } from "../../../../../../data-list";
+import { practicesRef } from "../../../../../../firebase/collections";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 export const Sheet1Integration = ({ practice, practitioner, company }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
+  const [annex2 = {}, annex2Loading, annex2Error] = useDocumentData(
+    practicesRef.doc(practice.id).collection("annexs").doc("annex2")
+  );
 
   const mapForm = (formData) => ({
     refreshment: formData.refreshment,
@@ -59,12 +64,19 @@ export const Sheet1Integration = ({ practice, practitioner, company }) => {
       practice={practice}
       company={company}
       practitioner={practitioner}
+      annex2={annex2}
       onConfirmSheet1={onConfirmSheet1}
     />
   );
 };
 
-const Sheet1 = ({ practice, company, practitioner, onConfirmSheet1 }) => {
+const Sheet1 = ({
+  practice,
+  company,
+  practitioner,
+  annex2,
+  onConfirmSheet1,
+}) => {
   const schema = yup.object({
     refreshment: yup.string(),
     mobility: yup.string(),
@@ -75,11 +87,24 @@ const Sheet1 = ({ practice, company, practitioner, onConfirmSheet1 }) => {
     formState: { errors },
     handleSubmit,
     control,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const { required, error } = useFormUtils({ errors, schema });
+
+  useEffect(() => {
+    resetForm();
+  }, [annex2]);
+
+  const resetForm = () => {
+    reset({
+      refreshment: annex2?.refreshment || "",
+      mobility: annex2?.mobility || "",
+      others: annex2?.others || "",
+    });
+  };
 
   return (
     <Container>
@@ -90,37 +115,37 @@ const Sheet1 = ({ practice, company, practitioner, onConfirmSheet1 }) => {
         <Col span={24}>
           <div>
             <p>Razón Social de la Empresa: </p>
-            <p>{company?.socialReason}</p>
+            <p>{company?.socialReason || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={12}>
           <div>
             <p>Dirección: </p>
-            <p>{company?.address}</p>
+            <p>{company?.address || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={12}>
           <div>
             <p>Distrito: </p>
-            <p>{company?.district}</p>
+            <p>{company?.district || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Teléfono: </p>
-            <p>{company?.phone}</p>
+            <p>{company?.phone || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Encargado del control de Prácticas Pre-Profesionales: </p>
-            <p>{company?.representative}</p>
+            <p>{company?.representative || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Cargo: </p>
-            <p>{company?.category}</p>
+            <p>{company?.category || "-"}</p>
           </div>
         </Col>
         <Col span={24}>
@@ -130,33 +155,33 @@ const Sheet1 = ({ practice, company, practitioner, onConfirmSheet1 }) => {
           <div>
             <p>Apellidos y Nombres: </p>
             <p>
-              {practitioner?.paternalSurname} {practitioner?.maternalSurname}{" "}
-              {practitioner?.firstName}
+              {`${practitioner?.paternalSurname} ${practitioner?.maternalSurname} ${practitioner?.firstName}` ||
+                "-"}
             </p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Carrera Profesional: </p>
-            <p>{practitioner?.ProfessionalCareer}</p>
+            <p>{practitioner?.ProfessionalCareer || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Turno: </p>
-            <p>{practitioner?.shift}</p>
+            <p>{practitioner?.shift || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Semestre: </p>
-            <p>{practitioner?.semester}</p>
+            <p>{practitioner?.semester || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <p>Año Académico: </p>
-            <p>{practitioner?.academicYear}</p>
+            <p>{practitioner?.academicYear || "-"}</p>
           </div>
         </Col>
         <Col span={24}>
@@ -168,7 +193,7 @@ const Sheet1 = ({ practice, company, practitioner, onConfirmSheet1 }) => {
           <div>
             <p>Período de la práctica: </p>
             <p>
-              {moment(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")} al
+              {moment(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")} -{" "}
               {moment(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
             </p>
           </div>
@@ -185,7 +210,7 @@ const Sheet1 = ({ practice, company, practitioner, onConfirmSheet1 }) => {
         <Col span={24} md={8}>
           <div>
             <p>Dpto. Sector o Área de las Prácticas: </p>
-            <p>{PracticeArea[practice?.practiceArea].name}</p>
+            <p>{PracticeArea[practice?.practiceArea].name || "-"}</p>
           </div>
         </Col>
         <Col span={24}>
