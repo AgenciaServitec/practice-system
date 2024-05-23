@@ -1,0 +1,82 @@
+[
+  {
+    "label": "Gerente General",
+    "value": "gerente_general"
+  },
+  {
+    "label": "Gerente de Recursos Humanos",
+    "value": "gerente_de_recursos_humanos"
+  },
+  {
+    "label": "Gerente de Marketing",
+    "value": "gerente_de_marketing"
+  },
+  {
+    "label": "Gerente de Finanzas",
+    "value": "gerente_de_finanzas"
+  },
+  {
+    "label": "Gerente de Operaciones",
+    "value": "gerente_de_operaciones"
+  },
+  {
+    "label": "Gerente de Ventas",
+    "value": "gerente_de_ventas"
+  },
+  {
+    "label": "Gerente de Desarrollo de Negocios",
+    "value": "gerente_de_desarrollo_de_negocios"
+  },
+  {
+    "label": "Gerente de Producción",
+    "value": "gerente_de_producción"
+  },
+  {
+    "label": "Gerente de Logística",
+    "value": "gerente_de_logística"
+  },
+  {
+    "label": "Gerente de Tecnología de la Información (IT)",
+    "value": "gerente_de_tecnología_de_la_información_(it)"
+  },
+  {
+    "label": "Director Ejecutivo (CEO)",
+    "value": "director_ejecutivo_(ceo)"
+  },
+  {
+    "label": "Director de Operaciones (COO)",
+    "value": "director_de_operaciones_(coo)"
+  },
+  {
+    "label": "Director Financiero (CFO)",
+    "value": "director_financiero_(cfo)"
+  },
+  {
+    "label": "Director de Marketing",
+    "value": "director_de_marketing"
+  },
+  {
+    "label": "Director de Recursos Humanos",
+    "value": "director_de_recursos_humanos"
+  },
+  {
+    "label": "Director de Tecnología de la Información (CTO)",
+    "value": "director_de_tecnología_de_la_información_(cto)"
+  },
+  {
+    "label": "Director de Ventas",
+    "value": "director_de ventas"
+  },
+  {
+    "label": "Director de Desarrollo de Negocios",
+    "value": "director_de_desarrollo_de_negocios"
+  },
+  {
+    "label": "Director de Producción",
+    "value": "director_de_producción"
+  },
+  {
+    "label": "Director de Logística",
+    "value": "director_de_logística"
+  }
+]
