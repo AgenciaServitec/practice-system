@@ -28,7 +28,7 @@ interface PractitionerData {
 }
 
 //for company_representative
-interface CompanyRepresentative {
+interface CompanyRepresentativeData {
   ruc: string;
   businessPosition: string;
 }
@@ -51,7 +51,7 @@ interface User extends DefaultFirestoreProps {
   iAcceptPrivacyPolicies: boolean;
   //conditional data by roleCode
   practitionerData?: PractitionerData;
-  companyRepresentative?: CompanyRepresentative;
+  companyRepresentativeData?: CompanyRepresentativeData;
 }
 
 interface Image {

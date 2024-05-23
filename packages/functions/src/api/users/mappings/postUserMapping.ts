@@ -22,8 +22,8 @@ export const postUserMapping = (user: UserBody): User => {
     ...(user?.practitionerData && {
       practitionerData: user.practitionerData,
     }),
-    ...(user?.companyRepresentative && {
-      companyRepresentative: user.companyRepresentative,
+    ...(user?.companyRepresentativeData && {
+      companyRepresentativeData: user.companyRepresentativeData,
     }),
   });
 };
