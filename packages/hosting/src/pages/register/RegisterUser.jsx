@@ -317,10 +317,6 @@ export const RegisterUser = ({ roleCode }) => {
                     label: "Nocturno",
                     value: "nocturno",
                   },
-                  {
-                    label: "Egresado",
-                    value: "egresado",
-                  },
                 ]}
               />
             )}
@@ -361,10 +357,6 @@ export const RegisterUser = ({ roleCode }) => {
                   {
                     label: "Ciclo: VI",
                     value: "VI",
-                  },
-                  {
-                    label: "Egresado",
-                    value: "egresado",
                   },
                 ]}
               />
