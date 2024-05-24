@@ -114,37 +114,39 @@ const Sheet1 = ({
         </Col>
         <Col span={24}>
           <div>
-            <p>Razón Social de la Empresa: </p>
+            <label>Razón Social de la Empresa: </label>
             <p>{company?.socialReason || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={12}>
           <div>
-            <p>Dirección: </p>
+            <label>Dirección: </label>
             <p>{company?.address || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={12}>
           <div>
-            <p>Distrito: </p>
+            <label>Distrito: </label>
             <p>{company?.district || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Teléfono: </p>
+            <label>Teléfono: </label>
             <p>{company?.phone || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Encargado del control de Prácticas Pre-Profesionales: </p>
+            <label>
+              Encargado del control de Prácticas Pre-Profesionales:{" "}
+            </label>
             <p>{company?.representative || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Cargo: </p>
+            <label>Cargo: </label>
             <p>{company?.category || "-"}</p>
           </div>
         </Col>
@@ -153,7 +155,7 @@ const Sheet1 = ({
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Apellidos y Nombres: </p>
+            <label>Apellidos y Nombres: </label>
             <p>
               {`${practitioner?.paternalSurname} ${practitioner?.maternalSurname} ${practitioner?.firstName}` ||
                 "-"}
@@ -162,25 +164,25 @@ const Sheet1 = ({
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Carrera Profesional: </p>
+            <label>Carrera Profesional: </label>
             <p>{practitioner?.ProfessionalCareer || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Turno: </p>
+            <label>Turno: </label>
             <p>{practitioner?.shift || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Semestre: </p>
+            <label>Semestre: </label>
             <p>{practitioner?.semester || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Año Académico: </p>
+            <label>Año Académico: </label>
             <p>{practitioner?.academicYear || "-"}</p>
           </div>
         </Col>
@@ -191,7 +193,7 @@ const Sheet1 = ({
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Período de la práctica: </p>
+            <label>Período de la práctica: </label>
             <p>
               {moment(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")} -{" "}
               {moment(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
@@ -200,7 +202,7 @@ const Sheet1 = ({
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Horario: </p>
+            <label>Horario: </label>
             <p>
               {moment(practice?.entryTime, "HH:mm:ss").format("HH:mm a")} -
               {moment(practice?.departureTime, "HH:mm:ss").format("HH:mm a")}
@@ -209,10 +211,11 @@ const Sheet1 = ({
         </Col>
         <Col span={24} md={8}>
           <div>
-            <p>Dpto. Sector o Área de las Prácticas: </p>
+            <label>Dpto. Sector o Área de las Prácticas: </label>
             <p>{PracticeArea[practice?.practiceArea].name || "-"}</p>
           </div>
         </Col>
+        <br />
         <Col span={24}>
           <Form onSubmit={handleSubmit(onConfirmSheet1)}>
             <Row gutter={[16, 16]}>
@@ -292,6 +295,8 @@ const Container = styled.div`
     p:last-child {
       font-weight: 500;
       text-transform: capitalize;
+      font-size: 1.1em;
+      margin: 0;
     }
   }
 `;
