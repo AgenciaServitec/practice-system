@@ -12,6 +12,10 @@ import { PracticesSheet8 } from "./PracticesSheet8";
 import { PracticesSheet9 } from "./PracticesSheet9";
 import { useNavigate, useParams } from "react-router";
 import { useGlobalData } from "../../../../../providers";
+import { practicesRef } from "../../../../../firebase/collections";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { firestore } from "../../../../../firebase";
+import { querySnapshotToArray } from "../../../../../firebase/firestore";
 
 export const Sheets = () => {
   const { practiceId } = useParams();
@@ -22,6 +26,7 @@ export const Sheets = () => {
   const [company, setCompany] = useState({});
   const [practitioner, setPractitioner] = useState({});
   const [representativeCompany, setRepresentativeCompany] = useState({});
+  const [annexs, setAnnexs] = useState([]);
 
   const onGoBack = () => navigate(-1);
 
@@ -42,11 +47,22 @@ export const Sheets = () => {
       (user) => user.id === _company.representativeId
     );
 
+    (async () => {
+      await practicesRef
+        .doc(_practice.id)
+        .collection("annexs")
+        .onSnapshot((snapshot) => {
+          setAnnexs(querySnapshotToArray(snapshot));
+        });
+    })();
+
     setPractice(_practice);
     setCompany(_company);
     setPractitioner(_practitioner);
     setRepresentativeCompany(_representativeCompany);
   }, [practiceId]);
+
+  const [annex2, annex3, annex4, annex6] = annexs;
 
   return (
     <PDF>
@@ -77,6 +93,7 @@ export const Sheets = () => {
           practice={practice}
           practitioner={practitioner}
           company={company}
+          annex3={annex3}
         />
       </Sheet>
       <Sheet layout="portrait">

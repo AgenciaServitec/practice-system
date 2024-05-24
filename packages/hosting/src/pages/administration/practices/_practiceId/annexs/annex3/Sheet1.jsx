@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   DatePicker,
@@ -18,9 +18,15 @@ import {
   useFormUtils,
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { practicesRef } from "../../../../../../firebase/collections";
+import moment from "moment";
 
-export const Sheet1Integration = ({ practice }) => {
+export const Sheet1Integration = ({ practice, practitioner, company }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
+  const [annex3 = {}, annex3Loading, annex3Error] = useDocumentData(
+    practicesRef.doc(practice.id).collection("annexs").doc("annex3")
+  );
 
   const mapForm = (formData) => ({
     visitNumber: formData.visitNumber,
@@ -30,7 +36,8 @@ export const Sheet1Integration = ({ practice }) => {
     difficultiesDetected: formData.difficultiesDetected,
     suggestionsRecommendations: formData.suggestionsRecommendations,
   });
-  const onSaveAnnex3 = async (formData) => {
+
+  const onSaveSheet1Annex3 = async (formData) => {
     try {
       const _annex3 = mapForm(formData);
 
@@ -51,13 +58,27 @@ export const Sheet1Integration = ({ practice }) => {
   const onConfirmSheet1 = (practice) =>
     modalConfirm({
       title: "¿Estás seguro de que quieres aprobar esta hoja?",
-      onOk: async () => await onSaveAnnex3(practice),
+      onOk: async () => await onSaveSheet1Annex3(practice),
     });
 
-  return <Sheet1 onConfirmSheet1={onConfirmSheet1} />;
+  return (
+    <Sheet1
+      practice={practice}
+      company={company}
+      practitioner={practitioner}
+      annex3={annex3}
+      onConfirmSheet1={onConfirmSheet1}
+    />
+  );
 };
 
-const Sheet1 = ({ onConfirmSheet1 }) => {
+const Sheet1 = ({
+  practice,
+  company,
+  practitioner,
+  annex3,
+  onConfirmSheet1,
+}) => {
   const schema = yup.object({
     visitNumber: yup.string().required(),
     supervisionDate: yup.date().required(),
@@ -71,11 +92,29 @@ const Sheet1 = ({ onConfirmSheet1 }) => {
     formState: { errors },
     handleSubmit,
     control,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const { required, error } = useFormUtils({ errors, schema });
+
+  useEffect(() => {
+    resetForm();
+  }, [annex3]);
+
+  const resetForm = () => {
+    reset({
+      visitNumber: annex3?.visitNumber || "",
+      supervisionDate: annex3?.supervisionDate
+        ? moment(annex3.supervisionDate.toDate())
+        : null,
+      progressStatus: annex3?.progressStatus || "",
+      observations: annex3?.observations || "",
+      difficultiesDetected: annex3?.difficultiesDetected || "",
+      suggestionsRecommendations: annex3?.suggestionsRecommendations || "",
+    });
+  };
 
   return (
     <Form onSubmit={handleSubmit(onConfirmSheet1)}>
