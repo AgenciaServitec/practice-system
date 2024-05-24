@@ -46,9 +46,21 @@ export const RegisterUser = ({ roleCode }) => {
     password: yup.string().min(6).required(),
     tuitionId: yup.string().required(),
     isGraduate: yup.boolean().required(),
-    studentShift: yup.string().nullable(),
-    semester: yup.number().nullable(),
-    academicYear: yup.number().nullable(),
+    studentShift: yup.string().when("isGraduate", {
+      is: true,
+      then: yup.string().notRequired(),
+      otherwise: yup.string().required(),
+    }),
+    semester: yup.string().when("isGraduate", {
+      is: true,
+      then: yup.string().notRequired(),
+      otherwise: yup.string().required(),
+    }),
+    academicYear: yup.string().when("isGraduate", {
+      is: true,
+      then: yup.string().notRequired(),
+      otherwise: yup.string().required(),
+    }),
   });
 
   const {
