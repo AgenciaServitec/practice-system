@@ -60,6 +60,7 @@ interface CompanyDataApi {
 
 interface CompanyData {
   socialReason: string;
+  ruc: string;
   ubigeo: string;
   department: string;
   province: string;

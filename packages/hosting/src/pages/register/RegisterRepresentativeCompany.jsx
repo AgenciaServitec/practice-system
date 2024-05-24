@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   Button,
-  DatePicker,
+  ComponentContainer,
   Form,
   Input,
   InputPassword,
   notification,
-  RadioGroup,
   Select,
 } from "../../components";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,94 +15,55 @@ import * as yup from "yup";
 import {
   apiErrorNotification,
   getApiErrorResponse,
+  useApiCompanyDataByRucGet,
   useApiPersonDataByDniGet,
   useApiUserPost,
 } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAuthentication } from "../../providers";
-import { capitalize } from "lodash";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { getAcademicYearBySemester } from "../../utils";
-import moment from "moment";
+import { capitalize } from "lodash";
+import { useAuthentication } from "../../providers";
+import { Space } from "antd";
+import { BusinessPosition } from "../../data-list";
 
-export const RegisterUser = ({ roleCode }) => {
+export const RegisterRepresentativeCompanyIntegration = ({ roleCode }) => {
+  const { loginWithEmailAndPassword } = useAuthentication();
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
   const {
     getPersonDataByDni,
     getPersonDataByDniResponse,
     getPersonDataByDniLoading,
   } = useApiPersonDataByDniGet();
-  const { loginWithEmailAndPassword } = useAuthentication();
-  const [loading, setLoading] = useState(false);
-
-  const schema = yup.object({
-    dni: yup.number().required(),
-    firstName: yup.string().required(),
-    paternalSurname: yup.string().required(),
-    maternalSurname: yup.string().required(),
-    phoneNumber: yup.string().min(9).max(9).required(),
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
-    tuitionId: yup.string().required(),
-    isGraduate: yup.boolean().required(),
-    studentShift: yup.string().when("isGraduate", {
-      is: true,
-      then: yup.string().notRequired(),
-      otherwise: yup.string().required(),
-    }),
-    semester: yup.string().when("isGraduate", {
-      is: true,
-      then: yup.string().notRequired(),
-      otherwise: yup.string().required(),
-    }),
-    academicYear: yup.string().when("isGraduate", {
-      is: true,
-      then: yup.string().notRequired(),
-      otherwise: yup.string().required(),
-    }),
-  });
-
   const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    watch,
-    setValue,
-  } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: { isGraduate: false },
-  });
+    getCompanyDataByRuc,
+    getCompanyDataByRucResponse,
+    getCompanyDataByRucLoading,
+  } = useApiCompanyDataByRucGet();
 
-  const { required, error, errorMessage } = useFormUtils({ errors, schema });
+  const [company, setCompany] = useState(null);
+  const [loadingRegister, setLoadingRegister] = useState(false);
 
   const mapUser = (formData) => ({
-    roleCode: roleCode, //user
+    roleCode: roleCode, //company_representative
     dni: formData.dni,
-    firstName: formData.firstName,
-    paternalSurname: formData.paternalSurname,
-    maternalSurname: formData.maternalSurname,
+    firstName: formData.firstName.toLowerCase(),
+    paternalSurname: formData.paternalSurname.toLowerCase(),
+    maternalSurname: formData.maternalSurname.toLowerCase(),
     phone: {
       prefix: "+51",
       number: formData.phoneNumber,
     },
-    email: formData.email,
+    email: formData.email.toLowerCase(),
     password: formData.password,
-    practitionerData: {
-      isGraduate: formData.isGraduate,
-      tuitionId: formData?.tuitionId,
-      studentShift: formData?.studentShift || null,
-      semester: formData?.semester || null,
-      academicYear: formData?.academicYear
-        ? `${moment(formData.academicYear, "YYYY").format(
-            "YYYY"
-          )} ${getAcademicYearBySemester(formData.semester)}`
-        : null,
+    companyRepresentative: {
+      ruc: company.ruc,
+      businessPosition: formData?.businessPosition,
     },
   });
 
   const onSaveUser = async (formData) => {
     try {
-      setLoading(true);
+      setLoadingRegister(true);
 
       const response = await postUser(mapUser(formData));
       if (!postUserResponse.ok) {
@@ -115,14 +75,66 @@ export const RegisterUser = ({ roleCode }) => {
         title: "¡El usuario se guardó correctamente!",
       });
 
-      await loginWithEmailAndPassword(formData.email, formData.password);
+      loginWithEmailAndPassword(formData.email, formData.password);
     } catch (e) {
       const errorResponse = await getApiErrorResponse(e);
       apiErrorNotification(errorResponse);
     } finally {
-      setLoading(false);
+      setLoadingRegister(false);
     }
   };
+
+  return (
+    <RegisterCompanyRepresentative
+      onGetPersonDataByDni={getPersonDataByDni}
+      onGetPersonDataByDniResponse={getPersonDataByDniResponse}
+      onGetPersonDataByDniLoading={getPersonDataByDniLoading}
+      onGetCompanyDataByRuc={getCompanyDataByRuc}
+      onGetCompanyDataByRucResponse={getCompanyDataByRucResponse}
+      onGetCompanyDataByRucLoading={getCompanyDataByRucLoading}
+      company={company}
+      onSetCompany={setCompany}
+      loadingRegister={loadingRegister}
+      postUserLoading={postUserLoading}
+      onSaveUser={onSaveUser}
+    />
+  );
+};
+
+const RegisterCompanyRepresentative = ({
+  onGetPersonDataByDni,
+  onGetPersonDataByDniResponse,
+  onGetPersonDataByDniLoading,
+  onGetCompanyDataByRuc,
+  onGetCompanyDataByRucResponse,
+  onGetCompanyDataByRucLoading,
+  company,
+  onSetCompany,
+  loadingRegister,
+  postUserLoading,
+  onSaveUser,
+}) => {
+  const schema = yup.object({
+    dni: yup.string().min(8).max(8).required(),
+    firstName: yup.string().required(),
+    paternalSurname: yup.string().required(),
+    maternalSurname: yup.string().required(),
+    phoneNumber: yup.string().min(9).max(9).required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(6).required(),
+    companyRuc: yup.string().min(11).max(11).required(),
+    businessPosition: yup.string().required(),
+  });
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const { required, error, errorMessage } = useFormUtils({ errors, schema });
 
   const userResetFields = (user) => {
     setValue("firstName", capitalize(user?.firstName || ""));
@@ -131,13 +143,33 @@ export const RegisterUser = ({ roleCode }) => {
   };
 
   useEffect(() => {
+    const existsRuc = (watch("companyRuc") || "").length === 11;
+    if (existsRuc) {
+      (async () => {
+        try {
+          const response = await onGetCompanyDataByRuc(watch("companyRuc"));
+          if (!onGetCompanyDataByRucResponse.ok) {
+            throw new Error(response);
+          }
+
+          onSetCompany(response);
+        } catch (e) {
+          const errorResponse = await getApiErrorResponse(e);
+          apiErrorNotification(errorResponse);
+          onSetCompany(null);
+          setValue("companyRuc", "");
+        }
+      })();
+    }
+  }, [watch("companyRuc")]);
+
+  useEffect(() => {
     const existsDni = (watch("dni") || "").length === 8;
     if (existsDni) {
       (async () => {
         try {
-          const response = await getPersonDataByDni(watch("dni"));
-
-          if (!getPersonDataByDniResponse.ok) {
+          const response = await onGetPersonDataByDni(watch("dni"));
+          if (!onGetPersonDataByDniResponse.ok) {
             throw new Error(response);
           }
 
@@ -148,6 +180,8 @@ export const RegisterUser = ({ roleCode }) => {
           userResetFields(null);
         }
       })();
+    } else {
+      userResetFields(null);
     }
   }, [watch("dni")]);
 
@@ -169,7 +203,7 @@ export const RegisterUser = ({ roleCode }) => {
             helperText={errorMessage(name)}
             required={required(name)}
             suffix={
-              getPersonDataByDniLoading && (
+              onGetPersonDataByDniLoading && (
                 <FontAwesomeIcon icon={faSpinner} spin />
               )
             }
@@ -267,127 +301,55 @@ export const RegisterUser = ({ roleCode }) => {
         )}
       />
       <Controller
-        name="tuitionId"
+        name="companyRuc"
         control={control}
         render={({ field: { onChange, value, name } }) => (
           <Input
-            label="Código de matricula"
+            label="RUC de empresa"
+            type="number"
             onChange={onChange}
             value={value}
             name={name}
             error={error(name)}
             helperText={errorMessage(name)}
             required={required(name)}
+            suffix={
+              onGetCompanyDataByRucLoading && (
+                <FontAwesomeIcon icon={faSpinner} spin />
+              )
+            }
           />
         )}
       />
-      <Controller
-        name="isGraduate"
-        control={control}
-        render={({ field: { onChange, value, name } }) => (
-          <RadioGroup
-            label="¿Eres egresado?"
-            onChange={onChange}
-            value={value}
-            name={name}
-            error={error(name)}
-            helperText={errorMessage(name)}
-            required={required(name)}
-            options={[
-              {
-                label: "No",
-                value: false,
-              },
-              {
-                label: "Si",
-                value: true,
-              },
-            ]}
-          />
-        )}
-      />
-      {!watch("isGraduate") && (
+      {company && watch("companyRuc").length === 11 && (
         <>
+          <ComponentContainer.group label="Empresa">
+            <Space
+              wrap
+              style={{ display: "flex", justifyContent: "start", gap: "1.5em" }}
+            >
+              <span>
+                Razón social: <h5>{company.socialReason}</h5>
+              </span>
+              <span>
+                RUC:
+                <h5>{company.ruc}</h5>
+              </span>
+            </Space>
+          </ComponentContainer.group>
           <Controller
-            name="studentShift"
+            name="businessPosition"
             control={control}
             render={({ field: { onChange, value, name } }) => (
               <Select
-                label="Turno"
+                label="Cargo en la empresa"
                 onChange={onChange}
                 value={value}
                 name={name}
                 error={error(name)}
                 helperText={errorMessage(name)}
                 required={required(name)}
-                options={[
-                  {
-                    label: "Diurno",
-                    value: "diurno",
-                  },
-                  {
-                    label: "Nocturno",
-                    value: "nocturno",
-                  },
-                ]}
-              />
-            )}
-          />
-          <Controller
-            name="semester"
-            control={control}
-            render={({ field: { onChange, value, name } }) => (
-              <Select
-                label="Semestre"
-                onChange={onChange}
-                value={value}
-                name={name}
-                error={error(name)}
-                helperText={errorMessage(name)}
-                required={required(name)}
-                options={[
-                  {
-                    label: "Ciclo: I",
-                    value: "I",
-                  },
-                  {
-                    label: "Ciclo: II",
-                    value: "II",
-                  },
-                  {
-                    label: "Ciclo: III",
-                    value: "III",
-                  },
-                  {
-                    label: "Ciclo: IV",
-                    value: "IV",
-                  },
-                  {
-                    label: "Ciclo: V",
-                    value: "V",
-                  },
-                  {
-                    label: "Ciclo: VI",
-                    value: "VI",
-                  },
-                ]}
-              />
-            )}
-          />
-          <Controller
-            name="academicYear"
-            control={control}
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Año Académico"
-                format="YYYY"
-                picker="year"
-                onChange={onChange}
-                value={value}
-                name={name}
-                error={error(name)}
-                helperText={errorMessage(name)}
-                required={required(name)}
+                options={BusinessPosition}
               />
             )}
           />
@@ -398,7 +360,7 @@ export const RegisterUser = ({ roleCode }) => {
         size="large"
         type="primary"
         htmlType="submit"
-        loading={loading || postUserLoading}
+        loading={loadingRegister || postUserLoading}
       >
         Registrarme
       </Button>

@@ -12,22 +12,28 @@ import { InitialPracticeFormIntegration } from "./InitialForm";
 import {
   addPractice,
   getPracticesId,
+  practicesRef,
   updatePractice,
 } from "../../../../firebase/collections";
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../../providers";
 import { useDefaultFirestoreProps } from "../../../../hooks";
-import { Card, Collapse, Space } from "antd";
+import { Card, Collapse } from "antd";
 import {
   faArrowLeft,
+  faFilePdf,
   faMinus,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Anexo2Integration } from "./anexo2";
 import { capitalize } from "lodash";
-import { Annex4Integration } from "./annex4";
-import { Annex6Integration } from "./annex6";
+import {
+  Annex2Integration,
+  Annex3Integration,
+  Annex4Integration,
+  Annex6Integration,
+} from "./annexs";
+import styled from "styled-components";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -60,12 +66,21 @@ export const PracticeIntegration = () => {
     setPractice(_practice);
     setPractitioner(_practitioner);
     setCompany(_company);
-  }, []);
+  }, [practiceId]);
 
   const savePractice = async (practice) => {
-    isNew
-      ? await addPractice(assignCreateProps(practice))
-      : await updatePractice(practice.id, assignUpdateProps(practice));
+    if (isNew) {
+      ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
+        practicesRef.doc(practice.id).collection("annexs").doc(annex).set({
+          id: annex,
+        });
+      });
+
+      await addPractice(assignCreateProps(practice));
+      return;
+    }
+
+    await updatePractice(practice.id, assignUpdateProps(practice));
   };
 
   const onConfirmModuleApproved = () =>
@@ -83,7 +98,26 @@ export const PracticeIntegration = () => {
         </Col>
       ),
       children: (
-        <Anexo2Integration
+        <Annex2Integration
+          practice={practice}
+          user={authUser}
+          users={users}
+          practitioner={practitioner}
+          company={company}
+          onSavePractice={savePractice}
+        />
+      ),
+      style: panelStyle,
+    },
+    {
+      key: "annex3",
+      label: (
+        <Col span={24}>
+          <Title level={4}>Anexo 3</Title>
+        </Col>
+      ),
+      children: (
+        <Annex3Integration
           practice={practice}
           user={authUser}
           users={users}
@@ -142,14 +176,14 @@ export const PracticeIntegration = () => {
   };
 
   return (
-    <>
+    <Container>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Space>
+          <div className="header-wrapper">
             <IconAction
               icon={faArrowLeft}
               styled={{ color: (theme) => theme.colors.primary }}
-              onClick={() => onGoBack()}
+              onClick={() => navigate("/practices")}
             />
             <Title level={3}>
               {!isNew
@@ -158,13 +192,24 @@ export const PracticeIntegration = () => {
                   )}`
                 : "Registro de Prácticas Pre-Profesionales"}
             </Title>
-          </Space>
+            {isNew ? (
+              <div />
+            ) : (
+              <IconAction
+                icon={faFilePdf}
+                styled={{ color: (theme) => theme.colors.error }}
+                onClick={() => navigate(`/practices/${practice.id}/sheets`)}
+                tooltipTitle="Ver pdf"
+              />
+            )}
+          </div>
         </Col>
         <Col>
           <InitialPracticeFormIntegration
+            isNew={isNew}
             practice={practice}
-            user={authUser}
             users={users}
+            user={authUser}
             practitioner={practitioner}
             companies={companies}
             company={company}
@@ -173,48 +218,61 @@ export const PracticeIntegration = () => {
         </Col>
       </Row>
       <br />
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <Card title="Anexos">
-            <Collapse
-              defaultActiveKey={["1"]}
-              bordered={false}
-              expandIconPosition="end"
-              accordion
-              size="large"
-              expandIcon={({ isActive }) => (
-                <FontAwesomeIcon
-                  icon={isActive ? faMinus : faPlus}
-                  style={{ fontSize: "1.2em" }}
+      {!isNew && (
+        <>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Card title="Anexos">
+                <Collapse
+                  defaultActiveKey={["1"]}
+                  bordered={false}
+                  expandIconPosition="end"
+                  accordion
+                  size="large"
+                  expandIcon={({ isActive }) => (
+                    <FontAwesomeIcon
+                      icon={isActive ? faMinus : faPlus}
+                      style={{ fontSize: "1.2em" }}
+                    />
+                  )}
+                  items={getItems(panelStyle)}
+                  style={{
+                    background: "transparent",
+                  }}
                 />
-              )}
-              items={getItems(panelStyle)}
-              style={{
-                background: "transparent",
-              }}
-            />
-          </Card>
-        </Col>
-      </Row>
-      <br />
-      <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={12} md={10} lg={8}>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            block
-            onClick={() => onConfirmModuleApproved()}
-          >
-            Aprobar el modulo completo
-          </Button>
-        </Col>
-        <Col span={24} sm={12} md={10} lg={5}>
-          <Button type="primary" size="large" block htmlType="submit">
-            Modulo revisado
-          </Button>
-        </Col>
-      </Row>
-    </>
+              </Card>
+            </Col>
+          </Row>
+          <br />
+          <Row justify="end" gutter={[16, 16]}>
+            <Col span={24} sm={12} md={10} lg={8}>
+              <Button
+                type="primary"
+                danger
+                size="large"
+                block
+                onClick={() => onConfirmModuleApproved()}
+              >
+                Aprobar el modulo completo
+              </Button>
+            </Col>
+            <Col span={24} sm={12} md={10} lg={5}>
+              <Button type="primary" size="large" block htmlType="submit">
+                Modulo revisado
+              </Button>
+            </Col>
+          </Row>
+        </>
+      )}
+    </Container>
   );
 };
+
+const Container = styled.div`
+  .header-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.5em;
+  }
+`;

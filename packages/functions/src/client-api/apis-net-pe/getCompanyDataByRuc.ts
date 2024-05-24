@@ -27,6 +27,7 @@ export const getCompanyDataByRuc = async ({
 };
 
 const mapCompanyData = (companyData: CompanyDataApi): CompanyData => ({
+  ruc: companyData?.numeroDocumento || "",
   socialReason: companyData?.razonSocial || "",
   ubigeo: companyData?.ubigeo || "",
   department: companyData?.departamento || "",

@@ -7,12 +7,12 @@ import Col from "antd/lib/col";
 import { RadioGroup, Title } from "../../components";
 import { Link } from "react-router-dom";
 import { RegisterUser } from "./RegisterUser";
-import { RegisterCompany } from "./RegisterCompany";
+import { RegisterRepresentativeCompanyIntegration } from "./RegisterRepresentativeCompany";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
-  const [type, setType] = useState("person");
+  const [roleCode, setRoleCode] = useState("user");
 
   const onNavigateTo = (url) => navigate(url);
 
@@ -31,15 +31,15 @@ export const RegisterIntegration = () => {
             <Col span={24}>
               <RadioGroup
                 label="Tipo de Usuario"
-                value={type}
+                value={roleCode}
                 options={[
                   {
-                    label: "Persona",
-                    value: "person",
+                    label: "Practicante",
+                    value: "user",
                   },
                   {
-                    label: "Empresa",
-                    value: "company",
+                    label: "Representante de empresa",
+                    value: "company_representative",
                   },
                 ]}
                 optionType="button"
@@ -48,14 +48,14 @@ export const RegisterIntegration = () => {
                   display: "flex",
                   justifyContent: "center",
                 }}
-                onChange={(e) => setType(e.target.value)}
+                onChange={(e) => setRoleCode(e.target.value)}
               />
             </Col>
             <Col span={24}>
-              {type === "person" ? (
-                <RegisterUser type={type} />
+              {roleCode === "user" ? (
+                <RegisterUser roleCode={roleCode} />
               ) : (
-                <RegisterCompany type={type} />
+                <RegisterRepresentativeCompanyIntegration roleCode={roleCode} />
               )}
             </Col>
             <Col span={24}>

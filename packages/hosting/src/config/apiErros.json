@@ -3,9 +3,13 @@
     "title": "Ha ocurrido un error!",
     "description": "Por favor, inténtelo de nuevo más tarde..."
   },
-  "entities/not_found_entity_by_ruc": {
-    "title": "La empresa no existe",
-    "description": "No se pudo encontrar la empresa por el RUC ingresado, intenta verificar que este correcto o ingrese los datos manualmente."
+  "consults/not_found_entity_by_dni": {
+    "title": "No se encontro resultados",
+    "description": "No se pudo encontrar la datos con el DNI ingresado, intenta verificar que este correcto o ingrese los datos manualmente."
+  },
+  "consults/not_found_entity_by_ruc": {
+    "title": "No se encontro resultados",
+    "description": "No se pudo encontrar la empresa con el RUC ingresado, intenta verificar que este correcto o comunicate con soporte."
   },
   "user/user_exists": {
     "title": "El usuario ya existe!",
@@ -23,6 +27,10 @@
     "title": "El teléfono ya está registrado",
     "description": "El teléfono especificado ya existe."
   },
+  "user/tuition_id_already_exists": {
+    "title": "El código de matricula ya está registrado",
+    "description": "Si no reconoces el registro del código de matricula, comunicate con soporte"
+  },
   "user/dni_already_exists": {
     "title": "El Dni ya está registrado",
     "description": "El Dni especificado ya existe."
@@ -30,6 +38,10 @@
   "user/ruc_already_exists": {
     "title": "El Ruc ya está registrado",
     "description": "El Ruc especificado ya existe."
+  },
+  "user/company_no_found": {
+    "title": "No se encontró la empresa",
+    "description": "Comuniquese con soporte por favor"
   },
   "user/not_found_type_user": {
     "title": "No existe el campo tipo para el registro",

@@ -1,13 +1,14 @@
 import React from "react";
-import { Title } from "../../../../../components";
+import { Title } from "../../../../../../components";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
 import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
 import styled from "styled-components";
 import { Sheet2Integration } from "./Sheet2";
+import { Sheet3Integration } from "./Sheet3";
 
-export const Annex4Integration = ({
+export const Annex6Integration = ({
   practice,
   user,
   users,
@@ -16,7 +17,7 @@ export const Annex4Integration = ({
   onSavePractice,
 }) => {
   return (
-    <Annex4
+    <Annex6
       practice={practice}
       user={user}
       users={users}
@@ -27,7 +28,7 @@ export const Annex4Integration = ({
   );
 };
 
-const Annex4 = ({
+const Annex6 = ({
   practice,
   user,
   users,
@@ -57,6 +58,21 @@ const Annex4 = ({
           <Space direction="vertical">
             <Title level={4}>Hoja 2</Title>
             <Sheet2Integration
+              practice={practice}
+              user={user}
+              users={users}
+              practitioner={practitioner}
+              company={company}
+              onSavePractice={onSavePractice}
+            />
+          </Space>
+        </div>
+      </Col>
+      <Col span={24}>
+        <div className="item-sheet">
+          <Space direction="vertical">
+            <Title level={4}>Hoja 3</Title>
+            <Sheet3Integration
               practice={practice}
               user={user}
               users={users}

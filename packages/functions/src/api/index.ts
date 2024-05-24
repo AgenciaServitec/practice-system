@@ -3,7 +3,7 @@ import cors from "cors";
 import { errorHandler, hostingToApi } from "./_middlewares";
 import { body } from "express-validator";
 import { patchUser, postUser, putUser } from "./users";
-import { getEntityDataByDni, getEntityDataByRuc } from "./entities";
+import { getEntityDataByDni, getEntityDataByRuc } from "./consults";
 
 const app: express.Application = express();
 
@@ -23,9 +23,8 @@ app.put(
 );
 app.patch("/users/:userId", [body("updateBy").exists()], patchUser);
 
-app.get("/consult/dni/:dni", getEntityDataByDni);
-
-app.get("/consult/ruc/:ruc", getEntityDataByRuc);
+app.get("/consults/dni/:dni", getEntityDataByDni);
+app.get("/consults/ruc/:ruc", getEntityDataByRuc);
 
 app.use(errorHandler);
 

@@ -9,16 +9,16 @@ import {
   Select,
   TimePicker,
   Title,
-} from "../../../../../components";
+} from "../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
+import { ProfessionalCareer } from "../../../../../../data-list";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormUtils } from "../../../../../hooks";
-import { ProfessionalCareer } from "../../../../../data-list";
+import { useFormUtils } from "../../../../../../hooks";
 
-export const Sheet2Integration = ({
+export const Sheet1Integration = ({
   practice,
   user,
   users,
@@ -26,16 +26,16 @@ export const Sheet2Integration = ({
   company,
   onSavePractice,
 }) => {
-  const onConfirmSheet2 = () =>
+  const onConfirmSheet1 = () =>
     modalConfirm({
       title: "¿Estás seguro de que quieres aprobar esta hoja?",
       onOk: () => notification({ type: "success" }),
     });
 
-  return <Sheet1 onConfirmSheet2={onConfirmSheet2} />;
+  return <Sheet1 onConfirmSheet1={onConfirmSheet1} />;
 };
 
-const Sheet1 = ({ onConfirmSheet2 }) => {
+const Sheet1 = ({ onConfirmSheet1 }) => {
   const schema = yup.object({
     socialReason: yup.string().required(),
     address: yup.string().required(),
@@ -54,9 +54,7 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
     <Form>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Title level={5}>
-            II. INSTRUCCIONES PARA LA EVALUACIÓN CUALITATIVA:
-          </Title>
+          <Title level={5}>I. DATOS PERSONALES:</Title>
         </Col>
         <Col span={24} md={6}>
           <Controller
@@ -126,6 +124,112 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
             )}
           />
         </Col>
+        <Col span={24} md={4}>
+          <Controller
+            name="startDate"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value, name } }) => (
+              <DatePicker
+                label="Fecha de Inicio de la práctica"
+                name={name}
+                value={value}
+                onChange={onChange}
+                error={error(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={24} md={4}>
+          <Controller
+            name="endDate"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value, name } }) => (
+              <DatePicker
+                label="Fecha de Término de la práctica"
+                name={name}
+                value={value}
+                onChange={onChange}
+                error={error(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={24} md={4}>
+          <Controller
+            name="entryTime"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value, name } }) => (
+              <TimePicker
+                label="Hora de entrada"
+                name={name}
+                value={value}
+                onChange={onChange}
+                error={error(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={24} md={4}>
+          <Controller
+            name="departureTime"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value, name } }) => (
+              <TimePicker
+                label="Hora de salida"
+                name={name}
+                value={value}
+                onChange={onChange}
+                error={error(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={24} md={8}>
+          <Controller
+            name="practiceArea"
+            control={control}
+            defaultValue=""
+            render={({ field: { onChange, value, name } }) => (
+              <Select
+                label="Área de Prácticas"
+                value={value}
+                onChange={onChange}
+                options={[
+                  {
+                    label: "Oficina",
+                    value: "office",
+                  },
+                  {
+                    label: "Taller",
+                    value: "workshop",
+                  },
+                  {
+                    label: "Laboratorio",
+                    value: "laboratory",
+                  },
+                  {
+                    label: "Granja",
+                    value: "farm",
+                  },
+                  {
+                    label: "Almacén",
+                    value: "store",
+                  },
+                ]}
+                error={error(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </Col>
         <Col span={24} md={6}>
           <Controller
             name="refreshment"
@@ -185,7 +289,7 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
             danger
             size="large"
             block
-            onClick={() => onConfirmSheet2()}
+            onClick={() => onConfirmSheet1()}
           >
             Aprobar
           </Button>

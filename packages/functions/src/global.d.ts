@@ -13,6 +13,27 @@ interface Role {
   updateAt: string;
 }
 
+interface RoleAcls extends DefaultFirestoreProps {
+  id: string;
+  acls: string[];
+  roleCode: string;
+}
+
+//for user
+interface PractitionerData {
+  isGraduate: boolean;
+  tuitionId: string | null;
+  studentShift?: "diurno" | "nocturno";
+  semester?: number;
+  academicYear?: number;
+}
+
+//for company_representative
+interface CompanyRepresentativeData {
+  ruc: string;
+  businessPosition: string;
+}
+
 interface User extends DefaultFirestoreProps {
   id: string;
   acls: string[];
@@ -20,7 +41,6 @@ interface User extends DefaultFirestoreProps {
   email: string;
   password: string;
   profilePhoto?: Image;
-  dniPhoto?: Image;
   dni: string;
   firstName: string;
   paternalSurname: string;
@@ -30,7 +50,9 @@ interface User extends DefaultFirestoreProps {
     number: string;
   };
   iAcceptPrivacyPolicies: boolean;
-  updateBy: string;
+  //conditional data by roleCode
+  practitionerData?: PractitionerData;
+  companyRepresentativeData?: CompanyRepresentativeData;
 }
 
 interface Image {
@@ -59,4 +81,20 @@ interface Correspondence extends DefaultFirestoreProps {
   dateCorrespondence: FirebaseFirestore.Timestamp;
   photos: Image[];
   files: Archive[];
+}
+
+interface Company extends DefaultFirestoreProps {
+  id: string;
+  ruc: string;
+  socialReason: string;
+  department: string;
+  province: string;
+  district: string;
+  address: string;
+  email: string;
+  category: string;
+  webSite: string;
+  status: "active" | "inactive";
+  membersIds: string[];
+  representativeId: string;
 }
