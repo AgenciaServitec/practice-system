@@ -381,6 +381,7 @@ export const RegisterUser = ({ roleCode }) => {
               <DatePicker
                 label="Año Académico"
                 format="YYYY"
+                picker="year"
                 onChange={onChange}
                 value={value}
                 name={name}
