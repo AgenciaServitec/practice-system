@@ -29,24 +29,39 @@ export const postUser = async (
 
   try {
     const _isEmailExists = await isEmailExists(user.email);
-
     if (_isEmailExists) {
       res.status(412).send("user/email_already_exists").end();
       return;
     }
 
     const _isDniExists = await isDniExists(user.dni);
-
     if (_isDniExists) {
       res.status(412).send("user/dni_already_exists").end();
       return;
     }
 
     const _isPhoneNumberExists = await isPhoneNumberExists(user?.phone.number);
-
     if (_isPhoneNumberExists) {
       res.status(412).send("user/phone_number_already_exists").end();
       return;
+    }
+
+    if (
+      user.roleCode === "user" &&
+      !isEmpty(user?.practitionerData?.tuitionId)
+    ) {
+      assert(
+        user?.practitionerData?.tuitionId,
+        "user.practitionerData.tuitionId missing!"
+      );
+
+      const _isTuitionIdExists = await isTuitionIdExists(
+        user.practitionerData.tuitionId
+      );
+      if (_isTuitionIdExists) {
+        res.status(412).send("user/tuition_id_already_exists").end();
+        return;
+      }
     }
 
     const userId = firestore.collection("users").doc().id;
@@ -126,6 +141,17 @@ const isPhoneNumberExists = async (phoneNumber: string): Promise<boolean> => {
       .collection("users")
       .where("isDeleted", "==", false)
       .where("phone.number", "==", phoneNumber)
+  );
+
+  return !isEmpty(users);
+};
+
+const isTuitionIdExists = async (tuitionId: string): Promise<boolean> => {
+  const users = await fetchCollection<User>(
+    firestore
+      .collection("users")
+      .where("isDeleted", "==", false)
+      .where("practitionerData.tuitionId", "==", tuitionId)
   );
 
   return !isEmpty(users);

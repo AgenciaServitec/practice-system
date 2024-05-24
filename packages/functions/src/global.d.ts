@@ -21,10 +21,11 @@ interface RoleAcls extends DefaultFirestoreProps {
 
 //for user
 interface PractitionerData {
+  isGraduate: boolean;
   tuitionId: string | null;
-  studentShift: "diurno" | "nocturno";
-  semester: number;
-  academicYear: number;
+  studentShift?: "diurno" | "nocturno";
+  semester?: number;
+  academicYear?: number;
 }
 
 //for company_representative

@@ -27,6 +27,10 @@
     "title": "El teléfono ya está registrado",
     "description": "El teléfono especificado ya existe."
   },
+  "user/tuition_id_already_exists": {
+    "title": "El código de matricula ya está registrado",
+    "description": "Si no reconoces el registro del código de matricula, comunicate con soporte"
+  },
   "user/dni_already_exists": {
     "title": "El Dni ya está registrado",
     "description": "El Dni especificado ya existe."
