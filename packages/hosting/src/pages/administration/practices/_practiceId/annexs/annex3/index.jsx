@@ -6,8 +6,22 @@ import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
 import styled from "styled-components";
 
-export const Annex3Integration = ({ practice }) => {
-  return <Annex3 practice={practice} />;
+export const Annex3Integration = ({
+  practice,
+  user,
+  users,
+  practitioner,
+  company,
+}) => {
+  return (
+    <Annex3
+      practice={practice}
+      user={user}
+      users={users}
+      practitioner={practitioner}
+      company={company}
+    />
+  );
 };
 
 const Annex3 = ({ practice, user, users, practitioner, company }) => {
@@ -17,7 +31,13 @@ const Annex3 = ({ practice, user, users, practitioner, company }) => {
         <div className="item-sheet">
           <Space direction="vertical">
             <Title level={4}>Hoja 1</Title>
-            <Sheet1Integration practice={practice} />
+            <Sheet1Integration
+              practice={practice}
+              user={user}
+              users={users}
+              practitioner={practitioner}
+              company={company}
+            />
           </Space>
         </div>
       </Col>

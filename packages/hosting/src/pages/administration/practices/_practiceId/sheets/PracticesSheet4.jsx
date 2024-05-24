@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
+import moment from "moment";
 
-export const PracticesSheet4 = () => {
+export const PracticesSheet4 = ({ annex3 }) => {
   return (
     <>
       <Container>
@@ -83,22 +84,30 @@ export const PracticesSheet4 = () => {
                     <th className="observation">OBSERVACIONES</th>
                   </tr>
                   <tr>
-                    <td>01</td>
-                    <td>15/11/2023</td>
+                    <td>{`${annex3.visitNumber}`}</td>
+                    <td>
+                      {moment(
+                        annex3.supervisionDate.toDate(),
+                        "DD/MM/YYYY"
+                      ).format("DD/MM/YYYY")}
+                    </td>
                     <td>
                       Mantenimiento Preventivo y Correctivo de equipos de
                       Cómputo
                     </td>
-                    <td>100%</td>
-                    <td>-</td>
+                    <td>{`${annex3.progressStatus}`}</td>
+                    <td>{`${annex3.observations}`}</td>
                   </tr>
                 </Table>
+                <br />
                 <li>
-                  Dificultades detectadas durante las prácticas: <br />
-                  <br />
-                  <hr />
-                  <br />
+                  <div className="response-item">
+                    <span>Dificultades detectadas durante las prácticas:</span>
+                    <span>{annex3.difficultiesDetected}</span>
+                    <hr />
+                  </div>
                 </li>
+                <br />
                 <li>
                   Sugerencias y Recomendaciones: <br />
                   <br />
@@ -188,6 +197,11 @@ const Container = styled.div`
           line-height: 1.6em;
         }
       }
+    }
+
+    .response-item {
+      display: flex;
+      flex-direction: column;
     }
   }
   .footer {
