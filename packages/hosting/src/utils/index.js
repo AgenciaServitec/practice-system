@@ -9,3 +9,4 @@ export * from "./getNameId";
 export * from "./localStorage";
 export * from "./acl";
 export * from "./users";
+export * from "./abstrac";

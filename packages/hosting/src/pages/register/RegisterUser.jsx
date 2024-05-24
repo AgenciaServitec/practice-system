@@ -7,6 +7,7 @@ import {
   Input,
   InputPassword,
   notification,
+  RadioGroup,
   Select,
 } from "../../components";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,6 +23,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuthentication } from "../../providers";
 import { capitalize } from "lodash";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { getAcademicYearBySemester } from "../../utils";
+import moment from "moment";
 
 export const RegisterUser = ({ roleCode }) => {
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
@@ -42,9 +45,10 @@ export const RegisterUser = ({ roleCode }) => {
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
     tuitionId: yup.string().required(),
-    studentShift: yup.string().required(),
-    semester: yup.number().required(),
-    academicYear: yup.number().required(),
+    isGraduate: yup.boolean().required(),
+    studentShift: yup.string().nullable(),
+    semester: yup.number().nullable(),
+    academicYear: yup.number().nullable(),
   });
 
   const {
@@ -53,7 +57,10 @@ export const RegisterUser = ({ roleCode }) => {
     formState: { errors },
     watch,
     setValue,
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: { isGraduate: false },
+  });
 
   const { required, error, errorMessage } = useFormUtils({ errors, schema });
 
@@ -70,10 +77,15 @@ export const RegisterUser = ({ roleCode }) => {
     email: formData.email,
     password: formData.password,
     practitionerData: {
-      tuitionId: formData.tuitionId,
-      studentShift: formData.studentShift,
-      semester: formData.semester,
-      academicYear: formData.academicYear,
+      isGraduate: formData.isGraduate,
+      tuitionId: formData?.tuitionId,
+      studentShift: formData?.studentShift || null,
+      semester: formData?.semester || null,
+      academicYear: formData?.academicYear
+        ? `${moment(formData.academicYear, "YYYY").format(
+            "YYYY"
+          )} ${getAcademicYearBySemester(formData.semester)}`
+        : null,
     },
   });
 
@@ -258,11 +270,11 @@ export const RegisterUser = ({ roleCode }) => {
         )}
       />
       <Controller
-        name="studentShift"
+        name="isGraduate"
         control={control}
         render={({ field: { onChange, value, name } }) => (
-          <Select
-            label="Turno"
+          <RadioGroup
+            label="¿Eres egresado?"
             onChange={onChange}
             value={value}
             name={name}
@@ -271,78 +283,111 @@ export const RegisterUser = ({ roleCode }) => {
             required={required(name)}
             options={[
               {
-                label: "Diurno",
-                value: "diurno",
+                label: "No",
+                value: false,
               },
               {
-                label: "Nocturno",
-                value: "nocturno",
+                label: "Si",
+                value: true,
               },
             ]}
           />
         )}
       />
-      <Controller
-        name="semester"
-        control={control}
-        render={({ field: { onChange, value, name } }) => (
-          <Select
-            label="Semestre"
-            onChange={onChange}
-            value={value}
-            name={name}
-            error={error(name)}
-            helperText={errorMessage(name)}
-            required={required(name)}
-            options={[
-              {
-                label: "I",
-                value: "I",
-              },
-              {
-                label: "II",
-                value: "II",
-              },
-              {
-                label: "III",
-                value: "III",
-              },
-              {
-                label: "IV",
-                value: "IV",
-              },
-              {
-                label: "V",
-                value: "V",
-              },
-              {
-                label: "VI",
-                value: "VI",
-              },
-              {
-                label: "VI",
-                value: "VI",
-              },
-            ]}
+      {!watch("isGraduate") && (
+        <>
+          <Controller
+            name="studentShift"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <Select
+                label="Turno"
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error(name)}
+                helperText={errorMessage(name)}
+                required={required(name)}
+                options={[
+                  {
+                    label: "Diurno",
+                    value: "diurno",
+                  },
+                  {
+                    label: "Nocturno",
+                    value: "nocturno",
+                  },
+                  {
+                    label: "Egresado",
+                    value: "egresado",
+                  },
+                ]}
+              />
+            )}
           />
-        )}
-      />
-      <Controller
-        name="academicYear"
-        control={control}
-        render={({ field: { onChange, value, name } }) => (
-          <DatePicker
-            label="Año Académico"
-            format="YYYY"
-            onChange={onChange}
-            value={value}
-            name={name}
-            error={error(name)}
-            helperText={errorMessage(name)}
-            required={required(name)}
+          <Controller
+            name="semester"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <Select
+                label="Semestre"
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error(name)}
+                helperText={errorMessage(name)}
+                required={required(name)}
+                options={[
+                  {
+                    label: "Ciclo: I",
+                    value: "I",
+                  },
+                  {
+                    label: "Ciclo: II",
+                    value: "II",
+                  },
+                  {
+                    label: "Ciclo: III",
+                    value: "III",
+                  },
+                  {
+                    label: "Ciclo: IV",
+                    value: "IV",
+                  },
+                  {
+                    label: "Ciclo: V",
+                    value: "V",
+                  },
+                  {
+                    label: "Ciclo: VI",
+                    value: "VI",
+                  },
+                  {
+                    label: "Egresado",
+                    value: "egresado",
+                  },
+                ]}
+              />
+            )}
           />
-        )}
-      />
+          <Controller
+            name="academicYear"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <DatePicker
+                label="Año Académico"
+                format="YYYY"
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error(name)}
+                helperText={errorMessage(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </>
+      )}
       <Button
         block
         size="large"
