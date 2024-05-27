@@ -26,7 +26,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { capitalize } from "lodash";
+import { capitalize, isEmpty } from "lodash";
 import {
   Annex2Integration,
   Annex3Integration,
@@ -34,6 +34,7 @@ import {
   Annex6Integration,
 } from "./module1";
 import styled from "styled-components";
+import * as yup from "yup";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
