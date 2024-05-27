@@ -5,6 +5,7 @@ import { faEdit, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
 import { capitalize } from "lodash";
 import { useNavigate } from "react-router";
+import { useAuthentication } from "../../../providers";
 
 export const PracticeTable = ({
   practices,
@@ -12,8 +13,36 @@ export const PracticeTable = ({
   onConfirmRemovePractice,
 }) => {
   const navigate = useNavigate();
+  const { authUser } = useAuthentication();
 
   const onNavigateTo = (pathName) => navigate(pathName);
+
+  const getPracticesByRoleCode = (roleCode) => {
+    switch (roleCode) {
+      case "super_admin":
+        return practices;
+      case "admin":
+        return practices;
+      case "academic_supervisor":
+        return practices.filter(
+          (practice) => practice.academicSupervisorId === authUser.id
+        );
+      case "academic_coordinator":
+        return practices.filter(
+          (practice) => practice.academicCoordinatorId === authUser.id
+        );
+      case "company_representative":
+        return practices.filter(
+          (practice) => practice.companyRepresentativeId === authUser.id
+        );
+      case "user":
+        return practices.filter(
+          (practice) => practice.practitionerId === authUser.id
+        );
+    }
+  };
+
+  const practicesView = getPracticesByRoleCode(authUser.roleCode);
 
   const columns = [
     {
@@ -85,7 +114,7 @@ export const PracticeTable = ({
   return (
     <Table
       columns={columns}
-      dataSource={practices}
+      dataSource={practicesView}
       pagination={false}
       scroll={{ x: "max-content" }}
     />
