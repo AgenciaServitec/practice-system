@@ -12,6 +12,7 @@ import {
   Select,
   TextArea,
   TimePicker,
+  Text,
 } from "../../../../components";
 import { useFormUtils } from "../../../../hooks";
 import moment from "moment/moment";
@@ -181,6 +182,12 @@ const InitialPracticeForm = ({
 
   return (
     <Row gutter={[16, 16]}>
+      <Col span={24}>
+        <Text>
+          Si no encuentras la empresa de tus practicas, debes pedir a tu
+          representante de empresa que se registre!
+        </Text>
+      </Col>
       <Col span={24}>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Row gutter={[16, 16]}>
