@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import assert from "assert";
 import { useAuthentication } from "../../providers";
+import * as assert from "assert";
 
 export const Acl = ({ children, name, redirect }) => {
   const navigate = useNavigate();
