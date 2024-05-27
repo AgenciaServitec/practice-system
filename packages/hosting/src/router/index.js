@@ -76,6 +76,24 @@ export const Router = () => {
         />
         <Route
           exact
+          path="companies"
+          element={
+            <AdminLayout>
+              <A.Companies />
+            </AdminLayout>
+          }
+        />
+        <Route
+          exact
+          path="companies/:companyId"
+          element={
+            <AdminLayout>
+              <A.CompanyIntegration />
+            </AdminLayout>
+          }
+        />
+        <Route
+          exact
           path="practices"
           element={
             <AdminLayout>
@@ -98,24 +116,6 @@ export const Router = () => {
           element={<A.Sheets />}
         />
       </Route>
-      <Route
-        exact
-        path="companies"
-        element={
-          <AdminLayout>
-            <A.Companies />
-          </AdminLayout>
-        }
-      />
-      <Route
-        exact
-        path="companies/:companyId"
-        element={
-          <AdminLayout>
-            <A.CompanyIntegration />
-          </AdminLayout>
-        }
-      />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
