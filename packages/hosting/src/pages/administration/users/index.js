@@ -44,7 +44,7 @@ export const Users = () => {
 
     notification({
       type: "success",
-      title: "User deleted successfully!",
+      title: "¡Usuario eliminado exitosamente!",
     });
   };
 
