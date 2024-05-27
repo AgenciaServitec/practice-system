@@ -15,6 +15,7 @@ import { useNavigate } from "react-router";
 import { updatePractice } from "../../../firebase/collections";
 import { useDefaultFirestoreProps } from "../../../hooks";
 import { PracticeTable } from "./PracticeTable";
+import { isEmpty } from "lodash";
 
 export const Practices = () => {
   const navigate = useNavigate();
@@ -45,15 +46,23 @@ export const Practices = () => {
     });
 
   const onValidateAddPractice = () => {
-    notification({
-      type: "warning",
-      title: "Debe completar su perfil para crear una práctica",
-      btn: (
-        <Button type="primary" onClick={() => navigate("/profile")}>
-          Click aquí!
-        </Button>
-      ),
-    });
+    if (
+      !authUser?.academicCoordinatorId ||
+      !authUser.academicSupervisorId ||
+      isEmpty(authUser.companiesIds)
+    ) {
+      return notification({
+        type: "warning",
+        title: "Debe completar su perfil para crear una práctica",
+        btn: (
+          <Button type="primary" onClick={() => navigate("/profile")}>
+            Click aquí!
+          </Button>
+        ),
+      });
+    }
+
+    onAddPractice();
   };
 
   return (
