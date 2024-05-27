@@ -86,6 +86,7 @@ export const PracticeTable = ({
             <IconAction
               tooltipTitle="Pdf"
               icon={faFilePdf}
+              styled={{ color: (theme) => theme.colors.error }}
               onClick={() =>
                 onNavigateTo(`/practices/${practice.id}/module1/sheets`)
               }

@@ -1,13 +1,11 @@
 import React from "react";
-import { LogoServitec, QR } from "../../../../../../images";
+import { LogoPrimary, LogoServitec } from "../../../../../../images";
 import styled from "styled-components";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEarthAmerica,
-  faEnvelope,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEarthAmerica, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { QRCode } from "antd";
+import { fullName } from "../../../../../../utils";
 
 export const PracticesSheet2 = ({
   practice,
@@ -23,14 +21,21 @@ export const PracticesSheet2 = ({
             <img src={LogoServitec} alt="" />
           </div>
           <div className="images__qr">
-            <img src={QR} alt="" />
+            <QRCode
+              value={`${window.location.href}`}
+              icon={LogoPrimary}
+              iconSize={30}
+              type="svg"
+              size={110}
+              bordered={false}
+            />
           </div>
         </div>
 
         <div className="header">
           <div className="header__title">
-            <h3>REPRESENTANTE LEGAL DE LA EMPRESA</h3>
-            <h3>{`${company.socialReason}`}</h3>
+            <h4>REPRESENTANTE LEGAL DE LA EMPRESA</h4>
+            <h4>{`${company.socialReason}`}</h4>
           </div>
           <div className="header__legend">
             <h4>
@@ -42,16 +47,14 @@ export const PracticesSheet2 = ({
         </div>
         <div className="body">
           <div className="body__title">
-            <h2>CONSTANCIA DE PRÁCTICAS PRE PROFESIONALES</h2>
+            <h3>CONSTANCIA DE PRÁCTICAS PRE PROFESIONALES</h3>
           </div>
           <div className="body__description">
             <h5>EL QUE SUSCRIBE, HACE CONSTAR LOS SIGUIENTE:</h5>
             <text>
               Que el Sr.&nbsp;
               <span className="capitalize">
-                <strong>
-                  {`${practitioner.paternalSurname} ${practitioner.maternalSurname} ${practitioner.firstName}`}
-                </strong>
+                <strong>{fullName(practitioner)}</strong>
               </span>
               , alumno de este Instituto de Educación Superior Tecnológico
               Público “GILDA LILIANA BALLIVIAN ROSADO”, en la Carrera
@@ -59,17 +62,22 @@ export const PracticesSheet2 = ({
               realizado satisfactoriamente sus Prácticas Pre-Profesionales,
               referente al{" "}
               <strong>
-                MÓDULO N°{`${practice.moduleNumber}`}: {`${practice.name}`}, con
-                un total de {`${practice.hours}`} horas
+                MÓDULO N° {practice.moduleNumber} :{" "}
+                <span className="capitalize">{practice.name}</span>
               </strong>
-              , efectuadas en el periodo del{" "}
-              {moment(practice.startDate, "DD/MM/YYYY").format(
-                "DD [de] MMMM [del] YYYY"
-              )}
+              , con un total de <strong>{practice.hours} horas</strong>,
+              efectuadas en el periodo del{" "}
+              <strong>
+                {moment(practice.startDate, "DD/MM/YYYY").format(
+                  "DD [de] MMMM [del] YYYY"
+                )}
+              </strong>
               &nbsp;al&nbsp;
-              {moment(practice.endDate, "DD/MM/YYYY").format(
-                "DD [de] MMMM [del] YYYY"
-              )}
+              <strong>
+                {moment(practice.endDate, "DD/MM/YYYY").format(
+                  "DD [de] MMMM [del] YYYY"
+                )}
+              </strong>
               .<p></p>
               Se expide la presente constancia a solicitud del interesado, para
               los fines que estime conveniente.{" "}
@@ -77,35 +85,36 @@ export const PracticesSheet2 = ({
           </div>
           <div className="body__date">
             <span>
-              Chorrillos,&nbsp;{moment().format("DD [de] MMMM [del] YYYY")}
+              Chorrillos, {moment().format("DD [de] MMMM [del] YYYY")}
             </span>
           </div>
         </div>
         <div className="footer">
           <div className="footer__firma">
             <text>
-              <strong>Firme y Sello del representante de la Empresa </strong>
+              <strong>Firma y Sello del representante de la Empresa </strong>
             </text>
-            <span>{`${representativeCompany.firstName} ${representativeCompany.paternalSurname} ${representativeCompany.maternalSurname}`}</span>
+            <br />
+            <span>{fullName(representativeCompany)}</span>
           </div>
           <div className="footer__company">
             <span className="address">
-              <strong>{`${company.address}`}</strong>
+              <strong>{`${company?.address}`}</strong>
             </span>
-            <span>
-              <FontAwesomeIcon icon={faPhone} />
-              &nbsp; &nbsp;
-              <strong>{`${company.phone}`}</strong>
-            </span>
+            {/*<span>*/}
+            {/*  <FontAwesomeIcon icon={faPhone} />*/}
+            {/*  &nbsp; &nbsp;*/}
+            {/*  <strong>{`${company?.phone?.prefix} ${company?.phone?.number}`}</strong>*/}
+            {/*</span>*/}
             <span>
               <FontAwesomeIcon icon={faEnvelope} />
               &nbsp; &nbsp;
-              <strong>{`${company.email}`}</strong>
+              <strong>{`${company?.email}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEarthAmerica} />
               &nbsp; &nbsp;
-              <strong>{`${company.webSite}`}</strong>
+              <strong>{`${company?.webSite}`}</strong>
             </span>
           </div>
         </div>
@@ -115,6 +124,10 @@ export const PracticesSheet2 = ({
 };
 
 const Container = styled.div`
+  .capitalize {
+    text-transform: capitalize;
+  }
+
   .images {
     display: flex;
 
@@ -139,7 +152,7 @@ const Container = styled.div`
     &__title {
       text-align: center;
       text-transform: uppercase;
-      h3 {
+      h4 {
         margin: 0;
       }
     }
@@ -184,7 +197,7 @@ const Container = styled.div`
     &__firma {
       margin: auto;
       text-align: center;
-      width: 326px;
+      width: 400px;
       border-top: 3px solid #000;
       padding-top: 1em;
 
@@ -193,10 +206,10 @@ const Container = styled.div`
       }
     }
     &__company {
-      height: 300px;
+      height: auto;
       padding: 1em;
       width: auto;
-      background: darkgrey;
+      background: #ededed;
       margin-top: 6em;
       text-align: center;
       display: flex;

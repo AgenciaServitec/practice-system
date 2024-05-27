@@ -14,53 +14,72 @@ import { useNavigate, useParams } from "react-router";
 import { useGlobalData } from "../../../../../../providers";
 import { practicesRef } from "../../../../../../firebase/collections";
 import { querySnapshotToArray } from "../../../../../../firebase/firestore";
+import { notification, Spinner } from "../../../../../../components";
+import { isEmpty } from "lodash";
 
 export const Sheets = () => {
   const { practiceId } = useParams();
   const navigate = useNavigate();
-
   const { practices, users, companies } = useGlobalData();
+
   const [practice, setPractice] = useState({});
   const [company, setCompany] = useState({});
   const [practitioner, setPractitioner] = useState({});
   const [representativeCompany, setRepresentativeCompany] = useState({});
+  const [supervisor, setSupervisor] = useState({});
   const [annexs, setAnnexs] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const onGoBack = () => navigate(-1);
 
   useEffect(() => {
-    const _practice = practices.find((practice) => practice.id === practiceId);
-
-    if (!_practice) return onGoBack();
-
-    const _company = companies.find(
-      (company) => company.id === _practice.companyId
-    );
-
-    const _practitioner = users.find(
-      (user) => user.id === _practice.practitionerId
-    );
-
-    const _representativeCompany = users.find(
-      (user) => user.id === _company.representativeId
-    );
-
-    (async () => {
-      await practicesRef
-        .doc(_practice.id)
-        .collection("annexs")
-        .onSnapshot((snapshot) => {
-          setAnnexs(querySnapshotToArray(snapshot));
-        });
-    })();
-
-    setPractice(_practice);
-    setCompany(_company);
-    setPractitioner(_practitioner);
-    setRepresentativeCompany(_representativeCompany);
+    (() => getSheetsData())();
   }, [practiceId]);
 
+  const getSheetsData = () => {
+    try {
+      setLoading(true);
+
+      const _practice = practices.find(
+        (practice) => practice?.id === practiceId
+      );
+      if (!_practice) return onGoBack();
+
+      const _company = companies.find(
+        (company) => company?.id === _practice.companyId
+      );
+
+      (async () => {
+        await practicesRef
+          .doc(_practice?.id)
+          .collection("annexs")
+          .onSnapshot((snapshot) => {
+            setAnnexs(querySnapshotToArray(snapshot));
+          });
+      })();
+
+      setPractice(_practice);
+      setCompany(_company);
+      setPractitioner(
+        users.find((user) => user?.id === _practice.practitionerId)
+      );
+      setRepresentativeCompany(
+        users.find((user) => user?.id === _company.representativeId)
+      );
+      setSupervisor(
+        users.find((user) => user?.id === _practice.academicSupervisorId)
+      );
+    } catch (e) {
+      console.log("GetSheetsDataError: ", e);
+      notification({ type: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const [annex2, annex3, annex4, annex6] = annexs;
+
+  if (loading || isEmpty(practice)) return <Spinner height="80vh" />;
 
   return (
     <PDF>
@@ -73,24 +92,28 @@ export const Sheets = () => {
       </Sheet>
       <Sheet layout="portrait">
         <PracticesSheet2
-          practice={practice}
           practitioner={practitioner}
+          practice={practice}
           company={company}
           representativeCompany={representativeCompany}
         />
       </Sheet>
       <Sheet layout="portrait">
         <PracticesSheet3
-          practice={practice}
           practitioner={practitioner}
+          practice={practice}
           company={company}
+          representativeCompany={representativeCompany}
+          supervisor={supervisor}
         />
       </Sheet>
       <Sheet layout="portrait">
         <PracticesSheet4
-          practice={practice}
           practitioner={practitioner}
+          practice={practice}
           company={company}
+          representativeCompany={representativeCompany}
+          supervisor={supervisor}
           annex3={annex3}
         />
       </Sheet>

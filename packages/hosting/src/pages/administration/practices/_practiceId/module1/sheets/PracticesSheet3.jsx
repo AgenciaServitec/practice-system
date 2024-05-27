@@ -2,8 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
 import moment from "moment";
+import { fullName, getBusinessPosition } from "../../../../../../utils";
 
-export const PracticesSheet3 = () => {
+export const PracticesSheet3 = ({
+  practitioner,
+  practice,
+  company,
+  representativeCompany,
+  supervisor,
+}) => {
   return (
     <>
       <Container>
@@ -26,14 +33,39 @@ export const PracticesSheet3 = () => {
           </div>
           <div className="body__datacompany">
             <ul>
-              <li>Razón Social de la Empresa:</li>
-              <li>Dirección:</li>
-              <li>Distrito:</li>
-              <li>Teléfono:</li>
               <li>
-                Nombre del encargado del control de Prácticas Pre-Profesonales:
+                Razón Social de la Empresa:{" "}
+                <strong className="capitalize">{company.socialReason}</strong>
               </li>
-              <li>Cargo:</li>
+              <li>
+                Distrito:{" "}
+                <strong className="capitalize">{company.district}</strong>
+              </li>
+              <li>
+                Dirección:{" "}
+                <strong className="capitalize">{company.address}</strong>
+              </li>
+              <li>
+                Teléfono:{" "}
+                <strong className="capitalize">{`${
+                  company?.phone?.prefix || ""
+                } ${company?.phone?.number || ""}`}</strong>
+              </li>
+              <li>
+                Nombre del encargado del control de Prácticas Pre-Profesonales:{" "}
+                <strong className="capitalize">
+                  {fullName(representativeCompany)}
+                </strong>
+              </li>
+              <li>
+                Cargo:{" "}
+                <strong className="capitalize">
+                  {getBusinessPosition(
+                    representativeCompany?.companyRepresentativeData
+                      ?.businessPosition
+                  )?.label || ""}
+                </strong>
+              </li>
             </ul>
           </div>
           <div className="body__subtitle2">
@@ -41,13 +73,31 @@ export const PracticesSheet3 = () => {
           </div>
           <div className="body__datastudent">
             <ul>
-              <li>Apellidos y Nombres:</li>
-              <li>Carrera Profesional:</li>
+              <li>
+                Apellidos y Nombres:{" "}
+                <strong className="capitalize">{fullName(practitioner)}</strong>
+              </li>
+              <li>
+                Carrera Profesional:{" "}
+                <strong className="capitalize">
+                  Computación e Informática
+                </strong>
+              </li>
             </ul>
             <ul className="row-list">
-              <li>Turno:</li>
-              <li>Semestre:</li>
-              <li>Año Académico:</li>
+              <li>
+                Turno:{" "}
+                <strong className="capitalize">
+                  {practitioner?.practitionerData?.studentShift || "Egresado"}
+                </strong>
+              </li>
+              <li>
+                Semestre:{" "}
+                {practitioner?.practitionerData?.semester || "Egresado"}
+              </li>
+              <li>
+                Año Académico: {practitioner?.practitionerData?.academicYear}
+              </li>
             </ul>
           </div>
           <div className="body__subtitle3">
@@ -55,9 +105,16 @@ export const PracticesSheet3 = () => {
           </div>
           <div className="body__company">
             <ul>
-              <li>Período de la práctica:</li>
+              <li>
+                Período de la práctica:{" "}
+                {moment(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")}{" "}
+                - {moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
+              </li>
               <li>Horario:</li>
-              <li>Dpto. Sector o Área de las Prácticas:</li>
+              <li>
+                Dpto. Sector o Área de las Prácticas:{" "}
+                <strong className="capitalize">{practice?.practiceArea}</strong>
+              </li>
               <li>Refrigerio:</li>
               <li>Movilidad:</li>
               <li>Otros:</li>
@@ -69,14 +126,16 @@ export const PracticesSheet3 = () => {
         </div>
         <div className="footer">
           <div className="footer__firm1">
-            <span>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</span>
+            <strong>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</strong>
             <br />
-            <span>Mg. Yaya Gómez María Emilia</span>
+            <span className="capitalize">{fullName(supervisor)}</span>
           </div>
           <div className="footer__firm2">
-            <span>Representante de la Empresa</span>
+            <strong>Representante de la Empresa</strong>
             <br />
-            <span>Roberto Alcides Mendoza Perca</span>
+            <span className="capitalize">
+              {fullName(representativeCompany)}
+            </span>
           </div>
         </div>
         <div className="note">
@@ -92,6 +151,10 @@ export const PracticesSheet3 = () => {
 };
 
 const Container = styled.div`
+  .capitalize {
+    text-transform: capitalize;
+  }
+
   .header {
     text-align: center;
     line-height: 1em;

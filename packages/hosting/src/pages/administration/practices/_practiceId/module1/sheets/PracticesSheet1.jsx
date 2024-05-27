@@ -3,7 +3,7 @@ import { LogoGilda } from "../../../../../../images";
 import styled from "styled-components";
 import { fullName } from "../../../../../../utils";
 
-export const PracticesSheet1 = ({ practice, practitioner }) => {
+export const PracticesSheet1 = ({ practitioner }) => {
   return (
     <>
       <Container>
@@ -29,11 +29,15 @@ export const PracticesSheet1 = ({ practice, practitioner }) => {
           <div className="info">
             <h4>
               :&nbsp;
-              <span className="capitalize">{fullName(practitioner) || ""}</span>
+              <span className="capitalize">
+                {practitioner && fullName(practitioner)}
+              </span>
             </h4>
-            <h4>: 20192939</h4>
-            <h4>: DIURNO</h4>
-            <h4>: 2023</h4>
+            <h4>: {practitioner?.practitionerData?.tuitionId}</h4>
+            <h4>
+              : {practitioner?.practitionerData?.studentShift || "Egresado"}
+            </h4>
+            <h4>: {practitioner?.practitionerData?.academicYear}</h4>
           </div>
         </Details>
         <h1 style={{ fontSize: "60px" }}>{new Date().getFullYear()}</h1>
@@ -75,6 +79,7 @@ const Details = styled.div`
     }
   }
 `;
+
 const Career = styled.div`
   padding: 1em;
   margin: 1em;

@@ -2,8 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
 import moment from "moment";
+import { fullName } from "../../../../../../utils";
 
-export const PracticesSheet4 = ({ annex3 }) => {
+export const PracticesSheet4 = ({
+  practitioner,
+  practice,
+  company,
+  representativeCompany,
+  supervisor,
+  annex3,
+}) => {
   return (
     <>
       <Container>
@@ -24,54 +32,60 @@ export const PracticesSheet4 = ({ annex3 }) => {
             </h5>
           </div>
           <div className="body__career">
-            <div className="career">
-              <h5>CARRERA PROFESIONAL : </h5>
-            </div>
-            <div className="description">
-              <h5>Computación e Informática</h5>
-              <text>(Ingresantes a partir del año 2021)</text>
+            <div className="text-item">
+              <span>
+                <strong>CARRERA PROFESIONAL : Computación e Informática</strong>
+                (Ingresantes a partir del año 2021)
+              </span>
             </div>
           </div>
           <div className="body__data">
             <ol>
               <li>
                 &nbsp;Apellidos y Nombres del Practicante:{" "}
-                <strong>Aguirre Vizalote Mónica Luz</strong>
+                <strong>{fullName(practitioner)}</strong>
               </li>
               <li>
                 &nbsp;N° y Denominación del Módulo Técnico Profesional:{" "}
                 <strong>
-                  N° 1 | Gestión de Soporte Técnico, Seguridad y Tecnologías de
-                  la Información y Comunicación
+                  N° {practice?.moduleNumber} |{" "}
+                  <span className="capitalize">{practice?.name}</span>
                 </strong>
               </li>
               <li>
-                &nbsp;Duración de las PPP: <strong>320 horas</strong>
+                &nbsp;Duración de las PPP:{" "}
+                <strong>{practice?.hours} horas</strong>
               </li>
               <li>
-                &nbsp;Fecha de inicio de las PPP: <strong>20 de junio</strong>
+                &nbsp;Fecha de inicio de las PPP:{" "}
+                <strong>
+                  {moment(practice?.startDate, "DD/MM/YYYY").format(
+                    "DD/MM/YYYY"
+                  )}
+                </strong>
               </li>
               <li>
                 &nbsp;Nombre de la Empresa, Institución o Centro de Prácticas:
                 <br />
-                <strong>&quot;LOS INSUMOS GENERALES E.I.R.L&quot;</strong>
+                <strong className="capitalize">
+                  &quot;{company?.socialReason}&quot;
+                </strong>
               </li>
             </ol>
             <div className="company">
               <ul>
                 <li>
                   Giro de la Empresa o Institución:{" "}
-                  <strong>VENTA DE INSUMOS QUÍMICOS</strong>
+                  <strong>DesarrolLo de apps</strong>
                 </li>
                 <li>
-                  Dirección: <strong>JR. Daniel Garcés 464 Urb. P. Baja</strong>
+                  Dirección: <strong>{company?.address}</strong>
                 </li>
                 <li>
                   Teléfono: <strong>929393949</strong>
                 </li>
                 <li>
-                  Docente supervisor:{" "}
-                  <strong>Dr. Ing. Eladio Llamoga Sánchez</strong>
+                  Docente supervisor: <strong>{fullName(supervisor)}</strong>
                 </li>
                 <Table>
                   <tr>
@@ -84,7 +98,7 @@ export const PracticesSheet4 = ({ annex3 }) => {
                     <th className="observation">OBSERVACIONES</th>
                   </tr>
                   <tr>
-                    <td>{`${annex3?.visitNumber}`}</td>
+                    <td>{annex3?.visitNumber || ""}</td>
                     <td>
                       {annex3?.supervisionDate
                         ? moment(
@@ -93,29 +107,26 @@ export const PracticesSheet4 = ({ annex3 }) => {
                           ).format("DD/MM/YYYY")
                         : ""}
                     </td>
-                    <td>
-                      Mantenimiento Preventivo y Correctivo de equipos de
-                      Cómputo
-                    </td>
-                    <td>{`${annex3?.progressStatus}`}</td>
-                    <td>{`${annex3?.observations}`}</td>
+                    <td>{annex3?.task || ""}</td>
+                    <td>{annex3?.progressStatus || ""}</td>
+                    <td>{annex3?.observations || ""}</td>
                   </tr>
                 </Table>
                 <br />
                 <li>
                   <div className="response-item">
                     <span>Dificultades detectadas durante las prácticas:</span>
-                    <span>{annex3?.difficultiesDetected}</span>
+                    <span>{annex3?.difficultiesDetected || <br />}</span>
                     <hr />
                   </div>
                 </li>
                 <br />
                 <li>
-                  Sugerencias y Recomendaciones: <br />
-                  <br />
-                  <hr />
-                  <br />
-                  <hr />
+                  <div className="response-item">
+                    Sugerencias y Recomendaciones:
+                    <span>{annex3?.suggestionsRecommendations || <br />}</span>
+                    <hr />
+                  </div>
                 </li>
               </ul>
             </div>
@@ -123,21 +134,23 @@ export const PracticesSheet4 = ({ annex3 }) => {
         </div>
         <div className="footer">
           <div className="footer__firm1">
-            <span>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</span>
+            <strong>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</strong>
             <br />
-            <span>Mg. Yaya Gómez María Emilia</span>
+            <span className="capitalize">{fullName(supervisor)}</span>
           </div>
           <div className="footer__firm2">
-            <span>Representante de la Empresa</span>
+            <strong>Representante de la Empresa</strong>
             <br />
-            <span>Roberto Alcides Mendoza Perca</span>
+            <span className="capitalize">
+              {fullName(representativeCompany)}
+            </span>
           </div>
         </div>
-        <div className="footer2">
-          <span>Firma y Sello del Gerente General</span>
-          <br />
-          <span>Lozada Yntuscca Orlando Roberto</span>
-        </div>
+        {/*<div className="footer2">*/}
+        {/*  <span>Firma y Sello del Gerente General</span>*/}
+        {/*  <br />*/}
+        {/*  <span>{fullName(representativeCompany)}</span>*/}
+        {/*</div>*/}
       </Container>
     </>
   );
@@ -165,7 +178,6 @@ const Container = styled.div`
     &__title {
       margin: auto;
       text-align: center;
-      width: 600px;
 
       h3 {
         text-decoration: underline;
@@ -173,16 +185,13 @@ const Container = styled.div`
       }
     }
     &__career {
-      margin-top: 1.5em;
-      display: flex;
-      justify-content: center;
-      .career {
-        width: 195px;
-      }
-      .description {
-        width: 285px;
+      .text-item {
+        display: flex;
+        justify-content: center;
+        gap: 0.5em;
+        width: 37em;
         text-align: center;
-        line-height: 0.8em;
+        margin: auto;
       }
     }
     &__data {
