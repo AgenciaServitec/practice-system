@@ -55,7 +55,7 @@ export const RegisterRepresentativeCompanyIntegration = ({ roleCode }) => {
     },
     email: formData.email.toLowerCase(),
     password: formData.password,
-    companyRepresentative: {
+    companyRepresentativeData: {
       ruc: company.ruc,
       businessPosition: formData?.businessPosition,
     },
