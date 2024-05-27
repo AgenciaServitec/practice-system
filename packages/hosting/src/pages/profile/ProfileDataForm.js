@@ -252,6 +252,55 @@ export const ProfileDataForm = () => {
             )}
           />
         </Col>
+        <Col span={12}>
+          <Controller
+            name="academicCoordinatorId"
+            control={control}
+            render={({ field: { onChange, name, value } }) => (
+              <Select
+                label="Coordinador Académico"
+                value={value}
+                options={coordinatorView}
+                onChange={onChange}
+                error={error(name)}
+                helperText={errorMessage(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={12}>
+          <Controller
+            name="academicSupervisorId"
+            control={control}
+            render={({ field: { onChange, name, value } }) => (
+              <Select
+                label="Supervisor Académico"
+                value={value}
+                options={supervisorView}
+                onChange={onChange}
+                error={error(name)}
+                helperText={errorMessage(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={24}>
+          <Controller
+            name="companiesIds"
+            control={control}
+            render={({ field: { onChange, name, value } }) => (
+              <Select
+                label="Empresas"
+                mode="multiple"
+                value={value}
+                options={companiesView}
+                onChange={onChange}
+                error={error(name)}
+                helperText={errorMessage(name)}
+              />
+            )}
+          />
+        </Col>
         {authUser.roleCode === "user" && (
           <>
             {" "}
