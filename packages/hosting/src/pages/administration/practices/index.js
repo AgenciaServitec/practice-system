@@ -36,7 +36,7 @@ export const Practices = () => {
 
   const onConfirmRemovePractice = async (practice) =>
     modalConfirm({
-      content: "El documento se eliminará",
+      content: "La practica se eliminará",
       onOk: async () => {
         await onDeletePractice(practice);
       },
