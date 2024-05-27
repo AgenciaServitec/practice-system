@@ -18,7 +18,7 @@ export const postUserMapping = (user: UserBody): User => {
     isDeleted: false,
     status: "registered",
 
-    //conditional data by roleCode
+    // conditional data by roleCode
     ...(user?.practitionerData && {
       practitionerData: user.practitionerData,
     }),

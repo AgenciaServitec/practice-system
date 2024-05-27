@@ -84,7 +84,7 @@ export const postUser = async (
       await addCompany(postCompanyMapping(company, userId));
     }
 
-    //get acls of user by roleCode
+    // get acls of user by roleCode
     const roleAcls = await fetchDocument<RoleAcls>(
       firestore.collection("roles-acls").doc(user.roleCode)
     );
