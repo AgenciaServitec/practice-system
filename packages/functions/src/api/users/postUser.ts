@@ -66,16 +66,23 @@ export const postUser = async (
 
     const userId = firestore.collection("users").doc().id;
 
-    if (user.roleCode === "company_representative" && !isEmpty(user?.ruc)) {
-      assert(user.ruc, "Missing ruc!");
+    if (
+      user.roleCode === "company_representative" &&
+      !isEmpty(user?.companyRepresentativeData?.ruc)
+    ) {
+      assert(user?.companyRepresentativeData?.ruc, "Missing ruc!");
 
-      const _isCompanyExists = await isCompanyExists(user.ruc);
+      const _isCompanyExists = await isCompanyExists(
+        user.companyRepresentativeData.ruc
+      );
       if (_isCompanyExists) {
         res.status(412).send("user/ruc_already_exists").end();
         return;
       }
 
-      const company = await getCompanyDataByRuc({ ruc: user.ruc });
+      const company = await getCompanyDataByRuc({
+        ruc: user.companyRepresentativeData.ruc,
+      });
       if (!company) {
         res.status(412).send("user/company_no_found").end();
         return;
