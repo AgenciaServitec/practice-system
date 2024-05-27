@@ -110,12 +110,12 @@ export const Router = () => {
             </AdminLayout>
           }
         />
-        <Route
-          exact
-          path="practices/:practiceId/module1/sheets"
-          element={<A.Sheets />}
-        />
       </Route>
+      <Route
+        exact
+        path="practices/:practiceId/module1/sheets"
+        element={<A.Sheets />}
+      />
       <Route path="*" element={<Page404 />} />
     </Routes>
   );
