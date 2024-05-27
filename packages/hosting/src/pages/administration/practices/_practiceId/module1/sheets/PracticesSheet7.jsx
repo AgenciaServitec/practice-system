@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { LogoGilda } from "../../../../../images";
+import { LogoGilda } from "../../../../../../images";
 
 export const PracticesSheet7 = () => {
   return (

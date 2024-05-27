@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { LogoGilda } from "../../../../../images";
+import { LogoGilda } from "../../../../../../images";
 import moment from "moment";
 
 export const PracticesSheet4 = ({ annex3 }) => {
@@ -84,26 +84,28 @@ export const PracticesSheet4 = ({ annex3 }) => {
                     <th className="observation">OBSERVACIONES</th>
                   </tr>
                   <tr>
-                    <td>{`${annex3.visitNumber}`}</td>
+                    <td>{`${annex3?.visitNumber}`}</td>
                     <td>
-                      {moment(
-                        annex3.supervisionDate.toDate(),
-                        "DD/MM/YYYY"
-                      ).format("DD/MM/YYYY")}
+                      {annex3?.supervisionDate
+                        ? moment(
+                            annex3.supervisionDate.toDate(),
+                            "DD/MM/YYYY"
+                          ).format("DD/MM/YYYY")
+                        : ""}
                     </td>
                     <td>
                       Mantenimiento Preventivo y Correctivo de equipos de
                       Cómputo
                     </td>
-                    <td>{`${annex3.progressStatus}`}</td>
-                    <td>{`${annex3.observations}`}</td>
+                    <td>{`${annex3?.progressStatus}`}</td>
+                    <td>{`${annex3?.observations}`}</td>
                   </tr>
                 </Table>
                 <br />
                 <li>
                   <div className="response-item">
                     <span>Dificultades detectadas durante las prácticas:</span>
-                    <span>{annex3.difficultiesDetected}</span>
+                    <span>{annex3?.difficultiesDetected}</span>
                     <hr />
                   </div>
                 </li>

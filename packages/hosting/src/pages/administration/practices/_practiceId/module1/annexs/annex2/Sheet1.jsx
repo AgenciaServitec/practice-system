@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Form,
   Input,
-  Title,
   modalConfirm,
   notification,
-} from "../../../../../../components";
+  Title,
+} from "../../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
@@ -15,12 +15,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useDefaultFirestoreProps,
   useFormUtils,
-} from "../../../../../../hooks";
+} from "../../../../../../../hooks";
 import moment from "moment";
-import { firestore } from "../../../../../../firebase";
+import { firestore } from "../../../../../../../firebase";
 import styled from "styled-components";
-import { PracticeArea } from "../../../../../../data-list";
-import { practicesRef } from "../../../../../../firebase/collections";
+import { PracticeArea } from "../../../../../../../data-list";
+import { practicesRef } from "../../../../../../../firebase/collections";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 
 export const Sheet1Integration = ({ practice, practitioner, company }) => {

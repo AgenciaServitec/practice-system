@@ -7,7 +7,7 @@ import {
   modalConfirm,
   notification,
   Title,
-} from "../../../../../../components";
+} from "../../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
@@ -16,10 +16,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {
   useDefaultFirestoreProps,
   useFormUtils,
-} from "../../../../../../hooks";
-import { firestore } from "../../../../../../firebase";
+} from "../../../../../../../hooks";
+import { firestore } from "../../../../../../../firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { practicesRef } from "../../../../../../firebase/collections";
+import { practicesRef } from "../../../../../../../firebase/collections";
 import moment from "moment";
 
 export const Sheet1Integration = ({ practice, practitioner, company }) => {

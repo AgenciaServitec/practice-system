@@ -1,5 +1,5 @@
 import React from "react";
-import { Title } from "../../../../../../components";
+import { Title } from "../../../../../../../components";
 import Col from "antd/lib/col";
 import Row from "antd/lib/row";
 import { Sheet1Integration } from "./Sheet1";

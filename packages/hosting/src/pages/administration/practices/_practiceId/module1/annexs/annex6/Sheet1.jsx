@@ -9,14 +9,14 @@ import {
   Select,
   TimePicker,
   Title,
-} from "../../../../../../components";
+} from "../../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
-import { ProfessionalCareer } from "../../../../../../data-list";
+import { ProfessionalCareer } from "../../../../../../../data-list";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormUtils } from "../../../../../../hooks";
+import { useFormUtils } from "../../../../../../../hooks";
 
 export const Sheet1Integration = ({
   practice,

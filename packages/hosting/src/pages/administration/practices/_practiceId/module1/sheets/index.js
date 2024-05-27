@@ -11,11 +11,9 @@ import { PracticesSheet7 } from "./PracticesSheet7";
 import { PracticesSheet8 } from "./PracticesSheet8";
 import { PracticesSheet9 } from "./PracticesSheet9";
 import { useNavigate, useParams } from "react-router";
-import { useGlobalData } from "../../../../../providers";
-import { practicesRef } from "../../../../../firebase/collections";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import { firestore } from "../../../../../firebase";
-import { querySnapshotToArray } from "../../../../../firebase/firestore";
+import { useGlobalData } from "../../../../../../providers";
+import { practicesRef } from "../../../../../../firebase/collections";
+import { querySnapshotToArray } from "../../../../../../firebase/firestore";
 
 export const Sheets = () => {
   const { practiceId } = useParams();

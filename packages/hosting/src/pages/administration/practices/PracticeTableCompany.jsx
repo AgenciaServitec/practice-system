@@ -53,7 +53,7 @@ export const PracticeTable = ({
       key: "actions",
       render: (_, practice) => (
         <Space>
-          <Acl name="/practices/:practiceId/sheets">
+          <Acl name="/practices/:practiceId/module1/sheets">
             <IconAction
               tooltipTitle="Pdf"
               icon={faFilePdf}

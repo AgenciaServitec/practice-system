@@ -32,7 +32,7 @@ import {
   Annex3Integration,
   Annex4Integration,
   Annex6Integration,
-} from "./annexs";
+} from "./module1";
 import styled from "styled-components";
 
 export const PracticeIntegration = () => {
@@ -198,7 +198,9 @@ export const PracticeIntegration = () => {
               <IconAction
                 icon={faFilePdf}
                 styled={{ color: (theme) => theme.colors.error }}
-                onClick={() => navigate(`/practices/${practice.id}/sheets`)}
+                onClick={() =>
+                  navigate(`/practices/${practice.id}/module1/sheets`)
+                }
                 tooltipTitle="Ver pdf"
               />
             )}
