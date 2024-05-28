@@ -273,13 +273,8 @@ const Sheet1 = ({
             </Row>
             <Row justify="end" gutter={[16, 16]}>
               <Col span={24} sm={6} md={4}>
-                <Button type="primary" danger size="large" block>
-                  Aprobar
-                </Button>
-              </Col>
-              <Col span={24} sm={6} md={4}>
                 <Button type="primary" size="large" block htmlType="submit">
-                  Revisado
+                  Guardar
                 </Button>
               </Col>
             </Row>

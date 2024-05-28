@@ -21,6 +21,7 @@ import { useDefaultFirestoreProps } from "../../../../hooks";
 import { Card, Collapse } from "antd";
 import {
   faArrowLeft,
+  faCheckCircle,
   faFilePdf,
   faMinus,
   faPlus,
@@ -94,7 +95,12 @@ export const PracticeIntegration = () => {
       key: "annex2",
       label: (
         <Col span={24}>
-          <Title level={4}>Anexo 2</Title>
+          <Title level={4}>
+            Anexo 2{" "}
+            {practice.status === "approved" && (
+              <FontAwesomeIcon icon={faCheckCircle} color="green" />
+            )}
+          </Title>
         </Col>
       ),
       children: (
@@ -113,7 +119,7 @@ export const PracticeIntegration = () => {
       key: "annex3",
       label: (
         <Col span={24}>
-          <Title level={4}>Anexo 3</Title>
+          <Title level={4}>Anexo 3 </Title>
         </Col>
       ),
       children: (

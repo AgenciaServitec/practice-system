@@ -296,7 +296,7 @@ const Sheet1 = ({ onConfirmSheet1 }) => {
         </Col>
         <Col span={24} sm={6} md={4}>
           <Button type="primary" size="large" block htmlType="submit">
-            Revisado
+            Guardar
           </Button>
         </Col>
       </Row>
