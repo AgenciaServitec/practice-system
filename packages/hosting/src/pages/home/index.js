@@ -36,7 +36,9 @@ export const HomeIntegration = () => {
                 <FontAwesomeIcon icon={faUser} size="5x" />
               </div>
               <div className="texts">
-                <Title level={3}>{fullName(authUser)}:</Title>
+                <Title level={3}>
+                  <span className="capitalize"> {fullName(authUser)}:</span>
+                </Title>
                 <ul className="list">
                   <li>
                     <Link to="/profile">1. Perfil</Link>
