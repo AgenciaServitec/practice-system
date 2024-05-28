@@ -18,15 +18,10 @@ import {
   useFormUtils,
 } from "../../../../../../../hooks";
 import { firestore } from "../../../../../../../firebase";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { practicesRef } from "../../../../../../../firebase/collections";
 import moment from "moment";
 
-export const Sheet1Integration = ({ practice, practitioner, company }) => {
+export const Sheet1Integration = ({ practice, annex3 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
-  const [annex3 = {}, annex3Loading, annex3Error] = useDocumentData(
-    practicesRef.doc(practice.id).collection("annexs").doc("annex3")
-  );
 
   const mapForm = (formData) => ({
     visitNumber: formData.visitNumber,
@@ -35,18 +30,17 @@ export const Sheet1Integration = ({ practice, practitioner, company }) => {
     observations: formData.observations,
     difficultiesDetected: formData.difficultiesDetected,
     suggestionsRecommendations: formData.suggestionsRecommendations,
+    status: "pending",
   });
 
   const onSaveSheet1Annex3 = async (formData) => {
     try {
-      const _annex3 = mapForm(formData);
-
       await firestore
         .collection("practices")
         .doc(practice.id)
         .collection("annexs")
         .doc("annex3")
-        .update({ ...assignUpdateProps(_annex3) });
+        .update({ ...assignUpdateProps(mapForm(formData)) });
 
       notification({ type: "success" });
     } catch (e) {
@@ -55,30 +49,16 @@ export const Sheet1Integration = ({ practice, practitioner, company }) => {
     }
   };
 
-  const onConfirmSheet1 = (practice) =>
+  const onConfirmSaveSheet1 = (practice) =>
     modalConfirm({
-      title: "¿Estás seguro de que quieres aprobar esta hoja?",
+      title: "¿Estás seguro de que quieres guardar con los ultimos cambios?",
       onOk: async () => await onSaveSheet1Annex3(practice),
     });
 
-  return (
-    <Sheet1
-      practice={practice}
-      company={company}
-      practitioner={practitioner}
-      annex3={annex3}
-      onConfirmSheet1={onConfirmSheet1}
-    />
-  );
+  return <Sheet1 annex3={annex3} onConfirmSaveSheet1={onConfirmSaveSheet1} />;
 };
 
-const Sheet1 = ({
-  practice,
-  company,
-  practitioner,
-  annex3,
-  onConfirmSheet1,
-}) => {
+const Sheet1 = ({ annex3, onConfirmSaveSheet1 }) => {
   const schema = yup.object({
     visitNumber: yup.string().required(),
     supervisionDate: yup.date().required(),
@@ -117,7 +97,7 @@ const Sheet1 = ({
   };
 
   return (
-    <Form onSubmit={handleSubmit(onConfirmSheet1)}>
+    <Form onSubmit={handleSubmit(onConfirmSaveSheet1)}>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Title level={5}>
@@ -228,11 +208,6 @@ const Sheet1 = ({
         </Col>
       </Row>
       <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={6} md={4}>
-          <Button type="primary" danger size="large" block>
-            Aprobar
-          </Button>
-        </Col>
         <Col span={24} sm={6} md={4}>
           <Button type="primary" size="large" block htmlType="submit">
             Guardar

@@ -13,26 +13,7 @@ export const Annex4Integration = ({
   users,
   practitioner,
   company,
-  onSavePractice,
-}) => {
-  return (
-    <Annex4
-      practice={practice}
-      user={user}
-      users={users}
-      practitioner={practitioner}
-      company={company}
-      onSavePractice={onSavePractice}
-    />
-  );
-};
-
-const Annex4 = ({
-  practice,
-  user,
-  users,
-  practitioner,
-  company,
+  annex4,
   onSavePractice,
 }) => {
   return (
@@ -47,6 +28,7 @@ const Annex4 = ({
               users={users}
               practitioner={practitioner}
               company={company}
+              annex4={annex4}
               onSavePractice={onSavePractice}
             />
           </Space>

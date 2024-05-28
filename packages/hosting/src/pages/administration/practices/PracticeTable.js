@@ -6,6 +6,7 @@ import moment from "moment";
 import { capitalize } from "lodash";
 import { useNavigate } from "react-router";
 import { useAuthentication } from "../../../providers";
+import { practicesStatus } from "../../../data-list";
 
 export const PracticeTable = ({
   practices,
@@ -72,7 +73,9 @@ export const PracticeTable = ({
       render: (_, practice) => (
         <Space>
           <span>
-            <Tag color="yellow">{practice?.status}</Tag>
+            <Tag color={practicesStatus?.[practice.status]?.color}>
+              {practicesStatus?.[practice.status]?.value}
+            </Tag>
           </span>
         </Space>
       ),

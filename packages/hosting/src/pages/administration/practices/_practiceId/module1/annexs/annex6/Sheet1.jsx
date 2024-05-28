@@ -24,11 +24,12 @@ export const Sheet1Integration = ({
   users,
   practitioner,
   company,
+  annex6,
   onSavePractice,
 }) => {
   const onConfirmSheet1 = () =>
     modalConfirm({
-      title: "¿Estás seguro de que quieres aprobar esta hoja?",
+      title: "¿Estás seguro de que quieres guardar con los ultimos cambios?",
       onOk: () => notification({ type: "success" }),
     });
 

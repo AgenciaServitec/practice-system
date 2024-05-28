@@ -28,7 +28,7 @@ export const Sheet3Integration = ({
 }) => {
   const onConfirmSheet3 = () =>
     modalConfirm({
-      title: "¿Estás seguro de que quieres aprobar esta hoja?",
+      title: "¿Estás seguro de que quieres guardar con los ultimos cambios?",
       onOk: () => notification({ type: "success" }),
     });
 

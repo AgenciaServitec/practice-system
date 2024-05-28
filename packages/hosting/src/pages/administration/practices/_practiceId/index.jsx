@@ -21,13 +21,11 @@ import { useDefaultFirestoreProps } from "../../../../hooks";
 import { Card, Collapse } from "antd";
 import {
   faArrowLeft,
-  faCheckCircle,
   faFilePdf,
   faMinus,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { capitalize, isEmpty } from "lodash";
 import {
   Annex2Integration,
   Annex3Integration,
@@ -35,7 +33,8 @@ import {
   Annex6Integration,
 } from "./module1";
 import styled from "styled-components";
-import * as yup from "yup";
+import { practicesStatus } from "../../../../data-list";
+import { querySnapshotToArray } from "../../../../firebase/firestore";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -43,9 +42,11 @@ export const PracticeIntegration = () => {
   const { authUser } = useAuthentication();
   const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
   const { practices, users, companies } = useGlobalData();
+
   const [practice, setPractice] = useState({});
   const [practitioner, setPractitioner] = useState({});
   const [company, setCompany] = useState({});
+  const [annexs, setAnnexs] = useState([]);
 
   const isNew = practiceId === "new";
   const onGoBack = () => navigate(-1);
@@ -64,6 +65,15 @@ export const PracticeIntegration = () => {
     const _company = companies.find(
       (company) => company.id === _practice.companyId
     );
+
+    (async () => {
+      await practicesRef
+        .doc(_practice?.id)
+        .collection("annexs")
+        .onSnapshot((snapshot) => {
+          setAnnexs(querySnapshotToArray(snapshot));
+        });
+    })();
 
     setPractice(_practice);
     setPractitioner(_practitioner);
@@ -85,11 +95,16 @@ export const PracticeIntegration = () => {
     await updatePractice(practice.id, assignUpdateProps(practice));
   };
 
-  const onConfirmModuleApproved = () =>
+  const onConfirmModuleApproved = (practice) =>
     modalConfirm({
       title: "¿Estás seguro de que quieres aprobar el modulo completo?",
-      onOk: () => notification({ type: "success" }),
+      onOk: async () => {
+        await updatePractice(practice.id, { status: "approved" });
+        notification({ type: "success" });
+      },
     });
+
+  const [annex2, annex3, annex4, annex6] = annexs;
 
   const getItems = () => [
     {
@@ -98,20 +113,19 @@ export const PracticeIntegration = () => {
         <Col span={24}>
           <Title level={4}>
             Anexo 2{" "}
-            {practice.status === "approved" && (
-              <FontAwesomeIcon icon={faCheckCircle} color="green" />
-            )}
+            <FontAwesomeIcon
+              icon={practicesStatus?.[annex2?.status]?.icon}
+              color={practicesStatus?.[annex2?.status]?.color}
+            />
           </Title>
         </Col>
       ),
       children: (
         <Annex2Integration
           practice={practice}
-          user={authUser}
-          users={users}
           practitioner={practitioner}
           company={company}
-          onSavePractice={savePractice}
+          annex2={annex2}
         />
       ),
       style: panelStyle,
@@ -120,26 +134,29 @@ export const PracticeIntegration = () => {
       key: "annex3",
       label: (
         <Col span={24}>
-          <Title level={4}>Anexo 3 </Title>
+          <Title level={4}>
+            Anexo 3{" "}
+            <FontAwesomeIcon
+              icon={practicesStatus?.[annex3?.status]?.icon}
+              color={practicesStatus?.[annex3?.status]?.color}
+            />
+          </Title>
         </Col>
       ),
-      children: (
-        <Annex3Integration
-          practice={practice}
-          user={authUser}
-          users={users}
-          practitioner={practitioner}
-          company={company}
-          onSavePractice={savePractice}
-        />
-      ),
+      children: <Annex3Integration practice={practice} annex3={annex3} />,
       style: panelStyle,
     },
     {
       key: "annex4",
       label: (
         <Col span={24}>
-          <Title level={4}>Anexo 4</Title>
+          <Title level={4}>
+            Anexo 4{" "}
+            <FontAwesomeIcon
+              icon={practicesStatus?.[annex4?.status]?.icon}
+              color={practicesStatus?.[annex4?.status]?.color}
+            />
+          </Title>
         </Col>
       ),
       children: (
@@ -150,6 +167,7 @@ export const PracticeIntegration = () => {
           practitioner={practitioner}
           company={company}
           onSavePractice={savePractice}
+          annex4={annex4}
         />
       ),
       style: panelStyle,
@@ -158,7 +176,13 @@ export const PracticeIntegration = () => {
       key: "annex6",
       label: (
         <Col span={24}>
-          <Title level={4}>Anexo 6</Title>
+          <Title level={4}>
+            Anexo 6{" "}
+            <FontAwesomeIcon
+              icon={practicesStatus?.[annex6?.status]?.icon}
+              color={practicesStatus?.[annex6?.status]?.color}
+            />
+          </Title>
         </Col>
       ),
       children: (
@@ -169,6 +193,7 @@ export const PracticeIntegration = () => {
           practitioner={practitioner}
           company={company}
           onSavePractice={savePractice}
+          annex6={annex6}
         />
       ),
       style: panelStyle,
@@ -192,12 +217,12 @@ export const PracticeIntegration = () => {
               styled={{ color: (theme) => theme.colors.primary }}
               onClick={() => navigate("/practices")}
             />
-            <Title level={3}>
-              {!isNew
-                ? `Modulo ${practice.moduleNumber}: ${capitalize(
-                    practice.name
-                  )}`
-                : "Registro de Prácticas Pre-Profesionales"}
+            <Title level={3} style={{ margin: "0" }}>
+              <span className="capitalize">
+                {!isNew
+                  ? `Modulo ${practice.moduleNumber}: ${practice.name}`
+                  : "Registro de Prácticas Pre-Profesionales"}
+              </span>
             </Title>
             {isNew ? (
               <div />
@@ -278,6 +303,10 @@ export const PracticeIntegration = () => {
 };
 
 const Container = styled.div`
+  .capitalize {
+    text-transform: capitalize;
+  }
+
   .header-wrapper {
     width: 100%;
     display: grid;
