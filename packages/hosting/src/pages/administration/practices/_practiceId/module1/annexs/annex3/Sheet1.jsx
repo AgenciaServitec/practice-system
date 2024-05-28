@@ -42,10 +42,14 @@ export const Sheet1Integration = ({ practice, annex3 }) => {
         .doc("annex3")
         .update({ ...assignUpdateProps(mapForm(formData)) });
 
-      notification({ type: "success" });
+      notification({
+        type: "success",
+        title:
+          "Felicidades por completar el anexo 3, ahora solo debes esperar la aprobación de un supervisor académico",
+      });
     } catch (e) {
       console.log(e);
-      notification({ type: "error", description: "No se pudo guardar" });
+      notification({ type: "error" });
     }
   };
 

@@ -45,10 +45,14 @@ export const Sheet1Integration = ({
         .doc("annex2")
         .update({ ...assignUpdateProps(mapForm(formData)) });
 
-      notification({ type: "success" });
+      notification({
+        type: "success",
+        title:
+          "Felicidades por completar el anexo 2, ahora solo debes esperar la aprobación de un supervisor académico",
+      });
     } catch (e) {
       console.log(e);
-      notification({ type: "error", description: "No se pudo guardar" });
+      notification({ type: "error" });
     }
   };
 
