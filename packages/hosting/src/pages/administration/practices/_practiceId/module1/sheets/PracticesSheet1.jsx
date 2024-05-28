@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { fullName } from "../../../../../../utils";
 
 export const PracticesSheet1 = ({ practitioner }) => {
-  console.log({ practitioner });
-
   return (
     <>
       <Container>
@@ -36,7 +34,7 @@ export const PracticesSheet1 = ({ practitioner }) => {
               </span>
             </h4>
             <h4>: {practitioner?.practitionerData?.tuitionId}</h4>
-            <h4>
+            <h4 className="capitalize">
               : {practitioner?.practitionerData?.studentShift || "Egresado"}
             </h4>
             <h4>: {practitioner?.practitionerData?.entryYear}</h4>
