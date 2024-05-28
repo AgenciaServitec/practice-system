@@ -12,7 +12,6 @@ export const PracticesSheet3 = ({
   supervisor,
   annex2,
 }) => {
-  console.log({ annex2 });
   return (
     <>
       <Container>
