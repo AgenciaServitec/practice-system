@@ -34,10 +34,10 @@ export const PracticesSheet1 = ({ practitioner }) => {
               </span>
             </h4>
             <h4>: {practitioner?.practitionerData?.tuitionId}</h4>
-            <h4>
+            <h4 className="capitalize">
               : {practitioner?.practitionerData?.studentShift || "Egresado"}
             </h4>
-            <h4>: {practitioner?.practitionerData?.academicYear}</h4>
+            <h4>: {practitioner?.practitionerData?.entryYear}</h4>
           </div>
         </Details>
         <h1 style={{ fontSize: "60px" }}>{new Date().getFullYear()}</h1>

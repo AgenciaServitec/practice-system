@@ -105,6 +105,7 @@ export const Sheets = () => {
           company={company}
           representativeCompany={representativeCompany}
           supervisor={supervisor}
+          annex2={annex2}
         />
       </Sheet>
       <Sheet layout="portrait">

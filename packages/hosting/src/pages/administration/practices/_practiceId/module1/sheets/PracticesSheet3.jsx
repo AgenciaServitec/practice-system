@@ -10,7 +10,9 @@ export const PracticesSheet3 = ({
   company,
   representativeCompany,
   supervisor,
+  annex2,
 }) => {
+  console.log({ annex2 });
   return (
     <>
       <Container>
@@ -110,14 +112,18 @@ export const PracticesSheet3 = ({
                 {moment(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")}{" "}
                 - {moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
               </li>
-              <li>Horario:</li>
+              <li>
+                Horario:{" "}
+                {moment(practice.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
+                {moment(practice.departureTime, "HH:mm:ss").format("HH:mm")}
+              </li>
               <li>
                 Dpto. Sector o Área de las Prácticas:{" "}
                 <strong className="capitalize">{practice?.practiceArea}</strong>
               </li>
-              <li>Refrigerio:</li>
-              <li>Movilidad:</li>
-              <li>Otros:</li>
+              <li>Refrigerio: {annex2?.refreshment}</li>
+              <li>Movilidad: {annex2?.mobility}</li>
+              <li>Otros: {annex2?.others}</li>
             </ul>
           </div>
           <div className="body__date">
@@ -210,7 +216,7 @@ const Container = styled.div`
       }
       .row-list {
         display: flex;
-        gap: 8em;
+        gap: 5em;
         margin-bottom: 1em;
       }
     }
