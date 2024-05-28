@@ -65,6 +65,7 @@ export const postUser = async (
     }
 
     const userId = firestore.collection("users").doc().id;
+    const companyId = firestore.collection("companies").doc().id;
 
     if (
       user.roleCode === "company_representative" &&
@@ -88,7 +89,7 @@ export const postUser = async (
         return;
       }
 
-      await addCompany(postCompanyMapping(company, userId));
+      await addCompany(postCompanyMapping(company, companyId, userId));
     }
 
     // get acls of user by roleCode
@@ -98,11 +99,14 @@ export const postUser = async (
 
     await addUserAuth({ ...user, id: userId });
     await addUser(
-      postUserMapping({
-        ...user,
-        id: userId,
-        acls: roleAcls?.acls || ["/profile", "/home", "/practices"],
-      })
+      postUserMapping(
+        {
+          ...user,
+          id: userId,
+          acls: roleAcls?.acls || ["/profile", "/home", "/practices"],
+        },
+        companyId
+      )
     );
 
     res.sendStatus(200).end();

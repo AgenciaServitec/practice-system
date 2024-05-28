@@ -1,7 +1,7 @@
 import { defaultFirestoreProps } from "../../../utils";
 import { UserBody } from "../postUser";
 
-export const postUserMapping = (user: UserBody): User => {
+export const postUserMapping = (user: UserBody, companyId: string): User => {
   const { assignCreateProps } = defaultFirestoreProps();
   return assignCreateProps({
     id: user.id,
@@ -23,7 +23,10 @@ export const postUserMapping = (user: UserBody): User => {
       practitionerData: user.practitionerData,
     }),
     ...(user?.companyRepresentativeData && {
-      companyRepresentativeData: user.companyRepresentativeData,
+      companyRepresentativeData: {
+        ...user.companyRepresentativeData,
+        companyId: companyId,
+      },
     }),
   });
 };
