@@ -21,7 +21,7 @@ export const Annex2Integration = ({
   company,
   annex2,
 }) => {
-    const [visibleForm, setVisibleForm] = useState(false);
+  const [visibleForm, setVisibleForm] = useState(false);
 
   useEffect(() => {
     (async () => {

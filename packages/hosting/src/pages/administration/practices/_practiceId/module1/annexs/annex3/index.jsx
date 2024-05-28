@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Acl,
   Button,
@@ -12,16 +12,16 @@ import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
-import {ObservationOfAnnexIntegration} from "../../../ObservationOfAnnex";
+import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
-    const [visibleForm, setVisibleForm] = useState(false);
-    
+  const [visibleForm, setVisibleForm] = useState(false);
+
   useEffect(() => {
     (async () => {
       const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
         annex3;
-      
+
       await updateAnnex(practice.id, "annex3", {
         status:
           approvedByCompanyRepresentative && approvedByAcademicSupervisor
