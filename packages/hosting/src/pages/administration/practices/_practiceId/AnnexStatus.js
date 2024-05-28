@@ -7,6 +7,7 @@ import {
   faClock,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { isUndefined } from "lodash";
 
 export const AnnexStatus = ({ annex }) => {
   const annexStatusByRole = {
@@ -29,11 +30,17 @@ export const AnnexStatus = ({ annex }) => {
 
   const statusByCompanyRepresentative =
     annexStatusByRole?.[
-      (annex?.approvedByCompanyRepresentative || "undefined").toString()
+      (isUndefined(annex?.approvedByCompanyRepresentative)
+        ? "undefined"
+        : annex.approvedByCompanyRepresentative
+      ).toString()
     ];
   const statusByAcademicSupervisor =
     annexStatusByRole?.[
-      (annex?.approvedByAcademicSupervisor || "undefined").toString()
+      (isUndefined(annex?.approvedByAcademicSupervisor)
+        ? "undefined"
+        : annex.approvedByAcademicSupervisor
+      ).toString()
     ];
 
   return (
