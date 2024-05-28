@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Acl,
   Button,
@@ -21,9 +21,13 @@ import moment from "moment";
 import { firestore } from "../../../../../../../firebase";
 import styled from "styled-components";
 import { PracticeArea } from "../../../../../../../data-list";
+import { Alert } from "antd";
+import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
+import { ObservationsList } from "../../ObservationsList";
 
 export const Sheet1Integration = ({
   practice,
+  user,
   company,
   practitioner,
   annex2,
@@ -66,6 +70,7 @@ export const Sheet1Integration = ({
   return (
     <Sheet1
       practice={practice}
+      user={user}
       company={company}
       practitioner={practitioner}
       annex2={annex2}
@@ -76,6 +81,7 @@ export const Sheet1Integration = ({
 
 const Sheet1 = ({
   practice,
+  user,
   company,
   practitioner,
   annex2,
@@ -86,7 +92,6 @@ const Sheet1 = ({
     mobility: yup.string(),
     others: yup.string(),
   });
-
   const {
     formState: { errors },
     handleSubmit,
@@ -275,6 +280,7 @@ const Sheet1 = ({
                 />
               </Col>
             </Row>
+            <ObservationsList user={user} annex={annex2} practice={practice} />
             <Acl name="/practices/:practiceId/annex#save">
               <Row justify="end" gutter={[16, 16]}>
                 <Col span={24} sm={6} md={4}>

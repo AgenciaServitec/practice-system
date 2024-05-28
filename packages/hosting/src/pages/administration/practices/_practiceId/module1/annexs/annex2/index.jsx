@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Acl,
   Button,
@@ -12,14 +12,17 @@ import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
+import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 
 export const Annex2Integration = ({
   practice,
+  user,
   practitioner,
   company,
   annex2,
-  user,
 }) => {
+  const [visibleForm, setVisibleForm] = useState(false);
+
   useEffect(() => {
     (async () => {
       const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
@@ -99,6 +102,7 @@ export const Annex2Integration = ({
               <Title level={4}>Hoja 1</Title>
               <Sheet1Integration
                 practice={practice}
+                user={user}
                 practitioner={practitioner}
                 company={company}
                 annex2={annex2}
@@ -109,6 +113,18 @@ export const Annex2Integration = ({
       </Row>
       <br />
       <Row justify="end" gutter={[16, 16]}>
+        <Acl name="/practices/:practiceId/annex#observation">
+          <Col span={24} sm={6} md={6}>
+            <Button
+              type="primary"
+              size="large"
+              block
+              onClick={() => setVisibleForm(true)}
+            >
+              Observación
+            </Button>
+          </Col>
+        </Acl>
         <Acl name="/practices/:practiceId/annex#refused">
           <Col span={24} sm={6} md={6}>
             <Button
@@ -135,6 +151,14 @@ export const Annex2Integration = ({
           </Col>
         </Acl>
       </Row>
+      <ObservationOfAnnexIntegration
+        key={visibleForm}
+        practice={practice}
+        user={user}
+        visibleForm={visibleForm}
+        onSetVisibleForm={setVisibleForm}
+        annex={annex2}
+      />
     </Container>
   );
 };
