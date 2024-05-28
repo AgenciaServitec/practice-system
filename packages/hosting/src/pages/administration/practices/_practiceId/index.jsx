@@ -139,6 +139,7 @@ export const PracticeIntegration = () => {
       children: (
         <Annex2Integration
           practice={practice}
+          user={authUser}
           practitioner={practitioner}
           company={company}
           annex2={annex2}

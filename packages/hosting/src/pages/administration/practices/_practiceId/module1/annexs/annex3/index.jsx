@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Acl,
   Button,
@@ -12,13 +12,16 @@ import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
+import {ObservationOfAnnexIntegration} from "../../../ObservationOfAnnex";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
+    const [visibleForm, setVisibleForm] = useState(false);
+    
   useEffect(() => {
     (async () => {
       const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
         annex3;
-
+      
       await updateAnnex(practice.id, "annex3", {
         status:
           approvedByCompanyRepresentative && approvedByAcademicSupervisor
@@ -36,8 +39,8 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
 
   const onApprovedAnnex3 = async (practice) =>
     modalConfirm({
-      title: "Seguro que deseas aprovar el anexo 2?",
-      content: "El anexo 2 pasara al estado de aprobado",
+      title: "Seguro que deseas aprovar el anexo 3?",
+      content: "El anexo 3 pasara al estado de aprobado",
       onOk: async () => {
         if (!hasPermissions) {
           return notification({
@@ -61,8 +64,8 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
 
   const onRefusedAnnex3 = async (practice) =>
     modalConfirm({
-      title: "Seguro que deseas rechazar el anexo 2?",
-      content: "El anexo 2 pasara al estado de rechazado",
+      title: "Seguro que deseas rechazar el anexo 3?",
+      content: "El anexo 3 pasara al estado de rechazado",
       onOk: async () => {
         if (!hasPermissions) {
           return notification({
@@ -98,6 +101,18 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
       </Row>
       <br />
       <Row justify="end" gutter={[16, 16]}>
+        <Acl name="/practices/:practiceId/annex#observation">
+          <Col span={24} sm={6} md={6}>
+            <Button
+              type="primary"
+              size="large"
+              block
+              onClick={() => setVisibleForm(true)}
+            >
+              Observación
+            </Button>
+          </Col>
+        </Acl>
         <Acl name="/practices/:practiceId/annex#refused">
           <Col span={24} sm={6} md={6}>
             <Button
@@ -124,6 +139,14 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
           </Col>
         </Acl>
       </Row>
+      <ObservationOfAnnexIntegration
+        key={visibleForm}
+        practice={practice}
+        user={user}
+        visibleForm={visibleForm}
+        onSetVisibleForm={setVisibleForm}
+        annex={annex3}
+      />
     </Container>
   );
 };

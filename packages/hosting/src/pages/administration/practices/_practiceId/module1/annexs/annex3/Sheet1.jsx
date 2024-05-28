@@ -20,8 +20,9 @@ import {
 } from "../../../../../../../hooks";
 import { firestore } from "../../../../../../../firebase";
 import moment from "moment";
+import { ObservationsList } from "../../ObservationsList";
 
-export const Sheet1Integration = ({ practice, annex3 }) => {
+export const Sheet1Integration = ({ practice, annex3, user }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
 
   const mapForm = (formData) => ({
@@ -60,10 +61,17 @@ export const Sheet1Integration = ({ practice, annex3 }) => {
       onOk: async () => await onSaveSheet1Annex3(practice),
     });
 
-  return <Sheet1 annex3={annex3} onConfirmSaveSheet1={onConfirmSaveSheet1} />;
+  return (
+    <Sheet1
+      annex3={annex3}
+      onConfirmSaveSheet1={onConfirmSaveSheet1}
+      user={user}
+      practice={practice}
+    />
+  );
 };
 
-const Sheet1 = ({ annex3, onConfirmSaveSheet1 }) => {
+const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
   const schema = yup.object({
     visitNumber: yup.string().required(),
     supervisionDate: yup.date().required(),
@@ -212,6 +220,7 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1 }) => {
           />
         </Col>
       </Row>
+      <ObservationsList user={user} annex={annex3} practice={practice} />
       <Acl name="/practices/:practiceId/annex#save">
         <Row justify="end" gutter={[16, 16]}>
           <Col span={24} sm={6} md={4}>
