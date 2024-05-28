@@ -20,17 +20,23 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
         return users;
       case "academic_supervisor":
         return users.filter(
-          (user) => user?.academicSupervisorId === authUser.id
+          (user) =>
+            user.roleCode === "user" &&
+            user?.academicSupervisorId === authUser.id
         );
       case "academic_coordinator":
         return users.filter(
-          (user) => user?.academicCoordinatorId === authUser.id
+          (user) =>
+            user.roleCode === "user" &&
+            user?.academicCoordinatorId === authUser.id
         );
       case "company_representative":
-        return users.filter((user) =>
-          (authUser?.companiesIds || []).every((companyId) =>
-            (user?.companiesIds || []).includes(companyId)
-          )
+        return users.filter(
+          (user) =>
+            user.roleCode === "user" &&
+            (user?.companiesIds || []).includes(
+              authUser?.companyRepresentativeData?.companyId
+            )
         );
     }
   };

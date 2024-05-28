@@ -68,7 +68,9 @@ export const DrawerLayout = ({
       isVisible: existPageAclsInAclsOfUser(["/users", "/practices"]),
       children: [
         {
-          label: "Usuarios",
+          label: ["super_admin", "admin"].includes(user.roleCode)
+            ? "Usuarios"
+            : "Practicantes",
           key: "users",
           icon: <FontAwesomeIcon icon={faUsers} size="lg" />,
           isVisible: existPageAclsInAclsOfUser(["/users"]),
