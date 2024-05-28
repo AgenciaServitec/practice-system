@@ -11,7 +11,7 @@ export const fetchAnnex = async (practiceId, annexId) =>
   fetchDocumentOnce(annexsRef(practiceId).doc(annexId));
 
 export const fetchAnnexs = async (practiceId) =>
-  fetchCollectionOnce(annexsRef(practiceId).where("isDeleted", "==", false));
+  fetchCollectionOnce(annexsRef(practiceId));
 
 export const addAnnex = async (practiceId, annex) =>
   setDocument(annexsRef(practiceId).doc(annex.id), annex);
