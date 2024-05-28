@@ -7,6 +7,7 @@ import { capitalize } from "lodash";
 import { useNavigate } from "react-router";
 import { useAuthentication } from "../../../providers";
 import { practicesStatus } from "../../../data-list";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const PracticeTable = ({
   practices,
@@ -73,7 +74,16 @@ export const PracticeTable = ({
       render: (_, practice) => (
         <Space>
           <span>
-            <Tag color={practicesStatus?.[practice.status]?.color}>
+            <Tag
+              color={practicesStatus?.[practice.status]?.type}
+              icon={
+                <FontAwesomeIcon
+                  size="sm"
+                  icon={practicesStatus?.[practice.status]?.icon}
+                />
+              }
+            >
+              {" "}
               {practicesStatus?.[practice.status]?.value}
             </Tag>
           </span>
