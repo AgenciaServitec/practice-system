@@ -5,8 +5,15 @@ import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useFormUtils } from "../../hooks";
-import { Button, Form, Input, notification, Upload } from "../../components";
-import { useAuthentication } from "../../providers";
+import {
+  Button,
+  Form,
+  Input,
+  notification,
+  Select,
+  Upload,
+} from "../../components";
+import { useAuthentication, useGlobalData } from "../../providers";
 import {
   apiErrorNotification,
   getApiErrorResponse,
@@ -18,6 +25,26 @@ import { v4 as uuidv4 } from "uuid";
 export const ProfileDataForm = () => {
   const { authUser } = useAuthentication();
   const { putUser, putUserLoading, putUserResponse } = useApiUserPut();
+  const { companies, users } = useGlobalData();
+
+  const companiesView = companies.map((company) => ({
+    label: company.socialReason,
+    value: company.id,
+  }));
+
+  const coordinatorView = users
+    .filter((user) => user.roleCode === "academic_coordinator")
+    .map((_user) => ({
+      label: `${_user.firstName} ${_user.paternalSurname} ${_user.maternalSurname}`,
+      value: _user.id,
+    }));
+
+  const supervisorView = users
+    .filter((user) => user.roleCode === "academic_supervisor")
+    .map((_user) => ({
+      label: `${_user.firstName} ${_user.paternalSurname} ${_user.maternalSurname}`,
+      value: _user.id,
+    }));
 
   const schema = yup.object({
     profilePhoto: yup.mixed(),
@@ -32,6 +59,21 @@ export const ProfileDataForm = () => {
       .max(8)
       .required()
       .transform((value) => (value === null ? "" : value)),
+    academicCoordinatorId: yup.string().when("authUser", {
+      is: () => authUser.roleCode === "user",
+      then: yup.string().required(),
+      otherwise: yup.string(),
+    }),
+    academicSupervisorId: yup.string().when("authUser", {
+      is: () => authUser.roleCode === "user",
+      then: yup.string().required(),
+      otherwise: yup.string(),
+    }),
+    companiesIds: yup.array().when("authUser", {
+      is: () => authUser.roleCode === "user",
+      then: yup.array().required(),
+      otherwise: yup.array(),
+    }),
   });
 
   const {
@@ -74,6 +116,9 @@ export const ProfileDataForm = () => {
       email: authUser?.email || "",
       phoneNumber: authUser?.phone?.number || "",
       dni: authUser?.dni || "",
+      academicCoordinatorId: authUser?.academicCoordinatorId || undefined,
+      academicSupervisorId: authUser?.academicSupervisorId || undefined,
+      companiesIds: authUser?.companiesIds || undefined,
     });
   };
 
@@ -207,6 +252,109 @@ export const ProfileDataForm = () => {
             )}
           />
         </Col>
+        <Col span={12}>
+          <Controller
+            name="academicCoordinatorId"
+            control={control}
+            render={({ field: { onChange, name, value } }) => (
+              <Select
+                label="Coordinador Académico"
+                value={value}
+                options={coordinatorView}
+                onChange={onChange}
+                error={error(name)}
+                helperText={errorMessage(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={12}>
+          <Controller
+            name="academicSupervisorId"
+            control={control}
+            render={({ field: { onChange, name, value } }) => (
+              <Select
+                label="Supervisor Académico"
+                value={value}
+                options={supervisorView}
+                onChange={onChange}
+                error={error(name)}
+                helperText={errorMessage(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col span={24}>
+          <Controller
+            name="companiesIds"
+            control={control}
+            render={({ field: { onChange, name, value } }) => (
+              <Select
+                label="Empresas"
+                mode="multiple"
+                value={value}
+                options={companiesView}
+                onChange={onChange}
+                error={error(name)}
+                helperText={errorMessage(name)}
+              />
+            )}
+          />
+        </Col>
+        {authUser.roleCode === "user" && (
+          <>
+            {" "}
+            <Col span={12}>
+              <Controller
+                name="academicCoordinatorId"
+                control={control}
+                render={({ field: { onChange, name, value } }) => (
+                  <Select
+                    label="Coordinador Académico"
+                    value={value}
+                    options={coordinatorView}
+                    onChange={onChange}
+                    error={error(name)}
+                    helperText={errorMessage(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={12}>
+              <Controller
+                name="academicSupervisorId"
+                control={control}
+                render={({ field: { onChange, name, value } }) => (
+                  <Select
+                    label="Supervisor Académico"
+                    value={value}
+                    options={supervisorView}
+                    onChange={onChange}
+                    error={error(name)}
+                    helperText={errorMessage(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24}>
+              <Controller
+                name="companiesIds"
+                control={control}
+                render={({ field: { onChange, name, value } }) => (
+                  <Select
+                    label="Empresas de practicas"
+                    mode="multiple"
+                    value={value}
+                    options={companiesView}
+                    onChange={onChange}
+                    error={error(name)}
+                    helperText={errorMessage(name)}
+                  />
+                )}
+              />
+            </Col>
+          </>
+        )}
       </Row>
       <Row justify="end" gutter={[16, 16]}>
         <Col xs={24} sm={12} md={8}>
