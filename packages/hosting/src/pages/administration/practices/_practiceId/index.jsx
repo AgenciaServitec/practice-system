@@ -85,6 +85,7 @@ export const PracticeIntegration = () => {
       ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
         practicesRef.doc(practice.id).collection("annexs").doc(annex).set({
           id: annex,
+          status: "pending",
         });
       });
 
