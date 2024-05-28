@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Acl,
   Button,
@@ -11,40 +11,78 @@ import Row from "antd/lib/row";
 import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
 import styled from "styled-components";
-import { practicesRef } from "../../../../../../../firebase/collections";
+import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
 
-export const Annex3Integration = ({ practice, annex3 }) => {
-  const onApprovedAnnex3 = async (practice) => {
+export const Annex3Integration = ({ practice, annex3, user }) => {
+  useEffect(() => {
+    (async () => {
+      const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
+        annex3;
+
+      await updateAnnex(practice.id, "annex3", {
+        status:
+          approvedByCompanyRepresentative && approvedByAcademicSupervisor
+            ? "approved"
+            : !approvedByCompanyRepresentative && !approvedByAcademicSupervisor
+            ? "refused"
+            : "pending",
+      });
+    })();
+  }, [annex3]);
+
+  const hasPermissions =
+    user.roleCode === "company_representative" ||
+    user.roleCode === "academic_supervisor";
+
+  const onApprovedAnnex3 = async (practice) =>
     modalConfirm({
-      title: "Seguro que deseas aprovar el anexo 3?",
-      content: "El anexo 3 pasara al estado de aprobado",
+      title: "Seguro que deseas aprovar el anexo 2?",
+      content: "El anexo 2 pasara al estado de aprobado",
       onOk: async () => {
-        await practicesRef
-          .doc(practice.id)
-          .collection("annexs")
-          .doc("annex3")
-          .update({ status: "approved" });
+        if (!hasPermissions) {
+          return notification({
+            type: "warning",
+            title: "No tienes permisos para aprobar!",
+          });
+        }
+
+        await updateAnnex(practice.id, "annex3", {
+          ...(user.roleCode === "company_representative" && {
+            approvedByCompanyRepresentative: true,
+          }),
+          ...(user.roleCode === "academic_supervisor" && {
+            approvedByAcademicSupervisor: true,
+          }),
+        });
 
         notification({ type: "success" });
       },
     });
-  };
 
-  const onRefusedAnnex3 = async (practice) => {
+  const onRefusedAnnex3 = async (practice) =>
     modalConfirm({
-      title: "Seguro que deseas rechazar el anexo 3?",
-      content: "El anexo 3 pasara al estado de rechazado",
+      title: "Seguro que deseas rechazar el anexo 2?",
+      content: "El anexo 2 pasara al estado de rechazado",
       onOk: async () => {
-        await practicesRef
-          .doc(practice.id)
-          .collection("annexs")
-          .doc("annex3")
-          .update({ status: "refused" });
+        if (!hasPermissions) {
+          return notification({
+            type: "warning",
+            title: "No tienes permisos para rechazar!",
+          });
+        }
+
+        await updateAnnex(practice.id, "annex3", {
+          ...(user.roleCode === "company_representative" && {
+            approvedByCompanyRepresentative: false,
+          }),
+          ...(user.roleCode === "academic_supervisor" && {
+            approvedByAcademicSupervisor: false,
+          }),
+        });
 
         notification({ type: "success" });
       },
     });
-  };
 
   return (
     <Container>

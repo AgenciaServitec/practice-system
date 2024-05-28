@@ -19,7 +19,7 @@ import {
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../../providers";
 import { useDefaultFirestoreProps } from "../../../../hooks";
-import { Card, Collapse } from "antd";
+import { Card, Collapse, Space, Tag } from "antd";
 import {
   faArrowLeft,
   faFilePdf,
@@ -36,6 +36,7 @@ import {
 import styled from "styled-components";
 import { practicesStatus } from "../../../../data-list";
 import { querySnapshotToArray } from "../../../../firebase/firestore";
+import { AnnexStatus } from "./AnnexStatus";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -108,18 +109,31 @@ export const PracticeIntegration = () => {
 
   const [annex2, annex3, annex4, annex6] = annexs;
 
+  const AnnexTitle = ({ title, status }) => (
+    <div>
+      <Title level={4}>{title} </Title>
+      <Tag
+        icon={<FontAwesomeIcon size="lg" icon={status?.icon} />}
+        color={status?.type}
+      >
+        {" "}
+        {status?.value}
+      </Tag>
+    </div>
+  );
+
   const getItems = () => [
     {
       key: "annex2",
       label: (
         <Col span={24}>
-          <Title level={4}>
-            Anexo 2{" "}
-            <FontAwesomeIcon
-              icon={practicesStatus?.[annex2?.status]?.icon}
-              color={practicesStatus?.[annex2?.status]?.color}
+          <div className="header-annex">
+            <AnnexTitle
+              title="Anexo 2"
+              status={practicesStatus?.[annex2?.status]}
             />
-          </Title>
+            <AnnexStatus annex={annex2} />
+          </div>
         </Col>
       ),
       children: (
@@ -128,6 +142,7 @@ export const PracticeIntegration = () => {
           practitioner={practitioner}
           company={company}
           annex2={annex2}
+          user={authUser}
         />
       ),
       style: panelStyle,
@@ -136,29 +151,35 @@ export const PracticeIntegration = () => {
       key: "annex3",
       label: (
         <Col span={24}>
-          <Title level={4}>
-            Anexo 3{" "}
-            <FontAwesomeIcon
-              icon={practicesStatus?.[annex3?.status]?.icon}
-              color={practicesStatus?.[annex3?.status]?.color}
+          <div className="header-annex">
+            <AnnexTitle
+              title="Anexo 3"
+              status={practicesStatus?.[annex3?.status]}
             />
-          </Title>
+            <AnnexStatus annex={annex3} />
+          </div>
         </Col>
       ),
-      children: <Annex3Integration practice={practice} annex3={annex3} />,
+      children: (
+        <Annex3Integration
+          practice={practice}
+          annex3={annex3}
+          user={authUser}
+        />
+      ),
       style: panelStyle,
     },
     {
       key: "annex4",
       label: (
         <Col span={24}>
-          <Title level={4}>
-            Anexo 4{" "}
-            <FontAwesomeIcon
-              icon={practicesStatus?.[annex4?.status]?.icon}
-              color={practicesStatus?.[annex4?.status]?.color}
+          <div className="header-annex">
+            <AnnexTitle
+              title="Anexo 4"
+              status={practicesStatus?.[annex4?.status]}
             />
-          </Title>
+            <AnnexStatus annex={annex4} />
+          </div>
         </Col>
       ),
       children: (
@@ -178,13 +199,13 @@ export const PracticeIntegration = () => {
       key: "annex6",
       label: (
         <Col span={24}>
-          <Title level={4}>
-            Anexo 6{" "}
-            <FontAwesomeIcon
-              icon={practicesStatus?.[annex6?.status]?.icon}
-              color={practicesStatus?.[annex6?.status]?.color}
+          <div className="header-annex">
+            <AnnexTitle
+              title="Anexo 6"
+              status={practicesStatus?.[annex6?.status]}
             />
-          </Title>
+            <AnnexStatus annex={annex6} />
+          </div>
         </Col>
       ),
       children: (
@@ -311,5 +332,11 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: auto 1fr auto;
     gap: 0.5em;
+  }
+  .header-annex {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    flex-wrap: wrap;
   }
 `;

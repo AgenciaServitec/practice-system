@@ -5,19 +5,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const practicesStatus = {
-  pending: {
-    icon: faClock,
-    color: "orange",
-    value: "Pendiente",
-  },
   approved: {
     icon: faCheckCircle,
     color: "green",
     value: "Aprobado",
+    type: "success",
   },
   refused: {
     icon: faXmarkCircle,
     color: "red",
     value: "Rechazado",
+    type: "error",
+  },
+  pending: {
+    icon: faClock,
+    color: "orange",
+    value: "Pendiente",
+    type: "warning",
   },
 };
