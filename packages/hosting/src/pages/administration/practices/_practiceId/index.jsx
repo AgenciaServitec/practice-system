@@ -19,7 +19,7 @@ import {
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../../providers";
 import { useDefaultFirestoreProps } from "../../../../hooks";
-import { Card, Collapse, Space, Tag } from "antd";
+import { Card, Collapse, Tag } from "antd";
 import {
   faArrowLeft,
   faFilePdf,
@@ -143,7 +143,6 @@ export const PracticeIntegration = () => {
           practitioner={practitioner}
           company={company}
           annex2={annex2}
-          user={authUser}
         />
       ),
       style: panelStyle,
