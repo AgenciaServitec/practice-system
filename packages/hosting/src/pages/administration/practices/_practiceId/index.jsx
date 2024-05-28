@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import {
+  Acl,
   Button,
   IconAction,
   modalConfirm,
@@ -280,22 +281,19 @@ export const PracticeIntegration = () => {
           </Row>
           <br />
           <Row justify="end" gutter={[16, 16]}>
-            <Col span={24} sm={12} md={10} lg={8}>
-              <Button
-                type="primary"
-                danger
-                size="large"
-                block
-                onClick={() => onConfirmModuleApproved()}
-              >
-                Aprobar el modulo completo
-              </Button>
-            </Col>
-            <Col span={24} sm={12} md={10} lg={5}>
-              <Button type="primary" size="large" block htmlType="submit">
-                Modulo revisado
-              </Button>
-            </Col>
+            <Acl name="/practices/:practiceId/module#approved">
+              <Col span={24} sm={12} md={10} lg={8}>
+                <Button
+                  type="primary"
+                  danger
+                  size="large"
+                  block
+                  onClick={() => onConfirmModuleApproved()}
+                >
+                  Aprobar el modulo completo
+                </Button>
+              </Col>
+            </Acl>
           </Row>
         </>
       )}

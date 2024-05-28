@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Acl,
   Button,
   modalConfirm,
   notification,
@@ -59,27 +60,31 @@ export const Annex3Integration = ({ practice, annex3 }) => {
       </Row>
       <br />
       <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={6} md={6}>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            block
-            onClick={() => onRefusedAnnex3(practice)}
-          >
-            Rechazar Anexo 3
-          </Button>
-        </Col>
-        <Col span={24} sm={6} md={6}>
-          <Button
-            type="primary"
-            size="large"
-            block
-            onClick={() => onApprovedAnnex3(practice)}
-          >
-            Aprobar Anexo 3
-          </Button>
-        </Col>
+        <Acl name="/practices/:practiceId/annex#refused">
+          <Col span={24} sm={6} md={6}>
+            <Button
+              type="primary"
+              danger
+              size="large"
+              block
+              onClick={() => onRefusedAnnex3(practice)}
+            >
+              Rechazar Anexo 3
+            </Button>
+          </Col>
+        </Acl>
+        <Acl name="/practices/:practiceId/annex#approved">
+          <Col span={24} sm={6} md={6}>
+            <Button
+              type="primary"
+              size="large"
+              block
+              onClick={() => onApprovedAnnex3(practice)}
+            >
+              Aprobar Anexo 3
+            </Button>
+          </Col>
+        </Acl>
       </Row>
     </Container>
   );

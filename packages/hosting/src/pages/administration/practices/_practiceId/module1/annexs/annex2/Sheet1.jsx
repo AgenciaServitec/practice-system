@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import {
+  Acl,
   Button,
   Form,
   Input,
@@ -274,13 +275,15 @@ const Sheet1 = ({
                 />
               </Col>
             </Row>
-            <Row justify="end" gutter={[16, 16]}>
-              <Col span={24} sm={6} md={4}>
-                <Button type="primary" size="large" block htmlType="submit">
-                  Guardar
-                </Button>
-              </Col>
-            </Row>
+            <Acl name="/practices/:practiceId/annex#save">
+              <Row justify="end" gutter={[16, 16]}>
+                <Col span={24} sm={6} md={4}>
+                  <Button type="primary" size="large" block htmlType="submit">
+                    Guardar
+                  </Button>
+                </Col>
+              </Row>
+            </Acl>
           </Form>
         </Col>
       </Row>
