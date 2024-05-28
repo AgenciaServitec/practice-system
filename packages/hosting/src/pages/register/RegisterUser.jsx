@@ -68,11 +68,7 @@ export const RegisterUser = ({ roleCode }) => {
       then: yup.string().notRequired(),
       otherwise: yup.string().required(),
     }),
-    entryYear: yup.string().when("isGraduate", {
-      is: false,
-      then: yup.string().notRequired(),
-      otherwise: yup.string().required(),
-    }),
+    entryYear: yup.string().required(),
     yearGraduation: yup.string().when("isGraduate", {
       is: false,
       then: yup.string().notRequired(),
@@ -346,6 +342,23 @@ export const RegisterUser = ({ roleCode }) => {
           />
         )}
       />
+      <Controller
+        name="entryYear"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <DatePicker
+            label="Año de Ingreso"
+            format="YYYY"
+            picker="year"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+          />
+        )}
+      />
       {!watch("isGraduate") ? (
         <>
           <Controller
@@ -434,23 +447,6 @@ export const RegisterUser = ({ roleCode }) => {
         </>
       ) : (
         <>
-          <Controller
-            name="entryYear"
-            control={control}
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Año de Ingreso"
-                format="YYYY"
-                picker="year"
-                onChange={onChange}
-                value={value}
-                name={name}
-                error={error(name)}
-                helperText={errorMessage(name)}
-                required={required(name)}
-              />
-            )}
-          />
           <Controller
             name="yearGraduation"
             control={control}
