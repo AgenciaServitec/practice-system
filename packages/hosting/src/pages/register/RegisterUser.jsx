@@ -25,6 +25,7 @@ import { capitalize } from "lodash";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { getAcademicYearBySemester } from "../../utils";
 import moment from "moment";
+import { ProfessionalCareer } from "../../data-list";
 
 export const RegisterUser = ({ roleCode }) => {
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
@@ -36,6 +37,11 @@ export const RegisterUser = ({ roleCode }) => {
   const { loginWithEmailAndPassword } = useAuthentication();
   const [loading, setLoading] = useState(false);
 
+  const professionalCareerView = ProfessionalCareer.map((career) => ({
+    label: career.label,
+    value: career.value,
+  }));
+
   const schema = yup.object({
     dni: yup.number().required(),
     firstName: yup.string().required(),
@@ -44,8 +50,9 @@ export const RegisterUser = ({ roleCode }) => {
     phoneNumber: yup.string().min(9).max(9).required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
-    tuitionId: yup.string().required(),
+    tuitionId: yup.string().min(6).required(),
     isGraduate: yup.boolean().required(),
+    professionalCareer: yup.string().required(),
     studentShift: yup.string().when("isGraduate", {
       is: true,
       then: yup.string().notRequired(),
@@ -61,6 +68,16 @@ export const RegisterUser = ({ roleCode }) => {
       then: yup.string().notRequired(),
       otherwise: yup.string().required(),
     }),
+    entryYear: yup.string().when("isGraduate", {
+      is: false,
+      then: yup.string().notRequired(),
+      otherwise: yup.string().required(),
+    }),
+    yearGraduation: yup.string().when("isGraduate", {
+      is: false,
+      then: yup.string().notRequired(),
+      otherwise: yup.string().required(),
+    }),
   });
 
   const {
@@ -69,6 +86,7 @@ export const RegisterUser = ({ roleCode }) => {
     formState: { errors },
     watch,
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { isGraduate: false },
@@ -91,12 +109,19 @@ export const RegisterUser = ({ roleCode }) => {
     practitionerData: {
       isGraduate: formData.isGraduate,
       tuitionId: formData?.tuitionId,
+      professionalCareer: formData?.professionalCareer,
       studentShift: formData?.studentShift || null,
       semester: formData?.semester || null,
       academicYear: formData?.academicYear
         ? `${moment(formData.academicYear, "YYYY").format(
             "YYYY"
           )} ${getAcademicYearBySemester(formData.semester)}`
+        : null,
+      entryYear: formData?.entryYear
+        ? moment(formData.entryYear, "YYYY").format("YYYY")
+        : null,
+      yearGraduation: formData?.yearGraduation
+        ? moment(formData.yearGraduation, "YYYY").format("YYYY")
         : null,
     },
   });
@@ -282,6 +307,21 @@ export const RegisterUser = ({ roleCode }) => {
         )}
       />
       <Controller
+        name="professionalCareer"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Select
+            label="Carrera Profesional"
+            value={value}
+            onChange={onChange}
+            options={professionalCareerView}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+          />
+        )}
+      />
+      <Controller
         name="isGraduate"
         control={control}
         render={({ field: { onChange, value, name } }) => (
@@ -306,7 +346,7 @@ export const RegisterUser = ({ roleCode }) => {
           />
         )}
       />
-      {!watch("isGraduate") && (
+      {!watch("isGraduate") ? (
         <>
           <Controller
             name="studentShift"
@@ -380,6 +420,43 @@ export const RegisterUser = ({ roleCode }) => {
             render={({ field: { onChange, value, name } }) => (
               <DatePicker
                 label="Año Académico"
+                format="YYYY"
+                picker="year"
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error(name)}
+                helperText={errorMessage(name)}
+                required={required(name)}
+              />
+            )}
+          />
+        </>
+      ) : (
+        <>
+          <Controller
+            name="entryYear"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <DatePicker
+                label="Año de Ingreso"
+                format="YYYY"
+                picker="year"
+                onChange={onChange}
+                value={value}
+                name={name}
+                error={error(name)}
+                helperText={errorMessage(name)}
+                required={required(name)}
+              />
+            )}
+          />
+          <Controller
+            name="yearGraduation"
+            control={control}
+            render={({ field: { onChange, value, name } }) => (
+              <DatePicker
+                label="Año de Egreso"
                 format="YYYY"
                 picker="year"
                 onChange={onChange}
