@@ -13,6 +13,7 @@ import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
+import { isUndefined } from "lodash";
 
 export const Annex2Integration = ({
   practice,
@@ -32,9 +33,10 @@ export const Annex2Integration = ({
         status:
           approvedByCompanyRepresentative && approvedByAcademicSupervisor
             ? "approved"
-            : !approvedByCompanyRepresentative && !approvedByAcademicSupervisor
-            ? "refused"
-            : "pending",
+            : isUndefined(approvedByCompanyRepresentative) ||
+              isUndefined(approvedByAcademicSupervisor)
+            ? "pending"
+            : "refused",
       });
     })();
   }, [annex2]);

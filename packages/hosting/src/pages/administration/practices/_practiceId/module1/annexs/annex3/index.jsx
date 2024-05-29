@@ -13,6 +13,7 @@ import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
+import { isUndefined } from "lodash";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
   const [visibleForm, setVisibleForm] = useState(false);
@@ -26,9 +27,10 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         status:
           approvedByCompanyRepresentative && approvedByAcademicSupervisor
             ? "approved"
-            : !approvedByCompanyRepresentative && !approvedByAcademicSupervisor
-            ? "refused"
-            : "pending",
+            : isUndefined(approvedByCompanyRepresentative) ||
+              isUndefined(approvedByAcademicSupervisor)
+            ? "pending"
+            : "refused",
       });
     })();
   }, [annex3]);
