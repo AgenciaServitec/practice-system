@@ -20,7 +20,7 @@ import { isEmpty } from "lodash";
 export const Practices = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
-  const { practices } = useGlobalData();
+  const { practices, users } = useGlobalData();
   const { assignDeleteProps } = useDefaultFirestoreProps();
 
   const navigateTo = (practiceId) => navigate(`/practices/${practiceId}`);
@@ -86,6 +86,7 @@ export const Practices = () => {
         <Col span={24}>
           <PracticeTable
             practices={practices}
+            users={users}
             onEditPractice={onEditPractice}
             onConfirmRemovePractice={onConfirmRemovePractice}
           />

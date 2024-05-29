@@ -8,9 +8,12 @@ import { useNavigate } from "react-router";
 import { useAuthentication } from "../../../providers";
 import { practicesStatus } from "../../../data-list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fullName } from "../../../utils";
+import { Link } from "react-router-dom";
 
 export const PracticeTable = ({
   practices,
+  users,
   onEditPractice,
   onConfirmRemovePractice,
 }) => {
@@ -18,6 +21,7 @@ export const PracticeTable = ({
   const { authUser } = useAuthentication();
 
   const onNavigateTo = (pathName) => navigate(pathName);
+  const getPractitioner = (userId) => users.find((user) => user.id === userId);
 
   const getPracticesByRoleCode = (roleCode) => {
     switch (roleCode) {
@@ -55,17 +59,30 @@ export const PracticeTable = ({
         moment(practice?.createAt.toDate()).format("DD/MM/YYYY HH:mm"),
     },
     {
-      title: "N° de Módulo",
+      title: "N° Módulo",
       dataIndex: "moduleNumber",
       align: "center",
       key: "moduleNumber",
       render: (_, practice) => practice?.moduleNumber || "",
     },
     {
-      title: "Nombre del Módulo",
+      title: "Nombre módulo",
       dataIndex: "name",
       key: "name",
       render: (_, practice) => capitalize(practice?.name) || "",
+    },
+    {
+      title: "Practicante",
+      dataIndex: "practitioner",
+      key: "name",
+      render: (_, practice) => {
+        const practitioner = getPractitioner(practice.practitionerId);
+        return (
+          <Link to={`/users/${practitioner.id}`}>
+            {practitioner ? fullName(practitioner) : ""}
+          </Link>
+        );
+      },
     },
     {
       title: "Estado",
