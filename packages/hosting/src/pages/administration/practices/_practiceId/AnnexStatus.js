@@ -46,7 +46,6 @@ export const AnnexStatus = ({ annex }) => {
   return (
     <Container>
       <div className="item">
-        <span className="label">Representante de empresa:</span>
         <Tag
           icon={
             <FontAwesomeIcon
@@ -59,9 +58,11 @@ export const AnnexStatus = ({ annex }) => {
           {" "}
           {statusByCompanyRepresentative?.value}
         </Tag>
+        <span className="label">
+          <span>Por</span> Representante de empresa:
+        </span>
       </div>
       <div className="item">
-        <span className="label">Supervisor academico:</span>
         <Tag
           icon={
             <FontAwesomeIcon
@@ -74,6 +75,9 @@ export const AnnexStatus = ({ annex }) => {
           {" "}
           {statusByAcademicSupervisor?.value}
         </Tag>
+        <span className="label">
+          <span>Por</span> Supervisor academico:
+        </span>
       </div>
     </Container>
   );
@@ -85,12 +89,18 @@ const Container = styled.div`
   .item {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    gap: 0.3em;
     .label {
-      font-size: 0.8em;
-      width: 7em;
+      text-align: left;
+      font-size: 0.65em;
+      width: 10em;
       line-height: 1em;
       margin-bottom: 0.5em;
+      gap: 0.2em;
+      font-weight: 600;
+      span {
+        font-weight: 400;
+      }
     }
   }
 `;
