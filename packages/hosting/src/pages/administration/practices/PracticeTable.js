@@ -74,7 +74,7 @@ export const PracticeTable = ({
     {
       title: "Practicante",
       dataIndex: "practitioner",
-      key: "name",
+      key: "practitioner",
       render: (_, practice) => {
         const practitioner = getPractitioner(practice.practitionerId);
         return (
