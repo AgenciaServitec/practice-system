@@ -35,157 +35,138 @@ export const Sheet2Integration = ({
   const mapForm = (formData) => ({
     evaluationSheet: [
       {
-        productivity: [
+        id: "A",
+        name: "productivity",
+        indicators: [
           {
-            id: "A",
-            name: "productivity",
-            indicators: [
-              {
-                id: 1,
-                name: "scheduled work",
-                assessment: formData.A1,
-              },
-              {
-                id: 2,
-                name: "fast work",
-                assessment: formData.A2,
-              },
-              {
-                id: 3,
-                name: "business assets",
-                assessment: formData.A3,
-              },
-            ],
+            id: 1,
+            name: "scheduled work",
+            assessment: formData.A1,
+          },
+          {
+            id: 2,
+            name: "fast work",
+            assessment: formData.A2,
+          },
+          {
+            id: 3,
+            name: "business assets",
+            assessment: formData.A3,
           },
         ],
-
-        competence: [
+      },
+      {
+        id: "B",
+        name: "competence",
+        indicators: [
           {
-            id: "B",
-            name: "competence",
-            indicators: [
-              {
-                id: 4,
-                name: "effective solutions",
-                assessment: formData.B4,
-              },
-              {
-                id: 5,
-                name: "effective decisions",
-                assessment: formData.B5,
-              },
-              {
-                id: 6,
-                name: "judicious decisions",
-                assessment: formData.B6,
-              },
-              {
-                id: 7,
-                name: "equipment care",
-                assessment: formData.B7,
-              },
-            ],
+            id: 4,
+            name: "effective solutions",
+            assessment: formData.B4,
+          },
+          {
+            id: 5,
+            name: "effective decisions",
+            assessment: formData.B5,
+          },
+          {
+            id: 6,
+            name: "judicious decisions",
+            assessment: formData.B6,
+          },
+          {
+            id: 7,
+            name: "equipment care",
+            assessment: formData.B7,
           },
         ],
-
-        reliability: [
+      },
+      {
+        id: "C",
+        name: "reliability",
+        indicators: [
           {
-            id: "C",
-            name: "reliability",
-            indicators: [
-              {
-                id: 8,
-                name: "skilled labor",
-                assessment: formData.C8,
-              },
-              {
-                id: 9,
-                name: "proper handling",
-                assessment: formData.C9,
-              },
-              {
-                id: 10,
-                name: "timely attendance",
-                assessment: formData.C10,
-              },
-              {
-                id: 11,
-                name: "task discipline",
-                assessment: formData.C11,
-              },
-              {
-                id: 12,
-                name: "effective dialog",
-                assessment: formData.C12,
-              },
-            ],
+            id: 8,
+            name: "skilled labor",
+            assessment: formData.C8,
+          },
+          {
+            id: 9,
+            name: "proper handling",
+            assessment: formData.C9,
+          },
+          {
+            id: 10,
+            name: "timely attendance",
+            assessment: formData.C10,
+          },
+          {
+            id: 11,
+            name: "task discipline",
+            assessment: formData.C11,
+          },
+          {
+            id: 12,
+            name: "effective dialog",
+            assessment: formData.C12,
           },
         ],
-
-        excellence: [
+      },
+      {
+        id: "D",
+        name: "excellence",
+        indicators: [
           {
-            id: "D",
-            name: "excellence",
-            indicators: [
-              {
-                id: 13,
-                name: "high standards",
-                assessment: formData.D13,
-              },
-              {
-                id: 14,
-                name: "learning interest",
-                assessment: formData.D14,
-              },
-            ],
+            id: 13,
+            name: "high standards",
+            assessment: formData.D13,
+          },
+          {
+            id: 14,
+            name: "learning interest",
+            assessment: formData.D14,
           },
         ],
-
-        collaboration: [
+      },
+      {
+        id: "E",
+        name: "collaboration",
+        indicators: [
           {
-            id: "E",
-            name: "collaboration",
-            indicators: [
-              {
-                id: 15,
-                name: "team integration",
-                assessment: formData.E15,
-              },
-              {
-                id: 16,
-                name: "courtesy trait",
-                assessment: formData.E16,
-              },
-              {
-                id: 17,
-                name: "supportive actions",
-                assessment: formData.E17,
-              },
-            ],
+            id: 15,
+            name: "team integration",
+            assessment: formData.E15,
+          },
+          {
+            id: 16,
+            name: "courtesy trait",
+            assessment: formData.E16,
+          },
+          {
+            id: 17,
+            name: "supportive actions",
+            assessment: formData.E17,
           },
         ],
-
-        proactivity: [
+      },
+      {
+        id: "F",
+        name: "proactivity",
+        indicators: [
           {
-            id: "F",
-            name: "proactivity",
-            indicators: [
-              {
-                id: 18,
-                name: "active engagement",
-                assessment: formData.F18,
-              },
-              {
-                id: 19,
-                name: "initiative display",
-                assessment: formData.F19,
-              },
-              {
-                id: 20,
-                name: "spontaneus coaching",
-                assessment: formData.F20,
-              },
-            ],
+            id: 18,
+            name: "active engagement",
+            assessment: formData.F18,
+          },
+          {
+            id: 19,
+            name: "initiative display",
+            assessment: formData.F19,
+          },
+          {
+            id: 20,
+            name: "spontaneus coaching",
+            assessment: formData.F20,
           },
         ],
       },
@@ -217,10 +198,10 @@ export const Sheet2Integration = ({
       onOk: async () => await onSaveSheet2Annex4(formData),
     });
 
-  return <Sheet1 onConfirmSaveSheet2={onConfirmSaveSheet2} />;
+  return <Sheet1 onConfirmSheet2={onConfirmSaveSheet2} />;
 };
 
-const Sheet1 = ({ onConfirmSaveSheet2 }) => {
+const Sheet1 = ({ onConfirmSheet2 }) => {
   const schema = yup.object({
     A1: yup.number().required(),
     A2: yup.number().required(),
