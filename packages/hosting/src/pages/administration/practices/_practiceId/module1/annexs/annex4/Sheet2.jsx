@@ -66,30 +66,6 @@ export const Sheet2Integration = ({
             indicators: [
               {
                 id: 4,
-                name: "scheduled work",
-                assessment: formData.A1,
-              },
-              {
-                id: 2,
-                name: "fast work",
-                assessment: formData.A2,
-              },
-              {
-                id: 3,
-                name: "business assets",
-                assessment: formData.A3,
-              },
-            ],
-          },
-        ],
-
-        reliability: [
-          {
-            id: "B",
-            name: "competence",
-            indicators: [
-              {
-                id: 4,
                 name: "effective solutions",
                 assessment: formData.B4,
               },
@@ -112,10 +88,10 @@ export const Sheet2Integration = ({
           },
         ],
 
-        excellence: [
+        reliability: [
           {
-            id: "B",
-            name: "excellence",
+            id: "C",
+            name: "reliability",
             indicators: [
               {
                 id: 8,
@@ -146,20 +122,44 @@ export const Sheet2Integration = ({
           },
         ],
 
-        collaboration: [
+        excellence: [
           {
-            id: "B",
-            name: "collaboration",
+            id: "D",
+            name: "excellence",
             indicators: [
               {
                 id: 13,
                 name: "high standards",
-                assessment: formData.A1,
+                assessment: formData.D13,
               },
               {
                 id: 14,
-                name: "fast work",
-                assessment: formData.A2,
+                name: "learning interest",
+                assessment: formData.D14,
+              },
+            ],
+          },
+        ],
+
+        collaboration: [
+          {
+            id: "E",
+            name: "collaboration",
+            indicators: [
+              {
+                id: 15,
+                name: "team integration",
+                assessment: formData.E15,
+              },
+              {
+                id: 16,
+                name: "courtesy trait",
+                assessment: formData.E16,
+              },
+              {
+                id: 17,
+                name: "supportive actions",
+                assessment: formData.E17,
               },
             ],
           },
@@ -167,23 +167,23 @@ export const Sheet2Integration = ({
 
         proactivity: [
           {
-            id: "B",
-            name: "competence",
+            id: "F",
+            name: "proactivity",
             indicators: [
               {
-                id: 4,
-                name: "scheduled work",
-                assessment: formData.A1,
+                id: 18,
+                name: "active engagement",
+                assessment: formData.F18,
               },
               {
-                id: 2,
-                name: "fast work",
-                assessment: formData.A2,
+                id: 19,
+                name: "initiative display",
+                assessment: formData.F19,
               },
               {
-                id: 3,
-                name: "business assets",
-                assessment: formData.A3,
+                id: 20,
+                name: "spontaneus coaching",
+                assessment: formData.F20,
               },
             ],
           },
