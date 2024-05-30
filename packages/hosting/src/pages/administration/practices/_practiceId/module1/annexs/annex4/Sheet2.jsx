@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Button,
-  Form,
-  Input,
-  modalConfirm,
-  notification,
-  Select,
-  Title,
-} from "../../../../../../../components";
+import { Button, Form, Select, Title } from "../../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
@@ -22,15 +14,14 @@ export const Sheet2Integration = ({
   users,
   practitioner,
   company,
+  annex4,
   onSavePractice,
 }) => {
-  const onConfirmSheet2 = () =>
-    modalConfirm({
-      title: "¿Estás seguro de que quieres guardar con los ultimos cambios?",
-      onOk: () => notification({ type: "success" }),
-    });
+  const onConfirmSaveSheet2 = (formData) => {
+    console.log("DatosDeFormulario: ", formData);
+  };
 
-  return <Sheet1 onConfirmSheet2={onConfirmSheet2} />;
+  return <Sheet1 onConfirmSheet2={onConfirmSaveSheet2} />;
 };
 
 const Sheet1 = ({ onConfirmSheet2 }) => {
@@ -73,121 +64,8 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
             )}
           />
         </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="shift"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Turno"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="semester"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Semestre"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="academicYear"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Año Académico"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="refreshment"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Refrigerio"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="mobility"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Movilidad"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="others"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Otros"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
       </Row>
       <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={6} md={4}>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            block
-            onClick={() => onConfirmSheet2()}
-          >
-            Aprobar
-          </Button>
-        </Col>
         <Col span={24} sm={6} md={4}>
           <Button type="primary" size="large" block htmlType="submit">
             Guardar
