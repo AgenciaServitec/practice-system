@@ -43,8 +43,8 @@ export const theme = {
     tertiary: "#343a40",
 
     font1: "#101110FF",
-    font2: "#1f211f",
-    font3: "#292c29",
+    font2: "#19191a",
+    font3: "#242526",
 
     success: "#0ECB81",
     info: "#0795FF",

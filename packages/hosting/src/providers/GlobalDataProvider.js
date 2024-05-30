@@ -20,21 +20,15 @@ export const GlobalDataProvider = ({ children }) => {
   );
 
   const [users = [], usersLoading, usersError] = useCollectionData(
-    authUser
-      ? firestore.collection("users").where("isDeleted", "==", false)
-      : null
+    firestore.collection("users").where("isDeleted", "==", false) || null
   );
 
   const [practices = [], practicesLoading, practicesError] = useCollectionData(
-    authUser
-      ? firestore.collection("practices").where("isDeleted", "==", false)
-      : null
+    firestore.collection("practices").where("isDeleted", "==", false) || null
   );
 
   const [companies = [], companiesLoading, companiesError] = useCollectionData(
-    authUser
-      ? firestore.collection("companies").where("isDeleted", "==", false)
-      : null
+    firestore.collection("companies").where("isDeleted", "==", false) || null
   );
 
   const error =

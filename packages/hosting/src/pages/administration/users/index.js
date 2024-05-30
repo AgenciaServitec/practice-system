@@ -44,7 +44,7 @@ export const Users = () => {
 
     notification({
       type: "success",
-      title: "User deleted successfully!",
+      title: "¡Usuario eliminado exitosamente!",
     });
   };
 
@@ -68,7 +68,11 @@ export const Users = () => {
           </>
         </Acl>
         <Col span={24}>
-          <Title level={3}>Usuarios</Title>
+          <Title level={3}>
+            {["super_admin", "admin"].includes(authUser.roleCode)
+              ? "Usuarios"
+              : "Practicantes"}
+          </Title>
         </Col>
         <Col span={24}>
           <UsersTable

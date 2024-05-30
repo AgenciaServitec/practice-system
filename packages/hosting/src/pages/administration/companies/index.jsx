@@ -21,9 +21,9 @@ export const Companies = () => {
   const { assignDeleteProps } = useDefaultFirestoreProps();
 
   const navigateTo = (companyId) => navigate(`/companies/${companyId}`);
-
   const onAddCompany = () => navigate("new");
   const onEditCompany = (companyId) => navigateTo(companyId);
+
   const onDeleteCompany = async (company) => {
     try {
       await updateCompany(company.id, assignDeleteProps({ isDeleted: true }));

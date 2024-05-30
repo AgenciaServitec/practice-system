@@ -76,6 +76,10 @@ const global = css`
   .pointer {
     cursor: pointer;
   }
+
+  .capitalize {
+    text-transform: capitalize;
+  }
 `;
 
 const antd = {

@@ -157,8 +157,8 @@ export const UploadMultiple = ({
   const uploadErrorMessage = () =>
     notification({
       type: "error",
-      title: " Error uploading the file",
-      description: "Try again!",
+      title: " Error al cargar el archivo",
+      description: "¡Intentar otra vez!",
     });
 
   const addFileToFiles = (file) =>
@@ -185,7 +185,7 @@ export const UploadMultiple = ({
   const onRemove = async (file) =>
     new Promise((resolve) => {
       modalConfirm({
-        content: "The image will be removed.",
+        content: "La imagen será eliminada.",
         onOk: async () => {
           await deleteFile(file);
           resolve(true);

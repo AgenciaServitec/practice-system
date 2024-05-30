@@ -19,7 +19,7 @@ interface RoleAcls extends DefaultFirestoreProps {
   roleCode: string;
 }
 
-//for user
+//  for user
 interface PractitionerData {
   isGraduate: boolean;
   tuitionId: string | null;
@@ -28,7 +28,7 @@ interface PractitionerData {
   academicYear?: number;
 }
 
-//for company_representative
+//  for company_representative
 interface CompanyRepresentativeData {
   ruc: string;
   businessPosition: string;
@@ -50,7 +50,7 @@ interface User extends DefaultFirestoreProps {
     number: string;
   };
   iAcceptPrivacyPolicies: boolean;
-  //conditional data by roleCode
+  //  conditional data by roleCode
   practitionerData?: PractitionerData;
   companyRepresentativeData?: CompanyRepresentativeData;
 }

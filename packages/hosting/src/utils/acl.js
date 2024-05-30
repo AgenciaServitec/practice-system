@@ -16,9 +16,9 @@ export const mapAcls = (acls = []) => ({
   defaultRolesAcls: filterMapAcl(acls, "default-roles-acls"),
   manageAcls: filterMapAcl(acls, "manage-acls"),
   profile: filterMapAcl(acls, "profile"),
-  users: [...filterMapAcl(acls, "users")],
+  users: filterMapAcl(acls, "users"),
   practices: filterMapAcl(acls, "practices"),
-  companies: [...filterMapAcl(acls, "companies")],
+  companies: filterMapAcl(acls, "companies"),
 });
 
 const filterMapAcl = (acls = [], filter, except = []) =>

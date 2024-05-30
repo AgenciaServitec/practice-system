@@ -21,6 +21,7 @@ import * as yup from "yup";
 import { capitalize } from "lodash";
 import { fullName } from "../../../../utils";
 import { useNavigate } from "react-router";
+import { Alert } from "antd";
 
 export const InitialPracticeFormIntegration = ({
   isNew,
@@ -180,7 +181,15 @@ const InitialPracticeForm = ({
   const onSubmit = (formData) => onSaveInitialForm(formData);
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 24]}>
+      <Col span={24}>
+        <Alert
+          type="info"
+          showIcon
+          message="Si no encuentras la empresa de tus practicas, debes pedir a tu
+          representante de empresa que se registre en la plataforma!"
+        />
+      </Col>
       <Col span={24}>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Row gutter={[16, 16]}>

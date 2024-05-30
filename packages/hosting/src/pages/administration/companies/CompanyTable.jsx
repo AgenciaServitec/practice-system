@@ -3,12 +3,34 @@ import { Space, Table, Tag } from "antd";
 import { Acl, IconAction } from "../../../components";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { CompanyStatus } from "../../../data-list";
+import { useAuthentication } from "../../../providers";
 
 export const CompanyTable = ({
   onEditCompany,
   onConfirmRemoveCompany,
   companies,
 }) => {
+  const { authUser } = useAuthentication();
+
+  const getCompaniesByRoleCode = (roleCode) => {
+    switch (roleCode) {
+      case "super_admin":
+        return companies;
+      case "admin":
+        return companies;
+      case "academic_supervisor":
+        return companies;
+      case "academic_coordinator":
+        return companies;
+      case "company_representative":
+        return companies.filter(
+          (company) => company.representativeId === authUser.id
+        );
+    }
+  };
+
+  const companiesView = getCompaniesByRoleCode(authUser.roleCode);
+
   const columns = [
     {
       title: "RUC",
@@ -78,7 +100,7 @@ export const CompanyTable = ({
   return (
     <Table
       columns={columns}
-      dataSource={companies}
+      dataSource={companiesView}
       pagination={false}
       scroll={{ x: "max-content" }}
     />
