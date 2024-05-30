@@ -36,136 +36,136 @@ export const Sheet2Integration = ({
     evaluationSheet: [
       {
         id: "A",
-        name: "productivity",
+        name: "ORGANIZACIÓN Y EJECUCIÓN DEL TRABAJO",
         indicators: [
           {
             id: 1,
-            name: "scheduled work",
+            name: "Programa convenientemente su trabajo.",
             assessment: formData.A1,
           },
           {
             id: 2,
-            name: "fast work",
+            name: "Trabajo rápido.",
             assessment: formData.A2,
           },
           {
             id: 3,
-            name: "business assets",
+            name: "Identifica los objetos de la empresa.",
             assessment: formData.A3,
           },
         ],
       },
       {
         id: "B",
-        name: "competence",
+        name: "CAPACIDAD TÉCNICO EMPRESARIAL",
         indicators: [
           {
             id: 4,
-            name: "effective solutions",
+            name: "Plantea soluciones acertadas a problemas que se originan en el trabajo.",
             assessment: formData.B4,
           },
           {
             id: 5,
-            name: "effective decisions",
+            name: "Toma decisiones acertadas y oportunas.",
             assessment: formData.B5,
           },
           {
             id: 6,
-            name: "judicious decisions",
+            name: "Tiene habilidad para organizar, planificar y dirigir las prestaciones de servicios que ofrece la empresa.",
             assessment: formData.B6,
           },
           {
             id: 7,
-            name: "equipment care",
+            name: "Coopera con la conversación, mantenimiento de los equipos de la empresa.",
             assessment: formData.B7,
           },
         ],
       },
       {
         id: "C",
-        name: "reliability",
+        name: "CUMPLIMIENTO EN EL TRABAJO",
         indicators: [
           {
             id: 8,
-            name: "skilled labor",
+            name: "Demuestra seguridad, habilidad en el trabajo.",
             assessment: formData.C8,
           },
           {
             id: 9,
-            name: "proper handling",
+            name: "Usa adecuadamente: Registros, formularios, comprobantes, materiales, máquinas de oficina, taller, laboratorio o campo.",
             assessment: formData.C9,
           },
           {
             id: 10,
-            name: "timely attendance",
+            name: "Es puntual y no llega tarde.",
             assessment: formData.C10,
           },
           {
             id: 11,
-            name: "task discipline",
+            name: "Disciplinado en la realización de tareas.",
             assessment: formData.C11,
           },
           {
             id: 12,
-            name: "effective dialog",
+            name: "Se comunica con fluidez y propiedad.",
             assessment: formData.C12,
           },
         ],
       },
       {
         id: "D",
-        name: "excellence",
+        name: "CALIDAD EN LA EJECUCIÓN",
         indicators: [
           {
             id: 13,
-            name: "high standards",
+            name: "Calidad, presentación, cuidado en alto grado.",
             assessment: formData.D13,
           },
           {
             id: 14,
-            name: "learning interest",
+            name: "Denota interés por aprender cosas nuevas.",
             assessment: formData.D14,
           },
         ],
       },
       {
         id: "E",
-        name: "collaboration",
+        name: "TRABAJO EN EQUIPO",
         indicators: [
           {
             id: 15,
-            name: "team integration",
+            name: "Tiene capacidad de integración, colaboración.",
             assessment: formData.E15,
           },
           {
             id: 16,
-            name: "courtesy trait",
+            name: "Tiene cortesía, buen trato y don de gente.",
             assessment: formData.E16,
           },
           {
             id: 17,
-            name: "supportive actions",
+            name: "Realiza tareas en beneficio de sus compañeros.",
             assessment: formData.E17,
           },
         ],
       },
       {
         id: "F",
-        name: "proactivity",
+        name: "INICIATIVA",
         indicators: [
           {
             id: 18,
-            name: "active engagement",
+            name: "Participa activamente en los clubes deportivos y/o culturales de su empresa.",
             assessment: formData.F18,
           },
           {
             id: 19,
-            name: "initiative display",
+            name: "Muestra iniciativa y seriedad. Sus planteamientos son definidos.",
             assessment: formData.F19,
           },
           {
             id: 20,
-            name: "spontaneus coaching",
+            name: "Ejecuta acciones de adiestramiento espontáneo a sus compañeros de trabajo cuando lo requiera el caso.",
             assessment: formData.F20,
           },
         ],
@@ -675,13 +675,13 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
         </Col>
         <Col span={24} md={20}>
           <span>
-            Participa activamente en los clubes deportivos y/o culturales de su
-            empresa.
+            <strong>F. INICIATIVA</strong>
           </span>
         </Col>
         <Col span={24} md={20}>
           <span>
-            <strong>F. INICIATIVA</strong>
+            Participa activamente en los clubes deportivos y/o culturales de su
+            empresa.
           </span>
         </Col>
         <Col>
