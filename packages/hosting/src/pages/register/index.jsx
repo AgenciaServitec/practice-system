@@ -8,6 +8,8 @@ import { RadioGroup, Title } from "../../components";
 import { Link } from "react-router-dom";
 import { RegisterUser } from "./RegisterUser";
 import { RegisterRepresentativeCompanyIntegration } from "./RegisterRepresentativeCompany";
+import { RegisterAcademicSupervisorIntegration } from "./RegisterAcademicSupervisor";
+import { RegisterAcademicCoordinatorIntegration } from "./RegisterAcademicCoordinator";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
@@ -41,6 +43,14 @@ export const RegisterIntegration = () => {
                     label: "Representante de empresa",
                     value: "company_representative",
                   },
+                  {
+                    label: "Supervisor académico",
+                    value: "academic_supervisor",
+                  },
+                  {
+                    label: "Supervisor académico",
+                    value: "academic_coordinator",
+                  },
                 ]}
                 optionType="button"
                 buttonStyle="solid"
@@ -54,10 +64,15 @@ export const RegisterIntegration = () => {
             <Col span={24}>
               {roleCode === "user" ? (
                 <RegisterUser roleCode={roleCode} />
-              ) : (
+              ) : roleCode === "company_representative" ? (
                 <RegisterRepresentativeCompanyIntegration roleCode={roleCode} />
+              ) : roleCode === "academic_supervisor" ? (
+                <RegisterAcademicSupervisorIntegration roleCode={roleCode} />
+              ) : (
+                <RegisterAcademicCoordinatorIntegration roleCode={roleCode} />
               )}
             </Col>
+
             <Col span={24}>
               <span>
                 ¿Ya tienes una cuenta? <Link to="/">Iniciar sesión</Link>
@@ -78,7 +93,7 @@ const Container = styled.div`
   justify-content: center;
 
   .content-wrapper {
-    max-width: 40em;
+    max-width: 50em;
     width: 100%;
     margin: 0 auto;
     padding: 3em 1em;
