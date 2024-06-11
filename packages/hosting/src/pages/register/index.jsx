@@ -48,7 +48,7 @@ export const RegisterIntegration = () => {
                     value: "academic_supervisor",
                   },
                   {
-                    label: "Supervisor académico",
+                    label: "Coordinador académico",
                     value: "academic_coordinator",
                   },
                 ]}
