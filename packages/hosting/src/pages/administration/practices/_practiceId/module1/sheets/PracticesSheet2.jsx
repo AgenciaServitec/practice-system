@@ -3,7 +3,11 @@ import { LogoPrimary, LogoServitec } from "../../../../../../images";
 import styled from "styled-components";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEarthAmerica, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEarthAmerica,
+  faEnvelope,
+  faPhone,
+} from "@fortawesome/free-solid-svg-icons";
 import { QRCode } from "antd";
 import { fullName } from "../../../../../../utils";
 
@@ -101,11 +105,11 @@ export const PracticesSheet2 = ({
             <span className="address">
               <strong>{`${company?.address}`}</strong>
             </span>
-            {/*<span>*/}
-            {/*  <FontAwesomeIcon icon={faPhone} />*/}
-            {/*  &nbsp; &nbsp;*/}
-            {/*  <strong>{`${company?.phone?.prefix} ${company?.phone?.number}`}</strong>*/}
-            {/*</span>*/}
+            <span>
+              <FontAwesomeIcon icon={faPhone} />
+              &nbsp; &nbsp;
+              <strong>{`${company?.phone?.prefix} ${company?.phone?.number}`}</strong>
+            </span>
             <span>
               <FontAwesomeIcon icon={faEnvelope} />
               &nbsp; &nbsp;
