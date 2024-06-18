@@ -5,6 +5,7 @@ import Row from "antd/lib/row";
 import { Space } from "antd";
 import styled from "styled-components";
 import { Sheet2Integration } from "./Sheet2";
+import { Sheet1Integration } from "./Sheet1";
 
 export const Annex4Integration = ({
   practice,
@@ -17,22 +18,22 @@ export const Annex4Integration = ({
 }) => {
   return (
     <ContainerRow gutter={[16, 16]}>
-      {/*<Col span={24}>*/}
-      {/*  <div className="item-sheet">*/}
-      {/*    <Space direction="vertical">*/}
-      {/*      <Title level={4}>Hoja 1</Title>*/}
-      {/*      <Sheet1Integration*/}
-      {/*        practice={practice}*/}
-      {/*        user={user}*/}
-      {/*        users={users}*/}
-      {/*        practitioner={practitioner}*/}
-      {/*        company={company}*/}
-      {/*        annex4={annex4}*/}
-      {/*        onSavePractice={onSavePractice}*/}
-      {/*      />*/}
-      {/*    </Space>*/}
-      {/*  </div>*/}
-      {/*</Col>*/}
+      <Col span={24}>
+        <div className="item-sheet">
+          <Space direction="vertical">
+            <Title level={4}>Hoja 1</Title>
+            <Sheet1Integration
+              practice={practice}
+              user={user}
+              users={users}
+              practitioner={practitioner}
+              company={company}
+              annex4={annex4}
+              onSavePractice={onSavePractice}
+            />
+          </Space>
+        </div>
+      </Col>
       <Col span={24}>
         <div className="item-sheet">
           <Space direction="vertical">

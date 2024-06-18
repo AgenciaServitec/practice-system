@@ -1,8 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
+import { fullName, getBusinessPosition } from "../../../../../../utils";
 
-export const PracticesSheet5 = () => {
+export const PracticesSheet5 = ({
+  practitioner,
+  practice,
+  company,
+  representativeCompany,
+  supervisor,
+  annex4,
+}) => {
   return (
     <>
       <Container>
@@ -31,30 +39,29 @@ export const PracticesSheet5 = () => {
                 <span> 1.</span>
                 <span>
                   Apellidos y Nombres del practicante:&nbsp;
-                  <strong>Aguirre Vizalote Monica Luz </strong>
+                  <strong>{fullName(practitioner)} </strong>
                 </span>
               </li>
               <li>
                 <span> 2.</span>
                 <span>
                   Carrera Profesional:&nbsp;
-                  <strong>Computacion e Informatica </strong>
+                  <strong>
+                    {practitioner?.practitionerData?.professionalCareer}
+                  </strong>
                 </span>
               </li>
               <li>
                 <span> 3.</span>
                 <span>
                   Modulo Tecnico Profesional N° 1:&nbsp;
-                  <strong>
-                    Gestion de soporte tecnico, Seguridad y Tecnologia de la
-                    informacion y comunicacion
-                  </strong>
+                  <strong>{practice.name}</strong>
                 </span>
               </li>
               <li>
                 <span> 4.</span>
                 <span>
-                  Duracion de PPP:&nbsp; <strong>320 Horas </strong>
+                  Duracion de PPP:&nbsp; <strong>{practice.hours}</strong>
                 </span>
               </li>
               <li>
@@ -62,7 +69,7 @@ export const PracticesSheet5 = () => {
                 <span>
                   Periodo de Evaluación:&nbsp;
                   <strong>20/06/2023 / 23/09/2023</strong> Total de horas:&nbsp;
-                  <strong> 320 Horas</strong>
+                  <strong>{practice.hours}</strong>
                 </span>
               </li>
               <li>
@@ -70,7 +77,7 @@ export const PracticesSheet5 = () => {
                 <span>
                   Nombre de la Empresa o Institución: &nbsp;
                   <br />
-                  <strong>LOS INSUMOS GENERALES E.I.R.L</strong>
+                  <strong>{company.socialReason}</strong>
                   <br />
                 </span>
               </li>
@@ -78,20 +85,20 @@ export const PracticesSheet5 = () => {
                 <span>7.</span>
                 <span>
                   Giro de la Empresa o Institución:&nbsp;
-                  <strong>VENTA DE INSUMOS QUIMICOS </strong>
+                  <strong>{company?.category}</strong>
                 </span>
               </li>
               <li>
                 <span>8.</span>
                 <span>
-                  Dirección:&nbsp;{" "}
-                  <strong>Jr. Daniel Garces 464 Urb. P. Baja</strong>
+                  Dirección:&nbsp; <strong>{company?.address}</strong>
                 </span>
               </li>
               <li>
                 <span></span>
                 <span>
-                  Telefono:&nbsp; <strong>123456789 </strong>
+                  Telefono:&nbsp;{" "}
+                  <strong>{practitioner?.phone?.number} </strong>
                 </span>
               </li>
               <li>
@@ -103,13 +110,20 @@ export const PracticesSheet5 = () => {
               <li>
                 <span></span>
                 <span>
-                  Nombre:&nbsp; <strong>Lozada Yntuscca Orlando Roberto</strong>
+                  Nombre:&nbsp;{" "}
+                  <strong>{fullName(representativeCompany)}</strong>
                 </span>
               </li>
               <li>
                 <span></span>
                 <span>
-                  Cargo:&nbsp; <strong>Administrador </strong>
+                  Cargo:&nbsp;{" "}
+                  <strong>
+                    {getBusinessPosition(
+                      representativeCompany?.companyRepresentativeData
+                        ?.businessPosition
+                    )?.label || ""}
+                  </strong>
                 </span>
               </li>
               <li>
@@ -122,21 +136,31 @@ export const PracticesSheet5 = () => {
                     <tbody>
                       <tr>
                         <td>Oficina</td>
-                        <td>X</td>
+                        <td>
+                          {practice.practiceArea === "Oficina" ? "x" : ""}
+                        </td>
                         <td>Taller</td>
-                        <td></td>
+                        <td>{practice.practiceArea === "Taller" ? "x" : ""}</td>
                       </tr>
                       <tr>
                         <td>Laboratorio</td>
-                        <td></td>
+                        <td>
+                          {practice.practiceArea === "Laboratorio" ? "x" : ""}
+                        </td>
                         <td>Granja o Campo</td>
-                        <td></td>
+                        <td>
+                          {practice.practiceArea === "Granja o Campo"
+                            ? "x"
+                            : ""}
+                        </td>
                       </tr>
                       <tr>
                         <td>Almacén</td>
-                        <td></td>
+                        <td>
+                          {practice.practiceArea === "Almacén" ? "x" : ""}
+                        </td>
                         <td>Otros</td>
-                        <td></td>
+                        <td>{practice.practiceArea === "Otros" ? "x" : ""}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -145,7 +169,10 @@ export const PracticesSheet5 = () => {
               <li>
                 <span> 11.</span>
                 <span>
-                  Horario de practicas: <strong>14:00 pm a 20:00 pm </strong>
+                  Horario de practicas:{" "}
+                  <strong>
+                    {practice?.entryTime} a {practice?.departureTime}
+                  </strong>
                 </span>
               </li>
               <li>
@@ -153,9 +180,7 @@ export const PracticesSheet5 = () => {
                 <span>
                   Tareas asignadas segun el modulo indicado: <br />
                   <br />
-                  <div className="task-box">
-                    Mantenimiento Preventivo y Correctivo de equipos de Computo
-                  </div>
+                  <div className="task-box">{practice?.task}</div>
                 </span>
               </li>
             </ul>
@@ -243,10 +268,12 @@ const Container = styled.div`
       margin-right: 3em;
     }
   }
+
   .body {
     &__title {
       margin-bottom: 2em;
       text-align: center;
+
       h3 {
         text-decoration: underline;
         text-decoration-color: black;
@@ -259,6 +286,7 @@ const Container = styled.div`
       width: 605px;
       margin: auto;
     }
+
     &__datacompany,
     &__company {
       width: 570px;
@@ -271,10 +299,12 @@ const Container = styled.div`
         li {
           display: grid;
           grid-template-columns: 2em 1fr;
+
           .item-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
           }
+
           .jutify {
             text-align: justify;
           }
@@ -301,13 +331,16 @@ const Container = styled.div`
       }
     }
   }
+
   .table-container {
     width: fit-content;
     margin: 2em auto;
+
     table {
       border-collapse: collapse;
       text-align: center;
       margin: auto;
+
       td {
         border: 1px solid black;
         padding: 10px;
