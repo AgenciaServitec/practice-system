@@ -20,7 +20,7 @@ export const Annex4Integration = ({
     <ContainerRow gutter={[16, 16]}>
       <Col span={24}>
         <div className="item-sheet">
-          <Space direction="vertical" style={{width:"100%"}}>
+          <Space direction="vertical" style={{ width: "100%" }}>
             <Title level={4}>Hoja 1</Title>
             <Sheet1Integration
               practice={practice}
@@ -36,7 +36,7 @@ export const Annex4Integration = ({
       </Col>
       <Col span={24}>
         <div className="item-sheet">
-          <Space direction="vertical" style={{width:"100%"}}>
+          <Space direction="vertical" style={{ width: "100%" }}>
             <Title level={4}>Hoja 2</Title>
             <Sheet2Integration
               practice={practice}

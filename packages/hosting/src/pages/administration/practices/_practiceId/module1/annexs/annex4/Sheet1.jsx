@@ -17,8 +17,10 @@ export const Sheet1Integration = ({ annex4, user, practice, practitioner }) => {
 };
 
 const Sheet1 = ({ practitioner }) => {
-  
-  const ProfessionalCareerValue = ProfessionalCareer.find((profession)=> profession.value=== practitioner?.practitionerData?.professionalCareer)?.label
+  const ProfessionalCareerValue = ProfessionalCareer.find(
+    (profession) =>
+      profession.value === practitioner?.practitionerData?.professionalCareer
+  )?.label;
 
   return (
     <Container>
@@ -65,7 +67,7 @@ const Sheet1 = ({ practitioner }) => {
 };
 
 const Container = styled.div`
-width: 100%;
+  width: 100%;
   div {
     p:last-child {
       font-weight: 500;
