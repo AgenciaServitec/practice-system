@@ -221,7 +221,7 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Dpto. Sector o Área de las Prácticas: </label>
-            <p>{PracticeArea[practice?.practiceArea].name || "-"}</p>
+            <p>{PracticeArea?.[practice?.practiceArea]?.name || "-"}</p>
           </div>
         </Col>
         <br />
