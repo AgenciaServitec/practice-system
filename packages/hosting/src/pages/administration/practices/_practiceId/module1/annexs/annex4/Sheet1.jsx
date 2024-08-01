@@ -2,17 +2,9 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import {
-  Title,
-} from "../../../../../../../components";
+import { Title } from "../../../../../../../components";
 
-export const Sheet1Integration = ({
-  annex4,
-  user,
-  practice,
-  practitioner,
-  
-}) => {
+export const Sheet1Integration = ({ annex4, user, practice, practitioner }) => {
   return (
     <Sheet1
       annex4={annex4}
@@ -23,16 +15,15 @@ export const Sheet1Integration = ({
   );
 };
 
-const Sheet1 = ({ annex4, user, practice ,practitioner}) => {
- 
-console.log("annex4: ",annex4);
-console.log("user: ",user);
-console.log("practice: ",practice);
-console.log("practitioner: ",practitioner);
+const Sheet1 = ({ annex4, user, practice, practitioner }) => {
+  console.log("annex4: ", annex4);
+  console.log("user: ", user);
+  console.log("practice: ", practice);
+  console.log("practitioner: ", practitioner);
 
   return (
     <Container>
-      <Row gutter={[16,16]}>
+      <Row gutter={[16, 16]}>
         <Col span={24}>
           <Title level={5}>I. DATOS PERSONALES</Title>
         </Col>
@@ -75,8 +66,8 @@ console.log("practitioner: ",practitioner);
 };
 
 const Container = styled.div`
-  div{
-    p:last-child{
+  div {
+    p:last-child {
       font-weight: 500;
       text-transform: capitalize;
       font-size: 1.1em;
