@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Title } from "../../../../../../../components";
+import { ProfessionalCareer } from "../../../../../../../data-list";
 
 export const Sheet1Integration = ({ annex4, user, practice, practitioner }) => {
   return (
@@ -15,11 +16,9 @@ export const Sheet1Integration = ({ annex4, user, practice, practitioner }) => {
   );
 };
 
-const Sheet1 = ({ annex4, user, practice, practitioner }) => {
-  console.log("annex4: ", annex4);
-  console.log("user: ", user);
-  console.log("practice: ", practice);
-  console.log("practitioner: ", practitioner);
+const Sheet1 = ({ practitioner }) => {
+  
+  const ProfessionalCareerValue = ProfessionalCareer.find((profession)=> profession.value=== practitioner?.practitionerData?.professionalCareer)?.label
 
   return (
     <Container>
@@ -39,25 +38,25 @@ const Sheet1 = ({ annex4, user, practice, practitioner }) => {
         <Col span={24} md={12}>
           <div>
             <label>Carrera Profesional: </label>
-            <p>{practitioner?.ProfessionalCareer || "-"}</p>
+            <p>{ProfessionalCareerValue || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Turno: </label>
-            <p>{practitioner?.shift || "-"}</p>
+            <p>{practitioner?.practitionerData?.studentShift || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Semestre: </label>
-            <p>{practitioner?.semester || "-"}</p>
+            <p>{practitioner?.practitionerData?.semester || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Año Académico: </label>
-            <p>{practitioner?.academicYear || "-"}</p>
+            <p>{practitioner?.practitionerData?.academicYear || "-"}</p>
           </div>
         </Col>
       </Row>
@@ -66,6 +65,7 @@ const Sheet1 = ({ annex4, user, practice, practitioner }) => {
 };
 
 const Container = styled.div`
+width: 100%;
   div {
     p:last-child {
       font-weight: 500;
