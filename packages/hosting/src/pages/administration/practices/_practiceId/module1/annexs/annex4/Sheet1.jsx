@@ -16,7 +16,7 @@ export const Sheet1Integration = ({ annex4, user, practice, practitioner }) => {
   );
 };
 
-const Sheet1 = ({ practitioner }) => {
+const Sheet1 = ({ practitioner, user }) => {
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
       profession.value === practitioner?.practitionerData?.professionalCareer
