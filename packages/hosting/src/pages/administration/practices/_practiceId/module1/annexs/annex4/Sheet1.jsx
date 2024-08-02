@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import { Title } from "../../../../../../../components";
+import { Title } from "../../../../../../../components";
 import { ProfessionalCareer } from "../../../../../../../data-list";
 
 export const Sheet1Integration = ({ annex4, user, practice, practitioner }) => {
