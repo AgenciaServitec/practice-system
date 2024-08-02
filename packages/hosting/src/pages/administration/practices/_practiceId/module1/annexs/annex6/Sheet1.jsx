@@ -16,10 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormUtils } from "../../../../../../../hooks";
 import moment from "moment";
 
-export const Sheet1Integration = ({
-  practice,
-  practitioner,
-}) => {
+export const Sheet1Integration = ({ practice, practitioner }) => {
   const onConfirmSheet1 = () =>
     modalConfirm({
       title: "¿Estás seguro de que quieres guardar con los ultimos cambios?",
@@ -27,12 +24,15 @@ export const Sheet1Integration = ({
     });
 
   return (
-    <Sheet1 onConfirmSheet1={onConfirmSheet1} practitioner={practitioner} practice={practice} />
+    <Sheet1
+      onConfirmSheet1={onConfirmSheet1}
+      practitioner={practitioner}
+      practice={practice}
+    />
   );
 };
 
 const Sheet1 = ({ onConfirmSheet1, practitioner, practice }) => {
-
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
       profession.value === practitioner?.practitionerData?.professionalCareer
@@ -60,7 +60,10 @@ const Sheet1 = ({ onConfirmSheet1, practitioner, practice }) => {
           <Col span={24} md={7}>
             <div>
               <label>Apellidos y Nombres: </label>
-              <p>{`${practitioner?.paternalSurname} ${practitioner?.maternalSurname} ${practitioner?.firstName}` ||"-"}</p>
+              <p>
+                {`${practitioner?.paternalSurname} ${practitioner?.maternalSurname} ${practitioner?.firstName}` ||
+                  "-"}
+              </p>
             </div>
           </Col>
           <Col span={24} md={7}>
@@ -83,7 +86,10 @@ const Sheet1 = ({ onConfirmSheet1, practitioner, practice }) => {
               <label>
                 Período de Estudios (Año de ingreso - Año de Egreso) :
               </label>
-              <p>{practitioner?.practitionerData?.entryYear || "-"} - {practitioner?.practitionerData?.yearGraduation || "En curso"}</p>
+              <p>
+                {practitioner?.practitionerData?.entryYear || "-"} -{" "}
+                {practitioner?.practitionerData?.yearGraduation || "En curso"}
+              </p>
             </div>
           </Col>
           <Col span={24} md={8}>
@@ -131,7 +137,17 @@ const Sheet1 = ({ onConfirmSheet1, practitioner, practice }) => {
           <Col span={24} md={6}>
             <div>
               <label>Período de Evaluación: </label>
-              <p>{practice?.startDate ? moment(practice.startDate,'DD/MM/YYYY').format('DD/MM/YYYY') : '-'} - {practice?.endDate ? moment(practice.endDate, 'DD/MM/YYYY').format('DD/MM/YYYY') : "-"}</p>
+              <p>
+                {practice?.startDate
+                  ? moment(practice.startDate, "DD/MM/YYYY").format(
+                      "DD/MM/YYYY"
+                    )
+                  : "-"}{" "}
+                -{" "}
+                {practice?.endDate
+                  ? moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+                  : "-"}
+              </p>
             </div>
           </Col>
           <Col span={24} md={6}>
