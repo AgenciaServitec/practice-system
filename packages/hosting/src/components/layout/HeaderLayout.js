@@ -57,15 +57,6 @@ export const HeaderLayout = ({
     <HeaderContainer>
       <div className="right-item">
         <Space align="center" size="large">
-          <div>
-            <img
-              src={LogoPrimary}
-              width={60}
-              alt="practice system"
-              onClick={() => onNavigateTo("/home")}
-              className="logo-img"
-            />
-          </div>
           <div
             style={{ fontSize: "1.7em", display: "flex", alignItems: "center" }}
           >
@@ -73,6 +64,15 @@ export const HeaderLayout = ({
               icon={faBars}
               onClick={() => setIsVisibleDrawer(!isVisibleDrawer)}
               className="icon-item"
+            />
+          </div>
+          <div>
+            <img
+              src={LogoPrimary}
+              width={60}
+              alt="practice system"
+              onClick={() => onNavigateTo("/home")}
+              className="logo-img"
             />
           </div>
         </Space>

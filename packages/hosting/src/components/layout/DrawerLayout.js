@@ -89,17 +89,17 @@ export const DrawerLayout = ({
             onSetIsVisibleDrawer(false);
           },
         },
-        {
-          label: "Prácticas",
-          key: "practices",
-          icon: <FontAwesomeIcon icon={faFilePen} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/practices"]),
-          onClick: () => {
-            onNavigateTo("/practices");
-            onSetIsVisibleDrawer(false);
-          },
-        },
       ],
+    },
+    {
+      label: "Prácticas",
+      key: "practices",
+      icon: <FontAwesomeIcon icon={faFilePen} size="lg" />,
+      isVisible: existPageAclsInAclsOfUser(["/practices"]),
+      onClick: () => {
+        onNavigateTo("/practices");
+        onSetIsVisibleDrawer(false);
+      },
     },
   ];
 
