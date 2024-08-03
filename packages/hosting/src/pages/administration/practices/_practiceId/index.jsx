@@ -98,6 +98,7 @@ export const PracticeIntegration = () => {
       });
 
       await addPractice(assignCreateProps(practice));
+      onGoBack();
       return;
     }
 
