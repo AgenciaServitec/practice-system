@@ -47,6 +47,8 @@ export const PracticeIntegration = () => {
 
   const [practice, setPractice] = useState({});
   const [practitioner, setPractitioner] = useState({});
+  const [representativeCompany, setRepresentativeCompany] = useState({});
+  const [supervisor, setSupervisor] = useState({});
   const [company, setCompany] = useState({});
   const [annexs, setAnnexs] = useState([]);
 
@@ -59,10 +61,6 @@ export const PracticeIntegration = () => {
       : practices.find((practice) => practice.id === practiceId);
 
     if (!_practice) return onGoBack();
-
-    const _practitioner = users.find(
-      (user) => user.id === _practice.practitionerId
-    );
 
     const _company = companies.find(
       (company) => company.id === _practice.companyId
@@ -78,8 +76,16 @@ export const PracticeIntegration = () => {
     })();
 
     setPractice(_practice);
-    setPractitioner(_practitioner);
     setCompany(_company);
+    setPractitioner(
+      users.find((user) => user?.id === _practice.practitionerId)
+    );
+    setRepresentativeCompany(
+      users.find((user) => user?.id === _company.representativeId)
+    );
+    setSupervisor(
+      users.find((user) => user?.id === _practice.academicSupervisorId)
+    );
   }, [practiceId]);
 
   const savePractice = async (practice) => {
@@ -214,6 +220,8 @@ export const PracticeIntegration = () => {
           user={authUser}
           users={users}
           practitioner={practitioner}
+          representativeCompany={representativeCompany}
+          supervisor={supervisor}
           company={company}
           onSavePractice={savePractice}
           annex6={annex6}

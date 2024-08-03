@@ -1,30 +1,19 @@
 import React from "react";
+import styled from "styled-components";
 import {
   Button,
-  DatePicker,
-  Form,
-  Input,
   modalConfirm,
   notification,
-  Select,
-  TimePicker,
   Title,
 } from "../../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormUtils } from "../../../../../../../hooks";
-import { ProfessionalCareer } from "../../../../../../../data-list";
-
+import { fullName } from "../../../../../../../utils";
+import { BusinessPosition } from "../../../../../../../data-list";
 export const Sheet2Integration = ({
-  practice,
-  user,
-  users,
-  practitioner,
   company,
-  onSavePractice,
+  representativeCompany,
+  supervisor,
 }) => {
   const onConfirmSheet2 = () =>
     modalConfirm({
@@ -32,531 +21,99 @@ export const Sheet2Integration = ({
       onOk: () => notification({ type: "success" }),
     });
 
-  return <Sheet1 onConfirmSheet2={onConfirmSheet2} />;
+  return (
+    <Sheet1
+      onConfirmSheet2={onConfirmSheet2}
+      company={company}
+      representativeCompany={representativeCompany}
+      supervisor={supervisor}
+    />
+  );
 };
 
-const Sheet1 = ({ onConfirmSheet2 }) => {
-  const schema = yup.object({
-    socialReason: yup.string().required(),
-    address: yup.string().required(),
-  });
-
-  const {
-    formState: { errors },
-    control,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const { required, error } = useFormUtils({ errors, schema });
+const Sheet1 = ({
+  onConfirmSheet2,
+  company,
+  representativeCompany,
+  supervisor,
+}) => {
+  const BusinessPositionValue = BusinessPosition.find(
+    (position) =>
+      position.value ===
+      representativeCompany?.companyRepresentativeData?.businessPosition
+  )?.label;
 
   return (
-    <Form>
+    <Container>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Title level={5}>II. DATOS DE LA EMPRESA:</Title>
         </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="professionalCareer"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Select
-                label="Carrera Profesional"
-                value={value}
-                onChange={onChange}
-                options={ProfessionalCareer}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+        <Col span={24} md={12}>
+          <label>Razón Social de la Empresa o Centro de Prácticas: </label>
+          <p>{company?.socialReason || "-"}</p>
+        </Col>
+        <Col span={24} md={12}>
+          <label>Dirección: </label>
+          <p>{company?.address || "-"}</p>
         </Col>
         <Col span={24} md={6}>
-          <Controller
-            name="shift"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Turno"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>Distrito: </label>
+          <p>{company?.district || "-"}</p>
         </Col>
         <Col span={24} md={6}>
-          <Controller
-            name="semester"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Semestre"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>Ciudad:</label>
+          <p>{company?.province || "-"}</p>
         </Col>
         <Col span={24} md={6}>
-          <Controller
-            name="academicYear"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Año Académico"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>Región:</label>
+          <p>{company?.region || "-"}</p>
         </Col>
         <Col span={24} md={6}>
-          <Controller
-            name="refreshment"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Refrigerio"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="mobility"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Movilidad"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="others"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Otros"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-
-        <Col span={24} md={4}>
-          <Controller
-            name="startDate"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Fecha de Inicio de la práctica"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={4}>
-          <Controller
-            name="endDate"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Fecha de Término de la práctica"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={4}>
-          <Controller
-            name="entryTime"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <TimePicker
-                label="Hora de entrada"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={4}>
-          <Controller
-            name="departureTime"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <TimePicker
-                label="Hora de salida"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>Teléfono:</label>
+          <p>
+            {`${representativeCompany.phone.prefix} ${representativeCompany.phone.number}` ||
+              "-"}
+          </p>
         </Col>
         <Col span={24} md={8}>
-          <Controller
-            name="practiceArea"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Select
-                label="Área de Prácticas"
-                value={value}
-                onChange={onChange}
-                options={[
-                  {
-                    label: "Oficina",
-                    value: "office",
-                  },
-                  {
-                    label: "Taller",
-                    value: "workshop",
-                  },
-                  {
-                    label: "Laboratorio",
-                    value: "laboratory",
-                  },
-                  {
-                    label: "Granja",
-                    value: "farm",
-                  },
-                  {
-                    label: "Almacén",
-                    value: "store",
-                  },
-                ]}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>Correo Electrónico:</label>
+          <p>{company?.email || "-"}</p>
         </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="refreshment"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Refrigerio"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+        <Col span={24} md={8}>
+          <label>Página Web:</label>
+          <p>{company?.webSite || "-"}</p>
         </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="mobility"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Movilidad"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="others"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Otros"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="professionalCareer"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Select
-                label="Carrera Profesional"
-                value={value}
-                onChange={onChange}
-                options={ProfessionalCareer}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="shift"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Turno"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="semester"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Semestre"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="academicYear"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Año Académico"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="startDate"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Fecha"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={4}>
-          <Controller
-            name="endDate"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Fecha práctica"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={4}>
-          <Controller
-            name="entryTime"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <TimePicker
-                label="Hora de entrada"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={4}>
-          <Controller
-            name="departureTime"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <TimePicker
-                label="Hora de salida"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+        <Col span={24} md={8}>
+          <label>RUC:</label>
+          <p>{company?.ruc || "-"}</p>
         </Col>
         <Col span={24} md={12}>
-          <Controller
-            name="practiceArea"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Select
-                label="Área de Prácticas"
-                value={value}
-                onChange={onChange}
-                options={[
-                  {
-                    label: "Oficina",
-                    value: "office",
-                  },
-                  {
-                    label: "Taller",
-                    value: "workshop",
-                  },
-                  {
-                    label: "Laboratorio",
-                    value: "laboratory",
-                  },
-                  {
-                    label: "Granja",
-                    value: "farm",
-                  },
-                  {
-                    label: "Almacén",
-                    value: "store",
-                  },
-                ]}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="refreshment"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Refrigerio"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24} md={6}>
-          <Controller
-            name="mobility"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Movilidad"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>
+            Nombre y Apellidos del Jefe o Autoridad Principal de la Empresa:
+          </label>
+          <p>{fullName(representativeCompany) || "-"}</p>
         </Col>
         <Col span={24} md={12}>
-          <Controller
-            name="others"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Otros"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
+          <label>Cargo de la Autoridad Principal de la Empresa:</label>
+          <p>{BusinessPositionValue || "-"}</p>
+        </Col>
+        <Col span={24} md={12}>
+          <label>
+            Cargo del Jefe o Supervisor de Práctica Pre-Profesional designado
+            por la empresa:
+          </label>
+          <p>{BusinessPositionValue || "-"}</p>
+        </Col>
+        <Col span={24} md={12}>
+          <label>
+            Nombres y Apellidos del Docente Supervisor designado por el IESTP:
+          </label>
+          <p>{fullName(supervisor) || "-"}</p>
+        </Col>
+        <Col span={24} md={6}>
+          <label>Rubro y/o Actividad que realiza la empresa:</label>
+          <p>{company?.category || "-"}</p>
         </Col>
       </Row>
       <Row justify="end" gutter={[16, 16]}>
@@ -577,6 +134,18 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
           </Button>
         </Col>
       </Row>
-    </Form>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  div {
+    p:last-child {
+      font-weight: 500;
+      text-transform: capitalize;
+      font-size: 1.1em;
+      margin: 0;
+    }
+  }
+`;

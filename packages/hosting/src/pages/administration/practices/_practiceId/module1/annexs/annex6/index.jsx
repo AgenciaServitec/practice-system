@@ -13,9 +13,11 @@ export const Annex6Integration = ({
   user,
   users,
   practitioner,
+  representativeCompany,
   company,
   annex6,
   onSavePractice,
+  supervisor,
 }) => {
   return (
     <ContainerRow gutter={[16, 16]}>
@@ -46,6 +48,8 @@ export const Annex6Integration = ({
               practitioner={practitioner}
               company={company}
               onSavePractice={onSavePractice}
+              representativeCompany={representativeCompany}
+              supervisor={supervisor}
             />
           </Space>
         </div>
