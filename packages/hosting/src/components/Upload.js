@@ -19,7 +19,7 @@ import * as assert from "assert";
 export const Upload = ({
   accept,
   bucket = "default",
-  buttonText = "Upload image",
+  buttonText = "Cargar imagen",
   dragger = true,
   hidden,
   name,
