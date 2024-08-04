@@ -108,7 +108,7 @@ export const PracticesSheet2 = ({
             <span>
               <FontAwesomeIcon icon={faPhone} />
               &nbsp; &nbsp;
-              <strong>{`${company?.phone?.prefix} ${company?.phone?.number}`}</strong>
+              <strong>{`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEnvelope} />

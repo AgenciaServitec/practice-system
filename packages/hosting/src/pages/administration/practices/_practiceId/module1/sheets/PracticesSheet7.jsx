@@ -1,8 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
+import moment from "moment/moment";
+import { fullName } from "../../../../../../utils";
+import { ProfessionalCareer } from "../../../../../../data-list";
 
-export const PracticesSheet7 = () => {
+export const PracticesSheet7 = ({
+  practitioner,
+  practice,
+  company,
+  representativeCompany,
+  supervisor,
+  annex4,
+}) => {
+  const ProfessionalCareerValue = ProfessionalCareer.find(
+    (profession) =>
+      profession.value === practitioner?.practitionerData?.professionalCareer
+  )?.label;
+
   return (
     <>
       <Container>
@@ -20,18 +35,17 @@ export const PracticesSheet7 = () => {
             <h3>ANEXO 6</h3>
             <h4>INFORME DE PRACTICA PRE- PROFESIONAL</h4>
             <div className="rbody__title">
-              San Juan de Miraflores, 15 de Noviembre del 2023
+              San Juan de Miraflores, {moment().format("DD MMMM YYYY")}
             </div>
             <h4>INFORME N° 001 - 2023 - ELS – CI - IESTP &quot;GLBR&quot;</h4>
             <div className="lbody__title">
               <div className="vertical-align">
-                <p>SEÑOR(A):</p>
-                <p>Ing. Gutiérrez Barahona José</p>
-                <p>
+                <p className="capitalize">SEÑOR(A): {fullName(supervisor)}</p>
+                <p className="supervisor-rol">
                   <strong>
                     {" "}
-                    COORDINADOR DEL ÁREA ACADÉMICA DE COMPUTACIÓN E INFORMÁTICA
-                    DEL IESTP
+                    COORDINADOR(A) DEL ÁREA ACADÉMICA DE COMPUTACIÓN E
+                    INFORMÁTICA DEL IESTP
                   </strong>
                 </p>
                 <p>
@@ -45,7 +59,9 @@ export const PracticesSheet7 = () => {
               </div>
               <div className="item-informe">
                 <p>INFORME DE SUPERVISIÓN DE PRACTICAS PREPROFESIONALES</p>
-                <p>Estudiante: Aguirre Vizalote Mónica Luz</p>
+                <p className="capitalize">
+                  Estudiante: {fullName(practitioner)}
+                </p>
               </div>
 
               <div className="item-asunto">
@@ -61,8 +77,9 @@ export const PracticesSheet7 = () => {
             <div className="item-footer" style={{ marginBottom: "1em" }}>
               Mediante el presente me dirijo a usted para saludarla, a la vez
               informar respecto al desarrollo de las Prácticas Pre-profesionales
-              efectuadas por la estudiante Aguirre Vizalote Mónica Luz como a
-              continuación detallo:
+              efectuadas por el/la estudiante:{" "}
+              <strong>{fullName(practitioner)}</strong> como a continuación
+              detallo:
             </div>
           </div>
           <div className="body__subtitle1">
@@ -76,7 +93,7 @@ export const PracticesSheet7 = () => {
                 </span>
                 <span>
                   <strong> Apellidos y Nombres del practicante:</strong> <br />
-                  Aguirre Vizalote Monica Luz
+                  {fullName(practitioner)}
                 </span>
               </li>
               <li>
@@ -85,7 +102,7 @@ export const PracticesSheet7 = () => {
                 </span>
                 <span>
                   <strong> Carrera profesional:</strong> <br />
-                  Computación e Informática
+                  {ProfessionalCareerValue}
                 </span>
               </li>
               <li>
@@ -99,8 +116,9 @@ export const PracticesSheet7 = () => {
                     Curricular :
                   </strong>{" "}
                   <br />
-                  N° 1 Gestión de Soporte Técnico, Seguridad y Gestión de
-                  Soporte Técnico de la Información y Comunicación
+                  <span className="capitalize">
+                    N° {practice.moduleNumber}: {practice.name}
+                  </span>
                 </span>
               </li>
               <li>
@@ -109,10 +127,11 @@ export const PracticesSheet7 = () => {
                 </span>
                 <span>
                   <strong>
-                    Periodo de estudios (año de ingreso-año de egreso)
+                    Periodo de estudios (Año de ingreso - Año de egreso)
                   </strong>
                   <br />
-                  Abril 2021 - Actualidad
+                  {practitioner?.practitionerData?.entryYear || ""} -&nbsp;
+                  {practitioner?.practitionerData?.yearGraduation || "En Curso"}
                 </span>
               </li>
               <li>
@@ -122,7 +141,7 @@ export const PracticesSheet7 = () => {
                 <span>
                   <strong>Domicilio: </strong>
                   <br />
-                  Jr. Daniel Garcés 464 Urb. P. Baja San juan de Miraflores
+                  {practitioner?.address || "-"}
                 </span>
               </li>
               <li>
@@ -132,7 +151,8 @@ export const PracticesSheet7 = () => {
                 <span>
                   <strong>Teléfonos (domicilio-personal): </strong>
                   <br />
-                  938655592
+                  {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
+                    "-"}
                 </span>
               </li>
               <li>
@@ -142,7 +162,7 @@ export const PracticesSheet7 = () => {
                 <span>
                   <strong>Correo electrónico (e-mail)</strong>
                   <br />
-                  monicaaguirrevizalote18@gmail.com
+                  {practitioner.email}{" "}
                 </span>
               </li>
               <li>
@@ -151,7 +171,7 @@ export const PracticesSheet7 = () => {
                 </span>
                 <span>
                   <strong>DNI: </strong>
-                  61876029
+                  {practitioner.dni}
                 </span>
               </li>
               <li>
@@ -160,7 +180,7 @@ export const PracticesSheet7 = () => {
                 </span>
                 <span>
                   <strong>Código de matrícula: </strong>
-                  2021039
+                  {practitioner.practitionerData.tuitionId}
                 </span>
               </li>
               <li>
@@ -170,11 +190,13 @@ export const PracticesSheet7 = () => {
                 <span>
                   <div className="item-grid">
                     <div>
-                      <strong>Semestre: </strong>VI
+                      <strong>Semestre: </strong>
+                      {practitioner.practitionerData.semester}
                     </div>
-                    <div>
+                    <div className="capitalize">
                       {" "}
-                      <strong>Turno: </strong>Diurno
+                      <strong>Turno: </strong>
+                      {practitioner.practitionerData.studentShift}
                     </div>
                   </div>
                 </span>
@@ -185,7 +207,14 @@ export const PracticesSheet7 = () => {
                 </span>
                 <span>
                   <strong>Periodo de Evaluación: </strong>
-                  del 20 de Junio al 23 de Setiembre del 2022
+                  del{" "}
+                  <span className="capitalize">
+                    {moment(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
+                  </span>{" "}
+                  al &nbsp;
+                  <span className="capitalize">
+                    {moment(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
+                  </span>{" "}
                 </span>
               </li>
               <li>
@@ -193,8 +222,8 @@ export const PracticesSheet7 = () => {
                   <strong> 12. </strong>
                 </span>
                 <span>
-                  <strong>Total, de Horas: </strong>
-                  320 horas
+                  <strong>Total de Horas: </strong>
+                  {practice.hours} horas
                 </span>
               </li>
             </ul>
@@ -218,6 +247,10 @@ const Container = styled.div`
     text-align: left;
     width: 605px;
     margin: 1em auto auto auto;
+
+    .supervisor-rol {
+      font-size: 13px;
+    }
     p {
       margin-bottom: 0.5em;
     }

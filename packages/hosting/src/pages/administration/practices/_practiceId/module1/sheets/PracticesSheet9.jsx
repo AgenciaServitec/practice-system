@@ -1,8 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
+import moment from "moment";
+import { fullName } from "../../../../../../utils";
 
-export const PracticesSheet9 = () => (
+export const PracticesSheet9 = ({
+  practice,
+  practitioner,
+  company,
+  supervisor,
+}) => (
   <>
     <Container>
       <div className="header">
@@ -29,9 +36,8 @@ export const PracticesSheet9 = () => (
                   <strong>Módulo del Plan Curricular Vinculado:&nbsp;</strong>
                 </span>
                 <br />
-                <span>
-                  N° 1 | Gestión de Soporte Técnico, Seguridad y Tecnologías de
-                  la Información y Comunicación
+                <span className="capitalize">
+                  N° {practice.moduleNumber} | {practice.name}
                 </span>
               </span>
             </li>
@@ -45,16 +51,15 @@ export const PracticesSheet9 = () => (
                 </strong>
               </span>
               <br />
-              <span>
-                Mantenimiento Preventivo y Correctivo de Equipos de Cómputo
-              </span>
+              <span className="capitalize">{practice.task}</span>
             </li>
             <li>
               <span>
                 <strong> 3. </strong>
               </span>
               <span>
-                <strong>Total, de horas acumuladas: </strong> 320 horas
+                <strong>Total, de horas acumuladas: </strong> {practice.hours}{" "}
+                horas
               </span>
             </li>
             <li>
@@ -62,8 +67,14 @@ export const PracticesSheet9 = () => (
                 <strong> 4. </strong>
               </span>
               <span>
-                <strong>Período de ejecución de la práctica: </strong> del 20 de
-                Junio al 23 de Setiembre del 2022
+                <strong>Período de ejecución de la práctica: </strong> del del{" "}
+                <span className="capitalize">
+                  {moment(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
+                </span>{" "}
+                al &nbsp;
+                <span className="capitalize">
+                  {moment(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
+                </span>{" "}
               </span>
             </li>
             <li>
@@ -71,7 +82,8 @@ export const PracticesSheet9 = () => (
                 <strong> 5. </strong>
               </span>
               <span>
-                <strong>Horario de Prácticas: </strong> 14:00 pm a 20:00 pm
+                <strong>Horario de Prácticas: </strong>{" "}
+                {`${practice.entryTime} - ${practice.departureTime}`}
               </span>
             </li>
             <li>
@@ -86,21 +98,51 @@ export const PracticesSheet9 = () => (
                   <tbody>
                     <tr>
                       <td>Oficina</td>
-                      <td></td>
+                      <td>
+                        {practice.practiceArea === "Oficina" ||
+                        practice.practiceArea === "oficina"
+                          ? "x"
+                          : ""}
+                      </td>
                       <td>Taller</td>
-                      <td></td>
+                      <td>
+                        {practice.practiceArea === "Taller" ||
+                        practice.practiceArea === "taller"
+                          ? "x"
+                          : ""}
+                      </td>
                     </tr>
                     <tr>
                       <td>Laboratorio</td>
-                      <td></td>
+                      <td>
+                        {practice.practiceArea === "Laboratorio" ||
+                        practice.practiceArea === "laboratorio"
+                          ? "x"
+                          : ""}
+                      </td>
                       <td>Granja o Campo</td>
-                      <td></td>
+                      <td>
+                        {practice.practiceArea === "Granja o Campo" ||
+                        practice.practiceArea === "granja o campo"
+                          ? "x"
+                          : ""}
+                      </td>
                     </tr>
                     <tr>
                       <td>Almacén</td>
-                      <td></td>
+                      <td>
+                        {practice.practiceArea === "Almacén" ||
+                        practice.practiceArea === "almacén"
+                          ? "x"
+                          : ""}
+                      </td>
                       <td>Otros</td>
-                      <td></td>
+                      <td>
+                        {practice.practiceArea === "Otros" ||
+                        practice.practiceArea === "otros"
+                          ? "x"
+                          : ""}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -117,9 +159,7 @@ export const PracticesSheet9 = () => (
                 </strong>
               </span>
               <br />
-              <span>
-                Mantenimiento preventivo y correctivo de equipos de cómputo
-              </span>
+              <span className="capitalize">{practice.task}</span>
             </li>
           </ul>
           <div className="body__final">
@@ -171,7 +211,7 @@ export const PracticesSheet9 = () => (
           <span>Atentamente</span>
         </div>
         <div className="footer__firm">
-          <span>Dr.Ing. Eladio Llamoga Sánchez&nbsp;</span>
+          <span className="capitalize">{fullName(supervisor)}&nbsp;</span>
           <br />
           <span>DOCENTE SUPERVISOR DE PRÁCTICAS IESTP &quot;GLBR&quot;</span>
         </div>

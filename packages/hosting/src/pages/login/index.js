@@ -75,7 +75,7 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
           </Title>
         </div>
         <Title align="center" level={2}>
-          Practice system
+          Sistema de Prácticas
         </Title>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Controller
