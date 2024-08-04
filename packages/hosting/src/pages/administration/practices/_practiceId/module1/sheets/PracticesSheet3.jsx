@@ -49,8 +49,8 @@ export const PracticesSheet3 = ({
               <li>
                 Teléfono:{" "}
                 <strong className="capitalize">{`${
-                  company?.phone?.prefix || ""
-                } ${company?.phone?.number || ""}`}</strong>
+                  representativeCompany?.phone?.prefix || ""
+                } ${representativeCompany?.phone?.number || ""}`}</strong>
               </li>
               <li>
                 Nombre del encargado del control de Prácticas Pre-Profesonales:{" "}
@@ -94,10 +94,15 @@ export const PracticesSheet3 = ({
               </li>
               <li>
                 Semestre:{" "}
-                {practitioner?.practitionerData?.semester || "Egresado"}
+                <strong className="capitalize">
+                  {practitioner?.practitionerData?.semester || "Egresado"}
+                </strong>
               </li>
               <li>
-                Año Académico: {practitioner?.practitionerData?.academicYear}
+                Año Académico:{" "}
+                <strong className="capitalize">
+                  {practitioner?.practitionerData?.academicYear}
+                </strong>
               </li>
             </ul>
           </div>
@@ -108,25 +113,32 @@ export const PracticesSheet3 = ({
             <ul>
               <li>
                 Período de la práctica:{" "}
-                {moment(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")}{" "}
-                - {moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
+                <strong className="capitalize">
+                  {moment(practice.startDate, "DD/MM/YYYY").format(
+                    "DD/MM/YYYY"
+                  )}{" "}
+                  -{" "}
+                  {moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
+                </strong>
               </li>
               <li>
                 Horario:{" "}
-                {moment(practice.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
-                {moment(practice.departureTime, "HH:mm:ss").format("HH:mm")}
+                <strong className="capitalize">
+                  {moment(practice.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
+                  {moment(practice.departureTime, "HH:mm:ss").format("HH:mm")}
+                </strong>
               </li>
               <li>
                 Dpto. Sector o Área de las Prácticas:{" "}
                 <strong className="capitalize">{practice?.practiceArea}</strong>
               </li>
-              <li>Refrigerio: {annex2?.refreshment}</li>
-              <li>Movilidad: {annex2?.mobility}</li>
-              <li>Otros: {annex2?.others}</li>
+              <li>Refrigerio: {annex2?.refreshment || `-`}</li>
+              <li>Movilidad: {annex2?.mobility || `-`}</li>
+              <li>Otros: {annex2?.others || `-`}</li>
             </ul>
           </div>
           <div className="body__date">
-            <span>Chorrillos,{moment().format("DD MMMM YYYY")}</span>
+            <span>Chorrillos, {moment().format("DD MMMM YYYY")}</span>
           </div>
         </div>
         <div className="footer">

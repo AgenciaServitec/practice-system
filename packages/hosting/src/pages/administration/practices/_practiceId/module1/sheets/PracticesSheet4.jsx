@@ -107,7 +107,7 @@ export const PracticesSheet4 = ({
                           ).format("DD/MM/YYYY")
                         : ""}
                     </td>
-                    <td>{annex3?.task || ""}</td>
+                    <td>{practice?.task || ""}</td>
                     <td>{annex3?.progressStatus || ""}</td>
                     <td>{annex3?.observations || ""}</td>
                   </tr>

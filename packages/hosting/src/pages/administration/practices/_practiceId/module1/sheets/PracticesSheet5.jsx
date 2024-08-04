@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
 import { fullName, getBusinessPosition } from "../../../../../../utils";
+import { ProfessionalCareer } from "../../../../../../data-list";
 
 export const PracticesSheet5 = ({
   practitioner,
@@ -11,6 +12,11 @@ export const PracticesSheet5 = ({
   supervisor,
   annex4,
 }) => {
+  const ProfessionalCareerValue = ProfessionalCareer.find(
+    (profession) =>
+      profession.value === practitioner?.practitionerData?.professionalCareer
+  )?.label;
+
   return (
     <>
       <Container>
@@ -46,16 +52,14 @@ export const PracticesSheet5 = ({
                 <span> 2.</span>
                 <span>
                   Carrera Profesional:&nbsp;
-                  <strong>
-                    {practitioner?.practitionerData?.professionalCareer}
-                  </strong>
+                  <strong>{ProfessionalCareerValue}</strong>
                 </span>
               </li>
               <li>
                 <span> 3.</span>
                 <span>
-                  Modulo Tecnico Profesional N° 1:&nbsp;
-                  <strong>{practice.name}</strong>
+                  Modulo Tecnico Profesional N° {practice.moduleNumber}:&nbsp;
+                  <strong className="capitalize">{practice.name}</strong>
                 </span>
               </li>
               <li>
@@ -68,7 +72,8 @@ export const PracticesSheet5 = ({
                 <span> 5.</span>
                 <span>
                   Periodo de Evaluación:&nbsp;
-                  <strong>20/06/2023 / 23/09/2023</strong> Total de horas:&nbsp;
+                  <strong>20/06/2023 / 23/09/2023</strong>&nbsp;&nbsp;&nbsp;
+                  Total de horas:&nbsp;
                   <strong>{practice.hours}</strong>
                 </span>
               </li>
@@ -137,19 +142,31 @@ export const PracticesSheet5 = ({
                       <tr>
                         <td>Oficina</td>
                         <td>
-                          {practice.practiceArea === "Oficina" ? "x" : ""}
+                          {practice.practiceArea === "Oficina" ||
+                          practice.practiceArea === "oficina"
+                            ? "x"
+                            : ""}
                         </td>
                         <td>Taller</td>
-                        <td>{practice.practiceArea === "Taller" ? "x" : ""}</td>
+                        <td>
+                          {practice.practiceArea === "Taller" ||
+                          practice.practiceArea === "taller"
+                            ? "x"
+                            : ""}
+                        </td>
                       </tr>
                       <tr>
                         <td>Laboratorio</td>
                         <td>
-                          {practice.practiceArea === "Laboratorio" ? "x" : ""}
+                          {practice.practiceArea === "Laboratorio" ||
+                          practice.practiceArea === "laboratorio"
+                            ? "x"
+                            : ""}
                         </td>
                         <td>Granja o Campo</td>
                         <td>
-                          {practice.practiceArea === "Granja o Campo"
+                          {practice.practiceArea === "Granja o Campo" ||
+                          practice.practiceArea === "granja o campo"
                             ? "x"
                             : ""}
                         </td>
@@ -157,10 +174,18 @@ export const PracticesSheet5 = ({
                       <tr>
                         <td>Almacén</td>
                         <td>
-                          {practice.practiceArea === "Almacén" ? "x" : ""}
+                          {practice.practiceArea === "Almacén" ||
+                          practice.practiceArea === "almacén"
+                            ? "x"
+                            : ""}
                         </td>
                         <td>Otros</td>
-                        <td>{practice.practiceArea === "Otros" ? "x" : ""}</td>
+                        <td>
+                          {practice.practiceArea === "Otros" ||
+                          practice.practiceArea === "otros"
+                            ? "x"
+                            : ""}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -180,7 +205,7 @@ export const PracticesSheet5 = ({
                 <span>
                   Tareas asignadas segun el modulo indicado: <br />
                   <br />
-                  <div className="task-box">{practice?.task}</div>
+                  <div className="task-box capitalize">{practice?.task}</div>
                 </span>
               </li>
             </ul>
@@ -316,7 +341,7 @@ const Container = styled.div`
             table {
               font-size: 12px;
               margin: 1em;
-              width: 400px;
+              width: 500px;
               border-collapse: collapse;
               text-align: center;
 

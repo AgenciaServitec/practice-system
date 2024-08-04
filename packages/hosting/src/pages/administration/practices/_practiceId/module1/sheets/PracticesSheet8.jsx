@@ -1,8 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../../images";
+import { fullName } from "../../../../../../utils";
+import { BusinessPosition } from "../../../../../../data-list";
 
-export const PracticesSheet8 = () => {
+export const PracticesSheet8 = ({
+  company,
+  supervisor,
+  representativeCompany,
+}) => {
+  const BusinessPositionValue = BusinessPosition.find(
+    (position) =>
+      position.value ===
+      representativeCompany?.companyRepresentativeData?.businessPosition
+  )?.label;
+
   return (
     <>
       <Container>
@@ -28,7 +40,7 @@ export const PracticesSheet8 = () => {
                     Razón Social de la Empresa, Institución o Centro de
                     Prácticas:
                   </span>
-                  <span> &quot;LOS INSUMOS GENERALES E.I.R.L&quot;</span>
+                  <span> &quot;{company.socialReason}&quot;</span>
                 </div>
               </li>
               <li>
@@ -36,8 +48,7 @@ export const PracticesSheet8 = () => {
                   <strong> 2. </strong>
                 </span>
                 <span>
-                  <strong>Dirección: </strong> Jr. Daniel Garcés 464 Urb. P.
-                  Baja
+                  <strong>Dirección: </strong> {company.address}
                 </span>
               </li>
               <li>
@@ -45,7 +56,7 @@ export const PracticesSheet8 = () => {
                   <strong> 3. </strong>
                 </span>
                 <span>
-                  <strong>Distrito: </strong> San Juan de Miraflores
+                  <strong>Distrito: </strong> {company.district}
                 </span>
               </li>
               <li>
@@ -53,7 +64,7 @@ export const PracticesSheet8 = () => {
                   <strong> 4. </strong>
                 </span>
                 <span>
-                  <strong>Ciudad: </strong> Lima
+                  <strong>Ciudad: </strong> {company.province}
                 </span>
               </li>
               <li>
@@ -61,7 +72,7 @@ export const PracticesSheet8 = () => {
                   <strong> 5. </strong>
                 </span>
                 <span>
-                  <strong>Región: </strong> Lima
+                  <strong>Región: </strong> {company.region}
                 </span>
               </li>
               <li>
@@ -69,7 +80,9 @@ export const PracticesSheet8 = () => {
                   <strong> 6. </strong>
                 </span>
                 <span>
-                  <strong>Teléfono: </strong> 935682038
+                  <strong>Teléfono: </strong>{" "}
+                  {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
+                    "-"}
                 </span>
               </li>
               <li>
@@ -77,7 +90,7 @@ export const PracticesSheet8 = () => {
                   <strong> 7. </strong>
                 </span>
                 <span>
-                  <strong>Fax: </strong> ____________
+                  <strong>Fax: </strong> {representativeCompany?.fax || "-"}
                 </span>
               </li>
               <li>
@@ -85,8 +98,8 @@ export const PracticesSheet8 = () => {
                   <strong> 8. </strong>
                 </span>
                 <span>
-                  <strong>Correo electrónico (e-mail): - </strong>
-                  insumosgenerales2021@gmail.com
+                  <strong>Correo electrónico (e-mail): </strong>
+                  {company.email}
                 </span>
               </li>
               <li>
@@ -95,6 +108,7 @@ export const PracticesSheet8 = () => {
                 </span>
                 <span>
                   <strong>Página web: </strong>
+                  {company.webSite}
                 </span>
               </li>
               <li>
@@ -102,7 +116,7 @@ export const PracticesSheet8 = () => {
                   <strong> 10. </strong>
                 </span>
                 <span>
-                  <strong>R.U.C: </strong> 20601306264
+                  <strong>R.U.C: </strong> {company.ruc}
                 </span>
               </li>
               <li>
@@ -112,7 +126,9 @@ export const PracticesSheet8 = () => {
                     Nombre y Apellidos del Jefe o Autoridad principal de la
                     Empresa o Institución:
                   </span>
-                  <span>Lozada Yntuscca Orlando Roberto</span>
+                  <span className="capitalize">
+                    {fullName(representativeCompany)}
+                  </span>
                 </div>
               </li>
               <li>
@@ -121,7 +137,7 @@ export const PracticesSheet8 = () => {
                   <span>
                     Cargo de la Autoridad principal de la Empresa o Institución:
                   </span>
-                  <span>Gerente general</span>
+                  <span>Gerente General</span>
                 </div>
               </li>
               <li>
@@ -131,7 +147,7 @@ export const PracticesSheet8 = () => {
                     Cargo del Jefe o Supervisor de Práctica Pre-profesional
                     designado por la empresa:
                   </span>
-                  <span>Supervisor de prácticas pre profesional</span>
+                  <span className="capitalize">{BusinessPositionValue}</span>
                 </div>
               </li>
               <li>
@@ -141,7 +157,7 @@ export const PracticesSheet8 = () => {
                     Nombre y Apellidos del Docente-Supervisor de Práctica
                     designado por el IESTP &quot;GLBR&quot;:
                   </span>
-                  <span>Dr. Ing. Eladio Llamoga Sánchez</span>
+                  <span className="capitalize">{fullName(supervisor)}</span>
                 </div>
               </li>
               <li>
@@ -151,7 +167,7 @@ export const PracticesSheet8 = () => {
                     Rubro y Actividad que realiza la Empresa o Institución:
                     Descripción de los productos o servicios que ofrece.
                   </span>
-                  <span>Venta de insumos químicos para la fumigación</span>
+                  <span className="capitalize">{company.category}</span>
                 </div>
               </li>
             </ul>

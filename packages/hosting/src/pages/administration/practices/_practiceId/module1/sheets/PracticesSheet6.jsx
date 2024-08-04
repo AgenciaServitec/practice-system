@@ -127,7 +127,7 @@ export const PracticesSheet6 = ({
           <div className="body__results">
             <strong>
               <div className="evaluation">
-                <span>EVALUACIÓN FINAL: </span>
+                <span>EVALUACIÓN FINAL: {totalNotes}</span>
                 <div className="cuality">
                   <span>CUALITATIVA: </span>
                   <span>{validationQualityEvaluation(totalNotes)?.name}</span>

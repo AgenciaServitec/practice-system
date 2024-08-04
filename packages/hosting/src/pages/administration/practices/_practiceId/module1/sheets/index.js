@@ -141,13 +141,14 @@ export const Sheets = () => {
           practice={practice}
           practitioner={practitioner}
           company={company}
+          supervisor={supervisor}
         />
       </Sheet>
       <Sheet layout="portrait">
         <PracticesSheet8
-          practice={practice}
-          practitioner={practitioner}
           company={company}
+          supervisor={supervisor}
+          representativeCompany={representativeCompany}
         />
       </Sheet>
       <Sheet layout="portrait">
@@ -155,6 +156,7 @@ export const Sheets = () => {
           practice={practice}
           practitioner={practitioner}
           company={company}
+          supervisor={supervisor}
         />
       </Sheet>
     </PDF>
