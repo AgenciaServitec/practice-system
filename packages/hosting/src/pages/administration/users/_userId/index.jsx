@@ -360,6 +360,22 @@ const User = ({
                 )}
               />
             </Col>
+            <Col span={24}>
+              <Controller
+                name="dni"
+                control={control}
+                render={({ field: { onChange, value, name } }) => (
+                  <InputNumber
+                    label="DNI"
+                    onChange={onChange}
+                    value={value}
+                    name={name}
+                    error={error(name)}
+                    required={required(name)}
+                  />
+                )}
+              />
+            </Col>
 
             <Col span={24}>
               <Controller
