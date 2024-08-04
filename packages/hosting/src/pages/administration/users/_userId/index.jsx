@@ -54,7 +54,7 @@ export const UserIntegration = () => {
       const response = isNew ? await postUser(_user) : await putUser(_user);
 
       if (isNew ? !postUserResponse.ok : !putUserResponse.ok) {
-        new Error(response);
+        throw new Error(response);
       }
 
       notification({
@@ -192,22 +192,6 @@ const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
             </Col>
             <Col span={24}>
               <Controller
-                name="dni"
-                control={control}
-                render={({ field: { onChange, value, name } }) => (
-                  <InputNumber
-                    label="DNI"
-                    onChange={onChange}
-                    value={value}
-                    name={name}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24}>
-              <Controller
                 name="firstName"
                 control={control}
                 defaultValue=""
@@ -285,6 +269,22 @@ const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
                     name={name}
                     value={value}
                     onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24}>
+              <Controller
+                name="dni"
+                control={control}
+                render={({ field: { onChange, value, name } }) => (
+                  <InputNumber
+                    label="DNI"
+                    onChange={onChange}
+                    value={value}
+                    name={name}
                     error={error(name)}
                     required={required(name)}
                   />
