@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Acl,
   Button,
@@ -21,8 +21,6 @@ import moment from "moment";
 import { firestore } from "../../../../../../../firebase";
 import styled from "styled-components";
 import { PracticeArea } from "../../../../../../../data-list";
-import { Alert } from "antd";
-import { updateAnnex } from "../../../../../../../firebase/collections/annexs";
 import { ObservationsList } from "../../ObservationsList";
 
 export const Sheet1Integration = ({
@@ -30,6 +28,7 @@ export const Sheet1Integration = ({
   user,
   company,
   practitioner,
+  representativeCompany,
   annex2,
 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
@@ -73,6 +72,7 @@ export const Sheet1Integration = ({
       user={user}
       company={company}
       practitioner={practitioner}
+      representativeCompany={representativeCompany}
       annex2={annex2}
       onConfirmSaveSheet1={onConfirmSaveSheet1}
     />
@@ -84,6 +84,7 @@ const Sheet1 = ({
   user,
   company,
   practitioner,
+  representativeCompany,
   annex2,
   onConfirmSaveSheet1,
 }) => {
@@ -114,7 +115,7 @@ const Sheet1 = ({
       others: annex2?.others || "",
     });
   };
-
+  console.log("Representante: ", representativeCompany);
   return (
     <Container>
       <Row gutter={[16, 16]}>
@@ -142,7 +143,10 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Teléfono: </label>
-            <p>{company?.phone || "-"}</p>
+            <p>
+              {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
+                "-"}
+            </p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -156,7 +160,7 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Cargo: </label>
-            <p>{company?.category || "-"}</p>
+            <p>{representativeCompany?.businessPosition || "-"}</p>
           </div>
         </Col>
         <Col span={24}>

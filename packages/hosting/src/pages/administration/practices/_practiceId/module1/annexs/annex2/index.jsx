@@ -20,6 +20,7 @@ export const Annex2Integration = ({
   user,
   practitioner,
   company,
+  representativeCompany,
   annex2,
 }) => {
   const [visibleForm, setVisibleForm] = useState(false);
@@ -106,6 +107,7 @@ export const Annex2Integration = ({
                 practice={practice}
                 user={user}
                 practitioner={practitioner}
+                representativeCompany={representativeCompany}
                 company={company}
                 annex2={annex2}
               />
