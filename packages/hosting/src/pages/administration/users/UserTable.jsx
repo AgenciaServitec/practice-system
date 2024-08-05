@@ -6,6 +6,8 @@ import { capitalize } from "lodash";
 import moment from "moment";
 import { Roles } from "../../../data-list";
 import { useAuthentication } from "../../../providers";
+import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
 export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
   const { authUser } = useAuthentication();
@@ -45,6 +47,13 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
 
   const columns = [
     {
+      title: "Fecha creación",
+      dataIndex: "createAt",
+      key: "createAt",
+      render: (_, user) =>
+        dayjs(user?.createAt.toDate()).format("DD/MM/YYYY HH:mm"),
+    },
+    {
       title: "Nombres y Apellidos",
       dataIndex: "fullName",
       key: "fullName",
@@ -81,6 +90,20 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
         user?.phone ? `${user.phone.prefix} ${user.phone.number}` : "",
     },
     {
+      title: "Practicas",
+      dataIndex: "practices",
+      key: "practices",
+      render: (_, user) => (
+        <Space>
+          {user?.hasPractices && (
+            <span>
+              <Link to={`/practices?user=${user.id}`}>Ver practicas</Link>
+            </span>
+          )}
+        </Space>
+      ),
+    },
+    {
       title: "Estado",
       dataIndex: "status",
       key: "status",
@@ -91,13 +114,6 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
           </span>
         </Space>
       ),
-    },
-    {
-      title: "Fecha creación",
-      dataIndex: "createAt",
-      key: "createAt",
-      render: (_, user) =>
-        moment(user?.createAt.toDate()).format("DD/MM/YYYY HH:mm"),
     },
     {
       title: "Acciones",

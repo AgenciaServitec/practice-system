@@ -10,6 +10,10 @@
   "/users/new": "Agregar usuario",
   "/users/:userId": "Editar usuario",
   "/users#delete": "Eliminar usuario",
+  "/companies": "Menu: Empresas",
+  "/companies/new": "Agregar Empresa",
+  "/companies/:companyId": "Editar empresa",
+  "/companies#delete": "Eliminar empresa",
   "/practices": "Menu: Prácticas",
   "/practices/new": "Agregar práctica",
   "/practices/:practiceId": "Editar práctica",
@@ -21,9 +25,5 @@
   "/practices/:practiceId/annex#observation": "Agregar observación",
   "/practices/:practiceId/annex#observations": "Ver observaciones",
   "/practices/:practiceId/annex#observationResolver": "Resolver observación",
-  "/practices/:practiceId/module#approved": "Aprobar modulos",
-  "/companies": "Menu: Empresas",
-  "/companies/new": "Agregar Empresa",
-  "/companies/:companyId": "Editar empresa",
-  "/companies#delete": "Eliminar empresa"
+  "/practices/:practiceId/module#approved": "Aprobar modulos"
 }
