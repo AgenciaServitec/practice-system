@@ -8,7 +8,7 @@ import {
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import styled from "styled-components";
-import moment from "moment/moment";
+import dayjs from "dayjs";
 
 export const Sheet3Integration = ({ practice }) => {
   const onConfirmSheet3 = () =>
@@ -42,9 +42,9 @@ const Sheet3 = ({ onConfirmSheet3, practice }) => {
         <Col span={24} md={9}>
           <label>Período de Ejecución de las Prácticas:</label>
           <p>
-            {`${moment(practice.startDate, "DD/MM/YYYY").format(
+            {`${dayjs(practice.startDate, "DD/MM/YYYY").format(
               "DD/MM/YYYY"
-            )} - ${moment(practice.endDate, "DD/MM/YYYY").format(
+            )} - ${dayjs(practice.endDate, "DD/MM/YYYY").format(
               "DD/MM/YYYY"
             )}` || "-"}
           </p>

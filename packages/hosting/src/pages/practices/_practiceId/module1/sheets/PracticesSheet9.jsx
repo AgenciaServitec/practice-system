@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import moment from "moment";
 import { fullName } from "../../../../../utils";
+import dayjs from "dayjs";
 
 export const PracticesSheet9 = ({
   practice,
@@ -69,11 +69,11 @@ export const PracticesSheet9 = ({
               <span>
                 <strong>Período de ejecución de la práctica: </strong> del del{" "}
                 <span className="capitalize">
-                  {moment(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
+                  {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
                 </span>{" "}
                 al &nbsp;
                 <span className="capitalize">
-                  {moment(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
+                  {dayjs(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
                 </span>{" "}
               </span>
             </li>

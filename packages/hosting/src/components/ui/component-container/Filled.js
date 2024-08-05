@@ -7,17 +7,6 @@ import { lighten } from "polished";
 
 const { Text } = Typography;
 
-// interface Props {
-//   value?: string | number | boolean | Record<string, unknown> | Moment;
-//   required?: boolean;
-//   error?: FormError;
-//   label?: string;
-//   disabled?: boolean;
-//   componentId?: string;
-//   children?: React.ReactNode;
-//   animation?: boolean;
-// }
-
 export const Filled = ({
   value,
   required,

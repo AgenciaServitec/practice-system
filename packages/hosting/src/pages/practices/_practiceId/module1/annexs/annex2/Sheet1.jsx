@@ -17,11 +17,11 @@ import {
   useDefaultFirestoreProps,
   useFormUtils,
 } from "../../../../../../hooks";
-import moment from "moment";
 import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
 import { PracticeArea } from "../../../../../../data-list";
 import { ObservationsList } from "../../ObservationsList";
+import dayjs from "dayjs";
 
 export const Sheet1Integration = ({
   practice,
@@ -208,8 +208,8 @@ const Sheet1 = ({
           <div>
             <label>Período de la práctica: </label>
             <p>
-              {moment(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")} -{" "}
-              {moment(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
+              {dayjs(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")} -{" "}
+              {dayjs(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
             </p>
           </div>
         </Col>
@@ -217,8 +217,8 @@ const Sheet1 = ({
           <div>
             <label>Horario: </label>
             <p>
-              {moment(practice?.entryTime, "HH:mm:ss").format("HH:mm a")} -
-              {moment(practice?.departureTime, "HH:mm:ss").format("HH:mm a")}
+              {dayjs(practice?.entryTime, "HH:mm:ss").format("HH:mm a")} -
+              {dayjs(practice?.departureTime, "HH:mm:ss").format("HH:mm a")}
             </p>
           </div>
         </Col>

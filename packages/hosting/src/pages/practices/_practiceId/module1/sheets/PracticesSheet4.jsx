@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import moment from "moment";
 import { fullName } from "../../../../../utils";
+import dayjs from "dayjs";
 
 export const PracticesSheet4 = ({
   practitioner,
@@ -59,7 +59,7 @@ export const PracticesSheet4 = ({
               <li>
                 &nbsp;Fecha de inicio de las PPP:{" "}
                 <strong>
-                  {moment(practice?.startDate, "DD/MM/YYYY").format(
+                  {dayjs(practice?.startDate, "DD/MM/YYYY").format(
                     "DD/MM/YYYY"
                   )}
                 </strong>
@@ -101,7 +101,7 @@ export const PracticesSheet4 = ({
                     <td>{annex3?.visitNumber || ""}</td>
                     <td>
                       {annex3?.supervisionDate
-                        ? moment(
+                        ? dayjs(
                             annex3.supervisionDate.toDate(),
                             "DD/MM/YYYY"
                           ).format("DD/MM/YYYY")

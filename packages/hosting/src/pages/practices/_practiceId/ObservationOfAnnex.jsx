@@ -16,7 +16,7 @@ import React, { useEffect } from "react";
 import { updateAnnex } from "../../../firebase/collections/annexs";
 import { v1 as uuidv1 } from "uuid";
 import styled from "styled-components";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const ObservationOfAnnexIntegration = ({
   practice,
@@ -32,7 +32,7 @@ export const ObservationOfAnnexIntegration = ({
       ...(annex?.observationsCompanyRepresentative || []),
       {
         id: uid,
-        createAt: moment().format("DD/MM/YYYY HH:mm:ss"),
+        createAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
         status: "pending",
         value: formData.observation,
       },
@@ -43,7 +43,7 @@ export const ObservationOfAnnexIntegration = ({
       ...(annex?.observationsAcademicSupervisor || []),
       {
         id: uid,
-        createAt: moment().format("DD/MM/YYYY HH:mm:ss"),
+        createAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
         status: "pending",
         value: formData.observation,
       },

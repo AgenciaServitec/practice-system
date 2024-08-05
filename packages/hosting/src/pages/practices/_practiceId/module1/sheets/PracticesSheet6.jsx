@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import moment from "moment";
 import { fullName } from "../../../../../utils";
+import dayjs from "dayjs";
 
 export const PracticesSheet6 = ({
   practitioner,
@@ -144,7 +144,7 @@ export const PracticesSheet6 = ({
               <strong>Lugar y Fecha: </strong>
             </span>
             <span>
-              SAN JUAN DE MIRAFLORES, {moment().format("DD MMMM YYYY")}
+              SAN JUAN DE MIRAFLORES, {dayjs().format("DD MMMM YYYY")}
             </span>
           </div>
         </div>

@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { ProfessionalCareer } from "../../../../../../data-list";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const Sheet1Integration = ({ practice, practitioner }) => {
   const onConfirmSheet1 = () =>
@@ -138,13 +138,11 @@ const Sheet1 = ({ onConfirmSheet1, practitioner, practice }) => {
               <label>Período de Evaluación: </label>
               <p>
                 {practice?.startDate
-                  ? moment(practice.startDate, "DD/MM/YYYY").format(
-                      "DD/MM/YYYY"
-                    )
+                  ? dayjs(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")
                   : "-"}{" "}
                 -{" "}
                 {practice?.endDate
-                  ? moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")
+                  ? dayjs(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")
                   : "-"}
               </p>
             </div>

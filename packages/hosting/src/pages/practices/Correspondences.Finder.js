@@ -1,14 +1,14 @@
 import React, { memo } from "react";
-import moment from "moment";
 import styled from "styled-components";
 import { DatePicker, Input } from "../../components";
 import { mediaQuery } from "../../styles";
+import dayjs from "dayjs";
 
 const CorrespondencesFinder = ({ searchFields, onSearch }) => {
   const onChangeTourDate = (value) =>
     onSearch({
       ...searchFields,
-      createAt: momentToDateString(value),
+      createAt: dayjsToDateString(value),
     });
 
   const onChangeSearchTerm = (event) =>
@@ -22,7 +22,7 @@ const CorrespondencesFinder = ({ searchFields, onSearch }) => {
       <FormContent>
         <DatePicker
           label="Fecha de correspondencia"
-          value={dateStringToMoment(searchFields.createAt)}
+          value={dateStringToDayjs(searchFields.createAt)}
           onChange={onChangeTourDate}
           allowClear
         />
@@ -39,12 +39,12 @@ const CorrespondencesFinder = ({ searchFields, onSearch }) => {
 
 export default memo(CorrespondencesFinder);
 
-const dateStringToMoment = (dateString) =>
-  moment(dateString, "YYYY-MM-DD", true).isValid()
-    ? moment(dateString, "YYYY-MM-DD")
+const dateStringToDayjs = (dateString) =>
+  dayjs(dateString, "YYYY-MM-DD", true).isValid()
+    ? dayjs(dateString, "YYYY-MM-DD")
     : undefined;
 
-const momentToDateString = (date) => date?.format("YYYY-MM-DD") || undefined;
+const dayjsToDateString = (date) => date?.format("YYYY-MM-DD") || undefined;
 
 const Container = styled.section``;
 

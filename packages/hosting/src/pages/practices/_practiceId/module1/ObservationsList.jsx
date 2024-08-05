@@ -2,9 +2,9 @@ import React from "react";
 import Col from "antd/lib/col";
 import { Alert, Row } from "antd";
 import { Acl, Button, modalConfirm } from "../../../../components";
-import moment from "moment/moment";
 import { updateAnnex } from "../../../../firebase/collections/annexs";
 import styled from "styled-components";
+import dayjs from "dayjs";
 
 export const ObservationsList = ({ user, annex, practice }) => {
   const {
@@ -34,7 +34,7 @@ export const ObservationsList = ({ user, annex, practice }) => {
           observation && {
             ...observation,
             status: "resolved",
-            updateAt: moment().format("DD/MM/YYYY HH:mm:ss"),
+            updateAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
           },
         ];
 

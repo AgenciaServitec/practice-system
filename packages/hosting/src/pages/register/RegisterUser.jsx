@@ -24,8 +24,8 @@ import { useAuthentication } from "../../providers";
 import { capitalize } from "lodash";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { getAcademicYearBySemester } from "../../utils";
-import moment from "moment";
 import { ProfessionalCareer } from "../../data-list";
+import dayjs from "dayjs";
 
 export const RegisterUser = ({ roleCode }) => {
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
@@ -109,15 +109,15 @@ export const RegisterUser = ({ roleCode }) => {
       studentShift: formData?.studentShift || null,
       semester: formData?.semester || null,
       academicYear: formData?.academicYear
-        ? `${moment(formData.academicYear, "YYYY").format(
+        ? `${dayjs(formData.academicYear, "YYYY").format(
             "YYYY"
           )} ${getAcademicYearBySemester(formData.semester)}`
         : null,
       entryYear: formData?.entryYear
-        ? moment(formData.entryYear, "YYYY").format("YYYY")
+        ? dayjs(formData.entryYear, "YYYY").format("YYYY")
         : null,
       yearGraduation: formData?.yearGraduation
-        ? moment(formData.yearGraduation, "YYYY").format("YYYY")
+        ? dayjs(formData.yearGraduation, "YYYY").format("YYYY")
         : null,
     },
   });
