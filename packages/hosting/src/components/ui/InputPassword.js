@@ -26,7 +26,7 @@ export const InputPassword = ({
       animation={animation}
     >
       <InputAntd.Password
-        bordered={false}
+        variant="borderless"
         placeholder=""
         size="large"
         value={value}

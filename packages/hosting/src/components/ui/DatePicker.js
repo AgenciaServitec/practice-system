@@ -1,7 +1,7 @@
 import React from "react";
 import { DatePicker as AntdDatePicker } from "antd";
 import { ComponentContainer } from "./component-container";
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const DatePicker = ({
   value = undefined,
@@ -14,14 +14,12 @@ export const DatePicker = ({
   dataTestId,
   label,
   variant = "filled",
-  format = "DD/MM/YYYY",
   allowClear = true,
   onChange,
-  ...props
 }) => {
   const Container = ComponentContainer[variant];
 
-  value = value instanceof Date ? moment(value) : value;
+  value = value instanceof Date ? dayjs(value) : value;
 
   return (
     <Container
@@ -36,7 +34,7 @@ export const DatePicker = ({
     >
       <AntdDatePicker
         size="large"
-        format={format}
+        format="DD/MM/YYYY"
         value={value}
         disabled={disabled}
         name={name}
@@ -44,7 +42,6 @@ export const DatePicker = ({
         onChange={onChange}
         allowClear={allowClear}
         variant="borderless"
-        {...props}
       />
     </Container>
   );

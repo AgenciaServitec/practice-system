@@ -21,6 +21,8 @@ export const HomeIntegration = () => {
     (practice) => practice.practitionerId === authUser.id
   );
 
+  const showListPractitioners = authUser.roleCode !== "user";
+
   return (
     <Container>
       <Row gutter={[16, 16]}>
@@ -37,14 +39,14 @@ export const HomeIntegration = () => {
               </div>
               <div className="texts">
                 <Title level={3}>
-                  <span className="capitalize"> {fullName(authUser)}:</span>
+                  <span className="capitalize"> {fullName(authUser)}</span>
                 </Title>
                 <ul className="list">
                   <li>
                     <Link to="/profile">1. Perfil</Link>
                   </li>
-                  <li>
-                    2. Mis practicas
+                  <li className="my-practices">
+                    <div>2. Mis practicas</div>
                     <ul className="list">
                       {practicesOfUser.map((practice) => (
                         <li key={practice.id} className="capitalize">
@@ -58,27 +60,29 @@ export const HomeIntegration = () => {
                 </ul>
               </div>
             </CardStyled>
-            <CardStyled>
-              <div className="icon">
-                <FontAwesomeIcon icon={faUserGraduate} size="5x" />
-              </div>
-              <div className="texts">
-                <Title level={3}>Practicantes:</Title>
-                <ul className="list">
-                  <li>
-                    <Link to="/users?roleCode=user">
-                      1. Lista de practicantes
-                    </Link>
-                  </li>{" "}
-                </ul>
-              </div>
-            </CardStyled>
+            {showListPractitioners && (
+              <CardStyled>
+                <div className="icon">
+                  <FontAwesomeIcon icon={faUserGraduate} size="5x" />
+                </div>
+                <div className="texts">
+                  <Title level={3}>Practicantes</Title>
+                  <ul className="list">
+                    <li>
+                      <Link to="/users?roleCode=user">
+                        1. Lista de practicantes
+                      </Link>
+                    </li>{" "}
+                  </ul>
+                </div>
+              </CardStyled>
+            )}
             <CardStyled>
               <div className="icon">
                 <FontAwesomeIcon icon={faBuilding} size="5x" />
               </div>
               <div className="texts">
-                <Title level={3}>Empresas:</Title>
+                <Title level={3}>Empresas</Title>
                 <ul className="list">
                   <li>
                     <Link to="/companies">1. Lista de empresas</Link>
@@ -142,7 +146,12 @@ const CardStyled = styled.div`
       margin: 0;
       padding: 0;
       display: grid;
-      gap: 0.2em;
+      gap: 0.5em;
+
+      .my-practices {
+        display: grid;
+        gap: 0.5em;
+      }
     }
   }
 `;

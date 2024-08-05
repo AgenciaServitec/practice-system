@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useDefaultFirestoreProps, useQueriesState } from "../../hooks";
 import { PracticeModalProvider } from "./PracticeModalProvider";
-import { PracticesTable } from "./PracticesTable";
+import { PracticesTable } from "./Practices.Table";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { isEmpty } from "lodash";
 import { Divider } from "antd";

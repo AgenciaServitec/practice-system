@@ -1,4 +1,5 @@
 import {
+  Button,
   Typography,
   Tag,
   Row,
@@ -23,7 +24,6 @@ import {
 
 export * from "./component-container";
 export * from "./calendar";
-export * from "./Button";
 export * from "./CheckboxGroup";
 export * from "./DatePicker";
 export * from "./Form";
@@ -57,12 +57,14 @@ export * from "./InputCode";
 export * from "./Acl";
 export * from "./Carousel";
 export * from "./TimePicker";
+export * from "./sheet";
 
 export { default as Legend } from "./Legend";
 
 const { Link, Paragraph } = Typography;
 
 export {
+  Button,
   Card,
   Drawer,
   Dropdown,
