@@ -6,7 +6,7 @@ import {
   TableVirtualized,
   Tag,
 } from "../../components/ui";
-import { faEdit, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
 import { Link } from "react-router-dom";
 import { fullName } from "../../utils";
@@ -105,8 +105,8 @@ export const PracticesTable = ({
           </Acl>
           <Acl name="/practices/:practiceId">
             <IconAction
-              tooltipTitle="Editar"
-              icon={faEdit}
+              tooltipTitle="Ver practica"
+              icon={faEye}
               onClick={() => onEditPractice(practice.id)}
             />
           </Acl>
