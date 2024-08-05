@@ -132,8 +132,6 @@ const Sheet1 = ({
     });
   };
 
-  console.log("Representante: ", representativeCompany);
-
   return (
     <Container>
       <Row gutter={[16, 16]}>
