@@ -3,13 +3,9 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
+import { PracticeArea } from "../../../../../data-list";
 
-export const PracticesSheet9 = ({
-  practice,
-  practitioner,
-  company,
-  supervisor,
-}) => (
+export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
   <>
     <Container>
       <div className="header">
@@ -67,7 +63,7 @@ export const PracticesSheet9 = ({
                 <strong> 4. </strong>
               </span>
               <span>
-                <strong>Período de ejecución de la práctica: </strong> del del{" "}
+                <strong>Período de ejecución de la práctica: </strong> del{" "}
                 <span className="capitalize">
                   {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
                 </span>{" "}
@@ -96,54 +92,12 @@ export const PracticesSheet9 = ({
               <div className="center_work">
                 <table>
                   <tbody>
-                    <tr>
-                      <td>Oficina</td>
-                      <td>
-                        {practice.practiceArea === "Oficina" ||
-                        practice.practiceArea === "oficina"
-                          ? "x"
-                          : ""}
-                      </td>
-                      <td>Taller</td>
-                      <td>
-                        {practice.practiceArea === "Taller" ||
-                        practice.practiceArea === "taller"
-                          ? "x"
-                          : ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Laboratorio</td>
-                      <td>
-                        {practice.practiceArea === "Laboratorio" ||
-                        practice.practiceArea === "laboratorio"
-                          ? "x"
-                          : ""}
-                      </td>
-                      <td>Granja o Campo</td>
-                      <td>
-                        {practice.practiceArea === "Granja o Campo" ||
-                        practice.practiceArea === "granja o campo"
-                          ? "x"
-                          : ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Almacén</td>
-                      <td>
-                        {practice.practiceArea === "Almacén" ||
-                        practice.practiceArea === "almacén"
-                          ? "x"
-                          : ""}
-                      </td>
-                      <td>Otros</td>
-                      <td>
-                        {practice.practiceArea === "Otros" ||
-                        practice.practiceArea === "otros"
-                          ? "x"
-                          : ""}
-                      </td>
-                    </tr>
+                    {Object.entries(PracticeArea).map(([key, object]) => (
+                      <tr key={key}>
+                        <td>{object.name}</td>
+                        <td>{key === practice?.practiceArea ? "x" : ""}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -192,17 +146,15 @@ export const PracticesSheet9 = ({
             <span>COPIA DE DNI.</span>
             <br />
             <br />
+          </div>
+          <div className="body__observations">
             <span>
               <strong>Observaciones:</strong>
             </span>
             <br />
-            <br />
-            <br />
-            <hr />
-            <br />
-            <br />
-            <hr />
-            <br />
+            <span>
+              {annex3?.observations || "No hay observaciones hacia el alumno."}
+            </span>
           </div>
         </div>
       </div>
@@ -296,14 +248,14 @@ const Container = styled.div`
           }
 
           .center_work {
-            margin: auto;
-            padding-left: 4em;
+            padding-left: 9em;
 
             table {
               margin: 1em;
-              width: 400px;
+              width: 300px;
               border-collapse: collapse;
               text-align: center;
+              font-size: 11px;
 
               td {
                 border: 1px solid black;
@@ -319,6 +271,10 @@ const Container = styled.div`
       margin: auto;
       width: 550px;
       font-size: 14px;
+    }
+
+    &__observations {
+      line-height: 1.8em;
     }
   }
 
@@ -338,7 +294,7 @@ const Container = styled.div`
     }
 
     &__tip {
-      padding-top: 3em;
+      padding-top: 2em;
       width: 570px;
       margin: auto;
       text-align: justify;
