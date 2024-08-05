@@ -1,13 +1,12 @@
 import React from "react";
 import TimePickerAntd from "antd/lib/time-picker";
 import { ComponentContainer } from "./component-container";
-import moment from "moment/moment";
 
 export const TimePicker = ({
-  value = undefined,
-  disabled = false,
-  required = false,
-  error = false,
+  value,
+  disabled,
+  required,
+  error,
   label,
   variant = "filled",
   helperText,
@@ -15,8 +14,6 @@ export const TimePicker = ({
   ...props
 }) => {
   const Container = ComponentContainer[variant];
-
-  value = value instanceof Date ? moment(value) : value;
 
   return (
     <Container
@@ -29,9 +26,8 @@ export const TimePicker = ({
       helperText={helperText}
     >
       <TimePickerAntd
-        disabled={disabled}
-        format="HH:mm"
         variant="borderless"
+        disabled={disabled}
         size="large"
         placeholder=""
         value={value}

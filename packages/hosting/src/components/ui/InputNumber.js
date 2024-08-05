@@ -39,7 +39,7 @@ export const InputNumber = ({
     >
       <InputNumberAntd
         type="number"
-        bordered={false}
+        variant="borderless"
         placeholder=""
         size="large"
         value={value}

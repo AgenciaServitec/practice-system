@@ -19,8 +19,8 @@ import {
   useFormUtils,
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
-import moment from "moment";
 import { ObservationsList } from "../../ObservationsList";
+import dayjs from "dayjs";
 
 export const Sheet1Integration = ({ practice, annex3, user }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
@@ -100,7 +100,7 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
     reset({
       visitNumber: annex3?.visitNumber || "",
       supervisionDate: annex3?.supervisionDate
-        ? moment(annex3.supervisionDate.toDate())
+        ? dayjs(annex3.supervisionDate.toDate())
         : null,
       progressStatus: annex3?.progressStatus || "",
       observations: annex3?.observations || "",

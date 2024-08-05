@@ -1,82 +1,63 @@
 import React from "react";
-import { Space, Table, Tag } from "antd";
-import { Acl, IconAction } from "../../components";
-import { faEdit, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
-import moment from "moment";
+import {
+  Acl,
+  IconAction,
+  Space,
+  TableVirtualized,
+  Tag,
+} from "../../components/ui";
+import { faEye, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
-import { useNavigate } from "react-router";
-import { useAuthentication } from "../../providers";
+import { Link } from "react-router-dom";
+import { fullName } from "../../utils";
 import { practicesStatus } from "../../data-list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { fullName } from "../../utils";
-import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
-export const PracticeTable = ({
-  practices,
-  users,
+export const PracticesTable = ({
+  practices = [],
+  users = [],
+  onNavigateTo,
   onEditPractice,
   onConfirmRemovePractice,
 }) => {
-  const navigate = useNavigate();
-  const { authUser } = useAuthentication();
-
-  const onNavigateTo = (pathName) => navigate(pathName);
-  const getPractitioner = (userId) => users.find((user) => user.id === userId);
-
-  const getPracticesByRoleCode = (roleCode) => {
-    switch (roleCode) {
-      case "super_admin":
-        return practices;
-      case "admin":
-        return practices;
-      case "academic_supervisor":
-        return practices.filter(
-          (practice) => practice.academicSupervisorId === authUser.id
-        );
-      case "academic_coordinator":
-        return practices.filter(
-          (practice) => practice.academicCoordinatorId === authUser.id
-        );
-      case "company_representative":
-        return practices.filter(
-          (practice) => practice.companyRepresentativeId === authUser.id
-        );
-      case "user":
-        return practices.filter(
-          (practice) => practice.practitionerId === authUser.id
-        );
-    }
-  };
-
-  const practicesView = getPracticesByRoleCode(authUser.roleCode);
+  const getPractitioner = (userId) => users.find((user) => user?.id === userId);
 
   const columns = [
     {
       title: "Fecha creación",
       dataIndex: "createAt",
       key: "createAt",
-      render: (_, practice) =>
-        moment(practice?.createAt.toDate()).format("DD/MM/YYYY HH:mm"),
+      width: ["40px", "10%"],
+      render: (practice) =>
+        practice?.createAt
+          ? dayjs(practice.createAt.toDate()).format("DD/MM/YYYY HH:mm")
+          : null,
     },
     {
       title: "N° Módulo",
       dataIndex: "moduleNumber",
       align: "center",
       key: "moduleNumber",
-      render: (_, practice) => practice?.moduleNumber || "",
+      width: ["60px", "20%"],
+      render: (practice) => practice?.moduleNumber || "",
     },
     {
       title: "Nombre módulo",
       dataIndex: "name",
       key: "name",
-      render: (_, practice) => capitalize(practice?.name) || "",
+      width: ["200px", "47%"],
+      render: (practice) => capitalize(practice?.name) || "",
     },
     {
       title: "Practicante",
       dataIndex: "practitioner",
       key: "practitioner",
-      render: (_, practice) => {
-        const practitioner = getPractitioner(practice.practitionerId);
+      width: ["60px", "20%"],
+      render: (practice) => {
+        const practitioner = getPractitioner(practice?.practitionerId);
+        if (!practitioner) return;
+
         return (
           <Link to={`/users/${practitioner.id}`}>
             {practitioner ? fullName(practitioner) : ""}
@@ -88,7 +69,8 @@ export const PracticeTable = ({
       title: "Estado",
       dataIndex: "status",
       key: "status",
-      render: (_, practice) => (
+      width: ["60px", "20%"],
+      render: (practice) => (
         <Space>
           <span>
             <Tag
@@ -110,22 +92,21 @@ export const PracticeTable = ({
     {
       title: "Acciones",
       key: "actions",
-      render: (_, practice) => (
+      width: ["60px", "20%"],
+      render: (practice) => (
         <Space>
           <Acl name="/practices/:practiceId/module1/sheets">
             <IconAction
               tooltipTitle="Pdf"
               icon={faFilePdf}
               styled={{ color: (theme) => theme.colors.error }}
-              onClick={() =>
-                onNavigateTo(`/practices/${practice.id}/module1/sheets`)
-              }
+              onClick={() => onNavigateTo(`${practice.id}/module1/sheets`)}
             />
           </Acl>
           <Acl name="/practices/:practiceId">
             <IconAction
-              tooltipTitle="Editar"
-              icon={faEdit}
+              tooltipTitle="Ver practica"
+              icon={faEye}
               onClick={() => onEditPractice(practice.id)}
             />
           </Acl>
@@ -143,11 +124,11 @@ export const PracticeTable = ({
   ];
 
   return (
-    <Table
+    <TableVirtualized
+      dataSource={practices}
       columns={columns}
-      dataSource={practicesView}
-      pagination={false}
-      scroll={{ x: "max-content" }}
+      rowHeaderHeight={50}
+      rowBodyHeight={150}
     />
   );
 };

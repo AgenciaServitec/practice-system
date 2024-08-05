@@ -14,7 +14,6 @@ import {
   TimePicker,
 } from "../../../components";
 import { useFormUtils } from "../../../hooks";
-import moment from "moment/moment";
 import { Modules } from "../../../data-list";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -22,6 +21,7 @@ import { capitalize } from "lodash";
 import { fullName } from "../../../utils";
 import { useNavigate } from "react-router";
 import { Alert } from "antd";
+import dayjs from "dayjs";
 
 export const InitialPracticeFormIntegration = ({
   isNew,
@@ -49,18 +49,16 @@ export const InitialPracticeFormIntegration = ({
     task: formData?.task.toLowerCase(),
     hours: +formData?.hours,
     startDate: formData?.startDate
-      ? moment(formData.startDate, "DD/MM/YYYY HH:mm").format(
-          "DD/MM/YYYY HH:mm"
-        )
+      ? dayjs(formData.startDate).format("DD/MM/YYYY HH:mm")
       : null,
     endDate: formData?.endDate
-      ? moment(formData?.endDate, "DD/MM/YYYY HH:mm").format("DD/MM/YYYY HH:mm")
+      ? dayjs(formData?.endDate).format("DD/MM/YYYY HH:mm")
       : null,
     entryTime: formData?.entryTime
-      ? moment(formData.entryTime, "HH:mm:ss").format("HH:mm:ss")
+      ? dayjs(formData.entryTime).format("HH:mm:ss")
       : null,
     departureTime: formData?.departureTime
-      ? moment(formData.departureTime, "HH:mm:ss").format("HH:mm:ss")
+      ? dayjs(formData.departureTime).format("HH:mm:ss")
       : null,
     practiceArea: formData?.practiceArea.toLowerCase(),
     academicCoordinatorId: formData?.academicCoordinatorId,
@@ -159,16 +157,16 @@ const InitialPracticeForm = ({
       task: capitalize(practice?.task || ""),
       hours: practice?.hours || 0,
       startDate: practice?.startDate
-        ? moment(practice?.startDate, "DD/MM/YYYY HH:mm")
+        ? dayjs(practice?.startDate, "DD/MM/YYYY HH:mm")
         : undefined,
       endDate: practice?.endDate
-        ? moment(practice?.endDate, "DD/MM/YYYY HH:mm")
+        ? dayjs(practice?.endDate, "DD/MM/YYYY HH:mm")
         : undefined,
       entryTime: practice?.entryTime
-        ? moment(practice?.entryTime, "HH:mm:ss")
+        ? dayjs(practice?.entryTime, "HH:mm:ss")
         : undefined,
       departureTime: practice?.departureTime
-        ? moment(practice?.departureTime, "HH:mm:ss")
+        ? dayjs(practice?.departureTime, "HH:mm:ss")
         : undefined,
       practiceArea: practice?.practiceArea || "",
       academicCoordinatorId: practice?.academicCoordinatorId || "",
@@ -197,7 +195,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="moduleNumber"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
                     label="N° de Módulo"
@@ -227,7 +224,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="name"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Input
                     label="Nombre del módulo"
@@ -245,7 +241,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="companyId"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
                     label="Empresa"
@@ -265,7 +260,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="task"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <TextArea
                     label="Tarea desarrollada"
@@ -282,7 +276,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="hours"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <InputNumber
                     label="Horas"
@@ -299,7 +292,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="startDate"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <DatePicker
                     label="Fecha de Inicio"
@@ -316,7 +308,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="endDate"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <DatePicker
                     label="Fecha de Término"
@@ -333,7 +324,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="entryTime"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <TimePicker
                     label="Hora de entrada"
@@ -350,7 +340,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="departureTime"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <TimePicker
                     label="Hora de salida"
@@ -367,7 +356,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="practiceArea"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
                     label="Área de Prácticas"
@@ -409,7 +397,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="academicCoordinatorId"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
                     label="Coordinador(a) Académico(a)"
@@ -433,7 +420,6 @@ const InitialPracticeForm = ({
               <Controller
                 name="academicSupervisorId"
                 control={control}
-                defaultValue=""
                 render={({ field: { onChange, value, name } }) => (
                   <Select
                     label="Supervisor(a) Académico(a)"

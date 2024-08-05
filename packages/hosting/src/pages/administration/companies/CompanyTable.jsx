@@ -24,7 +24,11 @@ export const CompanyTable = ({
         return companies;
       case "company_representative":
         return companies.filter(
-          (company) => company.representativeId === authUser.id
+          (company) => company?.representativeId === authUser.id
+        );
+      case "user":
+        return companies.filter((company) =>
+          (authUser?.companiesIds || []).includes(company.id)
         );
     }
   };

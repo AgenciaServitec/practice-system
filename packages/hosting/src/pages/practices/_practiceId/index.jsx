@@ -15,6 +15,7 @@ import {
   getPracticesId,
   practicesRef,
   updatePractice,
+  updateUser,
 } from "../../../firebase/collections";
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../providers";
@@ -78,17 +79,22 @@ export const PracticeIntegration = () => {
     setPractice(_practice);
     setCompany(_company);
     setPractitioner(
-      users.find((user) => user?.id === _practice.practitionerId)
+      users.find((user) => user?.id === _practice?.practitionerId)
     );
     setRepresentativeCompany(
-      users.find((user) => user?.id === _company.representativeId)
+      users.find((user) => user?.id === _company?.representativeId)
     );
     setSupervisor(
-      users.find((user) => user?.id === _practice.academicSupervisorId)
+      users.find((user) => user?.id === _practice?.academicSupervisorId)
     );
   }, [practiceId]);
 
   const savePractice = async (practice) => {
+    await updateUser(
+      practice.practitionerId,
+      assignUpdateProps({ hasPractices: true })
+    );
+
     if (isNew) {
       ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
         practicesRef.doc(practice.id).collection("annexs").doc(annex).set({

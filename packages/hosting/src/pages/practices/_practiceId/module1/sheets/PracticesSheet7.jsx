@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import moment from "moment/moment";
 import { fullName } from "../../../../../utils";
 import { ProfessionalCareer } from "../../../../../data-list";
+import dayjs from "dayjs";
 
 export const PracticesSheet7 = ({
   practitioner,
@@ -35,7 +35,7 @@ export const PracticesSheet7 = ({
             <h3>ANEXO 6</h3>
             <h4>INFORME DE PRACTICA PRE- PROFESIONAL</h4>
             <div className="rbody__title">
-              San Juan de Miraflores, {moment().format("DD MMMM YYYY")}
+              San Juan de Miraflores, {dayjs().format("DD MMMM YYYY")}
             </div>
             <h4>INFORME N° 001 - 2023 - ELS – CI - IESTP &quot;GLBR&quot;</h4>
             <div className="lbody__title">
@@ -180,7 +180,7 @@ export const PracticesSheet7 = ({
                 </span>
                 <span>
                   <strong>Código de matrícula: </strong>
-                  {practitioner.practitionerData.tuitionId}
+                  {practitioner.practitionerData?.tuitionId}
                 </span>
               </li>
               <li>
@@ -191,12 +191,12 @@ export const PracticesSheet7 = ({
                   <div className="item-grid">
                     <div>
                       <strong>Semestre: </strong>
-                      {practitioner.practitionerData.semester}
+                      {practitioner.practitionerData?.semester}
                     </div>
                     <div className="capitalize">
                       {" "}
                       <strong>Turno: </strong>
-                      {practitioner.practitionerData.studentShift}
+                      {practitioner.practitionerData?.studentShift}
                     </div>
                   </div>
                 </span>
@@ -209,11 +209,11 @@ export const PracticesSheet7 = ({
                   <strong>Periodo de Evaluación: </strong>
                   del{" "}
                   <span className="capitalize">
-                    {moment(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
+                    {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
                   </span>{" "}
                   al &nbsp;
                   <span className="capitalize">
-                    {moment(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
+                    {dayjs(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
                   </span>{" "}
                 </span>
               </li>

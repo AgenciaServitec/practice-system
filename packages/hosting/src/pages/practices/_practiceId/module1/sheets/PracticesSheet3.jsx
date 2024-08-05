@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import moment from "moment";
 import { fullName, getBusinessPosition } from "../../../../../utils";
+import dayjs from "dayjs";
 
 export const PracticesSheet3 = ({
   practitioner,
@@ -114,18 +114,15 @@ export const PracticesSheet3 = ({
               <li>
                 Período de la práctica:{" "}
                 <strong className="capitalize">
-                  {moment(practice.startDate, "DD/MM/YYYY").format(
-                    "DD/MM/YYYY"
-                  )}{" "}
-                  -{" "}
-                  {moment(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
+                  {dayjs(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")}{" "}
+                  - {dayjs(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
                 </strong>
               </li>
               <li>
                 Horario:{" "}
                 <strong className="capitalize">
-                  {moment(practice.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
-                  {moment(practice.departureTime, "HH:mm:ss").format("HH:mm")}
+                  {dayjs(practice.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
+                  {dayjs(practice.departureTime, "HH:mm:ss").format("HH:mm")}
                 </strong>
               </li>
               <li>
@@ -138,7 +135,7 @@ export const PracticesSheet3 = ({
             </ul>
           </div>
           <div className="body__date">
-            <span>Chorrillos, {moment().format("DD MMMM YYYY")}</span>
+            <span>Chorrillos, {dayjs().format("DD MMMM YYYY")}</span>
           </div>
         </div>
         <div className="footer">

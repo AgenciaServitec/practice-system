@@ -97,7 +97,7 @@ export const Router = () => {
           path="practices"
           element={
             <AdminLayout>
-              <A.Practices />
+              <A.CorrespondencesIntegration />
             </AdminLayout>
           }
         />

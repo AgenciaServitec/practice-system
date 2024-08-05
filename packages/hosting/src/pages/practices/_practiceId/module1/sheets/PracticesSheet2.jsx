@@ -1,7 +1,6 @@
 import React from "react";
 import { LogoPrimary, LogoServitec } from "../../../../../images";
 import styled from "styled-components";
-import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEarthAmerica,
@@ -10,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { QRCode } from "antd";
 import { fullName } from "../../../../../utils";
+import dayjs from "dayjs";
 
 export const PracticesSheet2 = ({
   practice,
@@ -72,13 +72,13 @@ export const PracticesSheet2 = ({
               , con un total de <strong>{practice.hours} horas</strong>,
               efectuadas en el periodo del{" "}
               <strong>
-                {moment(practice.startDate, "DD/MM/YYYY").format(
+                {dayjs(practice.startDate, "DD/MM/YYYY").format(
                   "DD [de] MMMM [del] YYYY"
                 )}
               </strong>
               &nbsp;al&nbsp;
               <strong>
-                {moment(practice.endDate, "DD/MM/YYYY").format(
+                {dayjs(practice.endDate, "DD/MM/YYYY").format(
                   "DD [de] MMMM [del] YYYY"
                 )}
               </strong>
@@ -88,9 +88,7 @@ export const PracticesSheet2 = ({
             </text>
           </div>
           <div className="body__date">
-            <span>
-              Chorrillos, {moment().format("DD [de] MMMM [del] YYYY")}
-            </span>
+            <span>Chorrillos, {dayjs().format("DD [de] MMMM [del] YYYY")}</span>
           </div>
         </div>
         <div className="footer">

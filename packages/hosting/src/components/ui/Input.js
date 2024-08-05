@@ -38,7 +38,7 @@ export const Input = ({
       animation={animation}
     >
       <InputAntd
-        bordered={false}
+        variant="borderless"
         size="large"
         placeholder=""
         value={value}

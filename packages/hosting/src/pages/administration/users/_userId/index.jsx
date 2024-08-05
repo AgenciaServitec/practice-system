@@ -216,8 +216,6 @@ const User = ({
   }, [watch("dni")]);
 
   const onSubmit = (formData) => onSaveUser(formData);
-  console.log(authUser);
-
   const roleOptions =
     authUser.roleCode === "company_representative"
       ? [{ label: "Usuario", value: "user" }]

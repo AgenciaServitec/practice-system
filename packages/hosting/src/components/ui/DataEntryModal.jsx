@@ -17,9 +17,9 @@ export const DataEntryModal = ({
     wrapClassName="data-entry-modal"
     footer={false}
     onCancel={onCancel}
-    visible={visible}
+    open={visible}
     title={title}
-    width="60%"
+    width="70%"
     closeIcon={<FontAwesomeIcon icon={faTimes} size="lg" />}
     destroyOnClose
     data-testid={dataTestId}
@@ -40,7 +40,6 @@ export const ModalStyled = styled(ModalAntd)`
   ${({ theme }) => css`
     max-width: 100vw;
     margin: 0;
-    height: calc(100vh - calc(100vh - 100%));
     min-width: 100vw;
     padding-bottom: 9em;
     ${mediaQuery.minDesktop} {

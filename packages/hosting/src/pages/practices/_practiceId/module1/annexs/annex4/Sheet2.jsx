@@ -230,8 +230,6 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
     resolver: yupResolver(schema),
   });
 
-  console.log({ errors });
-
   const { required, error } = useFormUtils({ errors, schema });
 
   return (
