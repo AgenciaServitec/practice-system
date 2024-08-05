@@ -58,8 +58,6 @@ export const PracticesTable = ({
         const practitioner = getPractitioner(practice?.practitionerId);
         if (!practitioner) return;
 
-        console.log("practitioner: ", practitioner);
-
         return (
           <Link to={`/users/${practitioner.id}`}>
             {practitioner ? fullName(practitioner) : ""}
