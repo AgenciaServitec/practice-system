@@ -22,9 +22,12 @@ import { Roles } from "../../../../data-list";
 import {
   apiErrorNotification,
   getApiErrorResponse,
+  useApiPersonDataByDniGet,
   useApiUserPost,
   useApiUserPut,
 } from "../../../../api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export const UserIntegration = () => {
   const { authUser } = useAuthentication();
@@ -32,6 +35,11 @@ export const UserIntegration = () => {
   const { userId } = useParams();
   const { postUser, postUserResponse, postUserLoading } = useApiUserPost();
   const { putUser, putUserResponse, putUserLoading } = useApiUserPut();
+  const {
+    getPersonDataByDni,
+    getPersonDataByDniResponse,
+    getPersonDataByDniLoading,
+  } = useApiPersonDataByDniGet();
 
   const { rolesAcls, users } = useGlobalData();
 
@@ -68,13 +76,23 @@ export const UserIntegration = () => {
       apiErrorNotification(errorResponse);
     }
   };
+  const {
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm({
+    defaultValues: { isGraduate: false },
+  });
 
   const mapUserToApi = (formData) =>
     assign(
       {},
       {
         ...(user?.id && { id: user.id }),
-        roleCode: formData.roleCode,
+        roleCode:
+          authUser.roleCode === "company_representative"
+            ? "user"
+            : formData.roleCode,
         firstName: formData.firstName.toLowerCase(),
         paternalSurname: formData.paternalSurname.toLowerCase(),
         maternalSurname: formData.maternalSurname.toLowerCase(),
@@ -97,15 +115,28 @@ export const UserIntegration = () => {
 
   return (
     <User
+      authUser={authUser}
       user={user}
       onSaveUser={saveUser}
       onGoBack={onGoBack}
       isSavingUser={postUserLoading || putUserLoading}
+      getPersonDataByDniLoading={getPersonDataByDniLoading}
+      getPersonDataByDni={getPersonDataByDni}
+      getPersonDataByDniResponse={getPersonDataByDniResponse}
     />
   );
 };
 
-const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
+const User = ({
+  authUser,
+  user,
+  onSaveUser,
+  onGoBack,
+  isSavingUser,
+  getPersonDataByDniLoading,
+  getPersonDataByDni,
+  getPersonDataByDniResponse,
+}) => {
   const schema = yup.object({
     roleCode: yup.string().required(),
     firstName: yup.string().required(),
@@ -133,6 +164,7 @@ const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
     control,
     reset,
     watch,
+    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -156,12 +188,52 @@ const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
     });
   };
 
+  const userResetFields = (user) => {
+    setValue("firstName", capitalize(user?.firstName || ""));
+    setValue("paternalSurname", capitalize(user?.paternalSurname || ""));
+    setValue("maternalSurname", capitalize(user?.maternalSurname || ""));
+  };
+
+  useEffect(() => {
+    const existsDni = (watch("dni") || "").length === 8;
+    if (existsDni) {
+      (async () => {
+        try {
+          const response = await getPersonDataByDni(watch("dni"));
+
+          if (!getPersonDataByDniResponse.ok) {
+            throw new Error(response);
+          }
+
+          userResetFields(response);
+        } catch (e) {
+          const errorResponse = await getApiErrorResponse(e);
+          apiErrorNotification(errorResponse);
+          userResetFields(null);
+        }
+      })();
+    }
+  }, [watch("dni")]);
+
   const onSubmit = (formData) => onSaveUser(formData);
+  console.log(authUser);
+
+  const roleOptions =
+    authUser.roleCode === "company_representative"
+      ? [{ label: "Usuario", value: "user" }]
+      : Roles.map((role) => ({
+          label: capitalize(role.name),
+          value: role.code,
+        }));
 
   return (
     <Row gutter={[16, 16]}>
       <Col span={24}>
-        <Title level={3}>Usuario</Title>
+        <Title level={3}>
+          {authUser.roleCode === "company_representative"
+            ? "Agregar Practicante"
+            : "Agregar Usuario"}
+        </Title>
       </Col>
       <Col span={24}>
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -178,14 +250,29 @@ const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
-                    options={Roles.filter((role) =>
-                      watch("otherRoleCodes")
-                        ? !watch("otherRoleCodes").includes(role.code)
-                        : true
-                    ).map((role) => ({
-                      label: capitalize(role.name),
-                      value: role.code,
-                    }))}
+                    options={roleOptions}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24}>
+              <Controller
+                name="dni"
+                control={control}
+                render={({ field: { onChange, value, name } }) => (
+                  <Input
+                    label="DNI"
+                    type="number"
+                    onChange={onChange}
+                    value={value}
+                    name={name}
+                    error={error(name)}
+                    required={required(name)}
+                    suffix={
+                      getPersonDataByDniLoading && (
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      )
+                    }
                   />
                 )}
               />
@@ -275,22 +362,7 @@ const User = ({ user, onSaveUser, onGoBack, isSavingUser }) => {
                 )}
               />
             </Col>
-            <Col span={24}>
-              <Controller
-                name="dni"
-                control={control}
-                render={({ field: { onChange, value, name } }) => (
-                  <InputNumber
-                    label="DNI"
-                    onChange={onChange}
-                    value={value}
-                    name={name}
-                    error={error(name)}
-                    required={required(name)}
-                  />
-                )}
-              />
-            </Col>
+
             <Col span={24}>
               <Controller
                 name="phoneNumber"
