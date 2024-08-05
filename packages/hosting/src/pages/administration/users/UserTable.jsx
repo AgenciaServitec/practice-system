@@ -51,7 +51,7 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
       render: (_, user) =>
         capitalize(
           `${user?.firstName} ${user?.paternalSurname} ${
-            user?.maternalSurname || ""
+            user?.maternalSurname || "No definido"
           }`
         ),
     },

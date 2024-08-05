@@ -28,6 +28,7 @@ export const Sheet1Integration = ({
   user,
   company,
   practitioner,
+  representativeCompany,
   annex2,
 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
@@ -71,6 +72,7 @@ export const Sheet1Integration = ({
       user={user}
       company={company}
       practitioner={practitioner}
+      representativeCompany={representativeCompany}
       annex2={annex2}
       onConfirmSaveSheet1={onConfirmSaveSheet1}
     />
@@ -82,6 +84,7 @@ const Sheet1 = ({
   user,
   company,
   practitioner,
+  representativeCompany,
   annex2,
   onConfirmSaveSheet1,
 }) => {
@@ -140,7 +143,10 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Teléfono: </label>
-            <p>{company?.phone || "-"}</p>
+            <p>
+              {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
+                "-"}
+            </p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -154,7 +160,7 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Cargo: </label>
-            <p>{company?.category || "-"}</p>
+            <p>{representativeCompany?.businessPosition || "-"}</p>
           </div>
         </Col>
         <Col span={24}>
