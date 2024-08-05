@@ -191,12 +191,13 @@ export const PracticesSheet7 = ({
                   <div className="item-grid">
                     <div>
                       <strong>Semestre: </strong>
-                      {practitioner.practitionerData?.semester}
+                      {practitioner.practitionerData?.semester || "Egresado"}
                     </div>
                     <div className="capitalize">
                       {" "}
                       <strong>Turno: </strong>
-                      {practitioner.practitionerData?.studentShift}
+                      {practitioner.practitionerData?.studentShift ||
+                        "Egresado"}
                     </div>
                   </div>
                 </span>

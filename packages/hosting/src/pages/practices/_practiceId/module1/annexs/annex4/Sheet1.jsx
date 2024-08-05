@@ -46,19 +46,19 @@ const Sheet1 = ({ practitioner }) => {
         <Col span={24} md={8}>
           <div>
             <label>Turno: </label>
-            <p>{practitioner?.practitionerData?.studentShift || "-"}</p>
+            <p>{practitioner?.practitionerData?.studentShift || "Egresado"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Semestre: </label>
-            <p>{practitioner?.practitionerData?.semester || "-"}</p>
+            <p>{practitioner?.practitionerData?.semester || "Egresado"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Año Académico: </label>
-            <p>{practitioner?.practitionerData?.academicYear || "-"}</p>
+            <p>{practitioner?.practitionerData?.academicYear || "Egresado"}</p>
           </div>
         </Col>
       </Row>

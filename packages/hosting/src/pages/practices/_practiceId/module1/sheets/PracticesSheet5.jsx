@@ -3,14 +3,14 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName, getBusinessPosition } from "../../../../../utils";
 import { ProfessionalCareer } from "../../../../../data-list";
+import { PracticeArea } from "../../../../../data-list";
+import dayjs from "dayjs";
 
 export const PracticesSheet5 = ({
   practitioner,
   practice,
   company,
   representativeCompany,
-  supervisor,
-  annex4,
 }) => {
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
@@ -72,8 +72,20 @@ export const PracticesSheet5 = ({
                 <span> 5.</span>
                 <span>
                   Periodo de Evaluación:&nbsp;
-                  <strong>20/06/2023 / 23/09/2023</strong>&nbsp;&nbsp;&nbsp;
-                  Total de horas:&nbsp;
+                  <strong>
+                    {practice?.startDate
+                      ? dayjs(practice.startDate, "DD/MM/YYYY").format(
+                          "DD/MM/YYYY"
+                        )
+                      : "-"}
+                    &nbsp; - &nbsp;
+                    {practice?.endDate
+                      ? dayjs(practice.endDate, "DD/MM/YYYY").format(
+                          "DD/MM/YYYY"
+                        )
+                      : "-"}
+                  </strong>
+                  &nbsp;&nbsp;&nbsp; Total de horas:&nbsp;
                   <strong>{practice.hours}</strong>
                 </span>
               </li>
@@ -139,54 +151,12 @@ export const PracticesSheet5 = ({
                 <div className="center_work">
                   <table>
                     <tbody>
-                      <tr>
-                        <td>Oficina</td>
-                        <td>
-                          {practice.practiceArea === "Oficina" ||
-                          practice.practiceArea === "oficina"
-                            ? "x"
-                            : ""}
-                        </td>
-                        <td>Taller</td>
-                        <td>
-                          {practice.practiceArea === "Taller" ||
-                          practice.practiceArea === "taller"
-                            ? "x"
-                            : ""}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Laboratorio</td>
-                        <td>
-                          {practice.practiceArea === "Laboratorio" ||
-                          practice.practiceArea === "laboratorio"
-                            ? "x"
-                            : ""}
-                        </td>
-                        <td>Granja o Campo</td>
-                        <td>
-                          {practice.practiceArea === "Granja o Campo" ||
-                          practice.practiceArea === "granja o campo"
-                            ? "x"
-                            : ""}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Almacén</td>
-                        <td>
-                          {practice.practiceArea === "Almacén" ||
-                          practice.practiceArea === "almacén"
-                            ? "x"
-                            : ""}
-                        </td>
-                        <td>Otros</td>
-                        <td>
-                          {practice.practiceArea === "Otros" ||
-                          practice.practiceArea === "otros"
-                            ? "x"
-                            : ""}
-                        </td>
-                      </tr>
+                      {Object.entries(PracticeArea).map(([key, object]) => (
+                        <tr key={key}>
+                          <td>{object.name}</td>
+                          <td>{key === practice?.practiceArea ? "x" : ""}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -196,14 +166,14 @@ export const PracticesSheet5 = ({
                 <span>
                   Horario de practicas:{" "}
                   <strong>
-                    {practice?.entryTime} a {practice?.departureTime}
+                    {practice?.entryTime} - {practice?.departureTime}
                   </strong>
                 </span>
               </li>
               <li>
                 <span> 12.</span>
                 <span>
-                  Tareas asignadas segun el modulo indicado: <br />
+                  Tareas asignadas según el modulo indicado: <br />
                   <br />
                   <div className="task-box capitalize">{practice?.task}</div>
                 </span>
@@ -217,7 +187,7 @@ export const PracticesSheet5 = ({
             <ul>
               <li>
                 <span>1.</span>
-                <span className="jutify">
+                <span className="justify">
                   Examine cuidadosamente cada uno de los criterios (A, B, C, D,
                   E, F), de la Ficha de Evaluación adjunta, que consta de 20
                   indicadores a calificar. Para fines referenciales se tomara en
@@ -330,25 +300,23 @@ const Container = styled.div`
             grid-template-columns: 1fr 1fr;
           }
 
-          .jutify {
+          .justify {
             text-align: justify;
           }
 
           .center_work {
-            margin: auto;
-            padding-left: 4em;
-
             table {
-              font-size: 12px;
+              font-size: 10px;
               margin: 1em;
-              width: 500px;
+              width: 400px;
               border-collapse: collapse;
               text-align: center;
+              margin-left: 10em;
 
               td {
                 width: 50px;
                 border: 1px solid black;
-                padding: 2px;
+                padding: 1px;
               }
             }
           }
@@ -365,10 +333,11 @@ const Container = styled.div`
       border-collapse: collapse;
       text-align: center;
       margin: auto;
+      font-size: 11px;
 
       td {
         border: 1px solid black;
-        padding: 10px;
+        padding: 5px;
       }
     }
   }

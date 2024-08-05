@@ -101,7 +101,7 @@ export const PracticesSheet3 = ({
               <li>
                 Año Académico:{" "}
                 <strong className="capitalize">
-                  {practitioner?.practitionerData?.academicYear}
+                  {practitioner?.practitionerData?.academicYear || "Egresado"}
                 </strong>
               </li>
             </ul>
@@ -224,7 +224,7 @@ const Container = styled.div`
       }
       .row-list {
         display: flex;
-        gap: 5em;
+        gap: 4em;
         margin-bottom: 1em;
       }
     }
@@ -244,8 +244,9 @@ const Container = styled.div`
     &__firm1 {
       padding-top: 1em;
       border-top: 3px solid #000;
-      width: 289px;
+      width: 300px;
       text-align: center;
+      font-size: 0.95em;
     }
     &__firm2 {
       padding-top: 1em;

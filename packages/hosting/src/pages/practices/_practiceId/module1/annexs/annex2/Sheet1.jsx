@@ -22,6 +22,11 @@ import styled from "styled-components";
 import { PracticeArea } from "../../../../../../data-list";
 import { ObservationsList } from "../../ObservationsList";
 import dayjs from "dayjs";
+import { fullName } from "../../../../../../utils";
+import {
+  BusinessPosition,
+  ProfessionalCareer,
+} from "../../../../../../data-list";
 
 export const Sheet1Integration = ({
   practice,
@@ -88,6 +93,17 @@ const Sheet1 = ({
   annex2,
   onConfirmSaveSheet1,
 }) => {
+  const businessPosition = BusinessPosition.find(
+    (position) =>
+      position.value ===
+      representativeCompany?.companyRepresentativeData?.businessPosition
+  );
+
+  const professionalCareer = ProfessionalCareer.find(
+    (profession) =>
+      profession.value === practitioner?.practitionerData?.professionalCareer
+  );
+
   const schema = yup.object({
     refreshment: yup.string(),
     mobility: yup.string(),
@@ -154,13 +170,13 @@ const Sheet1 = ({
             <label>
               Encargado del control de Prácticas Pre-Profesionales:{" "}
             </label>
-            <p>{company?.representative || "-"}</p>
+            <p>{fullName(representativeCompany) || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Cargo: </label>
-            <p>{representativeCompany?.businessPosition || "-"}</p>
+            <p>{businessPosition?.label || "-"}</p>
           </div>
         </Col>
         <Col span={24}>
@@ -169,34 +185,31 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Apellidos y Nombres: </label>
-            <p>
-              {`${practitioner?.paternalSurname} ${practitioner?.maternalSurname} ${practitioner?.firstName}` ||
-                "-"}
-            </p>
+            <p>{fullName(practitioner) || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Carrera Profesional: </label>
-            <p>{practitioner?.ProfessionalCareer || "-"}</p>
+            <p>{professionalCareer?.label || ""}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Turno: </label>
-            <p>{practitioner?.shift || "-"}</p>
+            <p>{practitioner?.practitionerData?.studentShift || "Egresado"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Semestre: </label>
-            <p>{practitioner?.semester || "-"}</p>
+            <p>{practitioner?.practitionerData?.semester || "Egresado"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div>
             <label>Año Académico: </label>
-            <p>{practitioner?.academicYear || "-"}</p>
+            <p>{practitioner?.practitionerData?.academicYear || "Egresado"}</p>
           </div>
         </Col>
         <Col span={24}>
