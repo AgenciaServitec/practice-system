@@ -93,16 +93,16 @@ const Sheet1 = ({
   annex2,
   onConfirmSaveSheet1,
 }) => {
-  const BusinessPositionValue = BusinessPosition.find(
+  const businessPosition = BusinessPosition.find(
     (position) =>
       position.value ===
       representativeCompany?.companyRepresentativeData?.businessPosition
-  )?.label;
+  );
 
-  const ProfessionalCareerValue = ProfessionalCareer.find(
+  const professionalCareer = ProfessionalCareer.find(
     (profession) =>
       profession.value === practitioner?.practitionerData?.professionalCareer
-  )?.label;
+  );
 
   const schema = yup.object({
     refreshment: yup.string(),
@@ -176,7 +176,7 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Cargo: </label>
-            <p>{BusinessPositionValue || "-"}</p>
+            <p>{businessPosition?.label || "-"}</p>
           </div>
         </Col>
         <Col span={24}>
@@ -191,7 +191,7 @@ const Sheet1 = ({
         <Col span={24} md={8}>
           <div>
             <label>Carrera Profesional: </label>
-            <p>{ProfessionalCareerValue || "-"}</p>
+            <p>{professionalCareer?.label || ""}</p>
           </div>
         </Col>
         <Col span={24} md={8}>

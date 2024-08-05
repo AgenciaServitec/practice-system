@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
+import { PracticeArea } from "../../../../../data-list";
 
 export const PracticesSheet9 = ({
   practice,
@@ -68,7 +69,7 @@ export const PracticesSheet9 = ({
                 <strong> 4. </strong>
               </span>
               <span>
-                <strong>Período de ejecución de la práctica: </strong> del del{" "}
+                <strong>Período de ejecución de la práctica: </strong> del{" "}
                 <span className="capitalize">
                   {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
                 </span>{" "}
@@ -100,15 +101,15 @@ export const PracticesSheet9 = ({
                     <tr>
                       <td>Oficina</td>
                       <td>
-                        {practice.practiceArea === "Oficina" ||
-                        practice.practiceArea === "oficina"
+                        {PracticeArea?.[practice?.practiceArea].name ===
+                        "Oficina"
                           ? "x"
                           : ""}
                       </td>
                       <td>Taller</td>
                       <td>
-                        {practice.practiceArea === "Taller" ||
-                        practice.practiceArea === "taller"
+                        {PracticeArea?.[practice?.practiceArea].name ===
+                        "Taller"
                           ? "x"
                           : ""}
                       </td>
@@ -116,15 +117,15 @@ export const PracticesSheet9 = ({
                     <tr>
                       <td>Laboratorio</td>
                       <td>
-                        {practice.practiceArea === "Laboratorio" ||
-                        practice.practiceArea === "laboratorio"
+                        {PracticeArea?.[practice?.practiceArea].name ===
+                        "Laboratorio"
                           ? "x"
                           : ""}
                       </td>
                       <td>Granja o Campo</td>
                       <td>
-                        {practice.practiceArea === "Granja o Campo" ||
-                        practice.practiceArea === "granja o campo"
+                        {PracticeArea?.[practice?.practiceArea].name ===
+                        "Granja o Campo"
                           ? "x"
                           : ""}
                       </td>
@@ -132,20 +133,14 @@ export const PracticesSheet9 = ({
                     <tr>
                       <td>Almacén</td>
                       <td>
-                        {practice.practiceArea === "Almacén" ||
-                        practice.practiceArea === "almacén"
+                        {PracticeArea?.[practice?.practiceArea].name ===
+                        "Almacén"
                           ? "x"
                           : ""}
                       </td>
                       <td>Otros</td>
                       <td>
-                        {practice.practiceArea === "Otros" ||
-                        practice.practiceArea === "otros" ||
-                        practice.practiceArea != "Oficina" ||
-                        practice.practiceArea != "Taller" ||
-                        practice.practiceArea != "Laboratorio" ||
-                        practice.practiceArea != "Granja o Campo" ||
-                        practice.practiceArea != "Almacén"
+                        {PracticeArea?.[practice?.practiceArea].name === "Otros"
                           ? "x"
                           : ""}
                       </td>

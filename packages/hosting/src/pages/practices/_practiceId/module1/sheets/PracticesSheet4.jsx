@@ -82,7 +82,7 @@ export const PracticesSheet4 = ({
                   Dirección: <strong>{company?.address}</strong>
                 </li>
                 <li>
-                  Teléfono: <strong>929393949</strong>
+                  Teléfono: <strong></strong>
                 </li>
                 <li>
                   Docente supervisor: <strong>{fullName(supervisor)}</strong>
