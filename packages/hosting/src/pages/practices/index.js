@@ -27,8 +27,8 @@ export const CorrespondencesIntegration = () => {
   const { assignDeleteProps } = useDefaultFirestoreProps();
   const { users, practices } = useGlobalData();
 
-  const navigateTo = (practiceId) => navigate(`/practices/${practiceId}`);
-  const onAddPractice = () => navigate("new");
+  const navigateTo = (pathname) => navigate(pathname);
+  const onAddPractice = () => navigateTo("new");
   const onEditPractice = (practiceId) => navigateTo(practiceId);
   const onDeletePractice = async (practice) => {
     try {

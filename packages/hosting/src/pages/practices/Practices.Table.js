@@ -102,9 +102,7 @@ export const PracticesTable = ({
               tooltipTitle="Pdf"
               icon={faFilePdf}
               styled={{ color: (theme) => theme.colors.error }}
-              onClick={() =>
-                onNavigateTo(`/practices/${practice.id}/module1/sheets`)
-              }
+              onClick={() => onNavigateTo(`${practice.id}/module1/sheets`)}
             />
           </Acl>
           <Acl name="/practices/:practiceId">
