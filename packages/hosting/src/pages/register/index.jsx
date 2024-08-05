@@ -100,7 +100,7 @@ const Container = styled.div`
   }
 
   .content-step-wrapper {
-    width: auto;
+    width: 50em;
     height: auto;
     padding: 1.7rem;
     border-radius: 1em;
