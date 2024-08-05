@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName, getBusinessPosition } from "../../../../../utils";
 import { ProfessionalCareer } from "../../../../../data-list";
+import dayjs from "dayjs";
 
 export const PracticesSheet5 = ({
   practitioner,
@@ -72,8 +73,16 @@ export const PracticesSheet5 = ({
                 <span> 5.</span>
                 <span>
                   Periodo de Evaluación:&nbsp;
-                  <strong>20/06/2023 / 23/09/2023</strong>&nbsp;&nbsp;&nbsp;
-                  Total de horas:&nbsp;
+                  <strong>
+                    {dayjs(practice?.startDate, "DD/MM/YYYY").format(
+                      "DD/MM/YYYY"
+                    ) || "-"}{" "}
+                    -{" "}
+                    {dayjs(practice?.endDate, "DD/MM/YYYY").format(
+                      "DD/MM/YYYY"
+                    ) || "-"}
+                  </strong>
+                  &nbsp;&nbsp;&nbsp; Total de horas:&nbsp;
                   <strong>{practice.hours}</strong>
                 </span>
               </li>
@@ -182,7 +191,12 @@ export const PracticesSheet5 = ({
                         <td>Otros</td>
                         <td>
                           {practice.practiceArea === "Otros" ||
-                          practice.practiceArea === "otros"
+                          practice.practiceArea === "otros" ||
+                          practice.practiceArea != "Oficina" ||
+                          practice.practiceArea != "Taller" ||
+                          practice.practiceArea != "Laboratorio" ||
+                          practice.practiceArea != "Granja o Campo" ||
+                          practice.practiceArea != "Almacén"
                             ? "x"
                             : ""}
                         </td>
@@ -196,7 +210,7 @@ export const PracticesSheet5 = ({
                 <span>
                   Horario de practicas:{" "}
                   <strong>
-                    {practice?.entryTime} a {practice?.departureTime}
+                    {practice?.entryTime} - {practice?.departureTime}
                   </strong>
                 </span>
               </li>

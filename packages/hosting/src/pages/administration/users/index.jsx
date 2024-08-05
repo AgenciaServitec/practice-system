@@ -62,7 +62,15 @@ export const Users = () => {
         <Acl name="/users/new">
           <>
             <Col span={24}>
-              <AddButton onClick={onAddUser} title="Usuario" margin="0" />
+              <AddButton
+                onClick={onAddUser}
+                title={
+                  authUser.roleCode === "company_representative"
+                    ? "Practicante"
+                    : "Usuario"
+                }
+                margin="0"
+              />
             </Col>
             <Divider />
           </>

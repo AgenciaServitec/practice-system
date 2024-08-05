@@ -154,6 +154,7 @@ export const PracticeIntegration = () => {
           practice={practice}
           user={authUser}
           practitioner={practitioner}
+          representativeCompany={representativeCompany}
           company={company}
           annex2={annex2}
         />

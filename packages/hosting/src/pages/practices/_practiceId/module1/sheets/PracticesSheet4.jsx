@@ -43,7 +43,7 @@ export const PracticesSheet4 = ({
             <ol>
               <li>
                 &nbsp;Apellidos y Nombres del Practicante:{" "}
-                <strong>{fullName(practitioner)}</strong>
+                <strong className="capitalize">{fullName(practitioner)}</strong>
               </li>
               <li>
                 &nbsp;N° y Denominación del Módulo Técnico Profesional:{" "}
@@ -101,10 +101,9 @@ export const PracticesSheet4 = ({
                     <td>{annex3?.visitNumber || ""}</td>
                     <td>
                       {annex3?.supervisionDate
-                        ? dayjs(
-                            annex3.supervisionDate.toDate(),
+                        ? dayjs(annex3.supervisionDate.toDate()).format(
                             "DD/MM/YYYY"
-                          ).format("DD/MM/YYYY")
+                          )
                         : ""}
                     </td>
                     <td>{practice?.task || ""}</td>

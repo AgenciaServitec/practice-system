@@ -9,6 +9,7 @@ export const PracticesSheet9 = ({
   practitioner,
   company,
   supervisor,
+  annex3,
 }) => (
   <>
     <Container>
@@ -139,7 +140,12 @@ export const PracticesSheet9 = ({
                       <td>Otros</td>
                       <td>
                         {practice.practiceArea === "Otros" ||
-                        practice.practiceArea === "otros"
+                        practice.practiceArea === "otros" ||
+                        practice.practiceArea != "Oficina" ||
+                        practice.practiceArea != "Taller" ||
+                        practice.practiceArea != "Laboratorio" ||
+                        practice.practiceArea != "Granja o Campo" ||
+                        practice.practiceArea != "Almacén"
                           ? "x"
                           : ""}
                       </td>
@@ -192,17 +198,15 @@ export const PracticesSheet9 = ({
             <span>COPIA DE DNI.</span>
             <br />
             <br />
+          </div>
+          <div className="body__observations">
             <span>
               <strong>Observaciones:</strong>
             </span>
             <br />
-            <br />
-            <br />
-            <hr />
-            <br />
-            <br />
-            <hr />
-            <br />
+            <span>
+              {annex3?.observations || "No hay observaciones hacia el alumno."}
+            </span>
           </div>
         </div>
       </div>
@@ -319,6 +323,10 @@ const Container = styled.div`
       margin: auto;
       width: 550px;
       font-size: 14px;
+    }
+
+    &__observations {
+      line-height: 1.8em;
     }
   }
 

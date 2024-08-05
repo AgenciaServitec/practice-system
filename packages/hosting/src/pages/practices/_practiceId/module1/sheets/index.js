@@ -157,6 +157,7 @@ export const Sheets = () => {
           practitioner={practitioner}
           company={company}
           supervisor={supervisor}
+          annex3={annex3}
         />
       </Sheet>
     </PDF>

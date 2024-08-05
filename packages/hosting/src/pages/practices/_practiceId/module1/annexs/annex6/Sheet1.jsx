@@ -124,13 +124,15 @@ const Sheet1 = ({ onConfirmSheet1, practitioner, practice }) => {
           <Col span={24} md={6}>
             <div>
               <label>Semestre: </label>
-              <p>{practitioner?.practitionerData?.semester || "-"}</p>
+              <p>{practitioner?.practitionerData?.semester || "Egresado"}</p>
             </div>
           </Col>
           <Col span={24} md={6}>
             <div>
               <label>Turno: </label>
-              <p>{practitioner?.practitionerData?.studentShift || "-"}</p>
+              <p>
+                {practitioner?.practitionerData?.studentShift || "Egresado"}
+              </p>
             </div>
           </Col>
           <Col span={24} md={6}>
