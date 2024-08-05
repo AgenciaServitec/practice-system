@@ -5,13 +5,7 @@ import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
 import { PracticeArea } from "../../../../../data-list";
 
-export const PracticesSheet9 = ({
-  practice,
-  practitioner,
-  company,
-  supervisor,
-  annex3,
-}) => (
+export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
   <>
     <Container>
       <div className="header">
@@ -98,53 +92,12 @@ export const PracticesSheet9 = ({
               <div className="center_work">
                 <table>
                   <tbody>
-                    <tr>
-                      <td>Oficina</td>
-                      <td>
-                        {PracticeArea?.[practice?.practiceArea].name ===
-                        "Oficina"
-                          ? "x"
-                          : ""}
-                      </td>
-                      <td>Taller</td>
-                      <td>
-                        {PracticeArea?.[practice?.practiceArea].name ===
-                        "Taller"
-                          ? "x"
-                          : ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Laboratorio</td>
-                      <td>
-                        {PracticeArea?.[practice?.practiceArea].name ===
-                        "Laboratorio"
-                          ? "x"
-                          : ""}
-                      </td>
-                      <td>Granja o Campo</td>
-                      <td>
-                        {PracticeArea?.[practice?.practiceArea].name ===
-                        "Granja o Campo"
-                          ? "x"
-                          : ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Almacén</td>
-                      <td>
-                        {PracticeArea?.[practice?.practiceArea].name ===
-                        "Almacén"
-                          ? "x"
-                          : ""}
-                      </td>
-                      <td>Otros</td>
-                      <td>
-                        {PracticeArea?.[practice?.practiceArea].name === "Otros"
-                          ? "x"
-                          : ""}
-                      </td>
-                    </tr>
+                    {Object.entries(PracticeArea).map(([key, object]) => (
+                      <tr key={key}>
+                        <td>{object.name}</td>
+                        <td>{key === practice?.practiceArea ? "x" : ""}</td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -295,14 +248,14 @@ const Container = styled.div`
           }
 
           .center_work {
-            margin: auto;
-            padding-left: 4em;
+            padding-left: 9em;
 
             table {
               margin: 1em;
-              width: 400px;
+              width: 300px;
               border-collapse: collapse;
               text-align: center;
+              font-size: 11px;
 
               td {
                 border: 1px solid black;
@@ -341,7 +294,7 @@ const Container = styled.div`
     }
 
     &__tip {
-      padding-top: 3em;
+      padding-top: 2em;
       width: 570px;
       margin: auto;
       text-align: justify;

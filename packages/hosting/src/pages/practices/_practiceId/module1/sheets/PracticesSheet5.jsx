@@ -11,8 +11,6 @@ export const PracticesSheet5 = ({
   practice,
   company,
   representativeCompany,
-  supervisor,
-  annex4,
 }) => {
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
@@ -153,54 +151,12 @@ export const PracticesSheet5 = ({
                 <div className="center_work">
                   <table>
                     <tbody>
-                      <tr>
-                        <td>Oficina</td>
-                        <td>
-                          {PracticeArea?.[practice?.practiceArea].name ===
-                          "Oficina"
-                            ? "x"
-                            : ""}
-                        </td>
-                        <td>Taller</td>
-                        <td>
-                          {PracticeArea?.[practice?.practiceArea].name ===
-                          "Taller"
-                            ? "x"
-                            : ""}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Laboratorio</td>
-                        <td>
-                          {PracticeArea?.[practice?.practiceArea].name ===
-                          "Laboratorio"
-                            ? "x"
-                            : ""}
-                        </td>
-                        <td>Granja o Campo</td>
-                        <td>
-                          {PracticeArea?.[practice?.practiceArea].name ===
-                          "Granja o Campo"
-                            ? "x"
-                            : ""}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Almacén</td>
-                        <td>
-                          {PracticeArea?.[practice?.practiceArea].name ===
-                          "Almacén"
-                            ? "x"
-                            : ""}
-                        </td>
-                        <td>Otros</td>
-                        <td>
-                          {PracticeArea?.[practice?.practiceArea].name ===
-                          "Otros"
-                            ? "x"
-                            : ""}
-                        </td>
-                      </tr>
+                      {Object.entries(PracticeArea).map(([key, object]) => (
+                        <tr key={key}>
+                          <td>{object.name}</td>
+                          <td>{key === practice?.practiceArea ? "x" : ""}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -231,7 +187,7 @@ export const PracticesSheet5 = ({
             <ul>
               <li>
                 <span>1.</span>
-                <span className="jutify">
+                <span className="justify">
                   Examine cuidadosamente cada uno de los criterios (A, B, C, D,
                   E, F), de la Ficha de Evaluación adjunta, que consta de 20
                   indicadores a calificar. Para fines referenciales se tomara en
@@ -344,25 +300,23 @@ const Container = styled.div`
             grid-template-columns: 1fr 1fr;
           }
 
-          .jutify {
+          .justify {
             text-align: justify;
           }
 
           .center_work {
-            margin: auto;
-            padding-left: 4em;
-
             table {
-              font-size: 12px;
+              font-size: 10px;
               margin: 1em;
-              width: 500px;
+              width: 400px;
               border-collapse: collapse;
               text-align: center;
+              margin-left: 10em;
 
               td {
                 width: 50px;
                 border: 1px solid black;
-                padding: 2px;
+                padding: 1px;
               }
             }
           }
@@ -379,10 +333,11 @@ const Container = styled.div`
       border-collapse: collapse;
       text-align: center;
       margin: auto;
+      font-size: 11px;
 
       td {
         border: 1px solid black;
-        padding: 10px;
+        padding: 5px;
       }
     }
   }
