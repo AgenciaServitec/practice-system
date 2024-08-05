@@ -79,13 +79,13 @@ export const PracticeIntegration = () => {
     setPractice(_practice);
     setCompany(_company);
     setPractitioner(
-      users.find((user) => user?.id === _practice.practitionerId)
+      users.find((user) => user?.id === _practice?.practitionerId)
     );
     setRepresentativeCompany(
-      users.find((user) => user?.id === _company.representativeId)
+      users.find((user) => user?.id === _company?.representativeId)
     );
     setSupervisor(
-      users.find((user) => user?.id === _practice.academicSupervisorId)
+      users.find((user) => user?.id === _practice?.academicSupervisorId)
     );
   }, [practiceId]);
 

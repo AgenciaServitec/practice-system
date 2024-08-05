@@ -3,7 +3,6 @@ import { Space, Table, Tag } from "antd";
 import { Acl, IconAction } from "../../../components";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
-import moment from "moment";
 import { Roles } from "../../../data-list";
 import { useAuthentication } from "../../../providers";
 import dayjs from "dayjs";
