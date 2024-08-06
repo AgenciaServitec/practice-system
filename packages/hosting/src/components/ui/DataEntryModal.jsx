@@ -39,43 +39,21 @@ const WrapperContent = styled.div`
 export const ModalStyled = styled(ModalAntd)`
   ${({ theme }) => css`
     max-width: 100vw;
-    margin: 0;
+    margin: 0 !important;
+    height: calc(100vmin - calc(100vmin - 100%));
     min-width: 100vw;
-    padding-bottom: 9em;
-    ${mediaQuery.minDesktop} {
-      padding-bottom: 2em;
-    }
 
     ${mediaQuery.minDesktop} {
       min-width: 0;
     }
 
     .ant-modal-content {
-      height: 100%;
+      min-height: 100vmin;
+      height: auto;
       border-radius: 0;
 
       ${mediaQuery.minDesktop} {
         padding: 2rem 3rem;
-      }
-
-      .ant-modal-close {
-      }
-
-      .ant-modal-header {
-        border-radius: 0;
-        border-bottom: 0 solid #f0f0f0;
-      }
-
-      .ant-modal-body {
-        padding: ${theme.paddings.small};
-        height: calc(100% - 0px);
-        overflow-y: scroll;
-
-        .ant-picker-calendar {
-          .ant-picker-panel {
-            border-top: 0 solid #f0f0f0;
-          }
-        }
       }
     }
   `}

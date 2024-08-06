@@ -12,3 +12,4 @@ export * from "./useDebounce";
 export * from "./useAsync";
 export * from "./useAcl";
 export * from "./userInfo";
+export * from "./useGetAllDataByPractice";
