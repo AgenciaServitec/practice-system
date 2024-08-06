@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { Select } from "../../components";
 import { concat, uniq } from "lodash";
 import { fullName } from "../../utils";
+import { practicesStatus } from "../../data-list";
 
 export const PracticesFilters = ({
   practices = [],
   users = [],
-  filter,
+  filterFields,
   onFilter,
 }) => {
   const usersIds = uniq(practices.map((practice) => practice?.user));
@@ -17,8 +18,14 @@ export const PracticesFilters = ({
 
   const onChangeUser = (value) =>
     onFilter({
-      ...filter,
+      ...filterFields,
       user: !value ? "all" : value,
+    });
+
+  const onChangeStatus = (value) =>
+    onFilter({
+      ...filterFields,
+      status: !value ? "all" : value,
     });
 
   return (
@@ -26,11 +33,23 @@ export const PracticesFilters = ({
       <FormContent>
         <Select
           label="Usuario"
-          value={filter.user}
+          value={filterFields.user}
           onChange={(value) => onChangeUser(value)}
           options={concat(
             [{ label: "Todos", value: "all" }],
             _users.map((user) => ({ label: fullName(user), value: user.id }))
+          )}
+        />
+        <Select
+          label="Estado"
+          value={filterFields.status}
+          onChange={(value) => onChangeStatus(value)}
+          options={concat(
+            [{ label: "Todos", value: "all" }],
+            Object.entries(practicesStatus).map(([key, values]) => ({
+              label: values.value,
+              value: key,
+            }))
           )}
         />
       </FormContent>

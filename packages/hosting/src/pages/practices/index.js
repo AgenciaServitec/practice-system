@@ -94,6 +94,7 @@ const Practices = ({
 }) => {
   const [filterFields, setFilterFields] = useQueriesState({
     user: "all",
+    status: "all",
   });
 
   const mappedPractice = (practice) => {
@@ -163,7 +164,7 @@ const Practices = ({
               <PracticesFilters
                 practices={_practices}
                 users={users}
-                filter={filterFields}
+                filterFields={filterFields}
                 onFilter={setFilterFields}
               />
             </Legend>
@@ -202,8 +203,14 @@ const mapPracticesView = (practices) => {
 };
 
 const filteredPractices = (practices, filterFields) =>
-  practices.filter((practice) =>
-    filterFields.user === "all"
-      ? true
-      : filterFields.user === practice.practitionerId
-  );
+  practices
+    .filter((practice) =>
+      filterFields.user === "all"
+        ? true
+        : filterFields.user === practice.practitionerId
+    )
+    .filter((practice) =>
+      filterFields.status === "all"
+        ? true
+        : filterFields.status === practice.status
+    );
