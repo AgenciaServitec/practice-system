@@ -7,7 +7,15 @@ import styled from "styled-components";
 import { Sheet2Integration } from "./Sheet2";
 import { Sheet1Integration } from "./Sheet1";
 
-export const Annex4Integration = ({ practice, user }) => {
+export const Annex4Integration = ({
+  practice,
+  user,
+  users,
+  practitioner,
+  company,
+  annex4,
+  onSavePractice,
+}) => {
   return (
     <ContainerRow gutter={[16, 16]}>
       <Col span={24}>

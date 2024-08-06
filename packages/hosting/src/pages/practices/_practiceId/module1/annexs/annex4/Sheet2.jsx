@@ -18,7 +18,15 @@ import {
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
 
-export const Sheet2Integration = ({ practice, user }) => {
+export const Sheet2Integration = ({
+  practice,
+  user,
+  users,
+  practitioner,
+  company,
+  annex4,
+  onSavePractice,
+}) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
 
   const mapForm = (formData) => ({
@@ -190,7 +198,7 @@ export const Sheet2Integration = ({ practice, user }) => {
   return <Sheet1 onConfirmSheet2={onConfirmSaveSheet2} user={user} />;
 };
 
-const Sheet1 = ({ onConfirmSheet2 }) => {
+const Sheet1 = ({ onConfirmSheet2, user }) => {
   const schema = yup.object({
     A1: yup.number().required(),
     A2: yup.number().required(),
