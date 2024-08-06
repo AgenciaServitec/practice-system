@@ -195,10 +195,12 @@ export const Sheet2Integration = ({
       onOk: async () => await onSaveSheet2Annex4(formData),
     });
 
-  return <Sheet1 onConfirmSheet2={onConfirmSaveSheet2} user={user} />;
+  return (
+    <Sheet1 onSaveSheet2={onConfirmSaveSheet2} user={user} annex4={annex4} />
+  );
 };
 
-const Sheet1 = ({ onConfirmSheet2, user }) => {
+const Sheet1 = ({ onSaveSheet2, user, annex4 }) => {
   const schema = yup.object({
     A1: yup.number().required(),
     A2: yup.number().required(),
@@ -231,8 +233,20 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
   });
   const { required, error } = useFormUtils({ errors, schema });
 
+  const getAssessmentByIndicatorId = (indicators = [], indicatorId) => {
+    const indicator = (indicators || []).find(
+      (indicator) => indicator?.id === indicatorId
+    );
+
+    return indicator?.assessment || "Sin calificar";
+  };
+
+  const [A, B, C, D, E, F] = annex4?.evaluationSheet || [];
+
+  const onSubmit = (formData) => onSaveSheet2(formData);
+
   return (
-    <Form onSubmit={handleSubmit(onConfirmSheet2)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Title level={5}>
@@ -248,70 +262,81 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           <span>Programa convenientemente su trabajo.</span>
         </Col>
         <Col>
-          <Controller
-            name="A1"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="A1"
+              control={control}
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(A?.indicators, 1)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Trabajo rápido.</span>
         </Col>
         <Col>
-          <Controller
-            name="A2"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="A2"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(A?.indicators, 2)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Identifica los objetos de la empresa.</span>
         </Col>
         <Col>
-          <Controller
-            name="A3"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="A3"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(A?.indicators, 3)} </span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -325,47 +350,55 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="B4"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="B4"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(B?.indicators, 4)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Toma decisiones acertadas y oportunas.</span>
         </Col>
         <Col>
-          <Controller
-            name="B5"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="B5"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(B?.indicators, 5)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -374,24 +407,28 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="B6"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="B6"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(B?.indicators, 6)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -400,24 +437,28 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="B7"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="B7"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(B?.indicators, 7)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -428,24 +469,28 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           <span>Demuestra seguridad, habilidad en el trabajo.</span>
         </Col>
         <Col>
-          <Controller
-            name="C8"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="C8"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(C?.indicators, 8)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -454,93 +499,109 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="C9"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="C9"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(C?.indicators, 9)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Es puntual y no llega tarde.</span>
         </Col>
         <Col>
-          <Controller
-            name="C10"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="C10"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(C?.indicators, 10)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Disciplinado en la realización de tareas.</span>
         </Col>
         <Col>
-          <Controller
-            name="C11"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="C11"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(C?.indicators, 11)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Se comunica con fluidez y propiedad.</span>
         </Col>
         <Col>
-          <Controller
-            name="C12"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="C12"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(C?.indicators, 12)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -551,47 +612,55 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           <span>Calidad, presentación, cuidado en alto grado.</span>
         </Col>
         <Col>
-          <Controller
-            name="D13"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="D13"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(D?.indicators, 13)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Denota interés por aprender cosas nuevas.</span>
         </Col>
         <Col>
-          <Controller
-            name="D14"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="D14"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(D?.indicators, 14)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -602,70 +671,82 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           <span>Tiene capacidad de integración, colaboración.</span>
         </Col>
         <Col>
-          <Controller
-            name="E15"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="E15"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(E?.indicators, 15)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Tiene cortesía, buen trato y don de gente.</span>
         </Col>
         <Col>
-          <Controller
-            name="E16"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="E16"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(E?.indicators, 16)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>Realiza tareas en beneficio de sus compañeros.</span>
         </Col>
         <Col>
-          <Controller
-            name="E17"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="E17"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(E?.indicators, 17)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -679,24 +760,28 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="F18"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="F18"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(F?.indicators, 18)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -704,24 +789,28 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="F19"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="F19"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(F?.indicators, 19)}</span>
+          )}
         </Col>
         <Col span={24} md={20}>
           <span>
@@ -730,24 +819,28 @@ const Sheet1 = ({ onConfirmSheet2, user }) => {
           </span>
         </Col>
         <Col>
-          <Controller
-            name="F20"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <RadioGroup
-                label="CALIF."
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-                options={[
-                  { label: "0", value: 0 },
-                  { label: "1", value: 1 },
-                ]}
-              />
-            )}
-          />
+          {user?.roleCode === "company_representative" ? (
+            <Controller
+              name="F20"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <RadioGroup
+                  label="CALIF."
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                  options={[
+                    { label: "0", value: 0 },
+                    { label: "1", value: 1 },
+                  ]}
+                />
+              )}
+            />
+          ) : (
+            <span>{getAssessmentByIndicatorId(F?.indicators, 20)}</span>
+          )}
         </Col>
       </Row>
       <Row justify="end" gutter={[16, 16]}>
