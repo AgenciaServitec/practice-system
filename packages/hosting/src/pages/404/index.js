@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import Button from "antd/lib/button";
-import Result from "antd/lib/result";
+import { Button, Result } from "../../components";
 
 export const Page404 = () => {
   const navigate = useNavigate();
 
-  const onGoBack = () => navigate(-1);
+  const onGoBack = () => navigate("/");
 
   return (
     <Container>
