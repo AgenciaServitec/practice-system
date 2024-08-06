@@ -18,15 +18,7 @@ import {
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
 
-export const Sheet2Integration = ({
-  practice,
-  user,
-  users,
-  practitioner,
-  company,
-  annex4,
-  onSavePractice,
-}) => {
+export const Sheet2Integration = ({ practice, user }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
 
   const mapForm = (formData) => ({
@@ -195,7 +187,7 @@ export const Sheet2Integration = ({
       onOk: async () => await onSaveSheet2Annex4(formData),
     });
 
-  return <Sheet1 onConfirmSheet2={onConfirmSaveSheet2} />;
+  return <Sheet1 onConfirmSheet2={onConfirmSaveSheet2} user={user} />;
 };
 
 const Sheet1 = ({ onConfirmSheet2 }) => {
@@ -229,7 +221,6 @@ const Sheet1 = ({ onConfirmSheet2 }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
   const { required, error } = useFormUtils({ errors, schema });
 
   return (

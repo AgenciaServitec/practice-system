@@ -22,6 +22,7 @@ import { fullName } from "../../../utils";
 import { useNavigate } from "react-router";
 import { Alert } from "antd";
 import dayjs from "dayjs";
+import { fetchPracticesByPractitionerId } from "../../../firebase/collections";
 
 export const InitialPracticeFormIntegration = ({
   isNew,
@@ -72,6 +73,20 @@ export const InitialPracticeFormIntegration = ({
     try {
       setLoading(true);
       const _practice = mapPractice(formData);
+
+      const userPractices = await fetchPracticesByPractitionerId(
+        _practice.practitionerId
+      );
+
+      const existsModule = userPractices.some(
+        (userPractice) => userPractice?.moduleNumber === _practice?.moduleNumber
+      );
+
+      if (existsModule)
+        return notification({
+          type: "warning",
+          title: "El numero del modulo ya existe en otra practica",
+        });
 
       onSavePractice(_practice);
 
@@ -216,6 +231,7 @@ const InitialPracticeForm = ({
                     ]}
                     error={error(name)}
                     required={required(name)}
+                    disabled={!isNew}
                   />
                 )}
               />
