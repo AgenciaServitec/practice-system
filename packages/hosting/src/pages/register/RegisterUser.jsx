@@ -82,7 +82,6 @@ export const RegisterUser = ({ roleCode }) => {
     formState: { errors },
     watch,
     setValue,
-    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { isGraduate: false },

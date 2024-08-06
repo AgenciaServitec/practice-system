@@ -12,6 +12,13 @@ export const fetchPractice = async (id) =>
 export const fetchPractices = async () =>
   fetchCollectionOnce(practicesRef.where("isDeleted", "==", false));
 
+export const fetchPracticesByPractitionerId = async (practitionerId) =>
+  fetchCollectionOnce(
+    practicesRef
+      .where("practitionerId", "==", practitionerId)
+      .where("isDeleted", "==", false)
+  );
+
 export const addPractice = async (practice) =>
   setDocument(practicesRef.doc(practice.id), practice);
 
