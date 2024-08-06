@@ -11,11 +11,12 @@ const Container = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 2rem 4rem 1rem 4rem;
+  padding: 2rem 3rem;
   width: 100%;
   margin: auto;
   background: #fff;
+  z-index: 700;
   ${mediaQuery.minDesktop} {
-    width: 60%;
+    width: 70%;
   }
 `;

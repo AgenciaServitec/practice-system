@@ -7,19 +7,21 @@ import {
   IconAction,
   modalConfirm,
   notification,
+  Spinner,
   Title,
 } from "../../../components";
-import { InitialPracticeFormIntegration } from "./InitialForm";
 import {
-  addPractice,
+  fetchPractice,
   getPracticesId,
-  practicesRef,
   updatePractice,
   updateUser,
 } from "../../../firebase/collections";
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../providers";
-import { useDefaultFirestoreProps } from "../../../hooks";
+import {
+  useDefaultFirestoreProps,
+  useGetAllDataByPractice,
+} from "../../../hooks";
 import { Card, Collapse, Tag } from "antd";
 import {
   faArrowLeft,
@@ -36,82 +38,59 @@ import {
 } from "./module1";
 import styled from "styled-components";
 import { practicesStatus } from "../../../data-list";
-import { querySnapshotToArray } from "../../../firebase/firestore";
 import { AnnexStatus } from "./AnnexStatus";
+import { ManageCreateProductIntegration } from "./ManageCreatePractice";
+import { InitialInformation } from "./InitialInformation";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
   const { practiceId } = useParams();
   const { authUser } = useAuthentication();
-  const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
-  const { practices, users, companies } = useGlobalData();
+  const { assignUpdateProps } = useDefaultFirestoreProps();
+  const { users, companies } = useGlobalData();
 
   const [practice, setPractice] = useState({});
-  const [practitioner, setPractitioner] = useState({});
-  const [representativeCompany, setRepresentativeCompany] = useState({});
-  const [supervisor, setSupervisor] = useState({});
-  const [company, setCompany] = useState({});
-  const [annexs, setAnnexs] = useState([]);
+  const { annexs, company, practitioner, representativeCompany, supervisor } =
+    useGetAllDataByPractice(practice);
+  const [loading, setLoading] = useState(false);
 
   const isNew = practiceId === "new";
   const onGoBack = () => navigate(-1);
 
   useEffect(() => {
-    const _practice = isNew
-      ? { id: getPracticesId() }
-      : practices.find((practice) => practice.id === practiceId);
-
-    if (!_practice) return onGoBack();
-
-    const _company = companies.find(
-      (company) => company.id === _practice.companyId
-    );
-
-    (async () => {
-      await practicesRef
-        .doc(_practice?.id)
-        .collection("annexs")
-        .onSnapshot((snapshot) => {
-          setAnnexs(querySnapshotToArray(snapshot));
-        });
-    })();
-
-    setPractice(_practice);
-    setCompany(_company);
-    setPractitioner(
-      users.find((user) => user?.id === _practice?.practitionerId)
-    );
-    setRepresentativeCompany(
-      users.find((user) => user?.id === _company?.representativeId)
-    );
-    setSupervisor(
-      users.find((user) => user?.id === _practice?.academicSupervisorId)
-    );
+    (async () => await initialFetch())();
   }, [practiceId]);
 
+  const initialFetch = async () => {
+    try {
+      setLoading(true);
+
+      const _practice = isNew
+        ? { id: getPracticesId() }
+        : await fetchPractice(practiceId);
+
+      if (!_practice) return onGoBack();
+
+      setPractice(_practice);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const savePractice = async (practice) => {
-    await updateUser(
+    const p0 = updateUser(
       practice.practitionerId,
       assignUpdateProps({ hasPractices: true })
     );
 
-    if (isNew) {
-      ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
-        practicesRef.doc(practice.id).collection("annexs").doc(annex).set({
-          id: annex,
-          status: "pending",
-        });
-      });
+    const p1 = updatePractice(practice.id, assignUpdateProps(practice));
 
-      await addPractice(assignCreateProps(practice));
-      onGoBack();
-      return;
-    }
-
-    await updatePractice(practice.id, assignUpdateProps(practice));
+    await Promise.all([p0, p1]);
   };
 
-  const onConfirmModuleApproved = (practice) =>
+  const onConfirmModuleApproved = () =>
     modalConfirm({
       title: "¿Estás seguro de que quieres aprobar el modulo completo?",
       onOk: async () => {
@@ -120,7 +99,9 @@ export const PracticeIntegration = () => {
       },
     });
 
-  const [annex2, annex3, annex4, annex6] = annexs;
+  if (loading) return <Spinner height="100vmin" />;
+
+  const [annex2 = {}, annex3 = {}, annex4 = {}, annex6 = {}] = annexs;
 
   const AnnexTitle = ({ title, status }) => (
     <div>
@@ -135,7 +116,7 @@ export const PracticeIntegration = () => {
     </div>
   );
 
-  const getItems = () => [
+  const annexsList = () => [
     {
       key: "annex2",
       label: (
@@ -248,51 +229,56 @@ export const PracticeIntegration = () => {
 
   return (
     <Container>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <div className="header-wrapper">
-            <IconAction
-              icon={faArrowLeft}
-              styled={{ color: (theme) => theme.colors.primary }}
-              onClick={() => navigate("/practices")}
-            />
-            <Title level={3} style={{ margin: "0" }}>
-              <span className="capitalize">
-                {!isNew
-                  ? `Modulo ${practice.moduleNumber}: ${practice.name}`
-                  : "Registro de Prácticas Pre-Profesionales"}
-              </span>
-            </Title>
-            {isNew ? (
-              <div />
-            ) : (
-              <IconAction
-                icon={faFilePdf}
-                styled={{ color: (theme) => theme.colors.error }}
-                onClick={() =>
-                  navigate(`/practices/${practice.id}/module1/sheets`)
-                }
-                tooltipTitle="Ver pdf"
-              />
-            )}
-          </div>
-        </Col>
-        <Col>
-          <InitialPracticeFormIntegration
-            isNew={isNew}
-            practice={practice}
-            users={users}
-            user={authUser}
-            practitioner={practitioner}
-            companies={companies}
-            company={company}
-            onSavePractice={savePractice}
-          />
-        </Col>
-      </Row>
-      <br />
-      {!isNew && (
+      {isNew ? (
+        <ManageCreateProductIntegration
+          practice={practice}
+          users={users}
+          user={authUser}
+          practitioner={practitioner}
+          companies={companies}
+          company={company}
+          onGoBack={onGoBack}
+        />
+      ) : (
         <>
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <div className="header-wrapper">
+                <IconAction
+                  icon={faArrowLeft}
+                  styled={{ color: (theme) => theme.colors.primary }}
+                  onClick={() => navigate("/practices")}
+                />
+                <Title level={3} style={{ margin: "0" }}>
+                  <span className="capitalize">
+                    Modulo {practice?.moduleNumber}: {practice?.name}
+                  </span>
+                </Title>
+                <IconAction
+                  icon={faFilePdf}
+                  styled={{ color: (theme) => theme.colors.error }}
+                  onClick={() =>
+                    navigate(`/practices/${practice.id}/module1/sheets`)
+                  }
+                  tooltipTitle="Ver pdf"
+                />
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <InitialInformation
+                practice={practice}
+                users={users}
+                user={authUser}
+                companies={companies}
+                company={company}
+                practitioner={practitioner}
+                supervisor={supervisor}
+                representativeCompany={representativeCompany}
+              />
+            </Col>
+          </Row>
           <Row gutter={[16, 16]}>
             <Col span={24}>
               <Card title="Anexos">
@@ -308,7 +294,7 @@ export const PracticeIntegration = () => {
                       style={{ fontSize: "1.2em" }}
                     />
                   )}
-                  items={getItems(panelStyle)}
+                  items={annexsList(panelStyle)}
                   style={{
                     background: "transparent",
                   }}

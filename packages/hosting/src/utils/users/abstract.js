@@ -1,9 +1,11 @@
 import { capitalize } from "lodash";
-import { BusinessPosition, Roles } from "../../data-list";
+import { BusinessPosition } from "../../data-list";
 
 export const fullName = (user) =>
   capitalize(
-    `${user.firstName} ${user.paternalSurname} ${user.maternalSurname}`
+    `${user?.firstName || ""} ${user?.paternalSurname || ""} ${
+      user?.maternalSurname || ""
+    }`
   );
 
 export const getBusinessPosition = (businessPositionCode) =>

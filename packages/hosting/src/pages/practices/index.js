@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Acl,
   AddButton,
   Button,
   Col,
+  DataEntryModal,
   Legend,
   modalConfirm,
   notification,
@@ -92,10 +93,18 @@ const Practices = ({
   onConfirmRemovePractice,
   onValidateAddPractice,
 }) => {
+  const [currentPractice, setCurrentPractice] = useState(null);
+  const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
+
   const [filterFields, setFilterFields] = useQueriesState({
     user: "all",
     status: "all",
   });
+
+  const onSetCurrentPractice = (_practice = null) =>
+    setCurrentPractice(_practice);
+  const onSetIsVisibleProductEdit = (isVisiblePracticeEdit = false) =>
+    setIsVisiblePracticeEdit(isVisiblePracticeEdit);
 
   const mappedPractice = (practice) => {
     const _practitioner = users.find(
@@ -179,6 +188,15 @@ const Practices = ({
             />
           </Col>
         </Row>
+        <DataEntryModal
+          visible={isVisiblePracticeEdit}
+          onCancel={() => setIsVisiblePracticeEdit(false)}
+        >
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut cumque
+          distinctio dolor, dolorum, ducimus eius facere iure maxime, natus
+          necessitatibus neque odit officia quos sequi sint vel veniam voluptas
+          voluptates.
+        </DataEntryModal>
       </Container>
     </Acl>
   );
