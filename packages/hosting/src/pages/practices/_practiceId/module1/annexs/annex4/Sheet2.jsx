@@ -17,6 +17,7 @@ import {
   useFormUtils,
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
+import styled from "styled-components";
 
 export const Sheet2Integration = ({
   practice,
@@ -234,11 +235,15 @@ const Sheet1 = ({ onSaveSheet2, user, annex4 }) => {
   const { required, error } = useFormUtils({ errors, schema });
 
   const getAssessmentByIndicatorId = (indicators = [], indicatorId) => {
+    console.log({ indicators });
+
     const indicator = (indicators || []).find(
       (indicator) => indicator?.id === indicatorId
     );
 
-    return indicator?.assessment || "Sin calificar";
+    return indicator?.assessment === undefined
+      ? "Sin calificar"
+      : indicator.assessment;
   };
 
   const [A, B, C, D, E, F] = annex4?.evaluationSheet || [];
@@ -246,610 +251,662 @@ const Sheet1 = ({ onSaveSheet2, user, annex4 }) => {
   const onSubmit = (formData) => onSaveSheet2(formData);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <Title level={5}>
-            II. INSTRUCCIONES PARA LA EVALUACIÓN CUALITATIVA:
-          </Title>
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            <strong>A. ORGANIZACIÓN Y EJECUCIÓN DEL TRABAJO</strong>
-          </span>
-        </Col>
-        <Col span={24} md={20}>
-          <span>Programa convenientemente su trabajo.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="A1"
-              control={control}
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(A?.indicators, 1)}</span>
+    <Container>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <Title level={5}>
+              II. INSTRUCCIONES PARA LA EVALUACIÓN CUALITATIVA:
+            </Title>
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              <strong>A. ORGANIZACIÓN Y EJECUCIÓN DEL TRABAJO</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <span>Programa convenientemente su trabajo.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !A?.indicators ? (
+              <Controller
+                name="A1"
+                control={control}
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(A?.indicators, 1)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Trabajo rápido.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !A?.indicators ? (
+              <Controller
+                name="A2"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(A?.indicators, 2)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Identifica los objetos de la empresa.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !A?.indicators ? (
+              <Controller
+                name="A3"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(A?.indicators, 3)}{" "}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              <strong>B. CAPACIDAD TÉCNICO EMPRESARIAL</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Plantea soluciones acertadas a problemas que se originan en el
+              trabajo.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !B?.indicators ? (
+              <Controller
+                name="B4"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(B?.indicators, 4)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Toma decisiones acertadas y oportunas.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !B?.indicators ? (
+              <Controller
+                name="B5"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(B?.indicators, 5)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Tiene habilidad para organizar, planificar y dirigir las
+              prestaciones de servicios que ofrece la empresa.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !B?.indicators ? (
+              <Controller
+                name="B6"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(B?.indicators, 6)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Coopera con la conversación, mantenimiento de los equipos de la
+              empresa.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !B?.indicators ? (
+              <Controller
+                name="B7"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(B?.indicators, 7)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              <strong>C. CUMPLIMIENTO EN EL TRABAJO</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <span>Demuestra seguridad, habilidad en el trabajo.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !C?.indicators ? (
+              <Controller
+                name="C8"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(C?.indicators, 8)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Usa adecuadamente: Registros, formularios, comprobantes,
+              materiales, máquinas de oficina, taller, laboratorio o campo.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !C?.indicators ? (
+              <Controller
+                name="C9"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(C?.indicators, 9)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Es puntual y no llega tarde.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !C?.indicators ? (
+              <Controller
+                name="C10"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(C?.indicators, 10)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Disciplinado en la realización de tareas.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !C?.indicators ? (
+              <Controller
+                name="C11"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(C?.indicators, 11)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Se comunica con fluidez y propiedad.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !C?.indicators ? (
+              <Controller
+                name="C12"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(C?.indicators, 12)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              <strong>D. CALIDAD EN LA EJECUCIÓN</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <span>Calidad, presentación, cuidado en alto grado.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !D?.indicators ? (
+              <Controller
+                name="D13"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(D?.indicators, 13)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Denota interés por aprender cosas nuevas.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !D?.indicators ? (
+              <Controller
+                name="D14"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(D?.indicators, 14)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              <strong>E. TRABAJO EN EQUIPO</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <span>Tiene capacidad de integración, colaboración.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !E?.indicators ? (
+              <Controller
+                name="E15"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(E?.indicators, 15)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Tiene cortesía, buen trato y don de gente.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !E?.indicators ? (
+              <Controller
+                name="E16"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(E?.indicators, 16)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>Realiza tareas en beneficio de sus compañeros.</span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !E?.indicators ? (
+              <Controller
+                name="E17"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(E?.indicators, 17)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              <strong>F. INICIATIVA</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Participa activamente en los clubes deportivos y/o culturales de
+              su empresa.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !F?.indicators ? (
+              <Controller
+                name="F18"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(F?.indicators, 18)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Muestra iniciativa y seriedad. Sus planteamientos son definidos.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !F?.indicators ? (
+              <Controller
+                name="F19"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(F?.indicators, 19)}
+              </span>
+            )}
+          </Col>
+          <Col span={24} md={20}>
+            <span>
+              Ejecuta acciones de adiestramiento espontáneo a sus compañeros de
+              trabajo cuando lo requiera el caso.
+            </span>
+          </Col>
+          <Col>
+            {user?.roleCode === "company_representative" && !F?.indicators ? (
+              <Controller
+                name="F20"
+                control={control}
+                defaultValue=""
+                render={({ field: { onChange, value, name } }) => (
+                  <RadioGroup
+                    label="CALIF."
+                    value={value}
+                    onChange={onChange}
+                    error={error(name)}
+                    required={required(name)}
+                    options={[
+                      { label: "0", value: 0 },
+                      { label: "1", value: 1 },
+                    ]}
+                  />
+                )}
+              />
+            ) : (
+              <span className="assessment">
+                {getAssessmentByIndicatorId(F?.indicators, 20)}
+              </span>
+            )}
+          </Col>
+        </Row>
+        {user?.roleCode === "company_representative" &&
+          !annex4?.evaluationSheet && (
+            <Row justify="end" gutter={[16, 16]}>
+              <Col span={24} sm={6} md={4}>
+                <Button type="primary" size="large" block htmlType="submit">
+                  Guardar
+                </Button>
+              </Col>
+            </Row>
           )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Trabajo rápido.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="A2"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(A?.indicators, 2)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Identifica los objetos de la empresa.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="A3"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(A?.indicators, 3)} </span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            <strong>B. CAPACIDAD TÉCNICO EMPRESARIAL</strong>
-          </span>
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Plantea soluciones acertadas a problemas que se originan en el
-            trabajo.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="B4"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(B?.indicators, 4)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Toma decisiones acertadas y oportunas.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="B5"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(B?.indicators, 5)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Tiene habilidad para organizar, planificar y dirigir las
-            prestaciones de servicios que ofrece la empresa.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="B6"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(B?.indicators, 6)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Coopera con la conversación, mantenimiento de los equipos de la
-            empresa.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="B7"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(B?.indicators, 7)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            <strong>C. CUMPLIMIENTO EN EL TRABAJO</strong>
-          </span>
-        </Col>
-        <Col span={24} md={20}>
-          <span>Demuestra seguridad, habilidad en el trabajo.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="C8"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(C?.indicators, 8)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Usa adecuadamente: Registros, formularios, comprobantes, materiales,
-            máquinas de oficina, taller, laboratorio o campo.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="C9"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(C?.indicators, 9)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Es puntual y no llega tarde.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="C10"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(C?.indicators, 10)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Disciplinado en la realización de tareas.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="C11"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(C?.indicators, 11)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Se comunica con fluidez y propiedad.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="C12"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(C?.indicators, 12)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            <strong>D. CALIDAD EN LA EJECUCIÓN</strong>
-          </span>
-        </Col>
-        <Col span={24} md={20}>
-          <span>Calidad, presentación, cuidado en alto grado.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="D13"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(D?.indicators, 13)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Denota interés por aprender cosas nuevas.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="D14"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(D?.indicators, 14)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            <strong>E. TRABAJO EN EQUIPO</strong>
-          </span>
-        </Col>
-        <Col span={24} md={20}>
-          <span>Tiene capacidad de integración, colaboración.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="E15"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(E?.indicators, 15)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Tiene cortesía, buen trato y don de gente.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="E16"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(E?.indicators, 16)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>Realiza tareas en beneficio de sus compañeros.</span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="E17"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(E?.indicators, 17)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            <strong>F. INICIATIVA</strong>
-          </span>
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Participa activamente en los clubes deportivos y/o culturales de su
-            empresa.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="F18"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(F?.indicators, 18)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Muestra iniciativa y seriedad. Sus planteamientos son definidos.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="F19"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(F?.indicators, 19)}</span>
-          )}
-        </Col>
-        <Col span={24} md={20}>
-          <span>
-            Ejecuta acciones de adiestramiento espontáneo a sus compañeros de
-            trabajo cuando lo requiera el caso.
-          </span>
-        </Col>
-        <Col>
-          {user?.roleCode === "company_representative" ? (
-            <Controller
-              name="F20"
-              control={control}
-              defaultValue=""
-              render={({ field: { onChange, value, name } }) => (
-                <RadioGroup
-                  label="CALIF."
-                  value={value}
-                  onChange={onChange}
-                  error={error(name)}
-                  required={required(name)}
-                  options={[
-                    { label: "0", value: 0 },
-                    { label: "1", value: 1 },
-                  ]}
-                />
-              )}
-            />
-          ) : (
-            <span>{getAssessmentByIndicatorId(F?.indicators, 20)}</span>
-          )}
-        </Col>
-      </Row>
-      <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={6} md={4}>
-          <Button type="primary" size="large" block htmlType="submit">
-            Guardar
-          </Button>
-        </Col>
-      </Row>
-    </Form>
+      </Form>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  .assessment {
+    font-size: 14px;
+    font-weight: 600;
+  }
+`;
