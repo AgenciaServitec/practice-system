@@ -141,7 +141,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: isApprovedAnnex(annex2.status) && (
+      children: !isApprovedAnnex(annex2.status) && (
         <Annex2Integration
           practice={practice}
           user={authUser}
@@ -172,7 +172,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: isApprovedAnnex(annex3.status) && (
+      children: !isApprovedAnnex(annex3.status) && (
         <Annex3Integration
           practice={practice}
           annex3={annex3}
@@ -200,7 +200,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: isApprovedAnnex(annex4.status) && (
+      children: !isApprovedAnnex(annex4.status) && (
         <Annex4Integration
           practice={practice}
           user={authUser}
@@ -232,7 +232,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: isApprovedAnnex(annex6.status) && (
+      children: !isApprovedAnnex(annex6.status) && (
         <Annex6Integration
           practice={practice}
           user={authUser}
