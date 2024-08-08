@@ -2,16 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import {
   faBuilding,
-  faUser,
+  faFolder,
+  faFolderTree,
   faLock,
+  faUser,
   faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Text, Title } from "../../components";
-import { Col, Row } from "antd";
+import { Col, Row, Tag } from "antd";
 import { Link } from "react-router-dom";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { fullName } from "../../utils";
+import { orderBy } from "lodash";
 
 export const HomeIntegration = () => {
   const { authUser } = useAuthentication();
@@ -21,7 +24,11 @@ export const HomeIntegration = () => {
     (practice) => practice.practitionerId === authUser.id
   );
 
-  const showListPractitioners = authUser.roleCode !== "user";
+  const isUser = authUser.roleCode === "user";
+  const isCompanyRepresentative =
+    authUser.roleCode === "company_representative";
+  const isSupervisor = authUser.roleCode === "academic_supervisor";
+  const isCoordinator = authUser.roleCode === "academic_coordinator";
 
   return (
     <Container>
@@ -45,22 +52,67 @@ export const HomeIntegration = () => {
                   <li>
                     <Link to="/profile">1. Perfil</Link>
                   </li>
-                  <li className="my-practices">
-                    <div>2. Mis practicas</div>
-                    <ul className="list">
-                      {practicesOfUser.map((practice) => (
-                        <li key={practice.id} className="capitalize">
-                          <Link to={`/practices/${practice.id}`}>
-                            Modulo {practice.moduleNumber} : {practice.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
                 </ul>
               </div>
             </CardStyled>
-            {showListPractitioners && (
+            {isUser && (
+              <CardStyled>
+                <div className="icon">
+                  <FontAwesomeIcon icon={faFolder} size="5x" />
+                </div>
+                <div className="texts">
+                  <Title level={3}>
+                    <span className="capitalize">Mis practicas</span>
+                  </Title>
+                  <ul className="list">
+                    <li>
+                      <Link to="/practices">
+                        1. Ver toda la lista de mis practicas
+                      </Link>
+                    </li>
+                    <li className="my-practices">
+                      <ul className="list">
+                        {orderBy(practicesOfUser, "moduleNumber", "asc").map(
+                          (practice) => (
+                            <li key={practice.id} className="capitalize">
+                              <Link
+                                to={`/practices/${practice.id}`}
+                                className="item-module"
+                              >
+                                <div>
+                                  <Tag color="blue" style={{ margin: "0" }}>
+                                    <FontAwesomeIcon icon={faFolder} /> &nbsp;
+                                    Modulo
+                                    {practice.moduleNumber}
+                                  </Tag>
+                                </div>
+                                <span>:</span> <div>{practice.name}</div>
+                              </Link>
+                            </li>
+                          )
+                        )}
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </CardStyled>
+            )}
+            {!isUser && (
+              <CardStyled>
+                <div className="icon">
+                  <FontAwesomeIcon icon={faFolderTree} size="4x" />
+                </div>
+                <div className="texts">
+                  <Title level={3}>Practicas</Title>
+                  <ul className="list">
+                    <li>
+                      <Link to="/practices">1. Lista de practicas</Link>
+                    </li>
+                  </ul>
+                </div>
+              </CardStyled>
+            )}
+            {!isUser && (
               <CardStyled>
                 <div className="icon">
                   <FontAwesomeIcon icon={faUserGraduate} size="5x" />
@@ -131,7 +183,8 @@ const CardStyled = styled.div`
   padding: 1em;
   border-radius: 1em;
   width: 45em;
-  height: 11em;
+  min-height: 11em;
+  height: auto;
   display: flex;
   align-items: center;
   gap: 3em;
@@ -149,8 +202,17 @@ const CardStyled = styled.div`
       gap: 0.5em;
 
       .my-practices {
-        display: grid;
-        gap: 0.5em;
+        margin-top: 0.7em;
+        .list {
+          display: grid;
+          gap: 0.7em;
+          li {
+            .item-module {
+              display: flex;
+              gap: 0.3em;
+            }
+          }
+        }
       }
     }
   }
