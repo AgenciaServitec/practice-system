@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Acl,
-  Button,
   modalConfirm,
   notification,
   Title,
@@ -104,6 +102,7 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
       </Row>
       <br />
       <AnnexButtons
+        annexName="annex3"
         hasPermissions={hasPermissions}
         practice={practice}
         onSetVisibleForm={setVisibleForm}

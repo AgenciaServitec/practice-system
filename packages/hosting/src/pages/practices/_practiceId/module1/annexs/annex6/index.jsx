@@ -1,31 +1,12 @@
 import React, { useEffect } from "react";
-import {
-  modalConfirm,
-  notification,
-  Title,
-} from "../../../../../../components";
-import Col from "antd/lib/col";
+import { modalConfirm, notification } from "../../../../../../components";
 import Row from "antd/lib/row";
-import { Sheet1Integration } from "./Sheet1";
-import { Space } from "antd";
 import styled from "styled-components";
-import { Sheet2Integration } from "./Sheet2";
-import { Sheet3Integration } from "./Sheet3";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { isUndefined } from "lodash";
 import { AnnexButtons } from "../AnnexButtons";
 
-export const Annex6Integration = ({
-  practice,
-  user,
-  users,
-  practitioner,
-  representativeCompany,
-  company,
-  annex6,
-  onSavePractice,
-  supervisor,
-}) => {
+export const Annex6Integration = ({ practice, user, annex6 }) => {
   useEffect(() => {
     (async () => {
       const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
@@ -99,56 +80,8 @@ export const Annex6Integration = ({
 
   return (
     <ContainerRow gutter={[16, 16]}>
-      <Col span={24}>
-        <div className="item-sheet">
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <Title level={4}>Hoja 1</Title>
-            <Sheet1Integration
-              practice={practice}
-              user={user}
-              users={users}
-              practitioner={practitioner}
-              company={company}
-              annex6={annex6}
-              onSavePractice={onSavePractice}
-            />
-          </Space>
-        </div>
-      </Col>
-      <Col span={24}>
-        <div className="item-sheet">
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <Title level={4}>Hoja 2</Title>
-            <Sheet2Integration
-              practice={practice}
-              user={user}
-              users={users}
-              practitioner={practitioner}
-              company={company}
-              onSavePractice={onSavePractice}
-              representativeCompany={representativeCompany}
-              supervisor={supervisor}
-            />
-          </Space>
-        </div>
-      </Col>
-      <Col span={24}>
-        <div className="item-sheet">
-          <Space direction="vertical" style={{ width: "100%" }}>
-            <Title level={4}>Hoja 3</Title>
-            <Sheet3Integration
-              practice={practice}
-              user={user}
-              users={users}
-              practitioner={practitioner}
-              company={company}
-              onSavePractice={onSavePractice}
-            />
-          </Space>
-        </div>
-      </Col>
-      <br />
       <AnnexButtons
+        annexName="annex6"
         hasPermissions={hasPermissions}
         practice={practice}
         onRefusedAnnex={onRefusedAnnex6}

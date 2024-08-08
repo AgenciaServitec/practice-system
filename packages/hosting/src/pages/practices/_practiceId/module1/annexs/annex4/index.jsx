@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   modalConfirm,
   notification,
@@ -113,6 +113,7 @@ export const Annex4Integration = ({
       </Col>
       <br />
       <AnnexButtons
+        annexName="annex4"
         hasPermissions={hasPermissions}
         practice={practice}
         onRefusedAnnex={onRefusedAnnex4}
