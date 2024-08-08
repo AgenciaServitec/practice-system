@@ -179,16 +179,32 @@ export const InitialInformation = ({
         </Col>
         <Col span={24} md={8}>
           <div className="item">
-            <label>
-              Encargado del control de Prácticas Pre-Profesionales:{" "}
-            </label>
+            <label>Jefe o Autoridad Principal de la Empresa: </label>
+            <p>{fullName(representativeCompany)}</p>
+          </div>
+        </Col>
+        <Col span={24} md={8}>
+          <div className="item">
+            <label>Cargo de la Autoridad Principal: </label>
+            <p>{businessPosition?.label || "-"}</p>
+          </div>
+        </Col>
+        <Col span={24} md={8}>
+          <div className="item">
+            <label>Supervisor designado por la empresa: </label>
             <p>{fullName(representativeCompany)}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div className="item">
             <label>Cargo: </label>
-            <p>{businessPosition?.label || "-"}</p>
+            <p>{fullName(representativeCompany)}</p>
+          </div>
+        </Col>
+        <Col span={24} md={8}>
+          <div className="item">
+            <label>Rubro de la empresa: </label>
+            <p>{company?.category || "-"}</p>
           </div>
         </Col>
       </Row>
@@ -196,7 +212,7 @@ export const InitialInformation = ({
       <Row gutter={[9, 9]}>
         <Col span={24}>
           <Title level={5} style={{ margin: "1px 0" }}>
-            LA EMPRESA O INSTITUCIÓN OFRECE LO SIGUIENTE
+            DATOS DE LAS PRÁCTICAS PRE PROFESIONALES
           </Title>
         </Col>
         <Col span={24} md={8}>
@@ -219,14 +235,20 @@ export const InitialInformation = ({
         </Col>
         <Col span={24} md={8}>
           <div className="item">
+            <label>Total de horas de las Prácticas: </label>
+            <p>{practice?.hours || "-"}</p>
+          </div>
+        </Col>
+        <Col span={24} md={8}>
+          <div className="item">
             <label>Dpto. Sector o Área de las Prácticas: </label>
             <p>{PracticeArea?.[practice?.practiceArea]?.name || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div className="item">
-            <label>Total de horas de las Prácticas: </label>
-            <p>{practice?.hours || "-"}</p>
+            <label>Funciones y/o Tareas asignadas de acuerdo al Módulo: </label>
+            <p>{practice?.task || "-"}</p>
           </div>
         </Col>
       </Row>

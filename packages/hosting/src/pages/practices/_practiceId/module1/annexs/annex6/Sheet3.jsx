@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  Form,
   modalConfirm,
   notification,
   Title,
@@ -8,7 +9,7 @@ import {
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import styled from "styled-components";
-import dayjs from "dayjs";
+import { Alert } from "antd";
 
 export const Sheet3Integration = ({ practice }) => {
   const onConfirmSheet3 = () =>
@@ -23,66 +24,40 @@ export const Sheet3Integration = ({ practice }) => {
 const Sheet3 = ({ onConfirmSheet3, practice }) => {
   return (
     <Container>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <Title level={5}>III. DATOS DE LA PRACTICA PRE-PROFESIONAL:</Title>
-        </Col>
-        <Col span={24} md={12}>
-          <label>Módulo del Plan Curricular Vinculado:</label>
-          <p>{`Nº ${practice.moduleNumber} ${practice.name}` || "-"}</p>
-        </Col>
-        <Col span={24} md={12}>
-          <label>Funciones y/o Tareas asignadas de acuerdo al Módulo:</label>
-          <p>{practice.task || "-"}</p>
-        </Col>
-        <Col span={24} md={6}>
-          <label>Total de Horas Acumuladas:</label>
-          <p>{practice.hours || "-"}</p>
-        </Col>
-        <Col span={24} md={9}>
-          <label>Período de Ejecución de las Prácticas:</label>
-          <p>
-            {`${dayjs(practice.startDate, "DD/MM/YYYY").format(
-              "DD/MM/YYYY"
-            )} - ${dayjs(practice.endDate, "DD/MM/YYYY").format(
-              "DD/MM/YYYY"
-            )}` || "-"}
-          </p>
-        </Col>
-        <Col span={24} md={9}>
-          <label>Horario de Prácticas:</label>
-          <p>{`${practice.entryTime} - ${practice.departureTime}` || "-"}</p>
-        </Col>
-        <Col span={24} md={6}>
-          <label>Lugar de Prácticas:</label>
-          <p>{practice.practiceArea || "-"}</p>
-        </Col>
-        <Col span={24} md={10}>
-          <label>
-            Aspectos Desarrollados referente al Módulo del Plan Curricular
-            vinculado:
-          </label>
-          <p>{practice.task || "-"}</p>
-        </Col>
-      </Row>
-      <Row justify="end" gutter={[16, 16]}>
-        <Col span={24} sm={6} md={4}>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            block
-            onClick={() => onConfirmSheet3()}
-          >
-            Aprobar
-          </Button>
-        </Col>
-        <Col span={24} sm={6} md={4}>
-          <Button type="primary" size="large" block htmlType="submit">
-            Guardar
-          </Button>
-        </Col>
-      </Row>
+      <Form>
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <Title level={5}>
+              III. INFORMACIÓN GENERAL SOBRE LAS PRÁCTICAS:
+            </Title>
+            <Alert
+              type="info"
+              showIcon
+              message={
+                <>
+                  Antes de aprobar, revisa el anexo haciendo{" "}
+                  <a href={`/practices/${practice.id}/module1/sheets#annex6`}>
+                    Click Aquí!
+                  </a>
+                </>
+              }
+            />
+          </Col>
+        </Row>
+        <Row justify="center" gutter={[16, 16]}>
+          <Col>
+            <Button
+              type="primary"
+              danger
+              size="large"
+              block
+              onClick={() => onConfirmSheet3()}
+            >
+              Aprobar
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 };

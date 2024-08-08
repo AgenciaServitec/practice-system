@@ -39,7 +39,7 @@ export const Annex6Integration = ({
       </Col>
       <Col span={24}>
         <div className="item-sheet">
-          <Space direction="vertical">
+          <Space direction="vertical" style={{ width: "100%" }}>
             <Title level={4}>Hoja 2</Title>
             <Sheet2Integration
               practice={practice}
@@ -56,7 +56,7 @@ export const Annex6Integration = ({
       </Col>
       <Col span={24}>
         <div className="item-sheet">
-          <Space direction="vertical">
+          <Space direction="vertical" style={{ width: "100%" }}>
             <Title level={4}>Hoja 3</Title>
             <Sheet3Integration
               practice={practice}
