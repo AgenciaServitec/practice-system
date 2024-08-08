@@ -123,6 +123,9 @@ export const PracticeIntegration = () => {
   );
 
   const isApprovedAnnex = (status) => status === "approved";
+  const hasPermissions =
+    authUser.roleCode === "company_representative" ||
+    authUser.roleCode === "academic_supervisor";
 
   const annexsList = () => [
     {
@@ -138,7 +141,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: (
+      children: isApprovedAnnex(annex2.status) && (
         <Annex2Integration
           practice={practice}
           user={authUser}
@@ -154,6 +157,7 @@ export const PracticeIntegration = () => {
           ? "green"
           : "rgba(0, 0, 0, 0.02)",
       },
+      collapsible: isApprovedAnnex(annex2.status) ? "disabled" : "visible",
     },
     {
       key: "annex3",
@@ -168,7 +172,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: (
+      children: isApprovedAnnex(annex3.status) && (
         <Annex3Integration
           practice={practice}
           annex3={annex3}
@@ -181,6 +185,7 @@ export const PracticeIntegration = () => {
           ? "green"
           : "rgba(0, 0, 0, 0.02)",
       },
+      collapsible: isApprovedAnnex(annex3.status) ? "disabled" : "visible",
     },
     {
       key: "annex4",
@@ -195,7 +200,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: (
+      children: isApprovedAnnex(annex4.status) && (
         <Annex4Integration
           practice={practice}
           user={authUser}
@@ -212,6 +217,7 @@ export const PracticeIntegration = () => {
           ? "green"
           : "rgba(0, 0, 0, 0.02)",
       },
+      collapsible: isApprovedAnnex(annex4.status) ? "disabled" : "visible",
     },
     {
       key: "annex6",
@@ -226,7 +232,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: (
+      children: isApprovedAnnex(annex6.status) && (
         <Annex6Integration
           practice={practice}
           user={authUser}
@@ -239,7 +245,10 @@ export const PracticeIntegration = () => {
           ? "green"
           : "rgba(0, 0, 0, 0.02)",
       },
-      collapsible: "disabled",
+      collapsible:
+        !hasPermissions || isApprovedAnnex(annex6.status)
+          ? "disabled"
+          : "visible",
     },
   ];
 
