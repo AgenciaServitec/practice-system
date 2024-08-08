@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Acl,
-  Button,
   modalConfirm,
   notification,
   Title,
@@ -14,6 +12,7 @@ import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { isUndefined } from "lodash";
+import { AnnexButtons } from "../AnnexButtons";
 
 export const Annex2Integration = ({
   practice,
@@ -116,45 +115,13 @@ export const Annex2Integration = ({
         </Col>
       </Row>
       <br />
-      <Row justify="end" gutter={[16, 16]}>
-        <Acl name="/practices/:practiceId/annex#observation">
-          <Col span={24} sm={6} md={6}>
-            <Button
-              type="primary"
-              size="large"
-              block
-              onClick={() => setVisibleForm(true)}
-            >
-              Observación
-            </Button>
-          </Col>
-        </Acl>
-        <Acl name="/practices/:practiceId/annex#refused">
-          <Col span={24} sm={6} md={6}>
-            <Button
-              type="primary"
-              danger
-              size="large"
-              block
-              onClick={() => onRefusedAnnex2(practice)}
-            >
-              Rechazar Anexo 2
-            </Button>
-          </Col>
-        </Acl>
-        <Acl name="/practices/:practiceId/annex#approved">
-          <Col span={24} sm={6} md={6}>
-            <Button
-              type="primary"
-              size="large"
-              block
-              onClick={() => onApprovedAnnex2(practice)}
-            >
-              Aprobar Anexo 2
-            </Button>
-          </Col>
-        </Acl>
-      </Row>
+      <AnnexButtons
+        hasPermissions={hasPermissions}
+        practice={practice}
+        onSetVisibleForm={setVisibleForm}
+        onRefusedAnnex={onRefusedAnnex2}
+        onApprovedAnnex={onApprovedAnnex2}
+      />
       <ObservationOfAnnexIntegration
         key={visibleForm}
         practice={practice}

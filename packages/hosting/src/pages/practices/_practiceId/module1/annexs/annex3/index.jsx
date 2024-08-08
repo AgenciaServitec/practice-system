@@ -14,6 +14,7 @@ import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { isUndefined } from "lodash";
+import { AnnexButtons } from "../AnnexButtons";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
   const [visibleForm, setVisibleForm] = useState(false);
@@ -102,45 +103,13 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         </Col>
       </Row>
       <br />
-      <Row justify="end" gutter={[16, 16]}>
-        <Acl name="/practices/:practiceId/annex#observation">
-          <Col span={24} sm={6} md={6}>
-            <Button
-              type="primary"
-              size="large"
-              block
-              onClick={() => setVisibleForm(true)}
-            >
-              Observación
-            </Button>
-          </Col>
-        </Acl>
-        <Acl name="/practices/:practiceId/annex#refused">
-          <Col span={24} sm={6} md={6}>
-            <Button
-              type="primary"
-              danger
-              size="large"
-              block
-              onClick={() => onRefusedAnnex3(practice)}
-            >
-              Rechazar Anexo 3
-            </Button>
-          </Col>
-        </Acl>
-        <Acl name="/practices/:practiceId/annex#approved">
-          <Col span={24} sm={6} md={6}>
-            <Button
-              type="primary"
-              size="large"
-              block
-              onClick={() => onApprovedAnnex3(practice)}
-            >
-              Aprobar Anexo 3
-            </Button>
-          </Col>
-        </Acl>
-      </Row>
+      <AnnexButtons
+        hasPermissions={hasPermissions}
+        practice={practice}
+        onSetVisibleForm={setVisibleForm}
+        onRefusedAnnex={onRefusedAnnex3}
+        onApprovedAnnex={onApprovedAnnex3}
+      />
       <ObservationOfAnnexIntegration
         key={visibleForm}
         practice={practice}
