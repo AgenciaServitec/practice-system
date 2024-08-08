@@ -95,7 +95,11 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
           <div className="item-sheet">
             <Space direction="vertical">
               <Title level={4}>Hoja 1</Title>
-              <Sheet1Integration practice={practice} annex3={annex3} />
+              <Sheet1Integration
+                practice={practice}
+                annex3={annex3}
+                user={user}
+              />
             </Space>
           </div>
         </Col>

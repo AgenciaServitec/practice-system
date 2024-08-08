@@ -21,6 +21,7 @@ import {
 import { firestore } from "../../../../../../firebase";
 import { ObservationsList } from "../../ObservationsList";
 import dayjs from "dayjs";
+import { fullName } from "../../../../../../utils";
 
 export const Sheet1Integration = ({ practice, annex3, user }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
@@ -109,6 +110,8 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
     });
   };
 
+  const hasPermission = user?.roleCode === "academic_supervisor";
+
   return (
     <Form onSubmit={handleSubmit(onConfirmSaveSheet1)}>
       <Row gutter={[16, 16]}>
@@ -117,111 +120,171 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
             I. FICHA DE SUPERVISIÓN Y MONITOREO DE PRÁCTICAS PRE-PROFESIONALES:
           </Title>
         </Col>
-        <Col span={24}>
-          <Controller
-            name="visitNumber"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="N° de Visita"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24}>
-          <Controller
-            name="supervisionDate"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <DatePicker
-                label="Fecha de Supervisión"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24}>
-          <Controller
-            name="progressStatus"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Estado de avance (en horas y %)"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24}>
-          <Controller
-            name="observations"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Observaciones"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24}>
-          <Controller
-            name="difficultiesDetected"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Dificultades detectadas durante las prácticas"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
-        <Col span={24}>
-          <Controller
-            name="suggestionsRecommendations"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value, name } }) => (
-              <Input
-                label="Sugerencias y Recomendaciones"
-                name={name}
-                value={value}
-                onChange={onChange}
-                error={error(name)}
-                required={required(name)}
-              />
-            )}
-          />
-        </Col>
+        {hasPermission ? (
+          <Col span={24}>
+            <Controller
+              name="visitNumber"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="N° de Visita"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
+          </Col>
+        ) : (
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>Número de Visita: </label>
+              <p>{annex3?.visitNumber || "-"}</p>
+            </div>
+          </Col>
+        )}
+        {hasPermission ? (
+          <Col span={24}>
+            <Controller
+              name="supervisionDate"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <DatePicker
+                  label="Fecha de Supervisión"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
+          </Col>
+        ) : (
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>Fecha de Supervisión: </label>
+              <p>
+                {annex3.supervisionDate
+                  ? dayjs(annex3?.supervisionDate.toDate()).format("DD/MM/YYYY")
+                  : "-"}
+              </p>
+            </div>
+          </Col>
+        )}
+        {hasPermission ? (
+          <Col span={24}>
+            <Controller
+              name="progressStatus"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="Estado de avance (en horas y %)"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
+          </Col>
+        ) : (
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>Estado de Avance (en %): </label>
+              <p>
+                {annex3?.progressStatus || "-"}
+                &nbsp;%
+              </p>
+            </div>
+          </Col>
+        )}
+        {hasPermission ? (
+          <Col span={24}>
+            <Controller
+              name="observations"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="Observaciones"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
+          </Col>
+        ) : (
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>Observaciones: </label>
+              <p>{annex3?.observations || "-"}</p>
+            </div>
+          </Col>
+        )}
+        {hasPermission ? (
+          <Col span={24}>
+            <Controller
+              name="difficultiesDetected"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="Dificultades detectadas durante las prácticas"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
+          </Col>
+        ) : (
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>Dificultades detectadas durante las prácticas: </label>
+              <p>{annex3?.difficultiesDetected || "-"}</p>
+            </div>
+          </Col>
+        )}
+        {hasPermission ? (
+          <Col span={24}>
+            <Controller
+              name="suggestionsRecommendations"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value, name } }) => (
+                <Input
+                  label="Sugerencias y Recomendaciones"
+                  name={name}
+                  value={value}
+                  onChange={onChange}
+                  error={error(name)}
+                  required={required(name)}
+                />
+              )}
+            />
+          </Col>
+        ) : (
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>Sugerencias y Recomendaciones: </label>
+              <p>{annex3?.suggestionsRecommendations || "-"}</p>
+            </div>
+          </Col>
+        )}
       </Row>
-      <ObservationsList user={user} annex={annex3} practice={practice} />
-      <Acl name="/practices/:practiceId/annex#save">
+      {hasPermission ? (
         <Row justify="end" gutter={[16, 16]}>
           <Col span={24} sm={6} md={4}>
             <Button type="primary" size="large" block htmlType="submit">
@@ -229,7 +292,11 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
             </Button>
           </Col>
         </Row>
-      </Acl>
+      ) : (
+        ""
+      )}
+      <ObservationsList user={user} annex={annex3} practice={practice} />
+      <Acl name="/practices/:practiceId/annex#save"></Acl>
     </Form>
   );
 };
