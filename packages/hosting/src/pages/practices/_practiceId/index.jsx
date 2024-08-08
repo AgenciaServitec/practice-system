@@ -103,6 +103,12 @@ export const PracticeIntegration = () => {
 
   const [annex2 = {}, annex3 = {}, annex4 = {}, annex6 = {}] = annexs;
 
+  const isValidToApprovedAllModule =
+    annex2?.status === "approved" &&
+    annex3?.status === "approved" &&
+    annex4?.status === "approved" &&
+    annex6?.status === "approved";
+
   const AnnexTitle = ({ title, status }) => (
     <div>
       <Title level={4}>{title} </Title>
@@ -303,21 +309,23 @@ export const PracticeIntegration = () => {
             </Col>
           </Row>
           <br />
-          <Row justify="end" gutter={[16, 16]}>
-            <Acl name="/practices/:practiceId/module#approved">
-              <Col span={24} sm={12} md={10} lg={8}>
-                <Button
-                  type="primary"
-                  danger
-                  size="large"
-                  block
-                  onClick={() => onConfirmModuleApproved()}
-                >
-                  Aprobar el modulo completo
-                </Button>
-              </Col>
-            </Acl>
-          </Row>
+          {isValidToApprovedAllModule && (
+            <Row justify="end" gutter={[16, 16]} style={{ padding: "2em 0" }}>
+              <Acl name="/practices/:practiceId/module#approved">
+                <Col span={24}>
+                  <Button
+                    type="primary"
+                    danger
+                    size="large"
+                    block
+                    onClick={() => onConfirmModuleApproved()}
+                  >
+                    Aprobar el modulo completo
+                  </Button>
+                </Col>
+              </Acl>
+            </Row>
+          )}
         </>
       )}
     </Container>
