@@ -1,9 +1,9 @@
 import React from "react";
-import { Acl, Button } from "../../../../../components";
-import Col from "antd/lib/col";
-import Row from "antd/lib/row";
+import { Acl, Button, Row, Col, Alert } from "../../../../../components";
+import { Link } from "react-router-dom";
 
 export const AnnexButtons = ({
+  annexName = "annex2",
   hasPermissions = false,
   practice,
   onSetVisibleForm = undefined,
@@ -18,6 +18,22 @@ export const AnnexButtons = ({
       gutter={[16, 16]}
       style={{ width: "100%", padding: "2em 1em" }}
     >
+      <Col span={24}>
+        <Alert
+          type="info"
+          showIcon
+          message={
+            <>
+              Antes de aprobar el anexo, puede revisar todas las hojas haciendo{" "}
+              <Link
+                to={`/practices/${practice.id}/module1/sheets#${annexName}`}
+              >
+                Click Aquí!
+              </Link>
+            </>
+          }
+        />
+      </Col>
       {onSetVisibleForm && (
         <Acl name="/practices/:practiceId/annex#observation">
           <Col span={24} sm={6} md={6}>

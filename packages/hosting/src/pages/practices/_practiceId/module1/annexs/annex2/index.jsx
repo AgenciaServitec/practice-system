@@ -116,6 +116,7 @@ export const Annex2Integration = ({
       </Row>
       <br />
       <AnnexButtons
+        annexName="annex2"
         hasPermissions={hasPermissions}
         practice={practice}
         onSetVisibleForm={setVisibleForm}

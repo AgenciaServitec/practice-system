@@ -122,6 +122,8 @@ export const PracticeIntegration = () => {
     </div>
   );
 
+  const isApprovedAnnex = (status) => status === "approved";
+
   const annexsList = () => [
     {
       key: "annex2",
@@ -146,7 +148,12 @@ export const PracticeIntegration = () => {
           annex2={annex2}
         />
       ),
-      style: panelStyle,
+      style: {
+        ...panelStyle,
+        background: isApprovedAnnex(annex2?.status)
+          ? "green"
+          : "rgba(0, 0, 0, 0.02)",
+      },
     },
     {
       key: "annex3",
@@ -168,7 +175,12 @@ export const PracticeIntegration = () => {
           user={authUser}
         />
       ),
-      style: panelStyle,
+      style: {
+        ...panelStyle,
+        background: isApprovedAnnex(annex3?.status)
+          ? "green"
+          : "rgba(0, 0, 0, 0.02)",
+      },
     },
     {
       key: "annex4",
@@ -194,7 +206,12 @@ export const PracticeIntegration = () => {
           annex4={annex4}
         />
       ),
-      style: panelStyle,
+      style: {
+        ...panelStyle,
+        background: isApprovedAnnex(annex4?.status)
+          ? "green"
+          : "rgba(0, 0, 0, 0.02)",
+      },
     },
     {
       key: "annex6",
@@ -213,21 +230,20 @@ export const PracticeIntegration = () => {
         <Annex6Integration
           practice={practice}
           user={authUser}
-          users={users}
-          practitioner={practitioner}
-          representativeCompany={representativeCompany}
-          supervisor={supervisor}
-          company={company}
-          onSavePractice={savePractice}
           annex6={annex6}
         />
       ),
-      style: panelStyle,
+      style: {
+        ...panelStyle,
+        background: isApprovedAnnex(annex6?.status)
+          ? "green"
+          : "rgba(0, 0, 0, 0.02)",
+      },
+      collapsible: "disabled",
     },
   ];
 
   const panelStyle = {
-    background: "rgba(0, 0, 0, 0.02)",
     marginBottom: "1em",
     borderRadius: "1em",
     border: "none",
