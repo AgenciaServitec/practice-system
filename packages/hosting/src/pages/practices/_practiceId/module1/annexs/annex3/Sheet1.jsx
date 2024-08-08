@@ -114,13 +114,14 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
 
   return (
     <Form onSubmit={handleSubmit(onConfirmSaveSheet1)}>
-      <Row gutter={[16, 16]}>
-        <Col span={24}>
-          <Title level={5}>
-            I. FICHA DE SUPERVISIÓN Y MONITOREO DE PRÁCTICAS PRE-PROFESIONALES:
-          </Title>
-        </Col>
-        {hasPermission ? (
+      {hasPermission ? (
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <Title level={5}>
+              I. FICHA DE SUPERVISIÓN Y MONITOREO DE PRÁCTICAS
+              PRE-PROFESIONALES:
+            </Title>
+          </Col>
           <Col span={24}>
             <Controller
               name="visitNumber"
@@ -138,15 +139,6 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
               )}
             />
           </Col>
-        ) : (
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Número de Visita: </label>
-              <p>{annex3?.visitNumber || "-"}</p>
-            </div>
-          </Col>
-        )}
-        {hasPermission ? (
           <Col span={24}>
             <Controller
               name="supervisionDate"
@@ -164,19 +156,6 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
               )}
             />
           </Col>
-        ) : (
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Fecha de Supervisión: </label>
-              <p>
-                {annex3.supervisionDate
-                  ? dayjs(annex3?.supervisionDate.toDate()).format("DD/MM/YYYY")
-                  : "-"}
-              </p>
-            </div>
-          </Col>
-        )}
-        {hasPermission ? (
           <Col span={24}>
             <Controller
               name="progressStatus"
@@ -194,18 +173,6 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
               )}
             />
           </Col>
-        ) : (
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Estado de Avance (en %): </label>
-              <p>
-                {annex3?.progressStatus || "-"}
-                &nbsp;%
-              </p>
-            </div>
-          </Col>
-        )}
-        {hasPermission ? (
           <Col span={24}>
             <Controller
               name="observations"
@@ -223,15 +190,6 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
               )}
             />
           </Col>
-        ) : (
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Observaciones: </label>
-              <p>{annex3?.observations || "-"}</p>
-            </div>
-          </Col>
-        )}
-        {hasPermission ? (
           <Col span={24}>
             <Controller
               name="difficultiesDetected"
@@ -249,15 +207,6 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
               )}
             />
           </Col>
-        ) : (
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Dificultades detectadas durante las prácticas: </label>
-              <p>{annex3?.difficultiesDetected || "-"}</p>
-            </div>
-          </Col>
-        )}
-        {hasPermission ? (
           <Col span={24}>
             <Controller
               name="suggestionsRecommendations"
@@ -275,16 +224,71 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
               )}
             />
           </Col>
-        ) : (
+        </Row>
+      ) : (
+        <Row gutter={[16, 16]}>
+          <Col span={24}>
+            <Title level={5}>
+              I. FICHA DE SUPERVISIÓN Y MONITOREO DE PRÁCTICAS
+              PRE-PROFESIONALES:
+            </Title>
+          </Col>
           <Col span={24} md={8}>
             <div className="item">
-              <label>Sugerencias y Recomendaciones: </label>
+              <label>
+                <strong>Número de Visita: </strong>
+              </label>
+              <p>{annex3?.visitNumber || "-"}</p>
+            </div>
+          </Col>
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>
+                <strong>Fecha de supervisión: </strong>
+              </label>
+              <p>
+                {annex3.supervisionDate
+                  ? dayjs(annex3.supervisionDate.toDate()).format("DD/MM/YYYY")
+                  : "-"}
+              </p>
+            </div>
+          </Col>
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>
+                <strong>Estado de avance (en %): </strong>
+              </label>
+              <p>{annex3?.progressStatus || "-"}&nbsp;%</p>
+            </div>
+          </Col>
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>
+                <strong>Observaciones:</strong>
+              </label>
+              <p>{annex3?.observations || "-"}</p>
+            </div>
+          </Col>
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>
+                <strong>Dificultades: </strong>
+              </label>
+              <p>{annex3?.difficultiesDetected || "-"}</p>
+            </div>
+          </Col>
+          <Col span={24} md={8}>
+            <div className="item">
+              <label>
+                <strong>Sugerencias y Recomendaciones: </strong>
+              </label>
               <p>{annex3?.suggestionsRecommendations || "-"}</p>
             </div>
           </Col>
-        )}
-      </Row>
-      {hasPermission ? (
+        </Row>
+      )}
+      <ObservationsList user={user} annex={annex3} practice={practice} />
+      <Acl name="/practices/:practiceId/annex#save">
         <Row justify="end" gutter={[16, 16]}>
           <Col span={24} sm={6} md={4}>
             <Button type="primary" size="large" block htmlType="submit">
@@ -292,11 +296,7 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice }) => {
             </Button>
           </Col>
         </Row>
-      ) : (
-        ""
-      )}
-      <ObservationsList user={user} annex={annex3} practice={practice} />
-      <Acl name="/practices/:practiceId/annex#save"></Acl>
+      </Acl>
     </Form>
   );
 };
