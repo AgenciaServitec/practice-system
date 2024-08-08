@@ -251,6 +251,12 @@ export const InitialInformation = ({
             <p>{practice?.task || "-"}</p>
           </div>
         </Col>
+        <Col span={24} md={8}>
+          <div className="item">
+            <label>Supervisor de prácticas asignado por el IESTP: </label>
+            <p>{fullName(supervisor) || "-"}</p>
+          </div>
+        </Col>
       </Row>
     </Container>
   );

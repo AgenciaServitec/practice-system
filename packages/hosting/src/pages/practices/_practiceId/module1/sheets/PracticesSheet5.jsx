@@ -94,7 +94,9 @@ export const PracticesSheet5 = ({
                 <span>
                   Nombre de la Empresa o Institución: &nbsp;
                   <br />
-                  <strong>{company.socialReason}</strong>
+                  <span className="capitalize">
+                    <strong>{company.socialReason}</strong>
+                  </span>
                   <br />
                 </span>
               </li>
@@ -126,7 +128,7 @@ export const PracticesSheet5 = ({
               </li>
               <li>
                 <span></span>
-                <span>
+                <span className="capitalize">
                   Nombre:&nbsp;{" "}
                   <strong>{fullName(representativeCompany)}</strong>
                 </span>
@@ -166,7 +168,8 @@ export const PracticesSheet5 = ({
                 <span>
                   Horario de practicas:{" "}
                   <strong>
-                    {practice?.entryTime} - {practice?.departureTime}
+                    {dayjs(practice?.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
+                    {dayjs(practice?.departureTime, "HH:mm:ss").format("HH:mm")}
                   </strong>
                 </span>
               </li>

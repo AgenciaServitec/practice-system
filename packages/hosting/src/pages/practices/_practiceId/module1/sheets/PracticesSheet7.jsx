@@ -93,7 +93,7 @@ export const PracticesSheet7 = ({
                 </span>
                 <span>
                   <strong> Apellidos y Nombres del practicante:</strong> <br />
-                  {fullName(practitioner)}
+                  <span className="capitalize">{fullName(practitioner)} </span>
                 </span>
               </li>
               <li>
