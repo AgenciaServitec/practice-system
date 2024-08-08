@@ -111,6 +111,13 @@ export const Annex4Integration = ({
           </Space>
         </div>
       </Col>
+      <br />
+      <AnnexButtons
+        hasPermissions={hasPermissions}
+        practice={practice}
+        onRefusedAnnex={onRefusedAnnex4}
+        onApprovedAnnex={onApprovedAnnex4}
+      />
     </ContainerRow>
   );
 };

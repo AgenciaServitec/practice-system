@@ -1,15 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  Button,
-  modalConfirm,
-  Form,
-  notification,
-  Title,
-} from "../../../../../../components";
+import { modalConfirm, notification } from "../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
-import { BusinessPosition } from "../../../../../../data-list";
 import { Alert } from "antd";
 
 export const Sheet2Integration = ({
@@ -42,45 +35,24 @@ const Sheet2 = ({
   supervisor,
   practice,
 }) => {
-  const BusinessPositionValue = BusinessPosition.find(
-    (position) =>
-      position.value ===
-      representativeCompany?.companyRepresentativeData?.businessPosition
-  )?.label;
-
   return (
     <Container>
-      <Form>
         <Row gutter={[16, 16]}>
           <Col span={24}>
-            <Title level={5}>II. INFORMACIÓN GENERAL SOBRE LA EMPRESA:</Title>
-            <Alert
-              type="info"
-              showIcon
-              message={
-                <>
-                  Antes de aprobar, revisa el anexo haciendo{" "}
-                  <a href={`/practices/${practice.id}/module1/sheets#annex6`}>
-                    Click Aquí!
-                  </a>
-                </>
-              }
-            />
+              <Alert
+                  type="info"
+                  showIcon
+                  message={
+                      <>
+                          Antes de aprobar, revisa el anexo haciendo{" "}
+                          <a href={`/practices/${practice.id}/module1/sheets#annex6`}>
+                              Click Aquí!
+                          </a>
+                      </>
+                  }
+              />
           </Col>
         </Row>
-        <Row justify="center" gutter={[16, 16]}>
-          <Col>
-            <Button
-              type="primary"
-              danger
-              size="large"
-              onClick={() => onConfirmSheet2()}
-            >
-              Aprobar
-            </Button>
-          </Col>
-        </Row>
-      </Form>
     </Container>
   );
 };

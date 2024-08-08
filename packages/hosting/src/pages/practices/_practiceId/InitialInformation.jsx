@@ -164,7 +164,18 @@ export const InitialInformation = ({
             </p>
           </div>
         </Col>
-
+        <Col span={24} md={8}>
+          <div className="item">
+            <label>Correo Electrónico: </label>
+            <p>{company?.email || "-"}</p>
+          </div>
+        </Col>
+        <Col span={24} md={8}>
+          <div className="item">
+            <label>Página Web: </label>
+            <p>{company?.webSite || "-"}</p>
+          </div>
+        </Col>
         <Col span={24} md={8}>
           <div className="item">
             <label>Correo Electrónico: </label>
