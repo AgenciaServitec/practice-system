@@ -48,7 +48,7 @@ const Sheet1 = ({
     <Container>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <Title level={5}>II. DATOS DE LA EMPRESA:</Title>
+          <Title level={5}>II. INFORMACIÓN GENERAL DE LA EMPRESA:</Title>
         </Col>
         <Col span={24} md={12}>
           <label>Razón Social de la Empresa o Centro de Prácticas: </label>

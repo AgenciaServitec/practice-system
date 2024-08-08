@@ -101,7 +101,7 @@ export const Annex6Integration = ({
     <ContainerRow gutter={[16, 16]}>
       <Col span={24}>
         <div className="item-sheet">
-          <Space direction="vertical">
+          <Space direction="vertical" style={{ width: "100%" }}>
             <Title level={4}>Hoja 1</Title>
             <Sheet1Integration
               practice={practice}
