@@ -10,7 +10,7 @@ export const BreadcrumbLayout = ({ user }) => {
     Roles.find((role) => role.roleCode === roleCode);
 
   return (
-    <Breadcrumb style={{ margin: "16px 0" }}>
+    <Breadcrumb style={{ margin: "16px 0", fontSize: 11 }}>
       <Breadcrumb.Item>
         {capitalize(findRole(user?.roleCode)?.roleName || "User")}
       </Breadcrumb.Item>
