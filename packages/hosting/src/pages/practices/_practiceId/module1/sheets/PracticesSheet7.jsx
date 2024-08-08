@@ -21,7 +21,7 @@ export const PracticesSheet7 = ({
   return (
     <>
       <Container>
-        <div className="header">
+        <div className="header" id="annex6">
           <div className="header__gilda">
             <img src={LogoGilda} alt="" />
           </div>
