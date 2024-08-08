@@ -5,11 +5,6 @@
     "initialPathname": "/home"
   },
   {
-    "code": "admin",
-    "name": "Admin",
-    "initialPathname": "/home"
-  },
-  {
     "code": "company_representative",
     "name": "Representante de empresa",
     "initialPathname": "/home"
@@ -27,6 +22,6 @@
   {
     "code": "user",
     "name": "Usuario",
-    "initialPathname": "/profile"
+    "initialPathname": "/home"
   }
 ]
