@@ -4,7 +4,7 @@ import Row from "antd/lib/row";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { AnnexButtons } from "../AnnexButtons";
-import { AnnexStatus } from "../../../AnnexStatus";
+import { practicesStatus } from "../../../../../../data-list";
 
 export const Annex6Integration = ({ practice, user, annex6 }) => {
   useEffect(() => {
@@ -12,7 +12,7 @@ export const Annex6Integration = ({ practice, user, annex6 }) => {
       const { approvedByAcademicSupervisor } = annex6;
 
       await updateAnnex(practice.id, "annex6", {
-        status: AnnexStatus?.[approvedByAcademicSupervisor]?.value,
+        status: practicesStatus?.[approvedByAcademicSupervisor]?.value,
       });
     })();
   }, [annex6]);

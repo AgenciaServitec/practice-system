@@ -93,18 +93,12 @@ const Practices = ({
   onConfirmRemovePractice,
   onValidateAddPractice,
 }) => {
-  const [currentPractice, setCurrentPractice] = useState(null);
   const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
 
   const [filterFields, setFilterFields] = useQueriesState({
     user: "all",
     status: "all",
   });
-
-  const onSetCurrentPractice = (_practice = null) =>
-    setCurrentPractice(_practice);
-  const onSetIsVisibleProductEdit = (isVisiblePracticeEdit = false) =>
-    setIsVisiblePracticeEdit(isVisiblePracticeEdit);
 
   const mappedPractice = (practice) => {
     const _practitioner = users.find(

@@ -147,7 +147,7 @@ export const PracticeIntegration = () => {
         color={status?.type}
       >
         {" "}
-        {status?.value}
+        {status?.name}
       </Tag>
     </div>
   );
@@ -189,7 +189,7 @@ export const PracticeIntegration = () => {
       },
       collapsible: isApprovedAnnex(annex2.status) ? "disabled" : "visible",
     },
-    {
+    authUser.roleCode !== "company_representative" && {
       key: "annex3",
       label: (
         <Col span={24}>
@@ -249,7 +249,7 @@ export const PracticeIntegration = () => {
       },
       collapsible: isApprovedAnnex(annex4.status) ? "disabled" : "visible",
     },
-    {
+    authUser.roleCode !== "company_representative" && {
       key: "annex6",
       label: (
         <Col span={24}>

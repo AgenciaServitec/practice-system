@@ -8,19 +8,21 @@ export const practicesStatus = {
   approved: {
     icon: faCheckCircle,
     color: "green",
-    value: "Aprobado",
+    name: "Aprobado",
+    value: "approved",
     type: "success",
   },
   refused: {
     icon: faXmarkCircle,
     color: "red",
-    value: "Rechazado",
+    value: "refused",
     type: "error",
   },
   pending: {
     icon: faClock,
     color: "orange",
-    value: "Pendiente",
+    name: "Pendiente",
+    value: "pending",
     type: "warning",
   },
 };

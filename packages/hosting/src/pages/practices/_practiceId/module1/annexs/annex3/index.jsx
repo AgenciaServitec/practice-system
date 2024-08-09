@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import {
+  Col,
   modalConfirm,
   notification,
-  Title,
-  Col,
   Row,
   Space,
+  Title,
 } from "../../../../../../components";
 import { Sheet1Integration } from "./Sheet1";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
-import { AnnexStatus } from "../../../AnnexStatus";
+import { practicesStatus } from "../../../../../../data-list";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
   const [visibleForm, setVisibleForm] = useState(false);
@@ -22,7 +22,7 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
       const { approvedByAcademicSupervisor } = annex3;
 
       await updateAnnex(practice.id, "annex3", {
-        status: AnnexStatus?.[approvedByAcademicSupervisor]?.value,
+        status: practicesStatus?.[approvedByAcademicSupervisor]?.value,
       });
     })();
   }, [annex3]);

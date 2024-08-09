@@ -83,7 +83,7 @@ export const PracticesTable = ({
               }
             >
               {" "}
-              {practicesStatus?.[practice.status]?.value}
+              {practicesStatus?.[practice.status]?.name}
             </Tag>
           </span>
         </Space>
