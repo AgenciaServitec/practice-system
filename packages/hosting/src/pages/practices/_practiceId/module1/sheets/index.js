@@ -10,6 +10,7 @@ import { PracticesSheet6 } from "./PracticesSheet6";
 import { PracticesSheet7 } from "./PracticesSheet7";
 import { PracticesSheet8 } from "./PracticesSheet8";
 import { PracticesSheet9 } from "./PracticesSheet9";
+import { PracticesSheet10 } from "./PracticesSheet10";
 import { useNavigate, useParams } from "react-router";
 import { useGlobalData } from "../../../../../providers";
 import { practicesRef } from "../../../../../firebase/collections";
@@ -178,6 +179,11 @@ export const Sheets = () => {
             annex3={annex3}
           />
         </Sheet>
+        {practitioner?.frontDniPhoto && practitioner?.backDniPhoto && (
+          <Sheet layout="portrait">
+            <PracticesSheet10 practitioner={practitioner} />
+          </Sheet>
+        )}
       </PDF>
     </Container>
   );

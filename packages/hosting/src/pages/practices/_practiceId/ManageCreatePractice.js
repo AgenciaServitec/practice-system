@@ -381,6 +381,7 @@ const ManageCreateProduct = ({
                       onChange={onChange}
                       error={error(name)}
                       required={required(name)}
+                      format="HH:mm a"
                     />
                   )}
                 />
@@ -397,6 +398,7 @@ const ManageCreateProduct = ({
                       onChange={onChange}
                       error={error(name)}
                       required={required(name)}
+                      format="HH:mm a"
                     />
                   )}
                 />

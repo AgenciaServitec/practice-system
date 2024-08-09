@@ -126,9 +126,7 @@ export const ProfileDataForm = () => {
     resetForm();
   }, [authUser]);
 
-  const onSubmit = async (formData) => {
-    await updateProfile(formData);
-  };
+  const onSubmit = async (formData) => await updateProfile(formData);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
