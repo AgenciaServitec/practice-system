@@ -179,11 +179,11 @@ export const Sheets = () => {
             annex3={annex3}
           />
         </Sheet>
-          {practitioner?.frontDniPhoto && practitioner?.backDniPhoto && (
-              <Sheet layout="portrait">
-                  <PracticesSheet10 practitioner={practitioner} />
-              </Sheet>
-          )}
+        {practitioner?.frontDniPhoto && practitioner?.backDniPhoto && (
+          <Sheet layout="portrait">
+            <PracticesSheet10 practitioner={practitioner} />
+          </Sheet>
+        )}
       </PDF>
     </Container>
   );
