@@ -11,7 +11,6 @@ import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
-import { isUndefined } from "lodash";
 import { AnnexButtons } from "../AnnexButtons";
 
 export const Annex2Integration = ({
@@ -31,12 +30,15 @@ export const Annex2Integration = ({
 
       await updateAnnex(practice.id, "annex2", {
         status:
-          approvedByCompanyRepresentative && approvedByAcademicSupervisor
-            ? "approved"
-            : isUndefined(approvedByCompanyRepresentative) ||
-              isUndefined(approvedByAcademicSupervisor)
+          approvedByCompanyRepresentative !== approvedByAcademicSupervisor
             ? "pending"
-            : "refused",
+            : approvedByCompanyRepresentative === "approved" &&
+              approvedByAcademicSupervisor === "approved"
+            ? "approved"
+            : approvedByCompanyRepresentative === "refused" &&
+              approvedByAcademicSupervisor === "refused"
+            ? "refused"
+            : "pending",
       });
     })();
   }, [annex2]);
@@ -59,10 +61,10 @@ export const Annex2Integration = ({
 
         await updateAnnex(practice.id, "annex2", {
           ...(user.roleCode === "company_representative" && {
-            approvedByCompanyRepresentative: true,
+            approvedByCompanyRepresentative: "approved",
           }),
           ...(user.roleCode === "academic_supervisor" && {
-            approvedByAcademicSupervisor: true,
+            approvedByAcademicSupervisor: "approved",
           }),
         });
 
@@ -84,10 +86,10 @@ export const Annex2Integration = ({
 
         await updateAnnex(practice.id, "annex2", {
           ...(user.roleCode === "company_representative" && {
-            approvedByCompanyRepresentative: false,
+            approvedByCompanyRepresentative: "refused",
           }),
           ...(user.roleCode === "academic_supervisor" && {
-            approvedByAcademicSupervisor: false,
+            approvedByAcademicSupervisor: "refused",
           }),
         });
 

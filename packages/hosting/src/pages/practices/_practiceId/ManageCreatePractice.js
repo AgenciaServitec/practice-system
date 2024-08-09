@@ -117,10 +117,18 @@ export const ManageCreateProductIntegration = ({
         });
 
       ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
-        practicesRef.doc(practice.id).collection("annexs").doc(annex).set({
-          id: annex,
-          status: "pending",
-        });
+        practicesRef
+          .doc(practice.id)
+          .collection("annexs")
+          .doc(annex)
+          .set({
+            id: annex,
+            status: "pending",
+            ...(["annex2", "annex4"].includes(annex) && {
+              approvedByCompanyRepresentative: "pending",
+            }),
+            approvedByAcademicSupervisor: "pending",
+          });
       });
 
       await addPractice(assignCreateProps(practice));

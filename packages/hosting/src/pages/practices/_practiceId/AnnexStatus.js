@@ -7,78 +7,75 @@ import {
   faClock,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { isUndefined } from "lodash";
 
 export const AnnexStatus = ({ annex }) => {
   const annexStatusByRole = {
-    true: {
-      value: "Aprobado",
+    approved: {
+      name: "Aprobado",
+      value: "approved",
       type: "success",
       icon: faCheckCircle,
     },
-    false: {
-      value: "Rechazado",
+    refused: {
+      name: "Rechazado",
+      value: "refused",
       type: "error",
       icon: faXmarkCircle,
     },
-    undefined: {
-      value: "Pendiente",
+    pending: {
+      name: "Pendiente",
+      value: "pending",
       type: "warning",
       icon: faClock,
     },
   };
 
   const statusByCompanyRepresentative =
-    annexStatusByRole?.[
-      (isUndefined(annex?.approvedByCompanyRepresentative)
-        ? "undefined"
-        : annex.approvedByCompanyRepresentative
-      ).toString()
-    ];
+    annexStatusByRole?.[annex?.approvedByCompanyRepresentative];
+
   const statusByAcademicSupervisor =
-    annexStatusByRole?.[
-      (isUndefined(annex?.approvedByAcademicSupervisor)
-        ? "undefined"
-        : annex.approvedByAcademicSupervisor
-      ).toString()
-    ];
+    annexStatusByRole?.[annex?.approvedByAcademicSupervisor];
 
   return (
     <Container>
-      <div className="item">
-        <Tag
-          icon={
-            <FontAwesomeIcon
-              size="sm"
-              icon={statusByCompanyRepresentative?.icon}
-            />
-          }
-          color={statusByCompanyRepresentative?.type}
-        >
-          {" "}
-          {statusByCompanyRepresentative?.value}
-        </Tag>
-        <span className="label">
-          <span>Por</span> Representante de empresa:
-        </span>
-      </div>
-      <div className="item">
-        <Tag
-          icon={
-            <FontAwesomeIcon
-              size="sm"
-              icon={statusByAcademicSupervisor?.icon}
-            />
-          }
-          color={statusByAcademicSupervisor?.type}
-        >
-          {" "}
-          {statusByAcademicSupervisor?.value}
-        </Tag>
-        <span className="label">
-          <span>Por</span> Supervisor academico:
-        </span>
-      </div>
+      {statusByCompanyRepresentative && (
+        <div className="item">
+          <Tag
+            icon={
+              <FontAwesomeIcon
+                size="sm"
+                icon={statusByCompanyRepresentative?.icon}
+              />
+            }
+            color={statusByCompanyRepresentative?.type}
+          >
+            {" "}
+            {statusByCompanyRepresentative?.name}
+          </Tag>
+          <span className="label">
+            <span>Por</span> Representante de empresa
+          </span>
+        </div>
+      )}
+      {statusByAcademicSupervisor && (
+        <div className="item">
+          <Tag
+            icon={
+              <FontAwesomeIcon
+                size="sm"
+                icon={statusByAcademicSupervisor?.icon}
+              />
+            }
+            color={statusByAcademicSupervisor?.type}
+          >
+            {" "}
+            {statusByAcademicSupervisor?.name}
+          </Tag>
+          <span className="label">
+            <span>Por</span> Supervisor academico
+          </span>
+        </div>
+      )}
     </Container>
   );
 };

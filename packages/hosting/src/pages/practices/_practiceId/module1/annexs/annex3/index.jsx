@@ -3,40 +3,31 @@ import {
   modalConfirm,
   notification,
   Title,
+  Col,
+  Row,
+  Space,
 } from "../../../../../../components";
-import Col from "antd/lib/col";
-import Row from "antd/lib/row";
 import { Sheet1Integration } from "./Sheet1";
-import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
-import { isUndefined } from "lodash";
 import { AnnexButtons } from "../AnnexButtons";
+import { AnnexStatus } from "../../../AnnexStatus";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
   const [visibleForm, setVisibleForm] = useState(false);
 
   useEffect(() => {
     (async () => {
-      const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
-        annex3;
+      const { approvedByAcademicSupervisor } = annex3;
 
       await updateAnnex(practice.id, "annex3", {
-        status:
-          approvedByCompanyRepresentative && approvedByAcademicSupervisor
-            ? "approved"
-            : isUndefined(approvedByCompanyRepresentative) ||
-              isUndefined(approvedByAcademicSupervisor)
-            ? "pending"
-            : "refused",
+        status: AnnexStatus?.[approvedByAcademicSupervisor]?.value,
       });
     })();
   }, [annex3]);
 
-  const hasPermissions =
-    user.roleCode === "company_representative" ||
-    user.roleCode === "academic_supervisor";
+  const hasPermissions = user.roleCode === "academic_supervisor";
 
   const onApprovedAnnex3 = async (practice) =>
     modalConfirm({
@@ -51,11 +42,8 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         }
 
         await updateAnnex(practice.id, "annex3", {
-          ...(user.roleCode === "company_representative" && {
-            approvedByCompanyRepresentative: true,
-          }),
           ...(user.roleCode === "academic_supervisor" && {
-            approvedByAcademicSupervisor: true,
+            approvedByAcademicSupervisor: "approved",
           }),
         });
 
@@ -76,11 +64,8 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         }
 
         await updateAnnex(practice.id, "annex3", {
-          ...(user.roleCode === "company_representative" && {
-            approvedByCompanyRepresentative: false,
-          }),
           ...(user.roleCode === "academic_supervisor" && {
-            approvedByAcademicSupervisor: false,
+            approvedByAcademicSupervisor: "refused",
           }),
         });
 
