@@ -11,6 +11,7 @@ export const PracticesSheet5 = ({
   practice,
   company,
   representativeCompany,
+  annexNumber,
 }) => {
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
@@ -19,7 +20,7 @@ export const PracticesSheet5 = ({
 
   return (
     <>
-      <Container>
+      <Container id="annex4">
         <div className="header">
           <div className="header__gilda">
             <img src={LogoGilda} alt="" />
@@ -30,7 +31,11 @@ export const PracticesSheet5 = ({
           </div>
         </div>
         <div className="body">
-          <div className="body__title">
+          <div
+            className={`body__title ${
+              annexNumber === "annex4" && "annex4-title"
+            }`}
+          >
             <h3>ANEXO 4</h3>
             <h5>
               INFORME VALORATIVO DE EVALUACIÓN DE PRÁCTICAS PRE-PROFESIONALES

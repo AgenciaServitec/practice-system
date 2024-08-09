@@ -8,10 +8,8 @@ import dayjs from "dayjs";
 export const PracticesSheet7 = ({
   practitioner,
   practice,
-  company,
-  representativeCompany,
   supervisor,
-  annex4,
+  annexNumber,
 }) => {
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
@@ -20,8 +18,8 @@ export const PracticesSheet7 = ({
 
   return (
     <>
-      <Container>
-        <div className="header" id="annex6">
+      <Container id="annex6">
+        <div className="header">
           <div className="header__gilda">
             <img src={LogoGilda} alt="" />
           </div>
@@ -31,9 +29,15 @@ export const PracticesSheet7 = ({
           </div>
         </div>
         <div className="body">
-          <div className="body__title">
+          <div
+            className={`body__title ${
+              annexNumber === "annex6" && "annex6-title"
+            }`}
+          >
             <h3>ANEXO 6</h3>
             <h4>INFORME DE PRACTICA PRE- PROFESIONAL</h4>
+          </div>
+          <div className="body__subtitle1">
             <div className="rbody__title">
               San Juan de Miraflores, {dayjs().format("DD MMMM YYYY")}
             </div>

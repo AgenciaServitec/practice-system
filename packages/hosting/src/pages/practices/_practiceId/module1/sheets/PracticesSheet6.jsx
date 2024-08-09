@@ -4,13 +4,7 @@ import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
 
-export const PracticesSheet6 = ({
-  practitioner,
-  annex4,
-  practice,
-  company,
-  representativeCompany,
-}) => {
+export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
   const qualityEvaluation = {
     A: {
       code: "A",
