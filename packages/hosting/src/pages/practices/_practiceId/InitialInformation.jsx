@@ -43,7 +43,7 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Apellidos y Nombres: </label>
-            <p>{fullName(practitioner) || "-"}</p>
+            <p className="capitalize">{fullName(practitioner) || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -55,13 +55,17 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Turno: </label>
-            <p>{practitioner?.practitionerData?.studentShift || "Egresado"}</p>
+            <p className="capitalize">
+              {practitioner?.practitionerData?.studentShift || "Egresado"}
+            </p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div className="item">
             <label>Semestre: </label>
-            <p>{practitioner?.practitionerData?.semester || "Egresado"}</p>
+            <p className="capitalize">
+              {practitioner?.practitionerData?.semester || "Egresado"}
+            </p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -76,8 +80,8 @@ export const InitialInformation = ({
               Período de Estudios (Año de Ingreso - Año de Egreso):{" "}
             </label>
             <p>
-              {`${practitioner?.practitionerData?.entryYear} - ${practitioner?.practitionerData?.yearGraduation}` ||
-                "Egresado"}
+              {practitioner?.practitionerData?.entryYear} -{" "}
+              {practitioner?.practitionerData?.yearGraduation || "En curso"}
             </p>
           </div>
         </Col>
@@ -122,7 +126,7 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Razón Social de la Empresa: </label>
-            <p>{company?.socialReason || "-"}</p>
+            <p className="capitalize">{company?.socialReason || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -140,19 +144,19 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Distrito: </label>
-            <p>{company?.district || "-"}</p>
+            <p className="capitalize">{company?.district || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div className="item">
             <label>Ciudad: </label>
-            <p>{company?.province || "-"}</p>
+            <p className="capitalize">{company?.province || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div className="item">
             <label>Región: </label>
-            <p>{company?.region || "-"}</p>
+            <p className="capitalize">{company?.region || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -191,7 +195,7 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Jefe o Autoridad Principal de la Empresa: </label>
-            <p>{fullName(representativeCompany)}</p>
+            <p className="capitalize">{fullName(representativeCompany)}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -203,7 +207,7 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Supervisor designado por la empresa: </label>
-            <p>{fullName(representativeCompany)}</p>
+            <p className="capitalize">{fullName(representativeCompany)}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
@@ -259,13 +263,13 @@ export const InitialInformation = ({
         <Col span={24} md={8}>
           <div className="item">
             <label>Funciones y/o Tareas asignadas de acuerdo al Módulo: </label>
-            <p>{practice?.task || "-"}</p>
+            <p className="capitalize">{practice?.task || "-"}</p>
           </div>
         </Col>
         <Col span={24} md={8}>
           <div className="item">
             <label>Supervisor de prácticas asignado por el IESTP: </label>
-            <p>{fullName(supervisor) || "-"}</p>
+            <p className="capitalize">{fullName(supervisor) || "-"}</p>
           </div>
         </Col>
       </Row>
@@ -283,7 +287,6 @@ const Container = styled.div`
   .item {
     p:last-child {
       font-weight: 500;
-      text-transform: capitalize;
       font-size: 1.1em;
       margin: 0.2em 0;
     }
