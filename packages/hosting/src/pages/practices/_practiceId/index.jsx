@@ -42,7 +42,7 @@ import { practicesStatus } from "../../../data-list";
 import { AnnexStatus } from "./AnnexStatus";
 import { ManageCreateProductIntegration } from "./ManageCreatePractice";
 import { InitialInformation } from "./InitialInformation";
-import { Link } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -81,6 +81,33 @@ export const PracticeIntegration = () => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      if (
+        practice?.status === "approved" ||
+        isEmpty(practice) ||
+        isEmpty(annexs)
+      )
+        return;
+
+      const annexsCount = (annexs || []).filter(
+        (annex) => annex.status === "refused"
+      ).length;
+
+      if (annexsCount >= 4) {
+        await updatePractice(
+          practice.id,
+          assignUpdateProps({ status: "refused" })
+        );
+      } else {
+        await updatePractice(
+          practice.id,
+          assignUpdateProps({ status: "pending" })
+        );
+      }
+    })();
+  }, [annexs]);
+
   const savePractice = async (practice) => {
     const p0 = updateUser(
       practice.practitionerId,
@@ -111,8 +138,6 @@ export const PracticeIntegration = () => {
     annex4?.status === "approved" &&
     annex6?.status === "approved" &&
     practice?.status !== "approved";
-
-  const isValidToApprovedAllModule2 = practice?.status === "approved";
 
   const AnnexTitle = ({ title, status }) => (
     <div>
@@ -300,7 +325,7 @@ export const PracticeIntegration = () => {
                 />
               </div>
               <br />
-              {isValidToApprovedAllModule2 ? (
+              {practice?.status === "approved" && (
                 <Row gutter={[16, 16]}>
                   <Col span={24}>
                     <Alert
@@ -315,8 +340,6 @@ export const PracticeIntegration = () => {
                     />
                   </Col>
                 </Row>
-              ) : (
-                ""
               )}
             </Col>
           </Row>
