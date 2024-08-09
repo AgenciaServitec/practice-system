@@ -15,6 +15,7 @@ export const practicesStatus = {
   refused: {
     icon: faXmarkCircle,
     color: "red",
+    name: "Rechazado",
     value: "refused",
     type: "error",
   },

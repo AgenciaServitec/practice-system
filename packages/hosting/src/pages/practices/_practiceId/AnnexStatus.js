@@ -2,39 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tag } from "antd";
-import {
-  faCheckCircle,
-  faClock,
-  faXmarkCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import { practicesStatus } from "../../../data-list";
 
 export const AnnexStatus = ({ annex }) => {
-  const annexStatusByRole = {
-    approved: {
-      name: "Aprobado",
-      value: "approved",
-      type: "success",
-      icon: faCheckCircle,
-    },
-    refused: {
-      name: "Rechazado",
-      value: "refused",
-      type: "error",
-      icon: faXmarkCircle,
-    },
-    pending: {
-      name: "Pendiente",
-      value: "pending",
-      type: "warning",
-      icon: faClock,
-    },
-  };
-
   const statusByCompanyRepresentative =
-    annexStatusByRole?.[annex?.approvedByCompanyRepresentative];
+    practicesStatus?.[annex?.approvedByCompanyRepresentative];
 
   const statusByAcademicSupervisor =
-    annexStatusByRole?.[annex?.approvedByAcademicSupervisor];
+    practicesStatus?.[annex?.approvedByAcademicSupervisor];
 
   return (
     <Container>
