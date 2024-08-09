@@ -368,7 +368,6 @@ export const PracticeIntegration = () => {
             <Col span={24}>
               <Card title="Anexos">
                 <Collapse
-                  defaultActiveKey={["1"]}
                   bordered={false}
                   expandIconPosition="end"
                   accordion
