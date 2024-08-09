@@ -21,7 +21,6 @@ import {
 import { firestore } from "../../../../../../firebase";
 import { ObservationsList } from "../../ObservationsList";
 import dayjs from "dayjs";
-import { fullName } from "../../../../../../utils";
 
 export const Sheet1Integration = ({ practice, annex3, user }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();

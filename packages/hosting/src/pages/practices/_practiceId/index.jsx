@@ -3,6 +3,7 @@ import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import {
   Acl,
+  Alert,
   Button,
   IconAction,
   modalConfirm,
@@ -41,6 +42,7 @@ import { practicesStatus } from "../../../data-list";
 import { AnnexStatus } from "./AnnexStatus";
 import { ManageCreateProductIntegration } from "./ManageCreatePractice";
 import { InitialInformation } from "./InitialInformation";
+import { isEmpty } from "lodash";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -79,6 +81,33 @@ export const PracticeIntegration = () => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      if (
+        practice?.status === "approved" ||
+        isEmpty(practice) ||
+        isEmpty(annexs)
+      )
+        return;
+
+      const annexsCount = (annexs || []).filter(
+        (annex) => annex.status === "refused"
+      ).length;
+
+      if (annexsCount >= 4) {
+        await updatePractice(
+          practice.id,
+          assignUpdateProps({ status: "refused" })
+        );
+      } else {
+        await updatePractice(
+          practice.id,
+          assignUpdateProps({ status: "pending" })
+        );
+      }
+    })();
+  }, [annexs]);
+
   const savePractice = async (practice) => {
     const p0 = updateUser(
       practice.practitionerId,
@@ -107,7 +136,8 @@ export const PracticeIntegration = () => {
     annex2?.status === "approved" &&
     annex3?.status === "approved" &&
     annex4?.status === "approved" &&
-    annex6?.status === "approved";
+    annex6?.status === "approved" &&
+    practice?.status !== "approved";
 
   const AnnexTitle = ({ title, status }) => (
     <div>
@@ -154,7 +184,7 @@ export const PracticeIntegration = () => {
       style: {
         ...panelStyle,
         background: isApprovedAnnex(annex2?.status)
-          ? "green"
+          ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
       collapsible: isApprovedAnnex(annex2.status) ? "disabled" : "visible",
@@ -182,7 +212,7 @@ export const PracticeIntegration = () => {
       style: {
         ...panelStyle,
         background: isApprovedAnnex(annex3?.status)
-          ? "green"
+          ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
       collapsible: isApprovedAnnex(annex3.status) ? "disabled" : "visible",
@@ -214,7 +244,7 @@ export const PracticeIntegration = () => {
       style: {
         ...panelStyle,
         background: isApprovedAnnex(annex4?.status)
-          ? "green"
+          ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
       collapsible: isApprovedAnnex(annex4.status) ? "disabled" : "visible",
@@ -242,7 +272,7 @@ export const PracticeIntegration = () => {
       style: {
         ...panelStyle,
         background: isApprovedAnnex(annex6?.status)
-          ? "green"
+          ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
       collapsible:
@@ -282,7 +312,7 @@ export const PracticeIntegration = () => {
                 />
                 <Title level={3} style={{ margin: "0" }}>
                   <span className="capitalize">
-                    Modulo {practice?.moduleNumber}: {practice?.name}
+                    Módulo {practice?.moduleNumber}: {practice?.name}
                   </span>
                 </Title>
                 <IconAction
@@ -294,6 +324,23 @@ export const PracticeIntegration = () => {
                   tooltipTitle="Ver pdf"
                 />
               </div>
+              <br />
+              {practice?.status === "approved" && (
+                <Row gutter={[16, 16]}>
+                  <Col span={24}>
+                    <Alert
+                      type="success"
+                      showIcon
+                      message={
+                        <>
+                          Felicidades, el Módulo {practice?.moduleNumber} ha
+                          sido completado de manera exitosa.
+                        </>
+                      }
+                    />
+                  </Col>
+                </Row>
+              )}
             </Col>
           </Row>
           <Row>
@@ -333,6 +380,7 @@ export const PracticeIntegration = () => {
               </Card>
             </Col>
           </Row>
+
           <br />
           {isValidToApprovedAllModule && (
             <Row justify="end" gutter={[16, 16]} style={{ padding: "2em 0" }}>
