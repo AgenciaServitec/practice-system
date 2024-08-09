@@ -40,14 +40,17 @@ export const PracticesSheet8 = ({
                     Razón Social de la Empresa, Institución o Centro de
                     Prácticas:
                   </span>
-                  <span> &quot;{company.socialReason}&quot;</span>
+                  <span className="capitalize">
+                    {" "}
+                    &quot;{company.socialReason}&quot;
+                  </span>
                 </div>
               </li>
               <li>
                 <span>
                   <strong> 2. </strong>
                 </span>
-                <span>
+                <span className="capitalize">
                   <strong>Dirección: </strong> {company.address}
                 </span>
               </li>

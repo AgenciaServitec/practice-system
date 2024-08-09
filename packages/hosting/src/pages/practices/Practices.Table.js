@@ -110,14 +110,16 @@ export const PracticesTable = ({
               onClick={() => onEditPractice(practice.id)}
             />
           </Acl>
-          <Acl name="/practices#delete">
-            <IconAction
-              tooltipTitle="Eliminar"
-              styled={{ color: (theme) => theme.colors.error }}
-              icon={faTrash}
-              onClick={() => onConfirmRemovePractice(practice)}
-            />
-          </Acl>
+          {practice?.status !== "approved" && (
+            <Acl name="/practices#delete">
+              <IconAction
+                tooltipTitle="Eliminar"
+                styled={{ color: (theme) => theme.colors.error }}
+                icon={faTrash}
+                onClick={() => onConfirmRemovePractice(practice)}
+              />
+            </Acl>
+          )}
         </Space>
       ),
     },

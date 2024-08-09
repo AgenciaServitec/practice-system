@@ -5,6 +5,7 @@ import Title from "antd/lib/typography/Title";
 import { Acl, Tabs } from "../../components";
 import { ProfileDataForm } from "./ProfileDataForm";
 import { ProfileInformation } from "./ProfileInformation";
+import { ProfileImagesForm } from "./ProfileImagesForm";
 import { useAuthentication } from "../../providers";
 
 const items = [
@@ -12,6 +13,11 @@ const items = [
     key: "1",
     label: "Editar perfil",
     children: <ProfileDataForm />,
+  },
+  {
+    key: "2",
+    label: "Imagen DNI (Anverso y Reverso)",
+    children: <ProfileImagesForm />,
   },
 ];
 
