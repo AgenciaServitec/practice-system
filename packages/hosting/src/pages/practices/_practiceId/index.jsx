@@ -137,7 +137,8 @@ export const PracticeIntegration = () => {
     annex3?.status === "approved" &&
     annex4?.status === "approved" &&
     annex6?.status === "approved" &&
-    practice?.status !== "approved";
+    practice?.status !== "approved" &&
+    authUser.roleCode === "academic_supervisor";
 
   const AnnexTitle = ({ title, status }) => (
     <div>
