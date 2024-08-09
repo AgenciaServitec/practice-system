@@ -190,7 +190,7 @@ export const PracticeIntegration = () => {
       },
       collapsible: isApprovedAnnex(annex2.status) ? "disabled" : "visible",
     },
-    authUser.roleCode !== "company_representative" && {
+    {
       key: "annex3",
       label: (
         <Col span={24}>
@@ -216,7 +216,11 @@ export const PracticeIntegration = () => {
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
-      collapsible: isApprovedAnnex(annex3.status) ? "disabled" : "visible",
+      collapsible:
+        isApprovedAnnex(annex3.status) ||
+        authUser.roleCode === "company_representative"
+          ? "disabled"
+          : "visible",
     },
     {
       key: "annex4",
@@ -250,7 +254,7 @@ export const PracticeIntegration = () => {
       },
       collapsible: isApprovedAnnex(annex4.status) ? "disabled" : "visible",
     },
-    authUser.roleCode !== "company_representative" && {
+    {
       key: "annex6",
       label: (
         <Col span={24}>
@@ -277,7 +281,9 @@ export const PracticeIntegration = () => {
           : "rgba(0, 0, 0, 0.02)",
       },
       collapsible:
-        !hasPermissions || isApprovedAnnex(annex6.status)
+        !hasPermissions ||
+        isApprovedAnnex(annex6.status) ||
+        authUser.roleCode === "company_representative"
           ? "disabled"
           : "visible",
     },
