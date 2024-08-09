@@ -11,13 +11,14 @@ export const PracticesSheet3 = ({
   representativeCompany,
   supervisor,
   annex2,
+  annexNumber,
 }) => {
   return (
     <>
-      <Container>
+      <Container id="annex2">
         <div className="header">
           <div className="header__gilda">
-            <img src={LogoGilda} alt="" />
+            <img src={LogoGilda} alt="gilda logo" />
           </div>
           <div className="header__institute">
             <h5>INSTITUTO DE EDUCACIÓN SUPERIOR TECNOLÓGICO PÚBLICO</h5>
@@ -25,7 +26,11 @@ export const PracticesSheet3 = ({
           </div>
         </div>
         <div className="body">
-          <div className="body__title">
+          <div
+            className={`body__title ${
+              annexNumber === "annex2" && "annex2-title"
+            }`}
+          >
             <h3>ANEXO 2</h3>
             <h4>FICHA DE ACEPTACIÓN DE PRÁCTICAS PRE - PROFESIONALES</h4>
           </div>

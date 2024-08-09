@@ -11,10 +11,11 @@ export const PracticesSheet4 = ({
   representativeCompany,
   supervisor,
   annex3,
+  annexNumber,
 }) => {
   return (
     <>
-      <Container>
+      <Container id="annex3">
         <div className="header">
           <div className="header__gilda">
             <img src={LogoGilda} alt="" />
@@ -25,7 +26,11 @@ export const PracticesSheet4 = ({
           </div>
         </div>
         <div className="body">
-          <div className="body__title">
+          <div
+            className={`body__title ${
+              annexNumber === "annex3" && "annex3-title"
+            }`}
+          >
             <h3>ANEXO 3</h3>
             <h5>
               FICHA DE SUPERVISIÓN Y MONITOREO DE PRÁCTICAS PRE - PROFESIONALES

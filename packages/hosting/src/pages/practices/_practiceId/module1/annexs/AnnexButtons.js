@@ -24,9 +24,10 @@ export const AnnexButtons = ({
           showIcon
           message={
             <>
-              Antes de aprobar el anexo, puede revisar todas las hojas haciendo{" "}
+              Antes de aprobar el anexo, puede revisar todas las hojas del anexo
+              haciendo{" "}
               <Link
-                to={`/practices/${practice.id}/module1/sheets#${annexName}`}
+                to={`/practices/${practice.id}/module1/sheets?annexNumber=${annexName}`}
               >
                 Click Aquí!
               </Link>
