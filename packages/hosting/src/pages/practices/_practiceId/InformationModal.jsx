@@ -28,7 +28,7 @@ export const InformationModal = ({
         <Row gutter={[9, 9]}>
           <Col span={24} md={24}>
             <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DEL PRACTICANTE
+              DATOS DEL PRACTICANTE:
             </Title>
           </Col>
           <Col span={24} md={8}>
@@ -51,7 +51,18 @@ export const InformationModal = ({
               </p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={12}>
+            <div className="item">
+              <label>
+                Período de Estudios (Año de Ingreso - Año de Egreso):{" "}
+              </label>
+              <p>
+                {practitioner?.practitionerData?.entryYear} -{" "}
+                {practitioner?.practitionerData?.yearGraduation || "En curso"}
+              </p>
+            </div>
+          </Col>
+          <Col span={24} md={12}>
             <div className="item">
               <label>Semestre: </label>
               <p className="capitalize">
@@ -67,17 +78,7 @@ export const InformationModal = ({
               </p>
             </div>
           </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>
-                Período de Estudios (Año de Ingreso - Año de Egreso):{" "}
-              </label>
-              <p>
-                {practitioner?.practitionerData?.entryYear} -{" "}
-                {practitioner?.practitionerData?.yearGraduation || "En curso"}
-              </p>
-            </div>
-          </Col>
+
           <Col span={24} md={8}>
             <div className="item">
               <label>Domicilio:</label>
@@ -87,22 +88,25 @@ export const InformationModal = ({
           <Col span={24} md={8}>
             <div className="item">
               <label>Teléfonos (Domicilio - Personal):</label>
-              <p>{`${user?.phone?.prefix} ${user?.phone?.number}` || "-"}</p>
+              <p>
+                {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
+                  "-"}
+              </p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={10}>
             <div className="item">
               <label>Correo Electrónico:</label>
-              <p>{user?.email || "-"}</p>
+              <p>{practitioner?.email || "-"}</p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={7}>
             <div className="item">
               <label>DNI:</label>
-              <p>{user?.dni || "-"}</p>
+              <p>{practitioner?.dni || "-"}</p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={7}>
             <div className="item">
               <label>Código de Matrícula:</label>
               <p>{practitioner?.practitionerData?.tuitionId || "-"}</p>
@@ -113,16 +117,10 @@ export const InformationModal = ({
         <Row gutter={[9, 9]}>
           <Col span={24}>
             <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DE LA EMPRESA O INSTITUCIÓN
+              DATOS DE LA EMPRESA O INSTITUCIÓN:
             </Title>
           </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Razón Social de la Empresa: </label>
-              <p className="capitalize">{company?.socialReason || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={6}>
             <div className="item">
               <label>N° RUC: </label>
               <p>{company?.ruc || "-"}</p>
@@ -130,47 +128,41 @@ export const InformationModal = ({
           </Col>
           <Col span={24} md={8}>
             <div className="item">
+              <label>Razón Social de la Empresa: </label>
+              <p className="capitalize">{company?.socialReason || "-"}</p>
+            </div>
+          </Col>
+          <Col span={24} md={10}>
+            <div className="item">
               <label>Dirección: </label>
               <p>{company?.address || "-"}</p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={6}>
             <div className="item">
               <label>Distrito: </label>
               <p className="capitalize">{company?.district || "-"}</p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={6}>
             <div className="item">
               <label>Ciudad: </label>
               <p className="capitalize">{company?.province || "-"}</p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={6}>
             <div className="item">
               <label>Región: </label>
               <p className="capitalize">{company?.region || "-"}</p>
             </div>
           </Col>
-          <Col span={24} md={8}>
+          <Col span={24} md={6}>
             <div className="item">
               <label>Teléfono: </label>
               <p>
                 {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
                   "-"}
               </p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Correo Electrónico: </label>
-              <p>{company?.email || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Página Web: </label>
-              <p>{company?.webSite || "-"}</p>
             </div>
           </Col>
           <Col span={24} md={8}>
@@ -220,7 +212,7 @@ export const InformationModal = ({
         <Row gutter={[9, 9]}>
           <Col span={24}>
             <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DE LAS PRÁCTICAS PRE PROFESIONALES
+              DATOS DE LAS PRÁCTICAS PRE PROFESIONALES:
             </Title>
           </Col>
           <Col span={24} md={8}>
