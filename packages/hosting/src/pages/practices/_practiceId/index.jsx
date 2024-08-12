@@ -354,9 +354,7 @@ export const PracticeIntegration = () => {
             <Col span={24}>
               <InitialInformation
                 practice={practice}
-                users={users}
                 user={authUser}
-                companies={companies}
                 company={company}
                 practitioner={practitioner}
                 supervisor={supervisor}
