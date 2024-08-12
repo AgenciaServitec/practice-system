@@ -272,9 +272,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
   };
 
   const validationQualityEvaluation = (note = 0) => {
-    if (isEmpty(annex4?.evaluationSheet)) {
-      return;
-    }
+    if (isEmpty(annex4?.evaluationSheet)) return;
 
     if (note == 19 || note == 20) {
       return qualityEvaluation["A"];
@@ -298,7 +296,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
 
   const totalNotes = allNotes.reduce(
     (accumulator, note) => accumulator + note,
-    annex4?.evaluationSheet ? 0 : undefined
+    0
   );
 
   return (
