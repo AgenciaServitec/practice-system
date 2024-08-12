@@ -19,6 +19,7 @@ import {
 import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
 import { InstructionsEvaluation } from "./InstructionsEvaluation";
+import { isEmpty } from "lodash";
 
 export const Sheet1Integration = ({
   practice,
@@ -271,6 +272,8 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
   };
 
   const validationQualityEvaluation = (note = 0) => {
+    if (isEmpty(annex4?.evaluationSheet)) return;
+
     if (note == 19 || note == 20) {
       return qualityEvaluation["A"];
     }
@@ -956,7 +959,9 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
           </Col>
           <Col span={24} md={4}>
             <span>
-              <strong>{validationQualityEvaluation(totalNotes)?.name}</strong>
+              <strong>
+                {validationQualityEvaluation(totalNotes)?.name || "--"}
+              </strong>
             </span>
           </Col>
           <Col span={24} md={20}>
@@ -966,7 +971,9 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
           </Col>
           <Col span={24} md={4}>
             <span>
-              <strong>{validationQualityEvaluation(totalNotes)?.code}</strong>
+              <strong>
+                {validationQualityEvaluation(totalNotes)?.code || "--"}
+              </strong>
             </span>
           </Col>
         </Row>
