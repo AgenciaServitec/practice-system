@@ -4,15 +4,15 @@ import {
   Alert,
   Button,
   Card,
+  Col,
   Collapse,
   IconAction,
   modalConfirm,
   notification,
+  Row,
   Spinner,
   Tag,
   Title,
-  Row,
-  Col,
 } from "../../../components";
 import {
   fetchPractice,
@@ -142,6 +142,10 @@ export const PracticeIntegration = () => {
     practice?.status !== "approved" &&
     authUser.roleCode === "academic_supervisor";
 
+  const isCompanyRepresentative =
+    authUser.roleCode === "company_representative";
+  const isAcademicSupervisor = authUser.roleCode === "academic_supervisor";
+
   const AnnexTitle = ({ title, status }) => (
     <div>
       <Title level={4}>{title} </Title>
@@ -156,22 +160,22 @@ export const PracticeIntegration = () => {
   );
 
   const isApprovedAnnex = (status) => status === "approved";
-  const hasPermissions =
-    authUser.roleCode === "company_representative" ||
-    authUser.roleCode === "academic_supervisor";
+  const hasPermissions = isCompanyRepresentative || isAcademicSupervisor;
 
   const annexsList = () => [
     {
       key: "annex2",
       label: (
         <Col span={24}>
-          <div className="header-annex">
-            <AnnexTitle
-              title="Anexo 2"
-              status={practicesStatus?.[annex2?.status]}
-            />
-            <AnnexStatus annex={annex2} />
-          </div>
+          {annex2 && (
+            <div className="header-annex">
+              <AnnexTitle
+                title="Anexo 2"
+                status={practicesStatus?.[annex2?.status]}
+              />
+              <AnnexStatus annex={annex2} />
+            </div>
+          )}
         </Col>
       ),
       children: !isApprovedAnnex(annex2.status) && (
@@ -190,7 +194,7 @@ export const PracticeIntegration = () => {
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
-      collapsible: isApprovedAnnex(annex2.status) ? "disabled" : "visible",
+      collapsible: isApprovedAnnex(annex2?.status) ? "disabled" : "visible",
     },
     {
       key: "annex3",
@@ -205,7 +209,7 @@ export const PracticeIntegration = () => {
           </div>
         </Col>
       ),
-      children: !isApprovedAnnex(annex3.status) && (
+      children: !isApprovedAnnex(annex3?.status) && (
         <Annex3Integration
           practice={practice}
           annex3={annex3}
@@ -214,13 +218,16 @@ export const PracticeIntegration = () => {
       ),
       style: {
         ...panelStyle,
+        display:
+          isApprovedAnnex(annex3.status) || isCompanyRepresentative
+            ? "none"
+            : "visible",
         background: isApprovedAnnex(annex3?.status)
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
       collapsible:
-        isApprovedAnnex(annex3.status) ||
-        authUser.roleCode === "company_representative"
+        isApprovedAnnex(annex3.status) || isCompanyRepresentative
           ? "disabled"
           : "visible",
     },
@@ -228,16 +235,18 @@ export const PracticeIntegration = () => {
       key: "annex4",
       label: (
         <Col span={24}>
-          <div className="header-annex">
-            <AnnexTitle
-              title="Anexo 4"
-              status={practicesStatus?.[annex4?.status]}
-            />
-            <AnnexStatus annex={annex4} />
-          </div>
+          {annex4 && (
+            <div className="header-annex">
+              <AnnexTitle
+                title="Anexo 4"
+                status={practicesStatus?.[annex4?.status]}
+              />
+              <AnnexStatus annex={annex4} />
+            </div>
+          )}
         </Col>
       ),
-      children: !isApprovedAnnex(annex4.status) && (
+      children: !isApprovedAnnex(annex4?.status) && (
         <Annex4Integration
           practice={practice}
           user={authUser}
@@ -278,6 +287,12 @@ export const PracticeIntegration = () => {
       ),
       style: {
         ...panelStyle,
+        display:
+          !hasPermissions ||
+          isApprovedAnnex(annex6.status) ||
+          isCompanyRepresentative
+            ? "none"
+            : "visible",
         background: isApprovedAnnex(annex6?.status)
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
@@ -285,7 +300,7 @@ export const PracticeIntegration = () => {
       collapsible:
         !hasPermissions ||
         isApprovedAnnex(annex6.status) ||
-        authUser.roleCode === "company_representative"
+        isCompanyRepresentative
           ? "disabled"
           : "visible",
     },
@@ -369,8 +384,20 @@ export const PracticeIntegration = () => {
               <Card title="Anexos">
                 <Collapse
                   bordered={false}
+                  defaultActiveKey={
+                    isCompanyRepresentative
+                      ? [
+                          annex2.status !== "approved" && "annex2",
+                          annex4.status !== "approved" && "annex4",
+                        ]
+                      : [
+                          annex2.status !== "approved" && "annex2",
+                          annex3.status !== "approved" && "annex3",
+                          annex4.status !== "approved" && "annex4",
+                          annex6.status !== "approved" && "annex6",
+                        ]
+                  }
                   expandIconPosition="end"
-                  accordion
                   size="large"
                   expandIcon={({ isActive }) => (
                     <FontAwesomeIcon

@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { Sheet1Integration } from "./Sheet1";
 import { AnnexButtons } from "../AnnexButtons";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
+import { isEmpty } from "lodash";
 
 export const Annex4Integration = ({
   practice,
@@ -23,6 +24,8 @@ export const Annex4Integration = ({
 }) => {
   useEffect(() => {
     (async () => {
+      if (isEmpty(practice) || isEmpty(annex4)) return;
+
       const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
         annex4;
 

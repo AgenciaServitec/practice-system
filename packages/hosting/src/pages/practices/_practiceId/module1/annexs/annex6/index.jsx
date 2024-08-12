@@ -5,10 +5,13 @@ import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { AnnexButtons } from "../AnnexButtons";
 import { practicesStatus } from "../../../../../../data-list";
+import { isEmpty } from "lodash";
 
 export const Annex6Integration = ({ practice, user, annex6 }) => {
   useEffect(() => {
     (async () => {
+      if (isEmpty(practice) || isEmpty(annex6)) return;
+
       const { approvedByAcademicSupervisor } = annex6;
 
       await updateAnnex(practice.id, "annex6", {

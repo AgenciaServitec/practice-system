@@ -13,12 +13,15 @@ import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
 import { practicesStatus } from "../../../../../../data-list";
+import { isEmpty } from "lodash";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
   const [visibleForm, setVisibleForm] = useState(false);
 
   useEffect(() => {
     (async () => {
+      if (isEmpty(practice) || isEmpty(annex3)) return;
+
       const { approvedByAcademicSupervisor } = annex3;
 
       await updateAnnex(practice.id, "annex3", {
