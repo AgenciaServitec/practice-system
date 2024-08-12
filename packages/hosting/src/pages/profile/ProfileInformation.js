@@ -46,8 +46,20 @@ export const ProfileInformation = ({ user }) => {
           />
         </Col>
         <Col span={24} md={12}>
-          <DescriptionItem title="Email" content={user?.email} />
+          <DescriptionItem
+            title="Email"
+            content={user?.email}
+            noCapitalization
+          />
         </Col>
+        {user?.roleCode === "user" && (
+          <Col span={24} md={12}>
+            <DescriptionItem
+              title="Código de Alumno"
+              content={user?.practitionerData?.tuitionId}
+            />
+          </Col>
+        )}
       </Row>
     </Container>
   );
@@ -74,14 +86,14 @@ const Container = styled.div`
   }
 `;
 
-const DescriptionItem = ({ title, content }) => (
+const DescriptionItem = ({ title, content, noCapitalization }) => (
   <span
     style={{
       marginBottom: "7px",
       color: "rgba(0, 0, 0, 0.85)",
       fontSize: "14px",
       lineHeight: "1.5715",
-      textTransform: "capitalize",
+      textTransform: noCapitalization ? "none" : "capitalize",
     }}
   >
     <p
