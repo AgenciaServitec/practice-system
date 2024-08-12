@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Row from "antd/lib/row";
-import Col from "antd/lib/col";
 import {
   Acl,
   Alert,
@@ -13,6 +11,8 @@ import {
   Spinner,
   Tag,
   Title,
+  Row,
+  Col,
 } from "../../../components";
 import {
   fetchPractice,
