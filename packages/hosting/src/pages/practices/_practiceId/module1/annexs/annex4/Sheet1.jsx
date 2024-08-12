@@ -24,6 +24,9 @@ import { isEmpty } from "lodash";
 export const Sheet1Integration = ({
   practice,
   user,
+  users,
+  practitioner,
+  company,
   annex4,
   onSavePractice,
 }) => {
