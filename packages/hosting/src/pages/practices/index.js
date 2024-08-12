@@ -15,7 +15,6 @@ import { updatePractice } from "../../firebase/collections";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useDefaultFirestoreProps, useQueriesState } from "../../hooks";
-import { PracticeModalProvider } from "./PracticeModalProvider";
 import { PracticesTable } from "./Practices.Table";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { isEmpty } from "lodash";
@@ -70,17 +69,15 @@ export const CorrespondencesIntegration = () => {
   };
 
   return (
-    <PracticeModalProvider>
-      <Practices
-        practices={practices}
-        users={users}
-        user={authUser}
-        onNavigateTo={navigateTo}
-        onEditPractice={onEditPractice}
-        onConfirmRemovePractice={onConfirmRemovePractice}
-        onValidateAddPractice={onValidateAddPractice}
-      />
-    </PracticeModalProvider>
+    <Practices
+      practices={practices}
+      users={users}
+      user={authUser}
+      onNavigateTo={navigateTo}
+      onEditPractice={onEditPractice}
+      onConfirmRemovePractice={onConfirmRemovePractice}
+      onValidateAddPractice={onValidateAddPractice}
+    />
   );
 };
 

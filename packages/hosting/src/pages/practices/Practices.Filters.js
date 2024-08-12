@@ -47,7 +47,7 @@ export const PracticesFilters = ({
           options={concat(
             [{ label: "Todos", value: "all" }],
             Object.entries(practicesStatus).map(([key, values]) => ({
-              label: values.value,
+              label: values.name,
               value: key,
             }))
           )}

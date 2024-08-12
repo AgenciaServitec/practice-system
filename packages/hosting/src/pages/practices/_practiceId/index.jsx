@@ -5,10 +5,13 @@ import {
   Acl,
   Alert,
   Button,
+  Card,
+  Collapse,
   IconAction,
   modalConfirm,
   notification,
   Spinner,
+  Tag,
   Title,
 } from "../../../components";
 import {
@@ -23,7 +26,6 @@ import {
   useDefaultFirestoreProps,
   useGetAllDataByPractice,
 } from "../../../hooks";
-import { Card, Collapse, Tag } from "antd";
 import {
   faArrowLeft,
   faFilePdf,
@@ -61,7 +63,7 @@ export const PracticeIntegration = () => {
 
   useEffect(() => {
     (async () => await initialFetch())();
-  }, [practiceId]);
+  }, [practiceId, practice?.status]);
 
   const initialFetch = async () => {
     try {
@@ -384,7 +386,6 @@ export const PracticeIntegration = () => {
               </Card>
             </Col>
           </Row>
-
           <br />
           {isValidToApprovedAllModule && (
             <Row justify="end" gutter={[16, 16]} style={{ padding: "2em 0" }}>

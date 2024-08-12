@@ -20,6 +20,7 @@ import {
   Image,
   Carousel as CarouselAntd,
   TimePicker as TimePickerAntd,
+  Collapse,
 } from "antd";
 
 export * from "./component-container";
@@ -86,4 +87,5 @@ export {
   Image,
   CarouselAntd,
   TimePickerAntd,
+  Collapse,
 };
