@@ -18,6 +18,7 @@ import {
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
+import { InstructionsEvaluation } from "./InstructionsEvaluation";
 
 export const Sheet1Integration = ({
   practice,
@@ -250,6 +251,51 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
 
   const onSubmit = (formData) => onSaveSheet1(formData);
 
+  const qualityEvaluation = {
+    A: {
+      code: "A",
+      name: "Muy buena",
+    },
+    B: {
+      code: "B",
+      name: "Buena",
+    },
+    C: {
+      code: "C",
+      name: "Aceptable",
+    },
+    D: {
+      code: "D",
+      name: "Deficiente",
+    },
+  };
+
+  const validationQualityEvaluation = (note = 0) => {
+    if (note == 19 || note == 20) {
+      return qualityEvaluation["A"];
+    }
+    if (note >= 15 && note <= 18) {
+      return qualityEvaluation["B"];
+    }
+    if (note == 13 || note == 14) {
+      return qualityEvaluation["C"];
+    }
+    if (note <= 12) {
+      return qualityEvaluation["D"];
+    }
+  };
+
+  const arrayAllNotes = (annex4?.evaluationSheet || []).map((evaluation) =>
+    evaluation.indicators.map((indicator) => indicator.assessment)
+  );
+
+  const allNotes = arrayAllNotes.flatMap((note) => note);
+
+  const totalNotes = allNotes.reduce(
+    (accumulator, note) => accumulator + note,
+    0
+  );
+
   return (
     <Container>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -258,6 +304,9 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
             <Title level={5}>
               II. INSTRUCCIONES PARA LA EVALUACIÓN CUALITATIVA:
             </Title>
+          </Col>
+          <Col span={24}>
+            <InstructionsEvaluation />
           </Col>
           <Col span={24} md={20}>
             <span>
@@ -887,6 +936,38 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                 {getAssessmentByIndicatorId(F?.indicators, 20)}
               </span>
             )}
+          </Col>
+          <br />
+          <br />
+          <Col span={24} md={20} className="totalAssesment">
+            <Title level={5}>
+              <strong>PUNTAJE TOTAL:</strong>
+            </Title>
+          </Col>
+          <Col span={24} md={4}>
+            <span>
+              <strong>{totalNotes ? totalNotes : "--"}</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <Title level={5}>
+              <strong>EVALUACIÓN CUALITATIVA:</strong>
+            </Title>
+          </Col>
+          <Col span={24} md={4}>
+            <span>
+              <strong>{validationQualityEvaluation(totalNotes)?.name}</strong>
+            </span>
+          </Col>
+          <Col span={24} md={20}>
+            <Title level={5}>
+              <strong>EVALUACIÓN LITERAL:</strong>
+            </Title>
+          </Col>
+          <Col span={24} md={4}>
+            <span>
+              <strong>{validationQualityEvaluation(totalNotes)?.code}</strong>
+            </span>
           </Col>
         </Row>
         {user?.roleCode === "company_representative" &&

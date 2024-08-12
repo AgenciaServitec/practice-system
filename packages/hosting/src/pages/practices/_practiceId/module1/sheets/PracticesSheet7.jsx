@@ -76,7 +76,7 @@ export const PracticesSheet7 = ({
               </div>
             </div>
             <div>
-              -------------------------------------------------------------------------------------------------------------
+              ---------------------------------------------------------------------------------------------
             </div>
             <div className="item-footer" style={{ marginBottom: "1em" }}>
               Mediante el presente me dirijo a usted para saludarla, a la vez

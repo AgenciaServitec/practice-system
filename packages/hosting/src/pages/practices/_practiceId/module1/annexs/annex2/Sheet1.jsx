@@ -155,13 +155,15 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
             </Row>
             <ObservationsList user={user} annex={annex2} practice={practice} />
             <Acl name="/practices/:practiceId/annex#save">
-              <Row justify="end" gutter={[16, 16]}>
-                <Col span={24} sm={6} md={4}>
-                  <Button type="primary" size="large" block htmlType="submit">
-                    Guardar
-                  </Button>
-                </Col>
-              </Row>
+              {user?.roleCode === "user" && (
+                <Row justify="end" gutter={[16, 16]}>
+                  <Col span={24} sm={6} md={4}>
+                    <Button type="primary" size="large" block htmlType="submit">
+                      Guardar
+                    </Button>
+                  </Col>
+                </Row>
+              )}
             </Acl>
           </Form>
         </Col>
