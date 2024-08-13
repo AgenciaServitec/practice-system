@@ -16,6 +16,7 @@ export const DatePicker = ({
   variant = "filled",
   allowClear = true,
   onChange,
+  ...props
 }) => {
   const Container = ComponentContainer[variant];
 
@@ -42,6 +43,7 @@ export const DatePicker = ({
         onChange={onChange}
         allowClear={allowClear}
         variant="borderless"
+        {...props}
       />
     </Container>
   );
