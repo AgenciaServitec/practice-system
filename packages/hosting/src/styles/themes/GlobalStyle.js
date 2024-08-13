@@ -80,6 +80,10 @@ const global = css`
   .capitalize {
     text-transform: capitalize;
   }
+
+  .center {
+    text-align: center;
+  }
 `;
 
 const antd = {
