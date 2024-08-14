@@ -82,6 +82,7 @@ export const RegisterUser = ({ roleCode }) => {
     formState: { errors },
     watch,
     setValue,
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: { isGraduate: false },
@@ -170,6 +171,12 @@ export const RegisterUser = ({ roleCode }) => {
       })();
     }
   }, [watch("dni")]);
+
+  useEffect(() => {
+    reset({
+      professionalCareer: "information_systems_development",
+    });
+  }, []);
 
   const onSubmit = async (formData) => await onSaveUser(formData);
 
