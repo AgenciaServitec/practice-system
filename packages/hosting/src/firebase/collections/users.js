@@ -7,6 +7,10 @@ export const usersRef = firestore.collection("users");
 export const getUserId = () => usersRef.doc().id;
 
 export const fetchUser = async (id) => fetchDocumentOnce(usersRef.doc(id));
+export const fetchUserByEmail = async (email) =>
+  fetchCollectionOnce(
+    usersRef.where("isDeleted", "==", false).where("email", "==", email)
+  );
 
 export const fetchUsers = async () =>
   fetchCollectionOnce(usersRef.where("isDeleted", "==", false));

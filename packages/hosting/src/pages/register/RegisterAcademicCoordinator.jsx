@@ -32,7 +32,7 @@ export const RegisterAcademicCoordinatorIntegration = ({ roleCode }) => {
   const [loadingRegister, setLoadingRegister] = useState(false);
 
   const mapUser = (formData) => ({
-    roleCode: roleCode,
+    roleCode: formData.roleCode,
     dni: formData.dni,
     firstName: formData.firstName,
     paternalSurname: formData.paternalSurname,
