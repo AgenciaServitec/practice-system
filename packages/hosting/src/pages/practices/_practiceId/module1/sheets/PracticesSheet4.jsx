@@ -4,7 +4,6 @@ import { LogoGilda } from "../../../../../images";
 import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
-import { Col } from "../../../../../components";
 
 export const PracticesSheet4 = ({
   practitioner,
