@@ -10,6 +10,7 @@ export const Router = () => {
     <Routes>
       <Route exact path="/" element={<A.LoginIntegration />} />
       <Route exact path="/register" element={<A.RegisterIntegration />} />
+      <Route exact path="/recovery" element={<A.RecoveryIntegration />} />
       <Route path="/" element={<PrivateRoute />}>
         <Route
           exact

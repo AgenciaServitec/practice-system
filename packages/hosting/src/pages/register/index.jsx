@@ -108,7 +108,6 @@ const Container = styled.div`
   justify-content: center;
 
   .content-wrapper {
-    width: 50em;
     height: auto;
     padding: 1.7rem;
     border-radius: 0;
@@ -124,9 +123,5 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     color: ${({ theme }) => theme.colors.primary};
-
-    h3 {
-      color: inherit;
-    }
   }
 `;

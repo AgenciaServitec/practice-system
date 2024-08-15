@@ -12,3 +12,4 @@ export * from "./administration/companies/_companyId";
 export * from "./practices";
 export * from "./practices/_practiceId";
 export * from "./practices/_practiceId/module1/sheets";
+export * from "./recovery";

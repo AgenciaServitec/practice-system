@@ -116,11 +116,15 @@ const Login = ({ loading, onSubmit, onNavigateToHomePage }) => {
             block
             htmlType="submit"
           >
-            LOGIN
+            INGRESAR
           </Button>
           <span>
             ¿No tienes una cuenta? <Link to="/register">Registrarme</Link>
           </span>
+          {/*<span>*/}
+          {/*  ¿Olvidaste tu contraseña?{" "}*/}
+          {/*  <Link to="/recovery">Recupérala aquí</Link>*/}
+          {/*</span>*/}
         </Form>
       </CardStyled>
     </Container>
