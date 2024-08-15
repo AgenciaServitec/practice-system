@@ -4,6 +4,7 @@ import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
 import { PracticeArea } from "../../../../../data-list";
+import { SignatureItem } from "../../SignatureItem";
 
 export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
   <>
@@ -79,7 +80,11 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
               </span>
               <span>
                 <strong>Horario de Prácticas: </strong>{" "}
-                {`${practice.entryTime} - ${practice.departureTime}`}
+                {`${dayjs(practice.entryTime, "HH:mm:ss").format(
+                  "HH:mm"
+                )} - ${dayjs(practice.departureTime, "HH:mm:ss").format(
+                  "HH:mm"
+                )}`}
               </span>
             </li>
             <li>
@@ -162,10 +167,8 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
         <div className="footer__atempt">
           <span>Atentamente</span>
         </div>
-        <div className="footer__firm">
-          <span className="capitalize">{fullName(supervisor)}&nbsp;</span>
-          <br />
-          <span>DOCENTE SUPERVISOR DE PRÁCTICAS IESTP &quot;GLBR&quot;</span>
+        <div className="firma">
+          <SignatureItem supervisor={supervisor} />
         </div>
         <div className="footer__tip">
           <span>
@@ -202,6 +205,7 @@ const Container = styled.div`
   }
 
   .body {
+    margin-bottom: 2em;
     &__title {
       margin-bottom: 2em;
       text-align: center;
@@ -259,7 +263,7 @@ const Container = styled.div`
 
               td {
                 border: 1px solid black;
-                padding: 5px;
+                padding: 3px;
               }
             }
           }
@@ -279,18 +283,12 @@ const Container = styled.div`
   }
 
   .footer {
-    margin-top: 2em;
     text-align: center;
 
-    &__atempt {
-      margin-bottom: 6em;
-    }
-
-    &__firm {
-      width: 400px;
-      margin: auto;
-      border-top: 2px solid black;
+    .firma {
       padding-top: 0.5em;
+      width: 50%;
+      margin: auto;
     }
 
     &__tip {

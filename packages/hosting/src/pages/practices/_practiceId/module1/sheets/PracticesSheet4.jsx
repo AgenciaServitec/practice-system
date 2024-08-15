@@ -4,6 +4,7 @@ import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
+import { Col } from "../../../../../components";
 
 export const PracticesSheet4 = ({
   practitioner,
@@ -146,12 +147,21 @@ export const PracticesSheet4 = ({
             </div>
           </div>
         </div>
-        <SignatureItem
-          supervisor={supervisor}
-          representativeCompany={representativeCompany}
-          practitioner={practitioner}
-          annex3={annex3}
-        />
+        <div className="signatures">
+          <div className="up">
+            <Col span={24} md={12}>
+              <SignatureItem supervisor={supervisor} />
+            </Col>
+            <Col span={24} md={12}>
+              <SignatureItem practitioner={practitioner} />
+            </Col>
+          </div>
+          <div className="down">
+            <Col span={24}>
+              <SignatureItem representativeCompany={representativeCompany} />
+            </Col>
+          </div>
+        </div>
       </Container>
     </>
   );
@@ -176,6 +186,7 @@ const Container = styled.div`
   }
 
   .body {
+    margin-bottom: 2em;
     &__title {
       margin: auto;
       text-align: center;
@@ -200,13 +211,13 @@ const Container = styled.div`
       width: 550px;
       margin: auto;
       ol {
-        line-height: 1.6em;
+        line-height: 1.4em;
       }
       .company {
         margin: auto;
         width: 500px;
         ul {
-          line-height: 1.6em;
+          line-height: 1.4em;
         }
       }
     }
@@ -218,28 +229,14 @@ const Container = styled.div`
   }
   .signatures {
     width: 100%;
-    display: grid;
-    .first {
-      padding-bottom: 3em;
+    .up {
       margin: auto;
       width: 80%;
       display: flex;
-      gap: 2em;
-      .firm1,
-      .firm2 {
-        padding-top: 0.5em;
-        border-top: 2px solid #000;
-        text-align: center;
-      }
     }
-    .third {
-      width: 80%;
+    .down {
+      width: 50%;
       margin: auto;
-      .firm3 {
-        padding-top: 0.5em;
-        border-top: 2px solid #000;
-        text-align: center;
-      }
     }
   }
 `;
@@ -249,10 +246,10 @@ const Table = styled.table`
   width: 100%;
   margin-bottom: 1em;
   th {
-    padding: 0.5em;
-    border: 1px solid black;
+    padding: 0.3em;
+    border: 0.5px solid black;
     text-align: center;
-    font-size: 11px;
+    font-size: 10px;
     line-height: 1.5em;
   }
   td {
@@ -260,6 +257,6 @@ const Table = styled.table`
     text-align: center;
     font-size: 12px;
     line-height: 1.5em;
-    padding: 0.5em;
+    padding: 0.3em;
   }
 `;

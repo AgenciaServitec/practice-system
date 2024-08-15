@@ -144,11 +144,9 @@ export const PracticesSheet3 = ({
             <span>Chorrillos, {dayjs().format("DD MMMM YYYY")}</span>
           </div>
         </div>
-        <SignatureItem
-          supervisor={supervisor}
-          representativeCompany={representativeCompany}
-          annex2={annex2}
-        />
+        <div className="firm">
+          <SignatureItem supervisor={supervisor} />
+        </div>
         <div className="note">
           <span>
             <strong>NOTA: </strong>Entregar por mesa de partes la ficha sellada
@@ -185,8 +183,8 @@ const Container = styled.div`
     }
   }
   .body {
-    margin-bottom: 10em;
-    
+    margin-bottom: 7em;
+
     &__title {
       margin-bottom: 2em;
       text-align: center;
@@ -234,20 +232,9 @@ const Container = styled.div`
       padding-top: 2em;
     }
   }
-
-  .signatures {
-    width: 80%;
+  .firm {
+    width: 60%;
     margin: auto;
-    display: flex;
-    gap: 3em;
-    
-      .firm1,.firm2 {
-        padding-top: 0.5em;
-        border-top: 2px solid #000;
-        width: 285px;
-        text-align: center;
-      }
-    }
   }
 
   .note {

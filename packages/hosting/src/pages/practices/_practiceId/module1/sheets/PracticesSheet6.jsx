@@ -142,10 +142,9 @@ export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
             </span>
           </div>
         </div>
-        <SignatureItem
-          representativeCompany={representativeCompany}
-          annex4={annex4}
-        />
+        <div className="firma">
+          <SignatureItem representativeCompany={representativeCompany} />
+        </div>
       </Container>
     </>
   );
@@ -171,9 +170,8 @@ const Container = styled.div`
   }
 
   .body {
-    padding-bottom: 2em;
-
     &__tip {
+      font-size: 13px;
       gap: 1em;
       display: flex;
       width: 570px;
@@ -217,14 +215,9 @@ const Container = styled.div`
     }
   }
 
-  .signatures {
-    .firm1 {
-      margin: auto;
-      padding-top: 0.5em;
-      border-top: 2px solid #000;
-      width: 80%;
-      text-align: center;
-    }
+  .firma {
+    margin: auto;
+    width: 60%;
   }
 `;
 

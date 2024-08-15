@@ -9,3 +9,4 @@ export { default as Bg6 } from "./webp/bg6.webp";
 export { default as LogoGilda } from "./webp/logogilda.webp";
 export { default as LogoServitec } from "./webp/LogoServitec.webp";
 export { default as QR } from "./webp/QR.webp";
+export { default as Firma } from "./webp/Firma.webp";
