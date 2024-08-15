@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
 
 export const PracticesSheet4 = ({
   practitioner,
@@ -65,7 +66,15 @@ export const PracticesSheet4 = ({
                 &nbsp;Fecha de inicio de las PPP:{" "}
                 <strong>
                   {dayjs(practice?.startDate, "DD/MM/YYYY").format(
-                    "DD/MM/YYYY"
+                    "DD [de] MMMM [del] YYYY"
+                  )}
+                </strong>
+              </li>
+              <li>
+                &nbsp;Fecha de término de las PPP:{" "}
+                <strong>
+                  {dayjs(practice?.endDate, "DD/MM/YYYY").format(
+                    "DD [de] MMMM [del] YYYY"
                   )}
                 </strong>
               </li>
@@ -87,7 +96,8 @@ export const PracticesSheet4 = ({
                   Dirección: <strong>{company?.address}</strong>
                 </li>
                 <li>
-                  Teléfono: <strong></strong>
+                  Teléfono:{" "}
+                  <strong>{`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}`}</strong>
                 </li>
                 <li>
                   Docente supervisor: <strong>{fullName(supervisor)}</strong>
@@ -136,25 +146,12 @@ export const PracticesSheet4 = ({
             </div>
           </div>
         </div>
-        <div className="footer">
-          <div className="footer__firm1">
-            <strong>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</strong>
-            <br />
-            <span className="capitalize">{fullName(supervisor)}</span>
-          </div>
-          <div className="footer__firm2">
-            <strong>Representante de la Empresa</strong>
-            <br />
-            <span className="capitalize">
-              {fullName(representativeCompany)}
-            </span>
-          </div>
-        </div>
-        {/*<div className="footer2">*/}
-        {/*  <span>Firma y Sello del Gerente General</span>*/}
-        {/*  <br />*/}
-        {/*  <span>{fullName(representativeCompany)}</span>*/}
-        {/*</div>*/}
+        <SignatureItem
+          supervisor={supervisor}
+          representativeCompany={representativeCompany}
+          practitioner={practitioner}
+          annex3={annex3}
+        />
       </Container>
     </>
   );
@@ -219,33 +216,31 @@ const Container = styled.div`
       flex-direction: column;
     }
   }
-  .footer {
-    display: flex;
-    width: 605px;
-    margin: auto;
-    gap: 2em;
-    padding-top: 5em;
-
-    &__firm1 {
-      padding-top: 0.5em;
-      border-top: 2px solid #000;
-      width: 289px;
-      text-align: center;
+  .signatures {
+    width: 100%;
+    display: grid;
+    .first {
+      padding-bottom: 3em;
+      margin: auto;
+      width: 80%;
+      display: flex;
+      gap: 2em;
+      .firm1,
+      .firm2 {
+        padding-top: 0.5em;
+        border-top: 2px solid #000;
+        text-align: center;
+      }
     }
-    &__firm2 {
-      padding-top: 0.5em;
-      border-top: 2px solid #000;
-      width: 289px;
-      text-align: center;
-      padding-bottom: 5em;
+    .third {
+      width: 80%;
+      margin: auto;
+      .firm3 {
+        padding-top: 0.5em;
+        border-top: 2px solid #000;
+        text-align: center;
+      }
     }
-  }
-  .footer2 {
-    padding-top: 0.5em;
-    border-top: 2px solid black;
-    text-align: center;
-    width: 400px;
-    margin: auto;
   }
 `;
 const Table = styled.table`

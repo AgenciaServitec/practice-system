@@ -23,7 +23,7 @@ export const PDF = ({ children }) => {
     const maxSheetWidth = getMaxSheetWidth();
 
     if (maxSheetWidth) {
-      const newZoom = floor((currentScreenWidth * 100) / maxSheetWidth) - 1;
+      const newZoom = floor((currentScreenWidth * 50) / maxSheetWidth) - 1;
 
       setZoom(newZoom);
       setZoomExpand(newZoom);

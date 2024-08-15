@@ -92,12 +92,13 @@ export const PracticesSheet2 = ({
           </div>
         </div>
         <div className="footer">
-          <div className="footer__firma">
+          <div className="footer__firm">
             <text>
               <strong>Firma y Sello del representante de la Empresa </strong>
             </text>
             <br />
             <span>{fullName(representativeCompany)}</span>
+            <span>{}</span>
           </div>
           <div className="footer__company">
             <span className="address">
@@ -196,7 +197,7 @@ const Container = styled.div`
   }
 
   .footer {
-    &__firma {
+    &__firm {
       margin: auto;
       text-align: center;
       width: 400px;
@@ -207,6 +208,7 @@ const Container = styled.div`
         text-transform: capitalize;
       }
     }
+
     &__company {
       height: auto;
       padding: 1em;

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
 
 export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
   const qualityEvaluation = {
@@ -142,15 +142,10 @@ export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
             </span>
           </div>
         </div>
-        <div className="footer">
-          <div className="footer__firma">
-            <span>Firma y Sello del Gerente General</span>
-            <br />
-            <span className="capitalize">
-              {fullName(representativeCompany)}
-            </span>
-          </div>
-        </div>
+        <SignatureItem
+          representativeCompany={representativeCompany}
+          annex4={annex4}
+        />
       </Container>
     </>
   );
@@ -176,7 +171,7 @@ const Container = styled.div`
   }
 
   .body {
-    padding-bottom: 5em;
+    padding-bottom: 2em;
 
     &__tip {
       gap: 1em;
@@ -222,14 +217,13 @@ const Container = styled.div`
     }
   }
 
-  .footer {
-    width: 500px;
-    margin: auto;
-    text-align: center;
-    border-top: 2px solid #000;
-
-    &__firma {
-      margin-top: 0.5em;
+  .signatures {
+    .firm1 {
+      margin: auto;
+      padding-top: 0.5em;
+      border-top: 2px solid #000;
+      width: 80%;
+      text-align: center;
     }
   }
 `;

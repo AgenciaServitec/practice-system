@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
 
 export const PracticesSheet3 = ({
   practitioner,
@@ -103,12 +104,6 @@ export const PracticesSheet3 = ({
                   {practitioner?.practitionerData?.semester || "Egresado"}
                 </strong>
               </li>
-              <li>
-                Año Académico:{" "}
-                <strong className="capitalize">
-                  {practitioner?.practitionerData?.academicYear || "Egresado"}
-                </strong>
-              </li>
             </ul>
           </div>
           <div className="body__subtitle3">
@@ -117,10 +112,16 @@ export const PracticesSheet3 = ({
           <div className="body__company">
             <ul>
               <li>
-                Período de la práctica:{" "}
-                <strong className="capitalize">
-                  {dayjs(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")}{" "}
-                  - {dayjs(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
+                Período de la práctica:
+                <strong>
+                  &nbsp;del&nbsp;
+                  {dayjs(practice.startDate, "DD/MM/YYYY").format(
+                    "DD [de] MMMM [del] YYYY"
+                  )}
+                  &nbsp;al&nbsp;
+                  {dayjs(practice.endDate, "DD/MM/YYYY").format(
+                    "DD [de] MMMM [del] YYYY"
+                  )}
                 </strong>
               </li>
               <li>
@@ -143,20 +144,11 @@ export const PracticesSheet3 = ({
             <span>Chorrillos, {dayjs().format("DD MMMM YYYY")}</span>
           </div>
         </div>
-        <div className="footer">
-          <div className="footer__firm1">
-            <strong>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</strong>
-            <br />
-            <span className="capitalize">{fullName(supervisor)}</span>
-          </div>
-          <div className="footer__firm2">
-            <strong>Representante de la Empresa</strong>
-            <br />
-            <span className="capitalize">
-              {fullName(representativeCompany)}
-            </span>
-          </div>
-        </div>
+        <SignatureItem
+          supervisor={supervisor}
+          representativeCompany={representativeCompany}
+          annex2={annex2}
+        />
         <div className="note">
           <span>
             <strong>NOTA: </strong>Entregar por mesa de partes la ficha sellada
@@ -193,6 +185,8 @@ const Container = styled.div`
     }
   }
   .body {
+    margin-bottom: 10em;
+    
     &__title {
       margin-bottom: 2em;
       text-align: center;
@@ -240,26 +234,22 @@ const Container = styled.div`
       padding-top: 2em;
     }
   }
-  .footer {
-    display: flex;
-    width: 605px;
+
+  .signatures {
+    width: 80%;
     margin: auto;
-    gap: 2em;
-    padding-top: 9em;
-    &__firm1 {
-      padding-top: 1em;
-      border-top: 3px solid #000;
-      width: 300px;
-      text-align: center;
-      font-size: 0.95em;
-    }
-    &__firm2 {
-      padding-top: 1em;
-      border-top: 3px solid #000;
-      width: 289px;
-      text-align: center;
+    display: flex;
+    gap: 3em;
+    
+      .firm1,.firm2 {
+        padding-top: 0.5em;
+        border-top: 2px solid #000;
+        width: 285px;
+        text-align: center;
+      }
     }
   }
+
   .note {
     padding-top: 3em;
     text-align: justify;
