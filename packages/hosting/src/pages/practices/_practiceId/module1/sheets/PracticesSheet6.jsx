@@ -5,7 +5,11 @@ import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
 import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 
-export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
+export const PracticesSheet6 = ({
+  annex4,
+  representativeCompany,
+  practice,
+}) => {
   const qualityEvaluation = {
     A: {
       code: "A",
@@ -145,7 +149,11 @@ export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
         </div>
         <div className="firma">
           <SignatureItem
-            signaturePhoto={representativeCompany?.signaturePhoto?.url}
+            signaturePhoto={
+              practice.status === "approved"
+                ? representativeCompany?.signaturePhoto?.url
+                : null
+            }
             fullName={fullName(representativeCompany)}
             businessPosition={
               getBusinessPosition(
