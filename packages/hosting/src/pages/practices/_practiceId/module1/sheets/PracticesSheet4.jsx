@@ -1,8 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName } from "../../../../../utils";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
+import { Col } from "../../../../../components";
 
 export const PracticesSheet4 = ({
   practitioner,
@@ -65,7 +67,15 @@ export const PracticesSheet4 = ({
                 &nbsp;Fecha de inicio de las PPP:{" "}
                 <strong>
                   {dayjs(practice?.startDate, "DD/MM/YYYY").format(
-                    "DD/MM/YYYY"
+                    "DD [de] MMMM [del] YYYY"
+                  )}
+                </strong>
+              </li>
+              <li>
+                &nbsp;Fecha de término de las PPP:{" "}
+                <strong>
+                  {dayjs(practice?.endDate, "DD/MM/YYYY").format(
+                    "DD [de] MMMM [del] YYYY"
                   )}
                 </strong>
               </li>
@@ -87,7 +97,8 @@ export const PracticesSheet4 = ({
                   Dirección: <strong>{company?.address}</strong>
                 </li>
                 <li>
-                  Teléfono: <strong></strong>
+                  Teléfono:{" "}
+                  <strong>{`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}`}</strong>
                 </li>
                 <li>
                   Docente supervisor: <strong>{fullName(supervisor)}</strong>
@@ -136,25 +147,33 @@ export const PracticesSheet4 = ({
             </div>
           </div>
         </div>
-        <div className="footer">
-          <div className="footer__firm1">
-            <strong>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</strong>
-            <br />
-            <span className="capitalize">{fullName(supervisor)}</span>
+        <div className="signatures">
+          <div className="up">
+            <SignatureItem
+              signaturePhoto={supervisor?.signaturePhoto?.url}
+              fullName={fullName(supervisor)}
+              role={findRole(supervisor.roleCode)?.name}
+            />
+            <SignatureItem
+              signaturePhoto={practitioner?.signaturePhoto?.url}
+              fullName={fullName(practitioner)}
+              role={findRole(practitioner.roleCode)?.name}
+            />
           </div>
-          <div className="footer__firm2">
-            <strong>Representante de la Empresa</strong>
-            <br />
-            <span className="capitalize">
-              {fullName(representativeCompany)}
-            </span>
+          <div className="down">
+            <SignatureItem
+              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              fullName={fullName(representativeCompany)}
+              businessPosition={
+                getBusinessPosition(
+                  representativeCompany.companyRepresentativeData
+                    .businessPosition
+                )?.label
+              }
+              role={findRole(representativeCompany.roleCode)?.name}
+            />
           </div>
         </div>
-        {/*<div className="footer2">*/}
-        {/*  <span>Firma y Sello del Gerente General</span>*/}
-        {/*  <br />*/}
-        {/*  <span>{fullName(representativeCompany)}</span>*/}
-        {/*</div>*/}
       </Container>
     </>
   );
@@ -179,6 +198,7 @@ const Container = styled.div`
   }
 
   .body {
+    margin-bottom: 2em;
     &__title {
       margin: auto;
       text-align: center;
@@ -203,13 +223,13 @@ const Container = styled.div`
       width: 550px;
       margin: auto;
       ol {
-        line-height: 1.6em;
+        line-height: 1.4em;
       }
       .company {
         margin: auto;
         width: 500px;
         ul {
-          line-height: 1.6em;
+          line-height: 1.4em;
         }
       }
     }
@@ -219,33 +239,17 @@ const Container = styled.div`
       flex-direction: column;
     }
   }
-  .footer {
-    display: flex;
-    width: 605px;
-    margin: auto;
-    gap: 2em;
-    padding-top: 5em;
-
-    &__firm1 {
-      padding-top: 0.5em;
-      border-top: 2px solid #000;
-      width: 289px;
-      text-align: center;
+  .signatures {
+    width: 100%;
+    .up {
+      margin: auto;
+      width: 80%;
+      display: flex;
     }
-    &__firm2 {
-      padding-top: 0.5em;
-      border-top: 2px solid #000;
-      width: 289px;
-      text-align: center;
-      padding-bottom: 5em;
+    .down {
+      width: 50%;
+      margin: auto;
     }
-  }
-  .footer2 {
-    padding-top: 0.5em;
-    border-top: 2px solid black;
-    text-align: center;
-    width: 400px;
-    margin: auto;
   }
 `;
 const Table = styled.table`
@@ -254,10 +258,10 @@ const Table = styled.table`
   width: 100%;
   margin-bottom: 1em;
   th {
-    padding: 0.5em;
-    border: 1px solid black;
+    padding: 0.3em;
+    border: 0.5px solid black;
     text-align: center;
-    font-size: 11px;
+    font-size: 10px;
     line-height: 1.5em;
   }
   td {
@@ -265,6 +269,6 @@ const Table = styled.table`
     text-align: center;
     font-size: 12px;
     line-height: 1.5em;
-    padding: 0.5em;
+    padding: 0.3em;
   }
 `;

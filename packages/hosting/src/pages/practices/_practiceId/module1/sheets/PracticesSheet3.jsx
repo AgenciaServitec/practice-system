@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName, getBusinessPosition } from "../../../../../utils";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
 
 export const PracticesSheet3 = ({
   practitioner,
@@ -103,12 +104,6 @@ export const PracticesSheet3 = ({
                   {practitioner?.practitionerData?.semester || "Egresado"}
                 </strong>
               </li>
-              <li>
-                Año Académico:{" "}
-                <strong className="capitalize">
-                  {practitioner?.practitionerData?.academicYear || "Egresado"}
-                </strong>
-              </li>
             </ul>
           </div>
           <div className="body__subtitle3">
@@ -117,10 +112,16 @@ export const PracticesSheet3 = ({
           <div className="body__company">
             <ul>
               <li>
-                Período de la práctica:{" "}
-                <strong className="capitalize">
-                  {dayjs(practice.startDate, "DD/MM/YYYY").format("DD/MM/YYYY")}{" "}
-                  - {dayjs(practice.endDate, "DD/MM/YYYY").format("DD/MM/YYYY")}
+                Período de la práctica:
+                <strong>
+                  &nbsp;del&nbsp;
+                  {dayjs(practice.startDate, "DD/MM/YYYY").format(
+                    "DD [de] MMMM [del] YYYY"
+                  )}
+                  &nbsp;al&nbsp;
+                  {dayjs(practice.endDate, "DD/MM/YYYY").format(
+                    "DD [de] MMMM [del] YYYY"
+                  )}
                 </strong>
               </li>
               <li>
@@ -143,18 +144,26 @@ export const PracticesSheet3 = ({
             <span>Chorrillos, {dayjs().format("DD MMMM YYYY")}</span>
           </div>
         </div>
-        <div className="footer">
-          <div className="footer__firm1">
-            <strong>Supervisor(a) de Prácticas IESTP &quot;GLBR&quot;</strong>
-            <br />
-            <span className="capitalize">{fullName(supervisor)}</span>
+        <div className="asignatures">
+          <div className="asignature">
+            <SignatureItem
+              signaturePhoto={supervisor?.signaturePhoto?.url}
+              fullName={fullName(supervisor)}
+              role={findRole(supervisor.roleCode)?.name}
+            />
           </div>
-          <div className="footer__firm2">
-            <strong>Representante de la Empresa</strong>
-            <br />
-            <span className="capitalize">
-              {fullName(representativeCompany)}
-            </span>
+          <div className="asignature2">
+            <SignatureItem
+              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              fullName={fullName(representativeCompany)}
+              businessPosition={
+                getBusinessPosition(
+                  representativeCompany.companyRepresentativeData
+                    .businessPosition
+                )?.label
+              }
+              role={findRole(representativeCompany.roleCode)?.name}
+            />
           </div>
         </div>
         <div className="note">
@@ -193,6 +202,8 @@ const Container = styled.div`
     }
   }
   .body {
+    margin-bottom: 7em;
+
     &__title {
       margin-bottom: 2em;
       text-align: center;
@@ -240,26 +251,15 @@ const Container = styled.div`
       padding-top: 2em;
     }
   }
-  .footer {
+  .asignatures {
+    width: 100%;
     display: flex;
-    width: 605px;
-    margin: auto;
-    gap: 2em;
-    padding-top: 9em;
-    &__firm1 {
-      padding-top: 1em;
-      border-top: 3px solid #000;
-      width: 300px;
-      text-align: center;
-      font-size: 0.95em;
-    }
-    &__firm2 {
-      padding-top: 1em;
-      border-top: 3px solid #000;
-      width: 289px;
-      text-align: center;
+    .asignature,
+    .asignature2 {
+      width: 100%;
     }
   }
+
   .note {
     padding-top: 3em;
     text-align: justify;

@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 
 export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
   const qualityEvaluation = {
@@ -142,14 +143,17 @@ export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
             </span>
           </div>
         </div>
-        <div className="footer">
-          <div className="footer__firma">
-            <span>Firma y Sello del Gerente General</span>
-            <br />
-            <span className="capitalize">
-              {fullName(representativeCompany)}
-            </span>
-          </div>
+        <div className="firma">
+          <SignatureItem
+            signaturePhoto={representativeCompany?.signaturePhoto?.url}
+            fullName={fullName(representativeCompany)}
+            businessPosition={
+              getBusinessPosition(
+                representativeCompany.companyRepresentativeData.businessPosition
+              )?.label
+            }
+            role={findRole(representativeCompany.roleCode)?.name}
+          />
         </div>
       </Container>
     </>
@@ -176,9 +180,8 @@ const Container = styled.div`
   }
 
   .body {
-    padding-bottom: 5em;
-
     &__tip {
+      font-size: 13px;
       gap: 1em;
       display: flex;
       width: 570px;
@@ -222,15 +225,9 @@ const Container = styled.div`
     }
   }
 
-  .footer {
-    width: 500px;
+  .firma {
     margin: auto;
-    text-align: center;
-    border-top: 2px solid #000;
-
-    &__firma {
-      margin-top: 0.5em;
-    }
+    width: 60%;
   }
 `;
 

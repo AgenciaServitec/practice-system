@@ -8,8 +8,10 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { QRCode } from "antd";
-import { fullName } from "../../../../../utils";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
+import { SignatureItem } from "../../SignatureItem";
+import { Col } from "../../../../../components";
 
 export const PracticesSheet2 = ({
   practice,
@@ -92,13 +94,19 @@ export const PracticesSheet2 = ({
           </div>
         </div>
         <div className="footer">
-          <div className="footer__firma">
-            <text>
-              <strong>Firma y Sello del representante de la Empresa </strong>
-            </text>
-            <br />
-            <span>{fullName(representativeCompany)}</span>
-          </div>
+          <Col span={24} md={12} className="firma">
+            <SignatureItem
+              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              fullName={fullName(representativeCompany)}
+              businessPosition={
+                getBusinessPosition(
+                  representativeCompany.companyRepresentativeData
+                    .businessPosition
+                )?.label
+              }
+              role={findRole(representativeCompany.roleCode)?.name}
+            />
+          </Col>
           <div className="footer__company">
             <span className="address">
               <strong>{`${company?.address}`}</strong>
@@ -165,7 +173,7 @@ const Container = styled.div`
   }
 
   .body {
-    margin-bottom: 7em;
+    margin-bottom: 5.5em;
     &__title {
       text-align: center;
       margin-bottom: 2em;
@@ -191,28 +199,20 @@ const Container = styled.div`
     &__date {
       text-align: center;
       margin-top: 4em;
-      margin-bottom: 4em;
     }
   }
 
   .footer {
-    &__firma {
+    .firma {
       margin: auto;
-      text-align: center;
-      width: 400px;
-      border-top: 3px solid #000;
-      padding-top: 1em;
-
-      span {
-        text-transform: capitalize;
-      }
     }
+
     &__company {
       height: auto;
-      padding: 1em;
+      padding: 0.5em;
       width: auto;
       background: #ededed;
-      margin-top: 6em;
+      margin-top: 2em;
       text-align: center;
       display: flex;
       flex-direction: column;

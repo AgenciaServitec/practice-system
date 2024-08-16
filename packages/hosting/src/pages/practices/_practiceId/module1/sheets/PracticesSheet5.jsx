@@ -50,7 +50,9 @@ export const PracticesSheet5 = ({
                 <span> 1.</span>
                 <span>
                   Apellidos y Nombres del practicante:&nbsp;
-                  <strong>{fullName(practitioner)} </strong>
+                  <strong className="capitalize">
+                    {fullName(practitioner)}{" "}
+                  </strong>
                 </span>
               </li>
               <li>
