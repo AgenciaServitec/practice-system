@@ -1,65 +1,60 @@
 import React from "react";
 import styled from "styled-components";
-import { fullName } from "../../../utils";
-import { BusinessPosition, Roles } from "../../../data-list";
-import { Col } from "../../../components";
-import { Firma } from "../../../images";
-import { Image } from "antd";
 
 export const SignatureItem = ({
-  practitioner,
-  representativeCompany,
-  supervisor,
+  signaturePhoto = null,
+  fullName = "",
+  businessPosition = null,
+  role = "",
+  size = 14,
 }) => {
-  const _roleCode =
-    practitioner?.roleCode ||
-    representativeCompany?.roleCode ||
-    supervisor?.roleCode;
-
-  const rolValue = Roles.find((rol) => rol.code === _roleCode)?.name;
-
-  const businessPositionValue = BusinessPosition.find(
-    (position) =>
-      representativeCompany?.companyRepresentativeData?.businessPosition ===
-      position.value
-  )?.label;
-
   return (
-    <>
-      <Container>
-        <Col span={24}>
-          <Image src={Firma} alt="firma" width={200} />
-          <div className="firm">
-            <span className="capitalize">
-              {rolValue === "Usuario" ? "Practicante" : rolValue}
-            </span>
-            <br />
-            <span className="capitalize">
-              {fullName(practitioner || representativeCompany || supervisor)}
-            </span>
-            <br />
-            <span className="capitalize">{businessPositionValue}</span>
+    <Container size={size}>
+      {signaturePhoto && (
+        <img src={signaturePhoto} alt="signature" width={200} height={80} />
+      )}
+      <div className="firm">
+        <div>
+          <span className="capitalize strong">
+            {role === "Usuario" ? "Practicante" : role}
+          </span>
+        </div>
+        <div>
+          <div>
+            <span className="capitalize">{fullName}</span>
           </div>
-        </Col>
-      </Container>
-    </>
+          {businessPosition && (
+            <div>
+              <span className="capitalize strong">{businessPosition}</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </Container>
   );
 };
 
 const Container = styled.div`
-  font-size: 13px;
-  display: grid;
   text-align: center;
   width: 100%;
   margin-top: 1em;
+  font-size: ${({ size }) => `${size}px`};
 
   .firm {
-    padding-top: 0.2em;
+    padding-top: 0.5em;
     margin: auto;
     width: 90%;
-    border-top: 2px solid #000000;
+    border-top: 0.2em solid #000000;
+    display: grid;
+    gap: 0.5em;
+    font-size: 1em;
   }
+
   .capitalize {
     text-transform: capitalize;
+  }
+
+  .strong {
+    font-weight: 700;
   }
 `;

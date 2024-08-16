@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName } from "../../../../../utils";
+import { findRole, fullName } from "../../../../../utils";
 import dayjs from "dayjs";
 import { PracticeArea } from "../../../../../data-list";
 import { SignatureItem } from "../../SignatureItem";
@@ -168,7 +168,11 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
           <span>Atentamente</span>
         </div>
         <div className="firma">
-          <SignatureItem supervisor={supervisor} />
+          <SignatureItem
+            signaturePhoto={supervisor?.signaturePhoto?.url}
+            fullName={fullName(supervisor)}
+            role={findRole(supervisor.roleCode)?.name}
+          />
         </div>
         <div className="footer__tip">
           <span>

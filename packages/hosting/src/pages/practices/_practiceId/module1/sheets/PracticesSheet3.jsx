@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName, getBusinessPosition } from "../../../../../utils";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
 
@@ -144,8 +144,27 @@ export const PracticesSheet3 = ({
             <span>Chorrillos, {dayjs().format("DD MMMM YYYY")}</span>
           </div>
         </div>
-        <div className="firm">
-          <SignatureItem supervisor={supervisor} />
+        <div className="asignatures">
+          <div className="asignature">
+            <SignatureItem
+              signaturePhoto={supervisor?.signaturePhoto?.url}
+              fullName={fullName(supervisor)}
+              role={findRole(supervisor.roleCode)?.name}
+            />
+          </div>
+          <div className="asignature2">
+            <SignatureItem
+              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              fullName={fullName(representativeCompany)}
+              businessPosition={
+                getBusinessPosition(
+                  representativeCompany.companyRepresentativeData
+                    .businessPosition
+                )?.label
+              }
+              role={findRole(representativeCompany.roleCode)?.name}
+            />
+          </div>
         </div>
         <div className="note">
           <span>
@@ -232,9 +251,13 @@ const Container = styled.div`
       padding-top: 2em;
     }
   }
-  .firm {
-    width: 60%;
-    margin: auto;
+  .asignatures {
+    width: 100%;
+    display: flex;
+    .asignature,
+    .asignature2 {
+      width: 100%;
+    }
   }
 
   .note {

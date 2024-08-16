@@ -8,7 +8,7 @@ import {
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { QRCode } from "antd";
-import { fullName } from "../../../../../utils";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
 import { Col } from "../../../../../components";
@@ -95,7 +95,17 @@ export const PracticesSheet2 = ({
         </div>
         <div className="footer">
           <Col span={24} md={12} className="firma">
-            <SignatureItem representativeCompany={representativeCompany} />
+            <SignatureItem
+              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              fullName={fullName(representativeCompany)}
+              businessPosition={
+                getBusinessPosition(
+                  representativeCompany.companyRepresentativeData
+                    .businessPosition
+                )?.label
+              }
+              role={findRole(representativeCompany.roleCode)?.name}
+            />
           </Col>
           <div className="footer__company">
             <span className="address">

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 
 export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
   const qualityEvaluation = {
@@ -143,7 +144,16 @@ export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
           </div>
         </div>
         <div className="firma">
-          <SignatureItem representativeCompany={representativeCompany} />
+          <SignatureItem
+            signaturePhoto={representativeCompany?.signaturePhoto?.url}
+            fullName={fullName(representativeCompany)}
+            businessPosition={
+              getBusinessPosition(
+                representativeCompany.companyRepresentativeData.businessPosition
+              )?.label
+            }
+            role={findRole(representativeCompany.roleCode)?.name}
+          />
         </div>
       </Container>
     </>

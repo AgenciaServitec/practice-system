@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
-import { fullName } from "../../../../../utils";
+import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
 import { Col } from "../../../../../components";
@@ -149,17 +149,29 @@ export const PracticesSheet4 = ({
         </div>
         <div className="signatures">
           <div className="up">
-            <Col span={24} md={12}>
-              <SignatureItem supervisor={supervisor} />
-            </Col>
-            <Col span={24} md={12}>
-              <SignatureItem practitioner={practitioner} />
-            </Col>
+            <SignatureItem
+              signaturePhoto={supervisor?.signaturePhoto?.url}
+              fullName={fullName(supervisor)}
+              role={findRole(supervisor.roleCode)?.name}
+            />
+            <SignatureItem
+              signaturePhoto={practitioner?.signaturePhoto?.url}
+              fullName={fullName(practitioner)}
+              role={findRole(practitioner.roleCode)?.name}
+            />
           </div>
           <div className="down">
-            <Col span={24}>
-              <SignatureItem representativeCompany={representativeCompany} />
-            </Col>
+            <SignatureItem
+              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              fullName={fullName(representativeCompany)}
+              businessPosition={
+                getBusinessPosition(
+                  representativeCompany.companyRepresentativeData
+                    .businessPosition
+                )?.label
+              }
+              role={findRole(representativeCompany.roleCode)?.name}
+            />
           </div>
         </div>
       </Container>
