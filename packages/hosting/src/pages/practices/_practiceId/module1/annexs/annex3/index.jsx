@@ -12,7 +12,6 @@ import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
-import { practicesStatus } from "../../../../../../data-list";
 import { isEmpty } from "lodash";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
@@ -22,15 +21,27 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
     (async () => {
       if (isEmpty(practice) || isEmpty(annex3)) return;
 
-      const { approvedByAcademicSupervisor } = annex3;
+      const { approvedByCompanyRepresentative, approvedByAcademicSupervisor } =
+        annex3;
 
       await updateAnnex(practice.id, "annex3", {
-        status: practicesStatus?.[approvedByAcademicSupervisor]?.value,
+        status:
+          approvedByCompanyRepresentative !== approvedByAcademicSupervisor
+            ? "pending"
+            : approvedByCompanyRepresentative === "approved" &&
+              approvedByAcademicSupervisor === "approved"
+            ? "approved"
+            : approvedByCompanyRepresentative === "refused" &&
+              approvedByAcademicSupervisor === "refused"
+            ? "refused"
+            : "pending",
       });
     })();
   }, [annex3]);
 
-  const hasPermissions = user.roleCode === "academic_supervisor";
+  const hasPermissions =
+    user.roleCode === "company_representative" ||
+    user.roleCode === "academic_supervisor";
 
   const onApprovedAnnex3 = async (practice) =>
     modalConfirm({
@@ -45,6 +56,9 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         }
 
         await updateAnnex(practice.id, "annex3", {
+          ...(user.roleCode === "company_representative" && {
+            approvedByCompanyRepresentative: "approved",
+          }),
           ...(user.roleCode === "academic_supervisor" && {
             approvedByAcademicSupervisor: "approved",
           }),
@@ -67,6 +81,9 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         }
 
         await updateAnnex(practice.id, "annex3", {
+          ...(user.roleCode === "company_representative" && {
+            approvedByCompanyRepresentative: "refused",
+          }),
           ...(user.roleCode === "academic_supervisor" && {
             approvedByAcademicSupervisor: "refused",
           }),
@@ -81,7 +98,7 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <div className="item-sheet">
-            <Space direction="vertical">
+            <Space direction="vertical" style={{ width: "100%" }}>
               <Title level={4}>Hoja 1</Title>
               <Sheet1Integration
                 practice={practice}
