@@ -25,6 +25,8 @@ import {
   fetchPracticesByPractitionerId,
   getPracticesId,
   practicesRef,
+  updatePractice,
+  updateUser,
 } from "../../../firebase/collections";
 import { useNavigate } from "react-router";
 import { fullName, getNameId } from "../../../utils";
@@ -32,12 +34,12 @@ import { Modules } from "../../../data-list";
 import { capitalize } from "lodash";
 import dayjs from "dayjs";
 import { Alert } from "antd";
+import { addAnnex } from "../../../firebase/collections/annexs";
 
 export const ManageCreateProductIntegration = ({
   practice,
   users,
   user,
-  practitioner,
   companies,
   company,
   onGoBack,
@@ -46,7 +48,7 @@ export const ManageCreateProductIntegration = ({
 
   const [savingPractice, setSavingPractice] = useState(false);
 
-  const { assignCreateProps } = useDefaultFirestoreProps();
+  const { assignCreateProps, assignUpdateProps } = useDefaultFirestoreProps();
 
   const onClickToProduct = (practiceId) => {
     const url = `/practices/${practiceId}`;
@@ -116,22 +118,24 @@ export const ManageCreateProductIntegration = ({
           title: "El numero del modulo ya existe en otra practica",
         });
 
-      ["annex2", "annex3", "annex4", "annex6"].forEach((annex) => {
-        practicesRef
-          .doc(practice.id)
-          .collection("annexs")
-          .doc(annex)
-          .set({
-            id: annex,
-            status: "pending",
-            ...(["annex2", "annex3", "annex4"].includes(annex) && {
-              approvedByCompanyRepresentative: "pending",
-            }),
-            approvedByAcademicSupervisor: "pending",
-          });
-      });
+      const promises = ["annex2", "annex3", "annex4", "annex6"].map((annex) =>
+        addAnnex(practice.id, {
+          id: annex,
+          status: "pending",
+          ...(["annex2", "annex3", "annex4"].includes(annex) && {
+            approvedByCompanyRepresentative: "pending",
+          }),
+          approvedByAcademicSupervisor: "pending",
+        })
+      );
 
-      await addPractice(assignCreateProps(practice));
+      const p0 = updateUser(
+        practice.practitionerId,
+        assignUpdateProps({ hasPractices: true })
+      );
+      const p1 = addPractice(assignCreateProps(practice));
+
+      await Promise.all([...promises, p0, p1]);
 
       notification({ type: "success" });
       onClickToProduct(practice.id);

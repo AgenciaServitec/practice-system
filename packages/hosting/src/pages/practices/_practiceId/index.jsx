@@ -110,17 +110,6 @@ export const PracticeIntegration = () => {
     })();
   }, [annexs]);
 
-  const savePractice = async (practice) => {
-    const p0 = updateUser(
-      practice.practitionerId,
-      assignUpdateProps({ hasPractices: true })
-    );
-
-    const p1 = updatePractice(practice.id, assignUpdateProps(practice));
-
-    await Promise.all([p0, p1]);
-  };
-
   const onConfirmModuleApproved = () =>
     modalConfirm({
       title: "¿Estás seguro de que quieres aprobar el modulo completo?",
@@ -244,10 +233,6 @@ export const PracticeIntegration = () => {
         <Annex4Integration
           practice={practice}
           user={authUser}
-          users={users}
-          practitioner={practitioner}
-          company={company}
-          onSavePractice={savePractice}
           annex4={annex4}
         />
       ),
@@ -313,7 +298,6 @@ export const PracticeIntegration = () => {
           practice={practice}
           users={users}
           user={authUser}
-          practitioner={practitioner}
           companies={companies}
           company={company}
           onGoBack={onGoBack}

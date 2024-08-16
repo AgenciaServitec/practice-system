@@ -21,15 +21,7 @@ import styled from "styled-components";
 import { InstructionsEvaluation } from "./InstructionsEvaluation";
 import { isEmpty } from "lodash";
 
-export const Sheet1Integration = ({
-  practice,
-  user,
-  users,
-  practitioner,
-  company,
-  annex4,
-  onSavePractice,
-}) => {
+export const Sheet1Integration = ({ practice, user, annex4 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
 
   const mapForm = (formData) => ({

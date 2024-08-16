@@ -13,15 +13,7 @@ import { AnnexButtons } from "../AnnexButtons";
 import { updateAnnex } from "../../../../../../firebase/collections/annexs";
 import { isEmpty } from "lodash";
 
-export const Annex4Integration = ({
-  practice,
-  user,
-  users,
-  practitioner,
-  company,
-  annex4,
-  onSavePractice,
-}) => {
+export const Annex4Integration = ({ practice, user, annex4 }) => {
   useEffect(() => {
     (async () => {
       if (isEmpty(practice) || isEmpty(annex4)) return;
@@ -107,11 +99,7 @@ export const Annex4Integration = ({
             <Sheet1Integration
               practice={practice}
               user={user}
-              users={users}
-              practitioner={practitioner}
-              company={company}
               annex4={annex4}
-              onSavePractice={onSavePractice}
             />
           </Space>
         </div>
