@@ -25,5 +25,6 @@
   "/practices/:practiceId/annex#observation": "Agregar observación",
   "/practices/:practiceId/annex#observations": "Ver observaciones",
   "/practices/:practiceId/annex#observationResolver": "Resolver observación",
-  "/practices/:practiceId/module#approved": "Aprobar modulos"
+  "/practices/:practiceId/module#approved": "Aprobar modulos",
+  "/practices/:practiceId/annex3#formObservation": "Revisar Anexo 3"
 }

@@ -124,7 +124,7 @@ export const ManageCreateProductIntegration = ({
           .set({
             id: annex,
             status: "pending",
-            ...(["annex2", "annex4"].includes(annex) && {
+            ...(["annex2", "annex3", "annex4"].includes(annex) && {
               approvedByCompanyRepresentative: "pending",
             }),
             approvedByAcademicSupervisor: "pending",

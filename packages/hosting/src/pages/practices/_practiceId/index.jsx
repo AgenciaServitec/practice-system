@@ -218,18 +218,12 @@ export const PracticeIntegration = () => {
       ),
       style: {
         ...panelStyle,
-        display:
-          isApprovedAnnex(annex3.status) || isCompanyRepresentative
-            ? "none"
-            : "visible",
+        display: isApprovedAnnex(annex3.status) ? "none" : "visible",
         background: isApprovedAnnex(annex3?.status)
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
       },
-      collapsible:
-        isApprovedAnnex(annex3.status) || isCompanyRepresentative
-          ? "disabled"
-          : "visible",
+      collapsible: isApprovedAnnex(annex3.status) ? "disabled" : "visible",
     },
     {
       key: "annex4",
@@ -388,6 +382,7 @@ export const PracticeIntegration = () => {
                     isCompanyRepresentative
                       ? [
                           annex2.status !== "approved" && "annex2",
+                          annex3.status !== "approved" && "annex3",
                           annex4.status !== "approved" && "annex4",
                         ]
                       : [
