@@ -24,8 +24,6 @@ import {
   addPractice,
   fetchPracticesByPractitionerId,
   getPracticesId,
-  practicesRef,
-  updatePractice,
   updateUser,
 } from "../../../firebase/collections";
 import { useNavigate } from "react-router";
@@ -35,6 +33,7 @@ import { capitalize } from "lodash";
 import dayjs from "dayjs";
 import { Alert } from "antd";
 import { addAnnex } from "../../../firebase/collections/annexs";
+import { useGlobalData } from "../../../providers";
 
 export const ManageCreateProductIntegration = ({
   practice,
@@ -44,6 +43,8 @@ export const ManageCreateProductIntegration = ({
   company,
   onGoBack,
 }) => {
+  const { practices } = useGlobalData();
+
   const navigate = useNavigate();
 
   const [savingPractice, setSavingPractice] = useState(false);
@@ -99,7 +100,6 @@ export const ManageCreateProductIntegration = ({
     const userPractices = await fetchPracticesByPractitionerId(
       practice.practitionerId
     );
-
     return userPractices.some(
       (userPractice) => userPractice?.moduleNumber === practice?.moduleNumber
     );
@@ -153,6 +153,7 @@ export const ManageCreateProductIntegration = ({
       company={company}
       companies={companies}
       users={users}
+      practices={practices}
       savePractice={savePractice}
       onGoBack={onGoBack}
     />
@@ -165,6 +166,7 @@ const ManageCreateProduct = ({
   company,
   companies,
   users,
+  practices,
   savePractice,
   onGoBack,
 }) => {
@@ -236,6 +238,9 @@ const ManageCreateProduct = ({
     });
   };
 
+  const existModule = (moduleNumber) =>
+    practices.some((_practice) => _practice.moduleNumber === moduleNumber);
+
   const onSubmit = (formData) => savePractice(formData);
 
   return (
@@ -265,14 +270,17 @@ const ManageCreateProduct = ({
                         {
                           label: "1",
                           value: 1,
+                          disabled: existModule(1),
                         },
                         {
                           label: "2",
                           value: 2,
+                          disabled: existModule(2),
                         },
                         {
                           label: "3",
                           value: 3,
+                          disabled: existModule(3),
                         },
                       ]}
                       error={error(name)}

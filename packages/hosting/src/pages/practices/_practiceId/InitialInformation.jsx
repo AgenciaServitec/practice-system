@@ -54,7 +54,6 @@ export const InitialInformation = ({
         open={visibleModal}
         onCancel={onClosePracticeModal}
         practitioner={practitioner}
-        user={user}
         professionalCareer={professionalCareer}
         practice={practice}
         company={company}
