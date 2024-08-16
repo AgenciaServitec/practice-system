@@ -9,7 +9,6 @@ export const InformationModal = ({
   open,
   onCancel,
   practitioner,
-  user,
   professionalCareer,
   practice,
   company,

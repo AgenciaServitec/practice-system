@@ -296,6 +296,7 @@ export const PracticeIntegration = () => {
       {isNew ? (
         <ManageCreateProductIntegration
           practice={practice}
+          practitioner={practitioner}
           users={users}
           user={authUser}
           companies={companies}
