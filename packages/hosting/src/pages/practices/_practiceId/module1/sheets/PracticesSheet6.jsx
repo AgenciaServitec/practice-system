@@ -5,7 +5,11 @@ import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
 import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 
-export const PracticesSheet6 = ({ annex4, representativeCompany }) => {
+export const PracticesSheet6 = ({
+  annex4,
+  representativeCompany,
+  practice,
+}) => {
   const qualityEvaluation = {
     A: {
       code: "A",
