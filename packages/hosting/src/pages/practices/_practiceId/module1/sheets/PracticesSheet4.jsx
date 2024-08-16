@@ -150,19 +150,31 @@ export const PracticesSheet4 = ({
         <div className="signatures">
           <div className="up">
             <SignatureItem
-              signaturePhoto={supervisor?.signaturePhoto?.url}
+              signaturePhoto={
+                practice.status === "approved"
+                  ? supervisor?.signaturePhoto?.url
+                  : null
+              }
               fullName={fullName(supervisor)}
               role={findRole(supervisor.roleCode)?.name}
             />
             <SignatureItem
-              signaturePhoto={practitioner?.signaturePhoto?.url}
+              signaturePhoto={
+                practice.status === "approved"
+                  ? practitioner?.signaturePhoto?.url
+                  : null
+              }
               fullName={fullName(practitioner)}
               role={findRole(practitioner.roleCode)?.name}
             />
           </div>
           <div className="down">
             <SignatureItem
-              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              signaturePhoto={
+                practice.status === "approved"
+                  ? representativeCompany?.signaturePhoto?.url
+                  : null
+              }
               fullName={fullName(representativeCompany)}
               businessPosition={
                 getBusinessPosition(

@@ -20,6 +20,7 @@ export const ProfileImagesForm = () => {
   const schema = yup.object({
     frontDniPhoto: yup.mixed(),
     backDniPhoto: yup.mixed(),
+    signaturePhoto: yup.mixed(),
   });
 
   const {
@@ -42,6 +43,7 @@ export const ProfileImagesForm = () => {
           email: authUser.email,
           frontDniPhoto: formData?.frontDniPhoto || null,
           backDniPhoto: formData?.backDniPhoto || null,
+          signaturePhoto: formData?.signaturePhoto || null,
         })
       );
 
@@ -60,6 +62,7 @@ export const ProfileImagesForm = () => {
     reset({
       frontDniPhoto: authUser?.frontDniPhoto || null,
       backDniPhoto: authUser?.backDniPhoto || null,
+      signaturePhoto: authUser?.signaturePhoto || null,
     });
   };
 
@@ -107,6 +110,28 @@ export const ProfileImagesForm = () => {
                 value={value}
                 name={name}
                 fileName={`back-dni-foto-${uuidv4()}`}
+                filePath={`users/${authUser.id}/documents`}
+                onChange={(file) => onChange(file)}
+                required={required(name)}
+                error={error(name)}
+              />
+            )}
+          />
+        </Col>
+        <Col xs={24}>
+          <Controller
+            control={control}
+            name="signaturePhoto"
+            render={({ field: { onChange, value, onBlur, name } }) => (
+              <Upload
+                isImage
+                label="Foto de su Firma:"
+                accept="image/*"
+                buttonText="Subir foto"
+                withThumbImage={false}
+                value={value}
+                name={name}
+                fileName={`signature-photo-${uuidv4()}`}
                 filePath={`users/${authUser.id}/documents`}
                 onChange={(file) => onChange(file)}
                 required={required(name)}
