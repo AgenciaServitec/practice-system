@@ -169,7 +169,11 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
         </div>
         <div className="firma">
           <SignatureItem
-            signaturePhoto={supervisor?.signaturePhoto?.url}
+            signaturePhoto={
+              practice.status === "approved"
+                ? supervisor?.signaturePhoto?.url
+                : null
+            }
             fullName={fullName(supervisor)}
             role={findRole(supervisor.roleCode)?.name}
           />

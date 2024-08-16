@@ -96,7 +96,11 @@ export const PracticesSheet2 = ({
         <div className="footer">
           <Col span={24} md={12} className="firma">
             <SignatureItem
-              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              signaturePhoto={
+                practice.status === "approved"
+                  ? representativeCompany?.signaturePhoto?.url
+                  : null
+              }
               fullName={fullName(representativeCompany)}
               businessPosition={
                 getBusinessPosition(

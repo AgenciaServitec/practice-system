@@ -147,14 +147,22 @@ export const PracticesSheet3 = ({
         <div className="asignatures">
           <div className="asignature">
             <SignatureItem
-              signaturePhoto={supervisor?.signaturePhoto?.url}
+              signaturePhoto={
+                practice.status === "approved"
+                  ? supervisor?.signaturePhoto?.url
+                  : null
+              }
               fullName={fullName(supervisor)}
               role={findRole(supervisor.roleCode)?.name}
             />
           </div>
           <div className="asignature2">
             <SignatureItem
-              signaturePhoto={representativeCompany?.signaturePhoto?.url}
+              signaturePhoto={
+                practice.status === "approved"
+                  ? representativeCompany?.signaturePhoto?.url
+                  : null
+              }
               fullName={fullName(representativeCompany)}
               businessPosition={
                 getBusinessPosition(
