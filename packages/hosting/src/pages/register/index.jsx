@@ -108,7 +108,6 @@ const Container = styled.div`
   justify-content: center;
 
   .content-wrapper {
-    width: 50em;
     height: auto;
     padding: 1.7rem;
     border-radius: 0;
