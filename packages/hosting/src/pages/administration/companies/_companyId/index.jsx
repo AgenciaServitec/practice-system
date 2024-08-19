@@ -6,6 +6,7 @@ import {
   notification,
   Select,
   Title,
+  Upload,
 } from "../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
@@ -13,7 +14,7 @@ import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { useDefaultFirestoreProps, useFormUtils } from "../../../../hooks";
 import { useNavigate, useParams } from "react-router";
-import { useGlobalData } from "../../../../providers";
+import { useAuthentication, useGlobalData } from "../../../../providers";
 import {
   addCompany,
   getCompanyId,
@@ -23,8 +24,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useApiCompanyDataByRucGet } from "../../../../api";
 import { capitalize } from "lodash";
 import { fullName } from "../../../../utils";
+import { v4 as uuidv4 } from "uuid";
 
 export const CompanyIntegration = () => {
+  const { authUser } = useAuthentication();
   const { companyId } = useParams();
   const navigate = useNavigate();
   const { getCompanyDataByRuc } = useApiCompanyDataByRucGet();
@@ -60,6 +63,8 @@ export const CompanyIntegration = () => {
     status: formData?.status,
     membersIds: formData?.membersIds,
     representativeId: formData?.representativeId,
+    isotype: formData?.isotype,
+    logotype: formData?.logotype,
   });
 
   const saveCompany = async (formData) => {
@@ -83,6 +88,7 @@ export const CompanyIntegration = () => {
 
   return (
     <Company
+      authUser={authUser}
       isNew={isNew}
       users={users}
       company={company}
@@ -96,6 +102,7 @@ export const CompanyIntegration = () => {
 
 const Company = ({
   isNew,
+  authUser,
   users,
   company,
   getCompanyDataByRuc,
@@ -103,19 +110,29 @@ const Company = ({
   onGoBack,
   onSaveCompany,
 }) => {
+  const isPractitioner = authUser?.roleCode === "user";
+
   const schema = yup.object({
     ruc: yup.string().min(11).max(11).required(),
     socialReason: yup.string().required(),
     region: yup.string().required(),
     province: yup.string().required(),
     district: yup.string().required(),
-    email: yup.string().email().required(),
+    email: isPractitioner
+      ? yup.string().email().notRequired()
+      : yup.string().email().required(),
     address: yup.string().required(),
-    category: yup.string().required(),
-    webSite: yup.string().required(),
+    category: isPractitioner
+      ? yup.string().notRequired()
+      : yup.string().required(),
+    webSite: isPractitioner
+      ? yup.string().notRequired()
+      : yup.string().required(),
     status: yup.string().required(),
     membersIds: yup.array().required(),
     representativeId: yup.string().required(),
+    isotype: yup.mixed(),
+    logotype: yup.mixed(),
   });
 
   const {
@@ -183,6 +200,8 @@ const Company = ({
       status: company?.status || "inactive",
       membersIds: company?.membersIds || null,
       representativeId: company?.representativeId || "",
+      isotype: company?.isotype || null,
+      logotype: company?.logotype || null,
     });
   };
 
@@ -245,6 +264,7 @@ const Company = ({
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -262,6 +282,7 @@ const Company = ({
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -279,6 +300,7 @@ const Company = ({
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -296,6 +318,7 @@ const Company = ({
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -313,6 +336,7 @@ const Company = ({
                     onChange={onChange}
                     error={error(name)}
                     required={required(name)}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -331,7 +355,8 @@ const Company = ({
                     value={value}
                     onChange={onChange}
                     error={error(name)}
-                    required={required(name)}
+                    required={isPractitioner ? required(name) : false}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -348,7 +373,8 @@ const Company = ({
                     value={value}
                     onChange={onChange}
                     error={error(name)}
-                    required={required(name)}
+                    required={isPractitioner ? required(name) : false}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -376,6 +402,7 @@ const Company = ({
                         value: "inactive",
                       },
                     ]}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -413,6 +440,7 @@ const Company = ({
                       label: fullName(user),
                       value: user.id,
                     }))}
+                    disabled={isPractitioner}
                   />
                 )}
               />
@@ -439,12 +467,61 @@ const Company = ({
                           label: fullName(user),
                           value: user.id,
                         }))}
+                      disabled={isPractitioner}
                     />
                   );
                 }}
               />
             </Col>
           </Row>
+          {isPractitioner && (
+            <Row gutter={[16, 16]}>
+              <Col span={24} md={12}>
+                <Controller
+                  control={control}
+                  name="isotype"
+                  render={({ field: { onChange, value, onBlur, name } }) => (
+                    <Upload
+                      isImage
+                      label="Isotipo (150x150):"
+                      resize="150x150"
+                      buttonText="Subir foto"
+                      withThumbImage={false}
+                      value={value}
+                      name={name}
+                      fileName={`isotype-${uuidv4()}`}
+                      filePath={`companies/${company?.id}/documents`}
+                      onChange={(file) => onChange(file)}
+                      required={required(name)}
+                      error={error(name)}
+                    />
+                  )}
+                />
+              </Col>
+              <Col span={24} md={12}>
+                <Controller
+                  control={control}
+                  name="logotype"
+                  render={({ field: { onChange, value, onBlur, name } }) => (
+                    <Upload
+                      isImage
+                      label="Logotipo (350x117):"
+                      resize="350x117"
+                      buttonText="Subir foto"
+                      withThumbImage={false}
+                      value={value}
+                      name={name}
+                      fileName={`logotype-${uuidv4()}`}
+                      filePath={`companies/${company?.id}/documents`}
+                      onChange={(file) => onChange(file)}
+                      required={required(name)}
+                      error={error(name)}
+                    />
+                  )}
+                />
+              </Col>
+            </Row>
+          )}
           <Row justify="end" gutter={[16, 16]}>
             <Col xs={24} sm={6} md={4}>
               <Button

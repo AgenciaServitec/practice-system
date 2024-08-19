@@ -16,6 +16,7 @@ import { Roles } from "../../data-list";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { mediaQuery } from "../../styles";
+import { RegisterAcademicCoordinatorIntegration } from "./RegisterAcademicCoordinator";
 
 export const RegisterIntegration = () => {
   const navigate = useNavigate();
@@ -29,8 +30,6 @@ export const RegisterIntegration = () => {
   }, [authUser]);
 
   const userRole = Roles.find((role) => role.code === roleCode);
-
-  console.log({ roleCode });
 
   if (isEmpty(roleCode))
     return (
@@ -68,7 +67,7 @@ export const RegisterIntegration = () => {
             ) : roleCode === "academic_supervisor" ? (
               <RegisterAcademicSupervisorIntegration roleCode={roleCode} />
             ) : (
-              <RegisterUser roleCode={roleCode} />
+              <RegisterAcademicCoordinatorIntegration roleCode={roleCode} />
             )}
           </Col>
         </Row>

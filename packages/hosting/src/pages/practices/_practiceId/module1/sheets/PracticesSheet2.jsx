@@ -23,8 +23,8 @@ export const PracticesSheet2 = ({
     <>
       <Container>
         <div className="images">
-          <div className="images__servitec">
-            <img src={LogoServitec} alt="" />
+          <div className="images__company">
+            <img src={company?.logotype?.url} alt="" />
           </div>
           <div className="images__qr">
             <QRCode
@@ -143,19 +143,21 @@ const Container = styled.div`
   }
 
   .images {
+    width: 100%;
     display: flex;
+    gap: 30em;
 
     img {
       width: 100%;
       height: 100%;
     }
-    &__servitec {
-      width: 300px;
-      height: 140px;
-      margin-right: 22em;
+    &__company {
+      width: 11em;
+      height: auto;
+      padding: 0.5em;
+      object-fit: contain;
     }
     &__qr {
-      align-content: flex-end;
       width: 100px;
       height: 100px;
     }
