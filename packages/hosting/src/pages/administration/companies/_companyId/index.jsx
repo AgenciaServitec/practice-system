@@ -63,8 +63,8 @@ export const CompanyIntegration = () => {
     status: formData?.status,
     membersIds: formData?.membersIds,
     representativeId: formData?.representativeId,
-    isotype: formData?.isotype,
-    logotype: formData?.logotype,
+    isotipoImage: formData?.isotipoImage,
+    logotipoImage: formData?.logotipoImage,
   });
 
   const saveCompany = async (formData) => {
@@ -131,8 +131,8 @@ const Company = ({
     status: yup.string().required(),
     membersIds: yup.array().required(),
     representativeId: yup.string().required(),
-    isotype: yup.mixed(),
-    logotype: yup.mixed(),
+    isotipoImage: yup.mixed(),
+    logotipoImage: yup.mixed(),
   });
 
   const {
@@ -200,8 +200,8 @@ const Company = ({
       status: company?.status || "inactive",
       membersIds: company?.membersIds || null,
       representativeId: company?.representativeId || "",
-      isotype: company?.isotype || null,
-      logotype: company?.logotype || null,
+      isotipoImage: company?.isotipoImage || null,
+      logotipoImage: company?.logotipoImage || null,
     });
   };
 
@@ -355,7 +355,7 @@ const Company = ({
                     value={value}
                     onChange={onChange}
                     error={error(name)}
-                    required={isPractitioner ? required(name) : false}
+                    required={required(name)}
                     disabled={isPractitioner}
                   />
                 )}
@@ -373,7 +373,7 @@ const Company = ({
                     value={value}
                     onChange={onChange}
                     error={error(name)}
-                    required={isPractitioner ? required(name) : false}
+                    required={required(name)}
                     disabled={isPractitioner}
                   />
                 )}
@@ -479,7 +479,7 @@ const Company = ({
               <Col span={24} md={12}>
                 <Controller
                   control={control}
-                  name="isotype"
+                  name="isotipoImage"
                   render={({ field: { onChange, value, onBlur, name } }) => (
                     <Upload
                       isImage
@@ -490,7 +490,7 @@ const Company = ({
                       value={value}
                       name={name}
                       fileName={`isotype-${uuidv4()}`}
-                      filePath={`companies/${company?.id}/documents`}
+                      filePath={`companies/${company?.id}/images`}
                       onChange={(file) => onChange(file)}
                       required={required(name)}
                       error={error(name)}
@@ -501,7 +501,7 @@ const Company = ({
               <Col span={24} md={12}>
                 <Controller
                   control={control}
-                  name="logotype"
+                  name="logotipoImage"
                   render={({ field: { onChange, value, onBlur, name } }) => (
                     <Upload
                       isImage
@@ -511,8 +511,8 @@ const Company = ({
                       withThumbImage={false}
                       value={value}
                       name={name}
-                      fileName={`logotype-${uuidv4()}`}
-                      filePath={`companies/${company?.id}/documents`}
+                      fileName={`logotipoImage-${uuidv4()}`}
+                      filePath={`companies/${company?.id}/images`}
                       onChange={(file) => onChange(file)}
                       required={required(name)}
                       error={error(name)}
