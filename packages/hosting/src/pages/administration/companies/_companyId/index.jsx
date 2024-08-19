@@ -474,54 +474,52 @@ const Company = ({
               />
             </Col>
           </Row>
-          {isPractitioner && (
-            <Row gutter={[16, 16]}>
-              <Col span={24} md={12}>
-                <Controller
-                  control={control}
-                  name="isotipoImage"
-                  render={({ field: { onChange, value, onBlur, name } }) => (
-                    <Upload
-                      isImage
-                      label="Isotipo (150x150):"
-                      resize="150x150"
-                      buttonText="Subir foto"
-                      withThumbImage={false}
-                      value={value}
-                      name={name}
-                      fileName={`isotype-${uuidv4()}`}
-                      filePath={`companies/${company?.id}/images`}
-                      onChange={(file) => onChange(file)}
-                      required={required(name)}
-                      error={error(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24} md={12}>
-                <Controller
-                  control={control}
-                  name="logotipoImage"
-                  render={({ field: { onChange, value, onBlur, name } }) => (
-                    <Upload
-                      isImage
-                      label="Logotipo (350x117):"
-                      resize="350x117"
-                      buttonText="Subir foto"
-                      withThumbImage={false}
-                      value={value}
-                      name={name}
-                      fileName={`logotipoImage-${uuidv4()}`}
-                      filePath={`companies/${company?.id}/images`}
-                      onChange={(file) => onChange(file)}
-                      required={required(name)}
-                      error={error(name)}
-                    />
-                  )}
-                />
-              </Col>
-            </Row>
-          )}
+          <Row gutter={[16, 16]}>
+            <Col span={24} md={12}>
+              <Controller
+                control={control}
+                name="isotipoImage"
+                render={({ field: { onChange, value, onBlur, name } }) => (
+                  <Upload
+                    isImage
+                    label="Isotipo (150x150):"
+                    resize="150x150"
+                    buttonText="Subir foto"
+                    withThumbImage={false}
+                    value={value}
+                    name={name}
+                    fileName={`isotype-${uuidv4()}`}
+                    filePath={`companies/${company?.id}/images`}
+                    onChange={(file) => onChange(file)}
+                    required={required(name)}
+                    error={error(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24} md={12}>
+              <Controller
+                control={control}
+                name="logotipoImage"
+                render={({ field: { onChange, value, onBlur, name } }) => (
+                  <Upload
+                    isImage
+                    label="Logotipo (350x117):"
+                    resize="350x117"
+                    buttonText="Subir foto"
+                    withThumbImage={false}
+                    value={value}
+                    name={name}
+                    fileName={`logotipoImage-${uuidv4()}`}
+                    filePath={`companies/${company?.id}/images`}
+                    onChange={(file) => onChange(file)}
+                    required={required(name)}
+                    error={error(name)}
+                  />
+                )}
+              />
+            </Col>
+          </Row>
           <Row justify="end" gutter={[16, 16]}>
             <Col xs={24} sm={6} md={4}>
               <Button
