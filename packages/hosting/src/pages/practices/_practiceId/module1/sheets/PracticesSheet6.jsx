@@ -129,11 +129,19 @@ export const PracticesSheet6 = ({
                 <span>EVALUACIÓN FINAL: {totalNotes}</span>
                 <div className="cuality">
                   <span>CUALITATIVA: </span>
-                  <span>{validationQualityEvaluation(totalNotes)?.name}</span>
+                  <span>
+                    {annex4?.evaluationSheet
+                      ? validationQualityEvaluation(totalNotes)?.name
+                      : "--"}
+                  </span>
                 </div>
                 <div className="literally">
                   <span>LITERAL: </span>
-                  <span>{validationQualityEvaluation(totalNotes)?.code}</span>
+                  <span>
+                    {annex4?.evaluationSheet
+                      ? validationQualityEvaluation(totalNotes)?.code
+                      : "--"}
+                  </span>
                 </div>
               </div>
             </strong>
