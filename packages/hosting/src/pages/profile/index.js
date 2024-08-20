@@ -16,7 +16,7 @@ const items = [
   },
   {
     key: "2",
-    label: "Imagen DNI (Anverso y Reverso)",
+    label: "Documento y Firma",
     children: <ProfileImagesForm />,
   },
 ];
