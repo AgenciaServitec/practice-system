@@ -265,12 +265,6 @@ export const PracticeIntegration = () => {
       ),
       style: {
         ...panelStyle,
-        display:
-          !hasPermissions ||
-          isApprovedAnnex(annex6.status) ||
-          isCompanyRepresentative
-            ? "none"
-            : "visible",
         background: isApprovedAnnex(annex6?.status)
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
