@@ -207,7 +207,6 @@ export const PracticeIntegration = () => {
       ),
       style: {
         ...panelStyle,
-        display: isApprovedAnnex(annex3.status) ? "visible" : "visible",
         background: isApprovedAnnex(annex3?.status)
           ? "#ecffc2"
           : "rgba(0, 0, 0, 0.02)",
