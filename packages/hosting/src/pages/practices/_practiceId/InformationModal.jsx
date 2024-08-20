@@ -249,7 +249,7 @@ export const InformationModal = ({
               <label>
                 Funciones y/o Tareas asignadas de acuerdo al Módulo:{" "}
               </label>
-              <p className="capitalize">{practice?.task || "-"}</p>
+              <p>{practice?.task || "-"}</p>
             </div>
           </Col>
           <Col span={24} md={8}>
