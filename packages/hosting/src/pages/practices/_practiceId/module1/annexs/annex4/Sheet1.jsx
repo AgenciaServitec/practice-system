@@ -229,8 +229,6 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
   const { required, error } = useFormUtils({ errors, schema });
 
   const getAssessmentByIndicatorId = (indicators = [], indicatorId) => {
-    console.log({ indicators });
-
     const indicator = (indicators || []).find(
       (indicator) => indicator?.id === indicatorId
     );
