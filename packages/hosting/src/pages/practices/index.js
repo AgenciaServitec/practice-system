@@ -56,7 +56,7 @@ export const CorrespondencesIntegration = () => {
     ) {
       return notification({
         type: "warning",
-        title: "Debe completar su perfil para crear una práctica",
+        title: "Debe completar todo su perfil para crear una práctica",
         btn: (
           <Button type="primary" onClick={() => navigate("/profile")}>
             Click aquí!
@@ -142,20 +142,22 @@ const Practices = ({
     <Acl name="/practices" redirect>
       <Container>
         <Row justify="space-between" align="middle" gutter={[16, 16]}>
-          <Col span={24}>
-            <Acl name="/practices/new">
-              <>
-                <Col span={24}>
-                  <AddButton
-                    onClick={onValidateAddPractice}
-                    title="Práctica"
-                    margin="0"
-                  />
-                </Col>
-                <Divider />
-              </>
-            </Acl>
-          </Col>
+          {user.roleCode === "user" && (
+            <Col span={24}>
+              <Acl name="/practices/new">
+                <>
+                  <Col span={24}>
+                    <AddButton
+                      onClick={onValidateAddPractice}
+                      title="Práctica"
+                      margin="0"
+                    />
+                  </Col>
+                  <Divider />
+                </>
+              </Acl>
+            </Col>
+          )}
           <Col span={24}>
             <Title level={3}>Prácticas Pre-Profesionales</Title>
           </Col>
