@@ -24,7 +24,9 @@ export const PracticesSheet2 = ({
       <Container>
         <div className="images">
           <div className="images__company">
-            <img src={company?.logotipoImage?.url} alt="" />
+            {company?.logotipoImage && (
+              <img src={company?.logotipoImage?.url} alt="" />
+            )}
           </div>
           <div className="images__qr">
             <QRCode
