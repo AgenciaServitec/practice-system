@@ -10,8 +10,10 @@ export const SignatureItem = ({
 }) => {
   return (
     <Container size={size}>
-      {signaturePhoto && (
+      {signaturePhoto ? (
         <img src={signaturePhoto} alt="signature" width={200} height={80} />
+      ) : (
+        <div className="signature-img"></div>
       )}
       <div className="firm">
         <div>
@@ -39,6 +41,11 @@ const Container = styled.div`
   width: 100%;
   margin-top: 1em;
   font-size: ${({ size }) => `${size}px`};
+
+  .signature-img {
+    width: auto;
+    height: 4em;
+  }
 
   .firm {
     padding-top: 0.5em;

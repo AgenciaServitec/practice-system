@@ -63,8 +63,8 @@ export const CompanyIntegration = () => {
     status: formData?.status,
     membersIds: formData?.membersIds,
     representativeId: formData?.representativeId,
-    isotipoImage: formData?.isotipoImage,
-    logotipoImage: formData?.logotipoImage,
+    isotipoImage: formData?.isotipoImage || null,
+    logotipoImage: formData?.logotipoImage || null,
   });
 
   const saveCompany = async (formData) => {

@@ -25,7 +25,7 @@ export const PracticesSheet2 = ({
         <div className="images">
           <div className="images__company">
             {company?.logotipoImage && (
-              <img src={company?.logotipoImage?.url} alt="" />
+              <img src={company?.logotipoImage?.url} alt="company logotipo" />
             )}
           </div>
           <div className="images__qr">
@@ -154,10 +154,12 @@ const Container = styled.div`
       height: 100%;
     }
     &__company {
-      width: 11em;
-      height: auto;
-      padding: 0.5em;
-      object-fit: contain;
+      img {
+        width: 11em;
+        height: auto;
+        padding: 0.5em;
+        object-fit: contain;
+      }
     }
     &__qr {
       width: 100px;
