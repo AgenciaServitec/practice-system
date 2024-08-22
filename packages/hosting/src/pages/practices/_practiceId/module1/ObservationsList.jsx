@@ -6,99 +6,179 @@ import { updateAnnex } from "../../../../firebase/collections/annexs";
 import styled from "styled-components";
 import dayjs from "dayjs";
 
-export const ObservationsList = ({ user, annex, practice }) => {
+export const ObservationsList = ({ annex, practice }) => {
   const {
     observationsAcademicSupervisor = [],
     observationsCompanyRepresentative = [],
   } = annex;
+
   const observations = {
-    company_representative: observationsCompanyRepresentative,
-    academic_supervisor: observationsAcademicSupervisor,
+    observationsAcademicSupervisor: observationsAcademicSupervisor,
+    observationsCompanyRepresentative: observationsCompanyRepresentative,
   };
 
-  const resolvedObservation = async (observationId) =>
+  const findObservation = (observationId, observationsType) =>
+    observations[observationsType].find(
+      (observation) => observation?.id === observationId
+    );
+
+  const excludeObservacion = (observationId, observationsType) =>
+    observations[observationsType].filter(
+      (_observation) => _observation?.id !== observationId
+    );
+
+  const updateObservation = async (
+    observationId,
+    observationsType,
+    newData
+  ) => {
+    const observation = findObservation(observationId, observationsType);
+    const oldObservations = excludeObservacion(observationId, observationsType);
+
+    const newObservations = [
+      ...oldObservations,
+      observation && {
+        ...observation,
+        ...newData,
+      },
+    ];
+
+    await updateAnnex(practice.id, annex.id, {
+      [observationsType]: newObservations,
+    });
+  };
+
+  const onResolveObservation = (observationId, observationsType) =>
     modalConfirm({
       title: "¿Esta seguro que resolvió la observación?",
       onOk: async () => {
-        const observationsList = observations[user.roleCode];
-        const observation = observationsList.find(
-          (observation) => observation.id === observationId
-        );
-
-        const oldObservations = observationsList.filter(
-          (_observation) => _observation.id !== observationId
-        );
-
-        const newObservations = [
-          ...oldObservations,
-          observation && {
-            ...observation,
-            status: "resolved",
-            updateAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
-          },
-        ];
-
-        await updateAnnex(practice.id, annex.id, {
-          ...(user.roleCode === "company_representative" && {
-            observationsCompanyRepresentative: newObservations,
-          }),
-          ...(user.roleCode === "academic_supervisor" && {
-            observationsAcademicSupervisor: newObservations,
-          }),
+        await updateObservation(observationId, observationsType, {
+          status: "resolved",
+          updateAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
         });
       },
     });
+
+  const onCloseObservation = (observationId, observationsType) =>
+    modalConfirm({
+      title: "¿Estás seguro de que quieres cerrar esta observación?",
+      onOk: async () => {
+        await updateObservation(observationId, observationsType, {
+          isDeleted: true,
+          updateAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
+        });
+      },
+    });
+
+  const observationsView = (observations) =>
+    (observations || []).filter(
+      (_observation) => _observation.isDeleted === false
+    );
 
   return (
     <Container gutter={[16, 16]}>
       <Acl name="/practices/:practiceId/annex#observations">
         <>
-          {observationsAcademicSupervisor
-            .filter((observation) => observation.status === "pending")
-            .map((observation, index) => (
+          {observationsView(observationsAcademicSupervisor).map(
+            (observation, index) => (
               <Col span={24} key={index}>
                 <Alert
-                  type="warning"
+                  type={
+                    observation.status === "pending" ? "warning" : "success"
+                  }
                   showIcon
                   message="Observación"
                   description={observation.value}
                   action={
-                    <Acl name="/practices/:practiceId/annex#observationResolver">
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={() => resolvedObservation(observation.id)}
-                      >
-                        Resolver
-                      </Button>
-                    </Acl>
+                    <>
+                      <Acl name="/practices/:practiceId/annex#observationResolver">
+                        {observation.status === "pending" && (
+                          <Button
+                            size="small"
+                            type="primary"
+                            onClick={() =>
+                              onResolveObservation(
+                                observation.id,
+                                "observationsAcademicSupervisor"
+                              )
+                            }
+                          >
+                            Resolver
+                          </Button>
+                        )}
+                      </Acl>
+                      <Acl name="/practices/:practiceId/annex#observationClose">
+                        {observation.status === "resolved" && (
+                          <Button
+                            size="small"
+                            danger
+                            onClick={() =>
+                              onCloseObservation(
+                                observation.id,
+                                "observationsAcademicSupervisor"
+                              )
+                            }
+                          >
+                            Cerrar
+                          </Button>
+                        )}
+                      </Acl>
+                    </>
                   }
                 />
               </Col>
-            ))}
-          {observationsCompanyRepresentative
-            .filter((observation) => observation.status === "pending")
-            .map((observation, index) => (
+            )
+          )}
+          {observationsView(observationsCompanyRepresentative).map(
+            (observation, index) => (
               <Col span={24} key={index}>
                 <Alert
-                  type="warning"
+                  type={
+                    observation.status === "pending" ? "warning" : "success"
+                  }
                   showIcon
                   message="Observación"
                   description={observation.value}
                   action={
-                    <Acl name="/practices/:practiceId/annex#observationResolver">
-                      <Button
-                        size="small"
-                        type="primary"
-                        onClick={() => resolvedObservation(observation.id)}
-                      >
-                        Resolver
-                      </Button>
-                    </Acl>
+                    <>
+                      <Acl name="/practices/:practiceId/annex#observationResolver">
+                        {observation.status === "pending" && (
+                          <Button
+                            size="small"
+                            type="primary"
+                            onClick={() =>
+                              onResolveObservation(
+                                observation.id,
+                                "observationsCompanyRepresentative"
+                              )
+                            }
+                          >
+                            Resolver
+                          </Button>
+                        )}
+                      </Acl>
+                      <Acl name="/practices/:practiceId/annex#observationClose">
+                        {observation.status === "resolved" && (
+                          <Button
+                            size="small"
+                            danger
+                            onClick={() =>
+                              onCloseObservation(
+                                observation.id,
+                                "observationsCompanyRepresentative"
+                              )
+                            }
+                          >
+                            Cerrar
+                          </Button>
+                        )}
+                      </Acl>
+                    </>
                   }
                 />
               </Col>
-            ))}
+            )
+          )}
         </>
       </Acl>
     </Container>

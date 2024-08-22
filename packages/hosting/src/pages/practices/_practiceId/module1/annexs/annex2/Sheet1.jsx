@@ -153,7 +153,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                 />
               </Col>
             </Row>
-            <ObservationsList user={user} annex={annex2} practice={practice} />
+            <ObservationsList annex={annex2} practice={practice} />
             <Acl name="/practices/:practiceId/annex#save">
               {user?.roleCode === "user" && (
                 <Row justify="end" gutter={[16, 16]}>

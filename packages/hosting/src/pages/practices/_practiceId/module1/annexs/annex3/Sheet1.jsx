@@ -77,7 +77,7 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice, loading }) => {
         />
       ) : hasPermissionRepresentative ? (
         <ObservationForRepresentativeCompany
-          annex3={annex3}
+          annex={annex3}
           loading={loading}
           onConfirmSaveSheet1={onConfirmSaveSheet1}
         />
@@ -143,7 +143,7 @@ const Sheet1 = ({ annex3, onConfirmSaveSheet1, user, practice, loading }) => {
           </Col>
         </Row>
       )}
-      <ObservationsList user={user} annex={annex3} practice={practice} />
+      <ObservationsList annex={annex3} practice={practice} />
     </>
   );
 };

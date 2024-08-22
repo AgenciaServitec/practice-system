@@ -35,6 +35,7 @@ export const ObservationOfAnnexIntegration = ({
         createAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
         status: "pending",
         value: formData.observation,
+        isDeleted: false,
       },
     ],
   });
@@ -46,6 +47,7 @@ export const ObservationOfAnnexIntegration = ({
         createAt: dayjs().format("DD/MM/YYYY HH:mm:ss"),
         status: "pending",
         value: formData.observation,
+        isDeleted: false,
       },
     ],
   });
