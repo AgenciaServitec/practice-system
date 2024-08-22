@@ -68,8 +68,8 @@ export const Sheet1Integration = ({ practice, user, annex2 }) => {
 
 const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
   const schema = yup.object({
-    refreshment: yup.string(),
-    mobility: yup.string(),
+    refreshment: yup.string().required(),
+    mobility: yup.string().required(),
     others: yup.string(),
   });
   const {
@@ -108,7 +108,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                   defaultValue=""
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="Refrigerio (opcional)"
+                      label="Refrigerio"
                       name={name}
                       value={value}
                       onChange={onChange}
@@ -125,7 +125,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                   defaultValue=""
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="Movilidad (opcional)"
+                      label="Movilidad"
                       name={name}
                       value={value}
                       onChange={onChange}
