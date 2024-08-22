@@ -108,7 +108,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                   defaultValue=""
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="Refrigerio (opcional)"
+                      label="Refrigerio"
                       name={name}
                       value={value}
                       onChange={onChange}
@@ -125,7 +125,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                   defaultValue=""
                   render={({ field: { onChange, value, name } }) => (
                     <Input
-                      label="Movilidad (opcional)"
+                      label="Movilidad"
                       name={name}
                       value={value}
                       onChange={onChange}
