@@ -96,6 +96,13 @@ export const ManageCreateProductIntegration = ({
     ].filter((item) => item),
   });
 
+  const companiesView = companies
+    .filter((company) => user?.companiesIds.includes(company.id))
+    .map((_company) => ({
+      label: capitalize(_company.socialReason),
+      value: _company.id,
+    }));
+
   const validateExistsModule = async (practice) => {
     const userPractices = await fetchPracticesByPractitionerId(
       practice.practitionerId
