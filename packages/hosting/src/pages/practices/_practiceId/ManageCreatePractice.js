@@ -158,7 +158,7 @@ export const ManageCreateProductIntegration = ({
       savingPractice={savingPractice}
       practice={practice}
       company={company}
-      companies={companies}
+      companiesView={companiesView}
       users={users}
       practices={practices}
       savePractice={savePractice}
@@ -171,7 +171,7 @@ const ManageCreateProduct = ({
   savingPractice,
   practice,
   company,
-  companies,
+  companiesView,
   users,
   practices,
   savePractice,
@@ -322,10 +322,7 @@ const ManageCreateProduct = ({
                       label="Empresa"
                       value={value}
                       onChange={onChange}
-                      options={companies.map((user) => ({
-                        label: capitalize(user.socialReason),
-                        value: user.id,
-                      }))}
+                      options={companiesView}
                       error={error(name)}
                       required={required(name)}
                     />
