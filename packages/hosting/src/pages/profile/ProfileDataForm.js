@@ -59,16 +59,6 @@ export const ProfileDataForm = () => {
       .max(8)
       .required()
       .transform((value) => (value === null ? "" : value)),
-    academicCoordinatorId: yup.string().when("authUser", {
-      is: () => authUser.roleCode === "user",
-      then: yup.string().required(),
-      otherwise: yup.string(),
-    }),
-    academicSupervisorId: yup.string().when("authUser", {
-      is: () => authUser.roleCode === "user",
-      then: yup.string().required(),
-      otherwise: yup.string(),
-    }),
     companiesIds: yup.array().when("authUser", {
       is: () => authUser.roleCode === "user",
       then: yup.array().required(),
@@ -116,8 +106,6 @@ export const ProfileDataForm = () => {
       email: authUser?.email || "",
       phoneNumber: authUser?.phone?.number || "",
       dni: authUser?.dni || "",
-      academicCoordinatorId: authUser?.academicCoordinatorId || undefined,
-      academicSupervisorId: authUser?.academicSupervisorId || undefined,
       companiesIds: authUser?.companiesIds || undefined,
     });
   };
@@ -251,58 +239,23 @@ export const ProfileDataForm = () => {
           />
         </Col>
         {authUser.roleCode === "user" && (
-          <>
-            {" "}
-            <Col span={12}>
-              <Controller
-                name="academicCoordinatorId"
-                control={control}
-                render={({ field: { onChange, name, value } }) => (
-                  <Select
-                    label="Coordinador Académico"
-                    value={value}
-                    options={coordinatorView}
-                    onChange={onChange}
-                    error={error(name)}
-                    helperText={errorMessage(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={12}>
-              <Controller
-                name="academicSupervisorId"
-                control={control}
-                render={({ field: { onChange, name, value } }) => (
-                  <Select
-                    label="Supervisor Académico"
-                    value={value}
-                    options={supervisorView}
-                    onChange={onChange}
-                    error={error(name)}
-                    helperText={errorMessage(name)}
-                  />
-                )}
-              />
-            </Col>
-            <Col span={24}>
-              <Controller
-                name="companiesIds"
-                control={control}
-                render={({ field: { onChange, name, value } }) => (
-                  <Select
-                    label="Empresas de practicas"
-                    mode="multiple"
-                    value={value}
-                    options={companiesView}
-                    onChange={onChange}
-                    error={error(name)}
-                    helperText={errorMessage(name)}
-                  />
-                )}
-              />
-            </Col>
-          </>
+          <Col span={24}>
+            <Controller
+              name="companiesIds"
+              control={control}
+              render={({ field: { onChange, name, value } }) => (
+                <Select
+                  label="Empresas de practicas"
+                  mode="multiple"
+                  value={value}
+                  options={companiesView}
+                  onChange={onChange}
+                  error={error(name)}
+                  helperText={errorMessage(name)}
+                />
+              )}
+            />
+          </Col>
         )}
       </Row>
       <Row justify="end" gutter={[16, 16]}>
