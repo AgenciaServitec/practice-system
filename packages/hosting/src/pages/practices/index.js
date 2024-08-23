@@ -49,11 +49,7 @@ export const CorrespondencesIntegration = () => {
     });
 
   const onValidateAddPractice = () => {
-    if (
-      !authUser?.academicCoordinatorId ||
-      !authUser.academicSupervisorId ||
-      isEmpty(authUser.companiesIds)
-    ) {
+    if (isEmpty(authUser.companiesIds)) {
       return notification({
         type: "warning",
         title: "Debe completar todo su perfil para crear una práctica",
