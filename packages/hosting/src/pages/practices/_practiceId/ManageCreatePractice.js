@@ -138,7 +138,11 @@ export const ManageCreateProductIntegration = ({
 
       const p0 = updateUser(
         practice.practitionerId,
-        assignUpdateProps({ hasPractices: true })
+        assignUpdateProps({
+          academicCoordinatorId: formData.academicCoordinatorId,
+          academicSupervisorId: formData.academicSupervisorId,
+          hasPractices: true,
+        })
       );
       const p1 = addPractice(assignCreateProps(practice));
 
