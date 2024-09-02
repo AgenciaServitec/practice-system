@@ -206,8 +206,6 @@ const ManageCreateProduct = ({
 
   const { required, error } = useFormUtils({ errors, schema });
 
-  console.log("errors: ", errors);
-
   useEffect(() => {
     watch("moduleNumber") &&
       setValue(
