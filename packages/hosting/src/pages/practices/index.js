@@ -48,26 +48,6 @@ export const CorrespondencesIntegration = () => {
       },
     });
 
-  const onValidateAddPractice = () => {
-    if (
-      !authUser?.academicCoordinatorId ||
-      !authUser.academicSupervisorId ||
-      isEmpty(authUser.companiesIds)
-    ) {
-      return notification({
-        type: "warning",
-        title: "Debe completar todo su perfil para crear una práctica",
-        btn: (
-          <Button type="primary" onClick={() => navigate("/profile")}>
-            Click aquí!
-          </Button>
-        ),
-      });
-    }
-
-    onAddPractice();
-  };
-
   return (
     <Practices
       practices={practices}
@@ -76,7 +56,7 @@ export const CorrespondencesIntegration = () => {
       onNavigateTo={navigateTo}
       onEditPractice={onEditPractice}
       onConfirmRemovePractice={onConfirmRemovePractice}
-      onValidateAddPractice={onValidateAddPractice}
+      onAddPractice={onAddPractice}
     />
   );
 };
@@ -88,7 +68,7 @@ const Practices = ({
   onNavigateTo,
   onEditPractice,
   onConfirmRemovePractice,
-  onValidateAddPractice,
+  onAddPractice,
 }) => {
   const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
 
@@ -148,7 +128,7 @@ const Practices = ({
                 <>
                   <Col span={24}>
                     <AddButton
-                      onClick={onValidateAddPractice}
+                      onClick={onAddPractice}
                       title="Práctica"
                       margin="0"
                     />

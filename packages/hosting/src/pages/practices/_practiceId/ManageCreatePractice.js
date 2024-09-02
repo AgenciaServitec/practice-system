@@ -29,7 +29,7 @@ import {
 import { useNavigate } from "react-router";
 import { fullName, getNameId } from "../../../utils";
 import { Modules } from "../../../data-list";
-import { capitalize } from "lodash";
+import { capitalize, uniq } from "lodash";
 import dayjs from "dayjs";
 import { Alert } from "antd";
 import { addAnnex } from "../../../firebase/collections/annexs";
@@ -131,7 +131,15 @@ export const ManageCreateProductIntegration = ({
 
       const p0 = updateUser(
         practice.practitionerId,
-        assignUpdateProps({ hasPractices: true })
+        assignUpdateProps({
+          academicCoordinatorId: formData.academicCoordinatorId,
+          academicSupervisorId: formData.academicSupervisorId,
+          companiesIds: uniq([
+            formData.companyId,
+            ...(user?.companiesIds || []),
+          ]),
+          hasPractices: true,
+        })
       );
       const p1 = addPractice(assignCreateProps(practice));
 
@@ -315,9 +323,9 @@ const ManageCreateProduct = ({
                       label="Empresa"
                       value={value}
                       onChange={onChange}
-                      options={companies.map((user) => ({
-                        label: capitalize(user.socialReason),
-                        value: user.id,
+                      options={companies.map((_company) => ({
+                        label: capitalize(_company.socialReason),
+                        value: _company.id,
                       }))}
                       error={error(name)}
                       required={required(name)}
