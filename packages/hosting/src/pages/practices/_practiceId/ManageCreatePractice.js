@@ -29,7 +29,7 @@ import {
 import { useNavigate } from "react-router";
 import { fullName, getNameId } from "../../../utils";
 import { Modules } from "../../../data-list";
-import { capitalize } from "lodash";
+import { capitalize, uniq } from "lodash";
 import dayjs from "dayjs";
 import { Alert } from "antd";
 import { addAnnex } from "../../../firebase/collections/annexs";
@@ -96,13 +96,6 @@ export const ManageCreateProductIntegration = ({
     ].filter((item) => item),
   });
 
-  const companiesView = companies
-    .filter((company) => user?.companiesIds.includes(company.id))
-    .map((_company) => ({
-      label: capitalize(_company.socialReason),
-      value: _company.id,
-    }));
-
   const validateExistsModule = async (practice) => {
     const userPractices = await fetchPracticesByPractitionerId(
       practice.practitionerId
@@ -141,6 +134,10 @@ export const ManageCreateProductIntegration = ({
         assignUpdateProps({
           academicCoordinatorId: formData.academicCoordinatorId,
           academicSupervisorId: formData.academicSupervisorId,
+          companiesIds: uniq([
+            formData.companyId,
+            ...(user?.companiesIds || []),
+          ]),
           hasPractices: true,
         })
       );
@@ -162,7 +159,7 @@ export const ManageCreateProductIntegration = ({
       savingPractice={savingPractice}
       practice={practice}
       company={company}
-      companiesView={companiesView}
+      companies={companies}
       users={users}
       practices={practices}
       savePractice={savePractice}
@@ -175,7 +172,7 @@ const ManageCreateProduct = ({
   savingPractice,
   practice,
   company,
-  companiesView,
+  companies,
   users,
   practices,
   savePractice,
@@ -208,6 +205,8 @@ const ManageCreateProduct = ({
   });
 
   const { required, error } = useFormUtils({ errors, schema });
+
+  console.log("errors: ", errors);
 
   useEffect(() => {
     watch("moduleNumber") &&
@@ -326,7 +325,10 @@ const ManageCreateProduct = ({
                       label="Empresa"
                       value={value}
                       onChange={onChange}
-                      options={companiesView}
+                      options={companies.map((_company) => ({
+                        label: capitalize(_company.socialReason),
+                        value: _company.id,
+                      }))}
                       error={error(name)}
                       required={required(name)}
                     />
