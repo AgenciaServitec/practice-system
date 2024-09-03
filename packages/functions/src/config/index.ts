@@ -3,11 +3,11 @@ import { config } from "./config";
 const projectId = process.env.GCLOUD_PROJECT;
 
 const currentEnvironment =
-  projectId === "korekenke-prod" ? "production" : "development";
+  projectId === "practice-system" ? "production" : "development";
 
 const isProduction = currentEnvironment === "production";
 
-const environmentConfig: EnvironmentConfig = {
+const environmentConfig = {
   ...config[currentEnvironment],
   ...config.common,
 };

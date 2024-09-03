@@ -1,18 +1,48 @@
+interface Config {
+  common: ConfigCommon;
+  development: ConfigEnvironment;
+  production: ConfigEnvironment;
+}
+
+interface ConfigCommon {
+  "node-mailer": NodeMailerConfig;
+}
+
+interface NodeMailerConfig {
+  port: number;
+  host: string;
+  from: string;
+  user: string;
+  pass: string;
+}
+
+interface MailerConfig {
+  contact: {
+    bcc: string;
+    to: string;
+  };
+}
+
+interface ConfigEnvironment {
+  mailer: MailerConfig;
+  "apis-net-pe": ApisNetPeConfig;
+}
+
 export const config: Config = {
   common: {
     "node-mailer": {
       port: 465,
       host: "smtp.gmail.com",
-      from: "Korekenke App",
-      user: "noreply@korekenke.pe",
-      pass: "mbnpgrdavwtxkljc",
+      from: "Practice System",
+      user: "galafloresangelemilio@gmail.com",
+      pass: "nwhn wysg fjkm urpe",
     },
   },
   development: {
-    version: "0.0.1",
     mailer: {
-      sendMailNotifyCDSError: {
-        to: "mariano260996@gmail.com",
+      contact: {
+        bcc: "prueba@gmail.com",
+        to: "galafloresangelemilio@gmail.com",
       },
     },
     "apis-net-pe": {
@@ -21,10 +51,10 @@ export const config: Config = {
     },
   },
   production: {
-    version: "0.0.1",
     mailer: {
-      sendMailNotifyCDSError: {
-        to: "ti@korekenke.com",
+      contact: {
+        bcc: "prueba@gmail.com",
+        to: "galafloresangelemilio@gmail.com",
       },
     },
     "apis-net-pe": {

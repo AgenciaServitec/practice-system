@@ -16,5 +16,6 @@ interface DefaultFirestoreProps {
   updateAt: FirebaseFirestore.Timestamp;
   deleteAt?: FirebaseFirestore.Timestamp;
   isDeleted: boolean;
+  createBy?: string;
   updateBy?: string;
 }

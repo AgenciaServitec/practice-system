@@ -21,11 +21,14 @@ interface RoleAcls extends DefaultFirestoreProps {
 
 //  for user
 interface PractitionerData {
-  isGraduate: boolean;
-  tuitionId: string | null;
-  studentShift?: "diurno" | "nocturno";
-  semester?: number;
   academicYear?: number;
+  entryYear: string;
+  isGraduate: boolean;
+  professionalCareer: string;
+  semester?: number;
+  studentShift?: "diurno" | "nocturno";
+  tuitionId: string | null;
+  yearGraduation: string;
 }
 
 //  for company_representative
@@ -37,6 +40,7 @@ interface CompanyRepresentativeData {
 interface User extends DefaultFirestoreProps {
   id: string;
   acls: string[];
+  companiesIds: string[];
   roleCode: RoleCode;
   email: string;
   password: string;
@@ -49,10 +53,13 @@ interface User extends DefaultFirestoreProps {
     prefix: string;
     number: string;
   };
-  iAcceptPrivacyPolicies: boolean;
-  //  conditional data by roleCode
+  hasPractices: boolean;
+  status: string;
+  academicCoordinatorId: string;
+  academicSupervisorId: string;
   practitionerData?: PractitionerData;
   companyRepresentativeData?: CompanyRepresentativeData;
+  iAcceptPrivacyPolicies: boolean;
 }
 
 interface Image {
@@ -97,4 +104,25 @@ interface Company extends DefaultFirestoreProps {
   status: "active" | "inactive";
   membersIds: string[];
   representativeId: string;
+}
+
+interface Practice extends DefaultFirestoreProps {
+  academicCoordinatorId: string;
+  academicSupervisorId: string;
+  companyId: string;
+  companyRepresentativeId: string;
+  departureTime: string;
+  endDate: string;
+  entryTime: string;
+  hours: number;
+  id: string;
+  moduleNumber: number;
+  name: string;
+  nameId: string;
+  practiceArea: string;
+  practitionerId: string;
+  searchData: string[];
+  startDate: string;
+  status: string;
+  task: string;
 }
