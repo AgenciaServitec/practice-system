@@ -4,7 +4,6 @@ import { errorHandler, hostingToApi } from "./_middlewares";
 import { body } from "express-validator";
 import { patchUser, postUser, putUser } from "./users";
 import { getEntityDataByDni, getEntityDataByRuc } from "./consults";
-import { sendMailConfirmationPractice } from "../mailer/practice-system";
 
 const app: express.Application = express();
 
@@ -26,14 +25,6 @@ app.patch("/users/:userId", [body("updateBy").exists()], patchUser);
 
 app.get("/consults/dni/:dni", getEntityDataByDni);
 app.get("/consults/ruc/:ruc", getEntityDataByRuc);
-app.get("/send-mail", async (req, res, next) => {
-  await sendMailConfirmationPractice(
-    null,
-    "galafloresangelemilio@gmail.com",
-    ""
-  );
-  res.send(200).end();
-});
 
 app.use(errorHandler);
 
