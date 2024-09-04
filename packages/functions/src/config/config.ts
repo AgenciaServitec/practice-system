@@ -40,8 +40,8 @@ export const config: Config = {
       port: 465,
       host: "smtp.gmail.com",
       from: "Practice System",
-      user: "galafloresangelemilio@gmail.com",
-      pass: "nwhn wysg fjkm urpe",
+      user: "servitecperu266@gmail.com",
+      pass: "aghv nygl mzqo gqud",
     },
   },
   development: {
