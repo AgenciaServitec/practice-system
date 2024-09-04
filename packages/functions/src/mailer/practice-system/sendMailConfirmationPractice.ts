@@ -18,7 +18,7 @@ export const sendMailConfirmationPractice = async (
   await sendMail({
     to: user.email,
     bcc: "",
-    subject: "Confirmación de aprobación de módulo",
+    subject: `[Módulo ${practice.moduleNumber}]: ${capitalize(practice.name)}`,
     html: html(template.contactEmailReceptor, mapMail(practice, user)),
   });
 
@@ -27,5 +27,5 @@ const mapMail = (practice: Practice, user: User): Mail => ({
   moduleNumber: practice.moduleNumber,
   name: capitalize(practice.name),
   status: practice.status,
-  practiceLink: `${environmentConfig.hosting.domain}/practices/${practice.id}/module${practice.moduleNumber}/sheets`,
+  practiceLink: `${environmentConfig.hosting.domain}/practices/${practice.id}/module1/sheets`,
 });
