@@ -1,7 +1,6 @@
 type EnvironmentConfig = ConfigCommon & ConfigEnvironment;
 
 interface Config {
-  common: ConfigCommon;
   development: ConfigEnvironment;
   production: ConfigEnvironment;
 }

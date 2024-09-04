@@ -1,31 +1,75 @@
+interface Config {
+  common: ConfigCommon;
+  development: ConfigEnvironment;
+  production: ConfigEnvironment;
+}
+
+interface ConfigCommon {
+  "node-mailer": NodeMailerConfig;
+}
+
+interface NodeMailerConfig {
+  port: number;
+  host: string;
+  from: string;
+  user: string;
+  pass: string;
+}
+
+interface MailerConfig {
+  contact: {
+    bcc: string;
+    to: string;
+  };
+}
+
+interface ConfigEnvironment {
+  mailer: MailerConfig;
+  "apis-net-pe": ApisNetPeConfig;
+  hosting: HostingConfig;
+}
+
+interface HostingConfig {
+  domain: string;
+  apiUrl: string;
+}
+
 export const config: Config = {
   common: {
     "node-mailer": {
       port: 465,
       host: "smtp.gmail.com",
-      from: "Korekenke App",
-      user: "noreply@korekenke.pe",
-      pass: "mbnpgrdavwtxkljc",
+      from: "Practice System",
+      user: "galafloresangelemilio@gmail.com",
+      pass: "nwhn wysg fjkm urpe",
     },
   },
   development: {
-    version: "0.0.1",
     mailer: {
-      sendMailNotifyCDSError: {
-        to: "mariano260996@gmail.com",
+      contact: {
+        bcc: "prueba@gmail.com",
+        to: "galafloresangelemilio@gmail.com",
       },
     },
     "apis-net-pe": {
       apiUrl: "https://api.apis.net.pe/v2",
       token: "apis-token-8290.s1Op-FA9ZArlfXq39wpzMuKiaXexehgs",
     },
+    hosting: {
+      domain: "https://practice-system.web.app",
+      apiUrl: "https://practice-system.web.app/api",
+    },
   },
   production: {
-    version: "0.0.1",
     mailer: {
-      sendMailNotifyCDSError: {
-        to: "ti@korekenke.com",
+      contact: {
+        bcc: "prueba@gmail.com",
+        to: "galafloresangelemilio@gmail.com",
       },
+    },
+    hosting: {
+      domain: "https://practice-system.web.app",
+      apiUrl: "https://practice-system.web.app/api",
     },
     "apis-net-pe": {
       apiUrl: "https://api.apis.net.pe/v2",

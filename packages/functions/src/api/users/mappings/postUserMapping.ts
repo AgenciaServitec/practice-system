@@ -6,6 +6,7 @@ export const postUserMapping = (user: UserBody, companyId: string): User => {
   return assignCreateProps({
     id: user.id,
     acls: user.acls,
+    companiesIds: user.companiesIds,
     roleCode: user.roleCode,
     email: user.email,
     password: user.password,
@@ -16,7 +17,10 @@ export const postUserMapping = (user: UserBody, companyId: string): User => {
     phone: user.phone,
     iAcceptPrivacyPolicies: true,
     isDeleted: false,
+    hasPractices: user.hasPractices,
     status: "registered",
+    academicCoordinatorId: user.academicCoordinatorId,
+    academicSupervisorId: user.academicSupervisorId,
 
     // conditional data by roleCode
     ...(user?.practitionerData && {
