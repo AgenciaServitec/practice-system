@@ -1,1 +1,1 @@
-export * from "./sendMailContactReceptor";
+export * from "./sendMailConfirmationPractice";

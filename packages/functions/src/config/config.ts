@@ -26,6 +26,12 @@ interface MailerConfig {
 interface ConfigEnvironment {
   mailer: MailerConfig;
   "apis-net-pe": ApisNetPeConfig;
+  hosting: HostingConfig;
+}
+
+interface HostingConfig {
+  domain: string;
+  apiUrl: string;
 }
 
 export const config: Config = {
@@ -49,6 +55,10 @@ export const config: Config = {
       apiUrl: "https://api.apis.net.pe/v2",
       token: "apis-token-8290.s1Op-FA9ZArlfXq39wpzMuKiaXexehgs",
     },
+    hosting: {
+      domain: "https://practice-system.web.app",
+      apiUrl: "https://practice-system.web.app/api",
+    },
   },
   production: {
     mailer: {
@@ -56,6 +66,10 @@ export const config: Config = {
         bcc: "prueba@gmail.com",
         to: "galafloresangelemilio@gmail.com",
       },
+    },
+    hosting: {
+      domain: "https://practice-system.web.app",
+      apiUrl: "https://practice-system.web.app/api",
     },
     "apis-net-pe": {
       apiUrl: "https://api.apis.net.pe/v2",

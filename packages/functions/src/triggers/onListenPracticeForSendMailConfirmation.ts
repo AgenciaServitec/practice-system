@@ -1,7 +1,8 @@
 import { OnDocumentUpdated } from "./interface";
 import { fetchDocument, firestore } from "../_firebase";
 import assert from "assert";
-import { senMailContactReceptor } from "../mailer/practice-system";
+import { sendMailConfirmationPractice } from "../mailer/practice-system";
+import { logger } from "../utils";
 
 export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
   async (event) => {
@@ -9,11 +10,16 @@ export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
 
     if (!practiceAfter) return;
 
-    const user = await fetchUser(practiceAfter.practitionerId);
+    if (practiceAfter.status === "approved") {
+      const user = await fetchUser(practiceAfter.practitionerId);
 
-    assert(user, "Missing user!");
+      logger.log("practiceAfter: ", practiceAfter);
+      logger.log("user: ", user);
 
-    await senMailContactReceptor(practiceAfter, user.email);
+      assert(user, "Missing user!");
+
+      await sendMailConfirmationPractice(practiceAfter, user);
+    }
   };
 
 const fetchUser = async (userId: string): Promise<User | undefined> => {
