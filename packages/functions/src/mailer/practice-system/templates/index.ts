@@ -5,7 +5,14 @@ const htmlTemplate = (url: string): string =>
   readFileSync(path.join(__dirname, url)).toString();
 
 export const template = {
-  contactEmailReceptor: htmlTemplate("./contactEmailReceptor.html"),
-  refusedEmailPractice: htmlTemplate("./refusedEmailPractice.html"),
-  observationsEmailPractice: htmlTemplate("./observationsEmailPractice.html"),
+  newPracticeEmailTemplate: htmlTemplate("./newPracticeEmailTemplate.html"),
+  practiceObservationsEmailTemplate: htmlTemplate(
+    "./practiceApprovedEmailTemplate.html"
+  ),
+  practiceApprovedEmailTemplate: htmlTemplate(
+    "./practiceObservationsEmailTemplate.html"
+  ),
+  practiceRefusedEmailTemplate: htmlTemplate(
+    "./practiceRefusedEmailTemplate.html"
+  ),
 };

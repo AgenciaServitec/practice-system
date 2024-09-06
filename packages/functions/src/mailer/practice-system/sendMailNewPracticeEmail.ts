@@ -11,7 +11,7 @@ interface Mail {
   practiceLink: string;
 }
 
-export const sendMailConfirmationPractice = async (
+export const sendMailNewPracticeEmail = async (
   practice: Practice,
   user: User
 ): Promise<void> =>
@@ -19,7 +19,7 @@ export const sendMailConfirmationPractice = async (
     to: user.email,
     bcc: "",
     subject: `[Módulo ${practice.moduleNumber}]: ${capitalize(practice.name)}`,
-    html: html(template.contactEmailReceptor, mapMail(practice, user)),
+    html: html(template.newPracticeEmailTemplate, mapMail(practice, user)),
   });
 
 const mapMail = (practice: Practice, user: User): Mail => ({
@@ -27,5 +27,5 @@ const mapMail = (practice: Practice, user: User): Mail => ({
   moduleNumber: practice.moduleNumber,
   name: capitalize(practice.name),
   status: practice.status,
-  practiceLink: `${environmentConfig.hosting.domain}/practices/${practice.id}/module1/sheets`,
+  practiceLink: `${environmentConfig.hosting.domain}/practices/${practice.id}`,
 });

@@ -21,7 +21,7 @@ interface ObservationByUser {
   list: ObservationAnnex[];
 }
 
-export const sendMailObservationsPractice = async (
+export const sendMailPracticeObservationsEmail = async (
   practice: Practice,
   user: User
 ): Promise<void> => {
@@ -29,7 +29,10 @@ export const sendMailObservationsPractice = async (
     to: user.email,
     bcc: "",
     subject: `[Módulo ${practice.moduleNumber}]: Observaciones`,
-    html: html(template.observationsEmailPractice, mapMail(practice, user)),
+    html: html(
+      template.practiceObservationsEmailTemplate,
+      mapMail(practice, user)
+    ),
   });
 };
 

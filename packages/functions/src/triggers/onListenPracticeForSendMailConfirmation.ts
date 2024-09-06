@@ -2,10 +2,10 @@ import { OnDocumentUpdated } from "./interface";
 import { fetchCollection, fetchDocument, firestore } from "../_firebase";
 import assert from "assert";
 import {
-  sendMailConfirmationPractice,
-  sendMailRefusedPractice,
+  sendMailPracticeRefusedEmail,
+  sendMailPracticeObservationsEmail,
+  sendMailPracticeApprovedEmail,
 } from "../mailer/practice-system";
-import { sendMailObservationsPractice } from "../mailer/practice-system/sendMailObservationsPractice";
 
 export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
   async (event) => {
@@ -22,11 +22,11 @@ export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
 
     if (practiceAfter.status !== "pending") {
       if (practiceAfter.status === "approved") {
-        await sendMailConfirmationPractice(practiceAfter, user);
+        await sendMailPracticeApprovedEmail(practiceAfter, user);
       }
 
       if (practiceAfter.status === "refused") {
-        await sendMailRefusedPractice(practiceAfter, user);
+        await sendMailPracticeRefusedEmail(practiceAfter, user);
       }
     }
 
@@ -35,7 +35,7 @@ export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
       practiceAfter?.existObservationsInAnnexs
     ) {
       if (practiceAfter?.existObservationsInAnnexs) {
-        await sendMailObservationsPractice(practiceAfter, user);
+        await sendMailPracticeObservationsEmail(practiceAfter, user);
       }
     }
   };
