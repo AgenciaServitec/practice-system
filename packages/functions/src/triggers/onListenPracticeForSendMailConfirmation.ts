@@ -5,71 +5,37 @@ import {
   sendMailConfirmationPractice,
   sendMailRefusedPractice,
 } from "../mailer/practice-system";
-import { logger } from "../utils";
+import { sendMailObservationsPractice } from "../mailer/practice-system/sendMailObservationsPractice";
 
 export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
   async (event) => {
+    const practiceBefore = event.data?.before.data() as Practice | undefined;
     const practiceAfter = event.data?.after.data() as Practice | undefined;
 
-    if (!practiceAfter) return;
+    assert(practiceBefore, "Missing practiceBefore!");
+    assert(practiceAfter, "Missing practiceAfter!");
 
-    const annexs = await fetchAnnexs(practiceAfter.id);
-    logger.log(annexs);
+    const user = await fetchUser(practiceAfter.practitionerId);
+    assert(user, "Missing user!");
 
-    annexs.map((annex) => {
-      if (
-        !annex.observationsAcademicSupervisor &&
-        !annex.observationsAcademicSupervisor
-      )
-        return;
-    });
-
-    const observationAnnexs = annexs
-      .filter(
-        (annex: Annex) =>
-          annex?.observationsCompanyRepresentative ||
-          annex?.observationsAcademicSupervisor
-      )
-      .map((_annex) => [
-        ...mapAnnexs(
-          _annex,
-          _annex?.observationsCompanyRepresentative,
-          "observationsCompanyRepresentative"
-        ),
-        ...mapAnnexs(
-          _annex,
-          _annex?.observationsAcademicSupervisor,
-          "observationsAcademicSupervisor"
-        ),
-      ]);
-
-    const mapAnnexs = (
-      annex: Annex,
-      observations: ObservationAnnex[],
-      type: string
-    ) =>
-      observations.map((_observation) => ({
-        ..._observation,
-        annexName: annex.id,
-        type: type,
-      }));
-
-    logger.log("annexsView: ", observationAnnexs);
+    await onCheckObservationsAnnexs(practiceAfter.id);
 
     if (practiceAfter.status !== "pending") {
-      const user = await fetchUser(practiceAfter.practitionerId);
-
-      logger.log("practiceAfter: ", practiceAfter);
-      logger.log("user: ", user);
-
-      assert(user, "Missing user!");
-
       if (practiceAfter.status === "approved") {
         await sendMailConfirmationPractice(practiceAfter, user);
       }
 
       if (practiceAfter.status === "refused") {
         await sendMailRefusedPractice(practiceAfter, user);
+      }
+    }
+
+    if (
+      practiceBefore?.existObservationsInAnnexs !==
+      practiceAfter?.existObservationsInAnnexs
+    ) {
+      if (practiceAfter?.existObservationsInAnnexs) {
+        await sendMailObservationsPractice(practiceAfter, user);
       }
     }
   };
@@ -82,4 +48,29 @@ const fetchAnnexs = async (practiceId: string): Promise<Annex[]> => {
   return await fetchCollection(
     firestore.collection("practices").doc(practiceId).collection("annexs")
   );
+};
+
+const onCheckObservationsAnnexs = async (practiceId: string) => {
+  const annexs = await fetchAnnexs(practiceId);
+  assert(annexs, "Missing annexs!");
+
+  const observationsOfAnnexs = annexs
+    .filter(
+      (annex) =>
+        annex?.observationsCompanyRepresentative ||
+        annex?.observationsAcademicSupervisor
+    )
+    .flatMap((_annex) => [
+      ..._annex.observationsCompanyRepresentative,
+      ..._annex.observationsAcademicSupervisor,
+    ]);
+
+  const existsObservationsInAnnexs = observationsOfAnnexs.some(
+    (observation) => observation.status === "pending"
+  );
+
+  await firestore
+    .collection("practices")
+    .doc(practiceId)
+    .update({ existObservationsInAnnexs: existsObservationsInAnnexs });
 };
