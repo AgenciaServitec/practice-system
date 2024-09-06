@@ -1,27 +1,76 @@
 import { OnDocumentUpdated } from "./interface";
-import { fetchDocument, firestore } from "../_firebase";
+import { fetchCollection, fetchDocument, firestore } from "../_firebase";
 import assert from "assert";
-import { sendMailConfirmationPractice } from "../mailer/practice-system";
-import { logger } from "../utils";
+import {
+  sendMailConfirmationPractice,
+  sendMailRefusedPractice,
+} from "../mailer/practice-system";
+import { sendMailObservationsPractice } from "../mailer/practice-system/sendMailObservationsPractice";
 
 export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
   async (event) => {
+    const practiceBefore = event.data?.before.data() as Practice | undefined;
     const practiceAfter = event.data?.after.data() as Practice | undefined;
 
-    if (!practiceAfter) return;
+    assert(practiceBefore, "Missing practiceBefore!");
+    assert(practiceAfter, "Missing practiceAfter!");
 
-    if (practiceAfter.status === "approved") {
-      const user = await fetchUser(practiceAfter.practitionerId);
+    const user = await fetchUser(practiceAfter.practitionerId);
+    assert(user, "Missing user!");
 
-      logger.log("practiceAfter: ", practiceAfter);
-      logger.log("user: ", user);
+    await onCheckObservationsAnnexs(practiceAfter.id);
 
-      assert(user, "Missing user!");
+    if (practiceAfter.status !== "pending") {
+      if (practiceAfter.status === "approved") {
+        await sendMailConfirmationPractice(practiceAfter, user);
+      }
 
-      await sendMailConfirmationPractice(practiceAfter, user);
+      if (practiceAfter.status === "refused") {
+        await sendMailRefusedPractice(practiceAfter, user);
+      }
+    }
+
+    if (
+      practiceBefore?.existObservationsInAnnexs !==
+      practiceAfter?.existObservationsInAnnexs
+    ) {
+      if (practiceAfter?.existObservationsInAnnexs) {
+        await sendMailObservationsPractice(practiceAfter, user);
+      }
     }
   };
 
 const fetchUser = async (userId: string): Promise<User | undefined> => {
   return await fetchDocument(firestore.collection("users").doc(userId));
+};
+
+const fetchAnnexs = async (practiceId: string): Promise<Annex[]> => {
+  return await fetchCollection(
+    firestore.collection("practices").doc(practiceId).collection("annexs")
+  );
+};
+
+const onCheckObservationsAnnexs = async (practiceId: string) => {
+  const annexs = await fetchAnnexs(practiceId);
+  assert(annexs, "Missing annexs!");
+
+  const observationsOfAnnexs = annexs
+    .filter(
+      (annex) =>
+        annex?.observationsCompanyRepresentative ||
+        annex?.observationsAcademicSupervisor
+    )
+    .flatMap((_annex) => [
+      ..._annex.observationsCompanyRepresentative,
+      ..._annex.observationsAcademicSupervisor,
+    ]);
+
+  const existsObservationsInAnnexs = observationsOfAnnexs.some(
+    (observation) => observation.status === "pending"
+  );
+
+  await firestore
+    .collection("practices")
+    .doc(practiceId)
+    .update({ existObservationsInAnnexs: existsObservationsInAnnexs });
 };

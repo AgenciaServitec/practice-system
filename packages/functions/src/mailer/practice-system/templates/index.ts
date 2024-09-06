@@ -6,4 +6,6 @@ const htmlTemplate = (url: string): string =>
 
 export const template = {
   contactEmailReceptor: htmlTemplate("./contactEmailReceptor.html"),
+  refusedEmailPractice: htmlTemplate("./refusedEmailPractice.html"),
+  observationsEmailPractice: htmlTemplate("./observationsEmailPractice.html"),
 };

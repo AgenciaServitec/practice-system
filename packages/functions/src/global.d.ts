@@ -125,4 +125,21 @@ interface Practice extends DefaultFirestoreProps {
   startDate: string;
   status: string;
   task: string;
+  existObservationsInAnnexs: boolean;
+}
+
+interface Annex {
+  id: string;
+  observationsCompanyRepresentative: ObservationAnnex[];
+  observationsAcademicSupervisor: ObservationAnnex[];
+  status: string;
+  isDeleted: boolean;
+}
+
+interface ObservationAnnex {
+  id: string;
+  createAt: string;
+  status: string;
+  value: string;
+  isDeleted: boolean;
 }
