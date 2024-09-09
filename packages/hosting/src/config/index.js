@@ -1,6 +1,5 @@
 import { includes } from "lodash";
 import config from "./configs.json";
-import apiErros from "./apiErros.json";
 
 export { default as yup } from "./yup.json";
 
