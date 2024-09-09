@@ -11,6 +11,8 @@ import { PracticesSheet7 } from "./PracticesSheet7";
 import { PracticesSheet8 } from "./PracticesSheet8";
 import { PracticesSheet9 } from "./PracticesSheet9";
 import { PracticesSheet10 } from "./PracticesSheet10";
+import { PracticesSheet11 } from "./PracticesSheet11";
+
 import { useNavigate, useParams } from "react-router";
 import { useGlobalData } from "../../../../../providers";
 import { practicesRef } from "../../../../../firebase/collections";
@@ -183,6 +185,11 @@ export const Sheets = () => {
         {practitioner?.frontDniPhoto && practitioner?.backDniPhoto && (
           <Sheet layout="portrait">
             <PracticesSheet10 practitioner={practitioner} />
+          </Sheet>
+        )}
+        {company?.address && (
+          <Sheet layout="portrait">
+            <PracticesSheet11 company={company} />
           </Sheet>
         )}
       </PDF>

@@ -23,6 +23,11 @@
         "name": "Agencia servitec",
         "webUrl": "https://agenciaservitec.com"
       }
+    },
+    "apis": {
+      "mapsStatic": {
+        "key": "AIzaSyDttA-IgTnTzFSTlQqgx4iNPV23BUrT_Qc"
+      }
     }
   },
   "development": {
