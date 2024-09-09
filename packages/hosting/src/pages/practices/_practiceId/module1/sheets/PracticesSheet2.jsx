@@ -147,22 +147,26 @@ const Container = styled.div`
   .images {
     width: 100%;
     display: flex;
-    gap: 30em;
 
     img {
       width: 100%;
       height: 100%;
     }
+
     &__company {
+      display: flex;
+      justify-content: start;
+      width: 50%;
       img {
         width: 11em;
         height: auto;
-        padding: 0.5em;
         object-fit: contain;
       }
     }
     &__qr {
-      width: 100px;
+      display: flex;
+      justify-content: end;
+      width: 50%;
       height: 100px;
     }
   }
