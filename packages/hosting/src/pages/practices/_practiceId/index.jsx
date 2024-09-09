@@ -18,7 +18,6 @@ import {
   fetchPractice,
   getPracticesId,
   updatePractice,
-  updateUser,
 } from "../../../firebase/collections";
 import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../providers";
@@ -38,7 +37,7 @@ import {
   Annex3Integration,
   Annex4Integration,
   Annex6Integration,
-} from "./module1";
+} from "./module";
 import styled from "styled-components";
 import { practicesStatus } from "../../../data-list";
 import { AnnexStatus } from "./AnnexStatus";
@@ -315,7 +314,9 @@ export const PracticeIntegration = () => {
                   icon={faFilePdf}
                   styled={{ color: (theme) => theme.colors.error }}
                   onClick={() =>
-                    navigate(`/practices/${practice.id}/module1/sheets`)
+                    navigate(
+                      `/practices/${practice.id}/module${practice.moduleNumber}/sheets`
+                    )
                   }
                   tooltipTitle="Ver pdf"
                 />

@@ -114,7 +114,7 @@ export const Router = () => {
       </Route>
       <Route
         exact
-        path="practices/:practiceId/module1/sheets"
+        path="practices/:practiceId/:module/sheets"
         element={<A.Sheets />}
       />
       <Route path="*" element={<Page404 />} />

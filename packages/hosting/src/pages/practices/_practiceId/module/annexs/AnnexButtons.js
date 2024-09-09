@@ -27,7 +27,7 @@ export const AnnexButtons = ({
               Antes de aprobar el anexo, puede revisar todas las hojas del anexo
               haciendo{" "}
               <Link
-                to={`/practices/${practice.id}/module1/sheets?annexNumber=${annexName}`}
+                to={`/practices/${practice.id}/module${practice.moduleNumber}/sheets?annexNumber=${annexName}`}
               >
                 Click Aquí!
               </Link>
