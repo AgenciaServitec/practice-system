@@ -48,16 +48,5 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 6em;
-
-    &__frontDNI,
-    &__backDNI {
-      width: 318px;
-      height: 198px;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
   }
 `;
