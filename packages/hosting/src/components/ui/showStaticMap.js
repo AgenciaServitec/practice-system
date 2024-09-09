@@ -6,8 +6,6 @@ export const ShowStaticMap = ({ address = null }) => {
 
   const claveAPI = common?.apis.mapsStatic.key;
 
-  console.log("claveAPI: ", claveAPI);
-
   const mapSize = "600x1000";
   const zoom = "16";
   const mapType = "roadmap";
