@@ -264,13 +264,13 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
   const validationQualityEvaluation = (note = 0) => {
     if (isEmpty(annex4?.evaluationSheet)) return;
 
-    if (note == 19 || note == 20) {
+    if (note >= 19) {
       return qualityEvaluation["A"];
     }
     if (note >= 15 && note <= 18) {
       return qualityEvaluation["B"];
     }
-    if (note == 13 || note == 14) {
+    if (note >= 13 && note <= 14) {
       return qualityEvaluation["C"];
     }
     if (note <= 12) {
@@ -323,6 +323,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -352,6 +353,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -381,6 +383,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -418,6 +421,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -447,6 +451,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -479,6 +484,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -511,6 +517,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -545,6 +552,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -577,6 +585,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -606,6 +615,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -635,6 +645,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -664,6 +675,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -698,6 +710,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -727,6 +740,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -761,6 +775,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -790,6 +805,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -819,6 +835,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -856,6 +873,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -887,6 +905,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
@@ -919,6 +938,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
                     required={required(name)}
                     options={[
                       { label: "0", value: 0 },
+                      { label: "0.5", value: 0.5 },
                       { label: "1", value: 1 },
                     ]}
                   />
