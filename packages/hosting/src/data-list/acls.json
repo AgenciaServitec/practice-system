@@ -18,7 +18,7 @@
   "/practices/new": "Agregar práctica",
   "/practices/:practiceId": "Editar práctica",
   "/practices#delete": "Eliminar práctica",
-  "/practices/:practiceId/module1/sheets": "Ver Pdf",
+  "/practices/:practiceId/:module/sheets": "Ver Pdf",
   "/practices/:practiceId/annex#save": "Guardar anexo",
   "/practices/:practiceId/annex#approved": "Aprobar anexos",
   "/practices/:practiceId/annex#refused": "Rechazar anexos",

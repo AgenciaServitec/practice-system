@@ -95,12 +95,16 @@ export const PracticesTable = ({
       width: ["60px", "20%"],
       render: (practice) => (
         <Space>
-          <Acl name="/practices/:practiceId/module1/sheets">
+          <Acl name="/practices/:practiceId/:module/sheets">
             <IconAction
               tooltipTitle="Pdf"
               icon={faFilePdf}
               styled={{ color: (theme) => theme.colors.error }}
-              onClick={() => onNavigateTo(`${practice.id}/module1/sheets`)}
+              onClick={() =>
+                onNavigateTo(
+                  `${practice.id}/module${practice.moduleNumber}/sheets`
+                )
+              }
             />
           </Acl>
           <Acl name="/practices/:practiceId">
