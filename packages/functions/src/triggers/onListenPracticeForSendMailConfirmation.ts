@@ -2,9 +2,9 @@ import { OnDocumentUpdated } from "./interface";
 import { fetchCollection, fetchDocument, firestore } from "../_firebase";
 import assert from "assert";
 import {
-  sendMailPracticeRefusedEmail,
-  sendMailPracticeObservationsEmail,
   sendMailPracticeApprovedEmail,
+  sendMailPracticeObservationsEmail,
+  sendMailPracticeRefusedEmail,
 } from "../mailer/practice-system";
 
 export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
@@ -20,14 +20,12 @@ export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
 
     await onCheckObservationsAnnexs(practiceAfter.id);
 
-    if (practiceAfter.status !== "pending") {
-      if (practiceAfter.status === "approved") {
-        await sendMailPracticeApprovedEmail(practiceAfter, user);
-      }
+    if (practiceAfter.status === "approved") {
+      await sendMailPracticeApprovedEmail(practiceAfter, user);
+    }
 
-      if (practiceAfter.status === "refused") {
-        await sendMailPracticeRefusedEmail(practiceAfter, user);
-      }
+    if (practiceAfter.status === "refused") {
+      await sendMailPracticeRefusedEmail(practiceAfter, user);
     }
 
     if (
@@ -54,16 +52,21 @@ const onCheckObservationsAnnexs = async (practiceId: string) => {
   const annexs = await fetchAnnexs(practiceId);
   assert(annexs, "Missing annexs!");
 
-  const observationsOfAnnexs = annexs
-    .filter(
-      (annex) =>
-        annex?.observationsCompanyRepresentative ||
-        annex?.observationsAcademicSupervisor
-    )
-    .flatMap((_annex) => [
-      ..._annex.observationsCompanyRepresentative,
-      ..._annex.observationsAcademicSupervisor,
-    ]);
+  const observations = (
+    observationBy:
+      | "observationsAcademicSupervisor"
+      | "observationsCompanyRepresentative"
+  ) =>
+    annexs
+      .filter((annex) => annex?.[observationBy])
+      .flatMap((_annex) =>
+        _annex[observationBy].map((observation) => observation)
+      );
+
+  const observationsOfAnnexs = [
+    ...observations("observationsAcademicSupervisor"),
+    ...observations("observationsCompanyRepresentative"),
+  ];
 
   const existsObservationsInAnnexs = observationsOfAnnexs.some(
     (observation) => observation.status === "pending"

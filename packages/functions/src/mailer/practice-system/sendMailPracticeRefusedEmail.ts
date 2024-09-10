@@ -18,13 +18,17 @@ export const sendMailPracticeRefusedEmail = async (
   await sendMail({
     to: user.email,
     bcc: "",
-    subject: `[Modulo ${practice.moduleNumber}]: ${capitalize(practice.name)}`,
+    subject: `Desaprobado [Modulo ${practice.moduleNumber}]: ${capitalize(
+      practice.name
+    )}`,
     html: html(template.practiceRefusedEmailTemplate, mapMail(practice, user)),
   });
 };
 
 const mapMail = (practice: Practice, user: User): Mail => ({
-  practitionerName: `${user.paternalSurname} ${user.maternalSurname} ${user.firstName}`,
+  practitionerName: `${capitalize(user.paternalSurname)} ${capitalize(
+    user.maternalSurname
+  )} ${capitalize(user.firstName)}`,
   moduleNumber: practice.moduleNumber,
   name: capitalize(practice.name),
   status: practice.status,
