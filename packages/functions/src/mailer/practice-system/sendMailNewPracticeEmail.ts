@@ -8,7 +8,7 @@ interface Mail {
   practitioner: User | undefined;
   practitionerName: string | null;
   academicSupervisorName: string | null;
-  companyRepresentative: string | null;
+  companyRepresentativeName: string | null;
   moduleNumber: number;
   tuitionId: string | null | undefined;
   professionalCareer: string | undefined;
@@ -50,7 +50,7 @@ const mapMail = (
           user.maternalSurname
         )} ${capitalize(user.firstName)}`
       : null,
-  companyRepresentative:
+  companyRepresentativeName:
     user.roleCode === "company_representative"
       ? `${capitalize(user.paternalSurname)} ${capitalize(
           user.maternalSurname
