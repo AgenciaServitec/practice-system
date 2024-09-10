@@ -21,10 +21,11 @@ import {
 } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { capitalize } from "lodash";
+import { capitalize, isEmpty } from "lodash";
 import { useAuthentication } from "../../providers";
 import { Space } from "antd";
 import { BusinessPosition } from "../../data-list";
+import { fetchCompanyByRuc } from "../../firebase/collections/companies";
 
 export const RegisterRepresentativeCompanyIntegration = ({ roleCode }) => {
   const { loginWithEmailAndPassword } = useAuthentication();
@@ -75,7 +76,7 @@ export const RegisterRepresentativeCompanyIntegration = ({ roleCode }) => {
         title: "¡El usuario se guardó correctamente!",
       });
 
-      loginWithEmailAndPassword(formData.email, formData.password);
+      await loginWithEmailAndPassword(formData.email, formData.password);
     } catch (e) {
       const errorResponse = await getApiErrorResponse(e);
       apiErrorNotification(errorResponse);
@@ -143,16 +144,25 @@ const RegisterCompanyRepresentative = ({
   };
 
   useEffect(() => {
-    const existsRuc = (watch("companyRuc") || "").length === 11;
+    const rucFormData = watch("companyRuc") || "";
+    const existsRuc = rucFormData.length === 11;
     if (existsRuc) {
       (async () => {
         try {
-          const response = await onGetCompanyDataByRuc(watch("companyRuc"));
-          if (!onGetCompanyDataByRucResponse.ok) {
-            throw new Error(response);
+          const companies = await fetchCompanyByRuc(rucFormData);
+
+          const company = companies?.[0];
+
+          if (!isEmpty(company)) {
+            return onSetCompany(company);
           }
 
-          onSetCompany(response);
+          const _company = await onGetCompanyDataByRuc(rucFormData);
+          if (!onGetCompanyDataByRucResponse.ok) {
+            throw new Error(company);
+          }
+
+          onSetCompany(_company);
         } catch (e) {
           const errorResponse = await getApiErrorResponse(e);
           apiErrorNotification(errorResponse);

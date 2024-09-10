@@ -1,6 +1,6 @@
 import { firestore } from "../index";
-import { fetchCollectionOnce, fetchDocumentOnce } from "../utils";
-import { setDocument, updateDocument } from "../firestore";
+import { fetchDocumentOnce } from "../utils";
+import { setDocument, updateDocument, fetchCollectionOnce } from "../firestore";
 
 export const companiesRef = firestore.collection("companies");
 
@@ -8,6 +8,11 @@ export const getCompanyId = () => companiesRef.doc().id;
 
 export const fetchCompany = () => async (id) =>
   fetchDocumentOnce(companiesRef.doc(id));
+
+export const fetchCompanyByRuc = async (ruc = "") =>
+  fetchCollectionOnce(
+    companiesRef.where("ruc", "==", ruc).where("isDeleted", "==", false)
+  );
 
 export const fetchCompanies = async () =>
   fetchCollectionOnce(companiesRef.where("isDeleted", "==", false));
