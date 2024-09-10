@@ -128,11 +128,6 @@ interface Practice extends DefaultFirestoreProps {
   existObservationsInAnnexs: boolean;
 }
 
-interface ProfessionalCareer {
-  label: string;
-  value: string;
-}
-
 interface Annex {
   id: string;
   observationsCompanyRepresentative: ObservationAnnex[];
