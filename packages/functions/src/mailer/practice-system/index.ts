@@ -1,2 +1,4 @@
-export * from "./sendMailConfirmationPractice";
-export * from "./sendMailRefusedPractice";
+export * from "./sendMailNewPracticeEmail";
+export * from "./sendMailPracticeObservationsEmail";
+export * from "./sendMailPracticeApprovedEmail";
+export * from "./sendMailPracticeRefusedEmail";

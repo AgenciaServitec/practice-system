@@ -1,6 +1,7 @@
 import { html, sendMail } from "../sendMail";
 import { template } from "./templates";
 import { environmentConfig } from "../../config";
+import { capitalize } from "lodash";
 
 interface Mail {
   practitionerName: string;
@@ -21,22 +22,29 @@ interface ObservationByUser {
   list: ObservationAnnex[];
 }
 
-export const sendMailObservationsPractice = async (
+export const sendMailPracticeObservationsEmail = async (
   practice: Practice,
   user: User
 ): Promise<void> => {
   await sendMail({
     to: user.email,
     bcc: "",
-    subject: `[Módulo ${practice.moduleNumber}]: Observaciones`,
-    html: html(template.observationsEmailPractice, mapMail(practice, user)),
+    subject: `Observaciones [Módulo ${practice.moduleNumber}]: ${capitalize(
+      practice.name
+    )}`,
+    html: html(
+      template.practiceObservationsEmailTemplate,
+      mapMail(practice, user)
+    ),
   });
 };
 
 const mapMail = (practice: Practice, user: User): Mail => ({
-  practitionerName: `${user.paternalSurname} ${user.maternalSurname} ${user.firstName}`,
+  practitionerName: `${capitalize(user.paternalSurname)} ${capitalize(
+    user.maternalSurname
+  )} ${capitalize(user.firstName)}`,
   moduleNumber: practice.moduleNumber,
-  name: practice.name,
+  name: capitalize(practice.name),
   status: practice.status,
   practiceLink: `${environmentConfig.hosting.domain}/practices/${practice.id}`,
 });

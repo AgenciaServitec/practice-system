@@ -1,6 +1,9 @@
 import "moment-timezone";
 import { app } from "./api";
-import { onListenPracticeForSendMailConfirmation } from "./triggers";
+import {
+  onCreatedPracticeForSendMailConfirmation,
+  onListenPracticeForSendMailConfirmation,
+} from "./triggers";
 import functionsHttps = require("firebase-functions/v2/https");
 import functionsTrigger = require("firebase-functions/v2/firestore");
 
@@ -30,4 +33,10 @@ exports.onListenPracticeForSendMailConfirmation =
   functionsTrigger.onDocumentUpdated(
     triggersOptions("practices/{id}"),
     onListenPracticeForSendMailConfirmation
+  );
+
+exports.onCreatedPracticeForSendMailConfirmation =
+  functionsTrigger.onDocumentCreated(
+    triggersOptions("practices/{id}"),
+    onCreatedPracticeForSendMailConfirmation
   );
