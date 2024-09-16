@@ -5,11 +5,12 @@ import {
   firestore,
 } from "../../_firebase";
 import { NextFunction, Request, Response } from "express";
-import { isEmpty } from "lodash";
+import { isEmpty, uniq } from "lodash";
 import { getCompanyDataByRuc } from "../../client-api/apis-net-pe";
 import assert from "assert";
 import { postUserMapping } from "./mappings";
 import { postCompanyMapping } from "../companies/mappings";
+import { defaultFirestoreProps } from "../../utils";
 
 export interface UserBody extends User {
   ruc?: string;
@@ -73,23 +74,27 @@ export const postUser = async (
     ) {
       assert(user?.companyRepresentativeData?.ruc, "Missing ruc!");
 
-      const _isCompanyExists = await isCompanyExists(
+      const _company = await fetchFirestoreCompany(
         user.companyRepresentativeData.ruc
       );
-      if (_isCompanyExists) {
-        res.status(412).send("user/ruc_already_exists").end();
-        return;
-      }
 
-      const company = await getCompanyDataByRuc({
-        ruc: user.companyRepresentativeData.ruc,
-      });
-      if (!company) {
-        res.status(412).send("user/company_no_found").end();
-        return;
-      }
+      if (isEmpty(_company)) {
+        const company = await getCompanyDataByRuc({
+          ruc: user.companyRepresentativeData.ruc,
+        });
 
-      await addCompany(postCompanyMapping(company, companyId, userId));
+        if (!company) {
+          res.status(412).send("user/company_no_found").end();
+          return;
+        }
+
+        await addCompany(postCompanyMapping(company, companyId, userId));
+      } else {
+        await updateCompany({
+          ..._company,
+          membersIds: uniq([..._company?.membersIds, userId]),
+        });
+      }
     }
 
     // get acls of user by roleCode
@@ -179,13 +184,24 @@ const isDniExists = async (dni: string): Promise<boolean> => {
   return !isEmpty(users);
 };
 
-const isCompanyExists = async (ruc: string): Promise<boolean> => {
-  const companies = await fetchCollection<User>(
+const fetchFirestoreCompany = async (
+  ruc: string
+): Promise<Company | undefined> => {
+  const companies = await fetchCollection<Company>(
     firestore
       .collection("companies")
       .where("isDeleted", "==", false)
       .where("ruc", "==", ruc)
   );
 
-  return !isEmpty(companies);
+  return companies?.[0];
+};
+
+const updateCompany = async (company: Company) => {
+  const { assignUpdateProps } = defaultFirestoreProps();
+
+  await firestore
+    .collection("companies")
+    .doc(company.id)
+    .update({ ...assignUpdateProps(company) });
 };
