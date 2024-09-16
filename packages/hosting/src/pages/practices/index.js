@@ -104,7 +104,8 @@ const Practices = ({
         );
       case "company_representative":
         return practices.filter(
-          (practice) => practice?.companyRepresentativeId === user?.id
+          (practice) =>
+            practice.companyId === user?.companyRepresentativeData.companyId
         );
       case "user":
         return practices.filter(
