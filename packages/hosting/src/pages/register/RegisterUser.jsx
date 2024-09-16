@@ -174,7 +174,7 @@ export const RegisterUser = ({ roleCode }) => {
 
   useEffect(() => {
     reset({
-      professionalCareer: "information_systems_development",
+      professionalCareer: "computing_and_informatics",
     });
   }, []);
 
