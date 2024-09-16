@@ -62,34 +62,26 @@ export const DrawerLayout = ({
       ],
     },
     {
-      label: "Administración",
-      key: "manager",
-      icon: <FontAwesomeIcon icon={faGears} size="lg" />,
-      isVisible: existPageAclsInAclsOfUser(["/users", "/practices"]),
-      children: [
-        {
-          label: ["super_admin", "admin"].includes(user.roleCode)
-            ? "Usuarios"
-            : "Practicantes",
-          key: "users",
-          icon: <FontAwesomeIcon icon={faUsers} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/users"]),
-          onClick: () => {
-            onNavigateTo("/users");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-        {
-          label: "Empresas",
-          key: "companies",
-          icon: <FontAwesomeIcon icon={faBriefcase} size="lg" />,
-          isVisible: existPageAclsInAclsOfUser(["/companies"]),
-          onClick: () => {
-            onNavigateTo("/companies");
-            onSetIsVisibleDrawer(false);
-          },
-        },
-      ],
+      label: ["super_admin", "admin"].includes(user.roleCode)
+        ? "Usuarios"
+        : "Practicantes",
+      key: "users",
+      icon: <FontAwesomeIcon icon={faUsers} size="lg" />,
+      isVisible: existPageAclsInAclsOfUser(["/users"]),
+      onClick: () => {
+        onNavigateTo("/users");
+        onSetIsVisibleDrawer(false);
+      },
+    },
+    {
+      label: "Empresas",
+      key: "companies",
+      icon: <FontAwesomeIcon icon={faBriefcase} size="lg" />,
+      isVisible: existPageAclsInAclsOfUser(["/companies"]),
+      onClick: () => {
+        onNavigateTo("/companies");
+        onSetIsVisibleDrawer(false);
+      },
     },
     {
       label: "Prácticas",

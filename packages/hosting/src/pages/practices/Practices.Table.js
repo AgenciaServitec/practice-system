@@ -16,12 +16,20 @@ import dayjs from "dayjs";
 
 export const PracticesTable = ({
   practices = [],
+  user = null,
   users = [],
   onNavigateTo,
   onEditPractice,
   onConfirmRemovePractice,
 }) => {
   const getPractitioner = (userId) => users.find((user) => user?.id === userId);
+
+  const isAdministratorUser = [
+    "super_admin",
+    "company_representative",
+    "academic_supervisor",
+    "academic_coordinator",
+  ].includes(user.roleCode);
 
   const columns = [
     {
@@ -58,10 +66,12 @@ export const PracticesTable = ({
         const practitioner = getPractitioner(practice?.practitionerId);
         if (!practitioner) return;
 
-        return (
+        return isAdministratorUser ? (
           <Link to={`/users/${practitioner.id}`}>
             {practitioner ? fullName(practitioner) : ""}
           </Link>
+        ) : (
+          <span>{practitioner ? fullName(practitioner) : ""}</span>
         );
       },
     },

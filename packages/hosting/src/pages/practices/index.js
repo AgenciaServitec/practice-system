@@ -154,6 +154,7 @@ const Practices = ({
           <Col span={24}>
             <PracticesTable
               practices={practicesView}
+              user={user}
               users={users}
               onNavigateTo={onNavigateTo}
               onEditPractice={onEditPractice}
