@@ -40,7 +40,7 @@ export const useDefaultFirestoreProps = (isSoftDelete = true) => {
       createAt: now(),
       updateAt: now(),
       ...(authUser?.email && {
-        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.cip}|${authUser.dni}`,
+        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.dni}`,
       }),
       ...(authUser?.email && { createBy: authUser.email }),
     };
@@ -54,7 +54,7 @@ export const useDefaultFirestoreProps = (isSoftDelete = true) => {
     const UPDATE = {
       updateAt: now(),
       ...(authUser?.email && {
-        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.cip}|${authUser.dni}`,
+        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.dni}`,
       }),
     };
 
@@ -65,7 +65,7 @@ export const useDefaultFirestoreProps = (isSoftDelete = true) => {
     const DELETE = {
       updateAt: now(),
       ...(authUser?.email && {
-        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.cip}|${authUser.dni}`,
+        updateBy: `${authUser.firstName} ${authUser.paternalSurname} ${authUser.maternalSurname}|${authUser.dni}`,
       }),
     };
 

@@ -34,6 +34,9 @@ import dayjs from "dayjs";
 import { Alert } from "antd";
 import { addAnnex } from "../../../firebase/collections/annexs";
 import { useGlobalData } from "../../../providers";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NewCompanyModal } from "./NewCompanyModal";
 
 export const ManageCreateProductIntegration = ({
   practice,
@@ -178,6 +181,9 @@ const ManageCreateProduct = ({
   savePractice,
   onGoBack,
 }) => {
+  const [isVisibleNewCompanyModal, setIsVisibleNewCompanyModal] =
+    useState(false);
+
   const schema = yup.object({
     moduleNumber: yup.number().required(),
     name: yup.string().required(),
@@ -314,7 +320,7 @@ const ManageCreateProduct = ({
                   )}
                 />
               </Col>
-              <Col span={24}>
+              <Col span={24} md={19}>
                 <Controller
                   name="companyId"
                   control={control}
@@ -331,6 +337,20 @@ const ManageCreateProduct = ({
                       required={required(name)}
                     />
                   )}
+                />
+              </Col>
+              <Col span={24} md={5}>
+                <Button
+                  type="primary"
+                  icon={<FontAwesomeIcon icon={faPlus} />}
+                  block
+                  onClick={setIsVisibleNewCompanyModal}
+                >
+                  Agregar empresa
+                </Button>
+                <NewCompanyModal
+                  visible={isVisibleNewCompanyModal}
+                  onClickVisibleModal={setIsVisibleNewCompanyModal}
                 />
               </Col>
               <Col span={24}>
