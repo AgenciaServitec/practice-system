@@ -77,19 +77,6 @@ interface Archive {
   url: string;
 }
 
-interface Correspondence extends DefaultFirestoreProps {
-  id: string;
-  destination: string;
-  receivedBy: string;
-  class: string;
-  indicative: string;
-  classification: string;
-  issue: string;
-  dateCorrespondence: FirebaseFirestore.Timestamp;
-  photos: Image[];
-  files: Archive[];
-}
-
 interface Company extends DefaultFirestoreProps {
   id: string;
   ruc: string;
