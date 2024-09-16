@@ -24,241 +24,241 @@ export const InformationModal = ({
   return (
     <DataEntryModal visible={open} onCancel={onCancel}>
       <Container>
-        <Row gutter={[9, 9]}>
-          <Col span={24} md={24}>
-            <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DEL PRACTICANTE:
-            </Title>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Apellidos y Nombres: </label>
-              <p className="capitalize">{fullName(practitioner) || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Carrera Profesional: </label>
-              <p>{professionalCareer?.label || ""}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Turno: </label>
-              <p className="capitalize">
-                {practitioner?.practitionerData?.studentShift || "Egresado"}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={12}>
-            <div className="item">
-              <label>
-                Período de Estudios (Año de Ingreso - Año de Egreso):{" "}
-              </label>
-              <p>
-                {practitioner?.practitionerData?.entryYear} -{" "}
-                {practitioner?.practitionerData?.yearGraduation || "En curso"}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={12}>
-            <div className="item">
-              <label>Semestre: </label>
-              <p className="capitalize">
-                {practitioner?.practitionerData?.semester || "Egresado"}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Año Académico: </label>
-              <p>
-                {practitioner?.practitionerData?.academicYear || "Egresado"}
-              </p>
-            </div>
-          </Col>
+        <div className="card-item">
+          <Row gutter={[13, 13]}>
+            <Col span={24} md={24}>
+              <Title level={5} style={{ margin: "1px 0" }}>
+                DATOS DEL PRACTICANTE:
+              </Title>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Apellidos y Nombres: </p>
+                <p className="capitalize">{fullName(practitioner) || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Carrera Profesional: </p>
+                <p>{professionalCareer?.label || ""}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Turno: </p>
+                <p className="capitalize">
+                  {practitioner?.practitionerData?.studentShift || "Egresado"}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={12}>
+              <div className="item">
+                <p>Período de Estudios (Año de Ingreso - Año de Egreso): </p>
+                <p>
+                  {practitioner?.practitionerData?.entryYear} -{" "}
+                  {practitioner?.practitionerData?.yearGraduation || "En curso"}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={12}>
+              <div className="item">
+                <p>Semestre: </p>
+                <p className="capitalize">
+                  {practitioner?.practitionerData?.semester || "Egresado"}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Año Académico: </p>
+                <p>
+                  {practitioner?.practitionerData?.academicYear || "Egresado"}
+                </p>
+              </div>
+            </Col>
 
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Domicilio:</label>
-              <p>{practitioner?.address || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Teléfonos (Domicilio - Personal):</label>
-              <p>
-                {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
-                  "-"}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={10}>
-            <div className="item">
-              <label>Correo Electrónico:</label>
-              <p>{practitioner?.email || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={7}>
-            <div className="item">
-              <label>DNI:</label>
-              <p>{practitioner?.dni || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={7}>
-            <div className="item">
-              <label>Código de Matrícula:</label>
-              <p>{practitioner?.practitionerData?.tuitionId || "-"}</p>
-            </div>
-          </Col>
-        </Row>
-        <br />
-        <Row gutter={[9, 9]}>
-          <Col span={24}>
-            <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DE LA EMPRESA O INSTITUCIÓN:
-            </Title>
-          </Col>
-          <Col span={24} md={6}>
-            <div className="item">
-              <label>N° RUC: </label>
-              <p>{company?.ruc || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Razón Social de la Empresa: </label>
-              <p className="capitalize">{company?.socialReason || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={10}>
-            <div className="item">
-              <label>Dirección: </label>
-              <p>{company?.address || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={6}>
-            <div className="item">
-              <label>Distrito: </label>
-              <p className="capitalize">{company?.district || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={6}>
-            <div className="item">
-              <label>Ciudad: </label>
-              <p className="capitalize">{company?.province || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={6}>
-            <div className="item">
-              <label>Región: </label>
-              <p className="capitalize">{company?.region || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={6}>
-            <div className="item">
-              <label>Teléfono: </label>
-              <p>
-                {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
-                  "-"}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Correo Electrónico: </label>
-              <p>{company?.email || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Página Web: </label>
-              <p>{company?.webSite || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Jefe o Autoridad Principal de la Empresa: </label>
-              <p className="capitalize">{fullName(representativeCompany)}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Cargo de la Autoridad Principal: </label>
-              <p>{businessPosition?.label || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Supervisor designado por la empresa: </label>
-              <p className="capitalize">{fullName(representativeCompany)}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Cargo: </label>
-              <p>{fullName(representativeCompany)}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Rubro de la empresa: </label>
-              <p>{company?.category || "-"}</p>
-            </div>
-          </Col>
-        </Row>
-        <br />
-        <Row gutter={[9, 9]}>
-          <Col span={24}>
-            <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DE LAS PRÁCTICAS PRE PROFESIONALES:
-            </Title>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Período de la Práctica y Evaluación: </label>
-              <p>
-                {dayjs(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")} -{" "}
-                {dayjs(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Horario: </label>
-              <p>
-                {dayjs(practice?.entryTime, "HH:mm:ss").format("HH:mm a")} -
-                {dayjs(practice?.departureTime, "HH:mm:ss").format("HH:mm a")}
-              </p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Total de horas de las Prácticas: </label>
-              <p>{practice?.hours || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Dpto. Sector o Área de las Prácticas: </label>
-              <p>{PracticeArea?.[practice?.practiceArea]?.name || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>
-                Funciones y/o Tareas asignadas de acuerdo al Módulo:{" "}
-              </label>
-              <p>{practice?.task || "-"}</p>
-            </div>
-          </Col>
-          <Col span={24} md={8}>
-            <div className="item">
-              <label>Supervisor de prácticas asignado por el IESTP: </label>
-              <p className="capitalize">{fullName(supervisor) || "-"}</p>
-            </div>
-          </Col>
-        </Row>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Domicilio:</p>
+                <p>{practitioner?.address || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Teléfonos (Domicilio - Personal):</p>
+                <p>
+                  {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
+                    "-"}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={10}>
+              <div className="item">
+                <p>Correo Electrónico:</p>
+                <p>{practitioner?.email || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={7}>
+              <div className="item">
+                <p>DNI:</p>
+                <p>{practitioner?.dni || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={7}>
+              <div className="item">
+                <p>Código de Matrícula:</p>
+                <p>{practitioner?.practitionerData?.tuitionId || "-"}</p>
+              </div>
+            </Col>
+          </Row>
+        </div>
+        <div className="card-item">
+          <Row gutter={[13, 13]}>
+            <Col span={24}>
+              <Title level={5} style={{ margin: "1px 0" }}>
+                DATOS DE LA EMPRESA O INSTITUCIÓN:
+              </Title>
+            </Col>
+            <Col span={24} md={6}>
+              <div className="item">
+                <p>N° RUC: </p>
+                <p>{company?.ruc || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Razón Social de la Empresa: </p>
+                <p className="capitalize">{company?.socialReason || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={10}>
+              <div className="item">
+                <p>Dirección: </p>
+                <p>{company?.address || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={6}>
+              <div className="item">
+                <p>Distrito: </p>
+                <p className="capitalize">{company?.district || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={6}>
+              <div className="item">
+                <p>Ciudad: </p>
+                <p className="capitalize">{company?.province || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={6}>
+              <div className="item">
+                <p>Región: </p>
+                <p className="capitalize">{company?.region || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={6}>
+              <div className="item">
+                <p>Teléfono: </p>
+                <p>
+                  {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
+                    "-"}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Correo Electrónico: </p>
+                <p>{company?.email || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Página Web: </p>
+                <p>{company?.webSite || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Jefe o Autoridad Principal de la Empresa: </p>
+                <p className="capitalize">{fullName(representativeCompany)}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Cargo de la Autoridad Principal: </p>
+                <p>{businessPosition?.label || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Supervisor designado por la empresa: </p>
+                <p className="capitalize">{fullName(representativeCompany)}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Cargo: </p>
+                <p>{fullName(representativeCompany)}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Rubro de la empresa: </p>
+                <p>{company?.category || "-"}</p>
+              </div>
+            </Col>
+          </Row>
+        </div>
+        <div className="card-item">
+          <Row gutter={[13, 13]}>
+            <Col span={24}>
+              <Title level={5} style={{ margin: "1px 0" }}>
+                DATOS DE LAS PRÁCTICAS PRE PROFESIONALES:
+              </Title>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Período de la Práctica y Evaluación: </p>
+                <p>
+                  {dayjs(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")}{" "}
+                  - {dayjs(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Horario: </p>
+                <p>
+                  {dayjs(practice?.entryTime, "HH:mm:ss").format("HH:mm a")} -
+                  {dayjs(practice?.departureTime, "HH:mm:ss").format("HH:mm a")}
+                </p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Total de horas de las Prácticas: </p>
+                <p>{practice?.hours || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Dpto. Sector o Área de las Prácticas: </p>
+                <p>{PracticeArea?.[practice?.practiceArea]?.name || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Funciones y/o Tareas asignadas de acuerdo al Módulo: </p>
+                <p>{practice?.task || "-"}</p>
+              </div>
+            </Col>
+            <Col span={24} md={8}>
+              <div className="item">
+                <p>Supervisor de prácticas asignado por el IESTP: </p>
+                <p className="capitalize">{fullName(supervisor) || "-"}</p>
+              </div>
+            </Col>
+          </Row>
+        </div>
       </Container>
     </DataEntryModal>
   );
@@ -266,15 +266,27 @@ export const InformationModal = ({
 
 const Container = styled.div`
   width: 100%;
-  padding: 1em 1.7em;
-  background: #f2f9ffff;
-  border-radius: 1em;
-  margin: 1em 0;
-  .item {
-    p:last-child {
-      font-weight: 500;
-      font-size: 1.1em;
-      margin: 0.2em 0;
+
+  .card-item {
+    padding: 1em 1.7em;
+    background: #f2f9ffff;
+    border-radius: 1em;
+    margin-bottom: 1em;
+
+    .item {
+      p:first-child {
+        font-size: 0.85em;
+        font-weight: 500;
+        color: rgb(55, 79, 93);
+        line-height: 1.1em;
+        margin: 0.3em 0;
+      }
+
+      p:last-child {
+        font-weight: 500;
+        font-size: 1.05em;
+        margin: -4px 0;
+      }
     }
   }
 `;
