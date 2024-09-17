@@ -39,9 +39,7 @@ export const AdminLayout = ({ children }) => {
         />
         <Content style={{ margin: "0 16px" }}>
           <BreadcrumbLayout user={authUser} />
-          <div className="site-layout-background" style={{ padding: 24 }}>
-            {children}
-          </div>
+          <div className="site-layout-background">{children}</div>
         </Content>
         <FooterLayout />
       </LayoutAntd>
@@ -54,6 +52,7 @@ const LayoutContainer = styled(LayoutAntd)`
   min-height: 100vh;
   .site-layout-background {
     background: #fff;
+    padding: 1em;
   }
 
   .logo {

@@ -23,6 +23,7 @@ import { useNavigate, useParams } from "react-router";
 import { useAuthentication, useGlobalData } from "../../../providers";
 import {
   useDefaultFirestoreProps,
+  useDevice,
   useGetAllDataByPractice,
 } from "../../../hooks";
 import {
@@ -44,6 +45,7 @@ import { AnnexStatus } from "./AnnexStatus";
 import { ManageCreateProductIntegration } from "./ManageCreatePractice";
 import { InitialInformation } from "./InitialInformation";
 import { isEmpty } from "lodash";
+import { mediaQuery } from "../../../styles";
 
 export const PracticeIntegration = () => {
   const navigate = useNavigate();
@@ -51,6 +53,7 @@ export const PracticeIntegration = () => {
   const { authUser } = useAuthentication();
   const { assignUpdateProps } = useDefaultFirestoreProps();
   const { users, companies } = useGlobalData();
+  const { isMobile } = useDevice();
 
   const [practice, setPractice] = useState({});
   const { annexs, company, practitioner, representativeCompany, supervisor } =
@@ -136,7 +139,7 @@ export const PracticeIntegration = () => {
 
   const AnnexTitle = ({ title, status }) => (
     <div>
-      <Title level={4}>{title} </Title>
+      <Title level={isMobile ? 5 : 4}>{title} </Title>
       <Tag
         icon={<FontAwesomeIcon size="lg" icon={status?.icon} />}
         color={status?.type}
@@ -305,7 +308,7 @@ export const PracticeIntegration = () => {
                   styled={{ color: (theme) => theme.colors.primary }}
                   onClick={() => navigate("/practices")}
                 />
-                <Title level={3} style={{ margin: "0" }}>
+                <Title level={isMobile ? 4 : 3} style={{ margin: "0" }}>
                   <span className="capitalize">
                     Módulo {practice?.moduleNumber}: {practice?.name}
                   </span>
@@ -416,11 +419,21 @@ const Container = styled.div`
     text-transform: capitalize;
   }
 
+  .ant-card {
+    .ant-card-body {
+      padding: 1em;
+    }
+  }
+
   .header-wrapper {
     width: 100%;
     display: grid;
+    gap: 0.7em;
     grid-template-columns: auto 1fr auto;
-    gap: 0.5em;
+    ${mediaQuery.minDesktop} {
+      gap: 0.5em;
+      grid-template-columns: auto 1fr auto;
+    }
   }
   .header-annex {
     display: flex;

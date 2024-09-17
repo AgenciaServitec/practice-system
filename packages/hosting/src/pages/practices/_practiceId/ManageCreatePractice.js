@@ -264,8 +264,7 @@ const ManageCreateProduct = ({
         <Alert
           type="info"
           showIcon
-          message="Si no encuentras la empresa de tus practicas, debes pedir a tu
-          representante de empresa que se registre en la plataforma!"
+          message="Si no encuentras la empresa de tus practicas, hay un boton para Agregar empresa y luego lo selecciones"
         />
         <br />
         <Container>

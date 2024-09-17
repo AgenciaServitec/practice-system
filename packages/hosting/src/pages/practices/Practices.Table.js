@@ -36,7 +36,7 @@ export const PracticesTable = ({
       title: "Fecha creación",
       dataIndex: "createAt",
       key: "createAt",
-      width: ["40px", "10%"],
+      width: ["7rem", "100%"],
       render: (practice) =>
         practice?.createAt
           ? dayjs(practice.createAt.toDate()).format("DD/MM/YYYY HH:mm")
@@ -47,21 +47,21 @@ export const PracticesTable = ({
       dataIndex: "moduleNumber",
       align: "center",
       key: "moduleNumber",
-      width: ["60px", "20%"],
+      width: ["5rem", "100%"],
       render: (practice) => practice?.moduleNumber || "",
     },
     {
       title: "Nombre módulo",
       dataIndex: "name",
       key: "name",
-      width: ["200px", "47%"],
+      width: ["15rem", "100%"],
       render: (practice) => capitalize(practice?.name) || "",
     },
     {
       title: "Practicante",
       dataIndex: "practitioner",
       key: "practitioner",
-      width: ["60px", "20%"],
+      width: ["11rem", "100%"],
       render: (practice) => {
         const practitioner = getPractitioner(practice?.practitionerId);
         if (!practitioner) return;
@@ -79,7 +79,7 @@ export const PracticesTable = ({
       title: "Estado",
       dataIndex: "status",
       key: "status",
-      width: ["60px", "20%"],
+      width: ["7rem", "100%"],
       render: (practice) => (
         <Space>
           <span>
@@ -102,7 +102,7 @@ export const PracticesTable = ({
     {
       title: "Acciones",
       key: "actions",
-      width: ["60px", "20%"],
+      width: ["10rem", "100%"],
       render: (practice) => (
         <Space>
           <Acl name="/practices/:practiceId/:module/sheets">
