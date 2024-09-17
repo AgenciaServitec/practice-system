@@ -1,6 +1,6 @@
 import React from "react";
-import { Col } from "antd";
 import styled from "styled-components";
+import { mediaQuery } from "../../../../../../styles";
 
 export const InstructionsEvaluation = () => {
   const indicatorData = [
@@ -50,21 +50,19 @@ export const InstructionsEvaluation = () => {
 
   return (
     <Container>
-      <Col span={24} md={12}>
-        <div className="instructions">
-          <span className="one">
-            1. Examine cuidadosamente cada criterio, de los 20 a calificar. Se
-            adjunta la siguiente tabla de equivalencia para fines referenciales.
-          </span>
-          <span className="two">
-            2. Cada indicador se califica entre 0 y 1, sumando las veinte
-            calificaciones para obtener el puntaje total, luego se establecerá
-            las equivalencias con la tabla mostrada para expresar la evaluación
-            final en forma cualitativa y literal.
-          </span>
-        </div>
-      </Col>
-      <Col span={24} md={12}>
+      <div className="instructions">
+        <p className="one">
+          1. Examine cuidadosamente cada criterio, de los 20 a calificar. Se
+          adjunta la siguiente tabla de equivalencia para fines referenciales.
+        </p>
+        <p className="two">
+          2. Cada indicador se califica entre 0 y 1, sumando las veinte
+          calificaciones para obtener el puntaje total, luego se establecerá las
+          equivalencias con la tabla mostrada para expresar la evaluación final
+          en forma cualitativa y literal.
+        </p>
+      </div>
+      <div className="table-item">
         <table>
           <thead>
             <tr>
@@ -85,43 +83,52 @@ export const InstructionsEvaluation = () => {
             ))}
           </tbody>
         </table>
-      </Col>
+      </div>
     </Container>
   );
 };
 
 const Container = styled.div`
-  display: flex;
   width: 100%;
   margin-bottom: 2em;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  flex-wrap: wrap;
+  gap: 1.2em;
+  ${mediaQuery.minDesktop} {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
 
   .instructions {
-    place-items: center;
-    display: grid;
-    gap: 2em;
     font-size: 12px;
-
-    .one,
-    .two {
-      width: 80%;
-    }
-  }
-
-  table {
-    font-size: 12px;
-    width: 75%;
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    border: 0.5px solid #333;
-    padding: 2px;
     text-align: left;
-    font-weight: initial;
+    width: 100%;
   }
 
-  th {
-    background-color: #f4f4f4;
+  .table-item {
+    width: 100%;
+    table {
+      font-size: 0.7em;
+      width: 100%;
+      max-width: 30em;
+      border-collapse: collapse;
+      ${mediaQuery.minDesktop} {
+        font-size: 0.8em;
+      }
+    }
+
+    th,
+    td {
+      border: 0.5px solid #333;
+      padding: 2px 0.8em;
+      text-align: left;
+      font-weight: initial;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
   }
 `;

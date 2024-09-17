@@ -370,10 +370,9 @@ const Sheet1 = ({
             <Title level={5}>
               II. INSTRUCCIONES PARA LA EVALUACIÓN CUALITATIVA:
             </Title>
-          </Col>
-          <Col span={24}>
             <InstructionsEvaluation />
           </Col>
+
           <Col span={24} md={20}>
             <span>
               <strong>A. ORGANIZACIÓN Y EJECUCIÓN DEL TRABAJO</strong>
