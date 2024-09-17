@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -19,10 +19,18 @@ import {
 import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
 import { InstructionsEvaluation } from "./InstructionsEvaluation";
-import { isEmpty } from "lodash";
 
 export const Sheet1Integration = ({ practice, user, annex4 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
+  const [evaluation, setEvaluation] = useState(0);
+  const [qualitativeEvaluation, setQualitativeEvaluation] = useState("---");
+  const [literalEvaluation, setLiteralEvaluation] = useState("---");
+
+  useEffect(() => {
+    setEvaluation(annex4?.result?.totalScore);
+    setQualitativeEvaluation(annex4?.result?.qualitativeEvaluation);
+    setLiteralEvaluation(annex4?.result?.literalEvaluation);
+  }, [annex4]);
 
   const mapForm = (formData) => ({
     evaluationSheet: [
@@ -163,6 +171,11 @@ export const Sheet1Integration = ({ practice, user, annex4 }) => {
         ],
       },
     ],
+    result: {
+      totalScore: evaluation,
+      qualitativeEvaluation: qualitativeEvaluation,
+      literalEvaluation: literalEvaluation,
+    },
   });
 
   const onSaveSheet1Annex4 = async (formData) => {
@@ -191,11 +204,31 @@ export const Sheet1Integration = ({ practice, user, annex4 }) => {
     });
 
   return (
-    <Sheet1 onSaveSheet1={onConfirmSaveSheet1} user={user} annex4={annex4} />
+    <Sheet1
+      onSaveSheet1={onConfirmSaveSheet1}
+      user={user}
+      annex4={annex4}
+      evaluation={evaluation}
+      onSetEvaluation={setEvaluation}
+      qualitativeEvaluation={qualitativeEvaluation}
+      onSetQualitativeEvaluation={setQualitativeEvaluation}
+      literalEvaluation={literalEvaluation}
+      onSetLiteralEvaluation={setLiteralEvaluation}
+    />
   );
 };
 
-const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
+const Sheet1 = ({
+  onSaveSheet1,
+  user,
+  annex4,
+  evaluation,
+  onSetEvaluation,
+  qualitativeEvaluation,
+  onSetQualitativeEvaluation,
+  literalEvaluation,
+  onSetLiteralEvaluation,
+}) => {
   const schema = yup.object({
     A1: yup.number().required(),
     A2: yup.number().required(),
@@ -223,6 +256,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
     formState: { errors },
     control,
     handleSubmit,
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -262,32 +296,71 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
   };
 
   const validationQualityEvaluation = (note = 0) => {
-    if (isEmpty(annex4?.evaluationSheet)) return;
+    if (evaluation === 0) return;
 
-    if (note >= 19) {
-      return qualityEvaluation["A"];
-    }
-    if (note >= 15 && note <= 18) {
-      return qualityEvaluation["B"];
-    }
-    if (note >= 13 && note <= 14) {
-      return qualityEvaluation["C"];
-    }
-    if (note <= 12) {
+    if (note <= 12.5) {
       return qualityEvaluation["D"];
+    } else if (note >= 13.0 && note <= 14.5) {
+      return qualityEvaluation["C"];
+    } else if (note >= 15.0 && note <= 18.5) {
+      return qualityEvaluation["B"];
+    } else if (note >= 19.0) {
+      return qualityEvaluation["A"];
     }
   };
 
-  const arrayAllNotes = (annex4?.evaluationSheet || []).map((evaluation) =>
-    evaluation.indicators.map((indicator) => indicator.assessment)
-  );
+  useEffect(() => {
+    const notesRealTime = [
+      watch("A1"),
+      watch("A2"),
+      watch("A3"),
+      watch("B4"),
+      watch("B5"),
+      watch("B6"),
+      watch("B7"),
+      watch("C8"),
+      watch("C9"),
+      watch("C10"),
+      watch("C11"),
+      watch("C12"),
+      watch("D13"),
+      watch("D14"),
+      watch("E15"),
+      watch("E16"),
+      watch("E17"),
+      watch("F18"),
+      watch("F19"),
+      watch("F20"),
+    ].reduce((acc, value) => acc + value, 0.0);
 
-  const allNotes = arrayAllNotes.flatMap((note) => note);
-
-  const totalNotes = allNotes.reduce(
-    (accumulator, note) => accumulator + note,
-    0
-  );
+    onSetEvaluation(notesRealTime);
+    onSetQualitativeEvaluation(validationQualityEvaluation(evaluation)?.name);
+    onSetLiteralEvaluation(validationQualityEvaluation(evaluation)?.code);
+  }, [
+    watch("A1"),
+    watch("A2"),
+    watch("A3"),
+    watch("B4"),
+    watch("B5"),
+    watch("B6"),
+    watch("B7"),
+    watch("C8"),
+    watch("C9"),
+    watch("C10"),
+    watch("C11"),
+    watch("C12"),
+    watch("D13"),
+    watch("D14"),
+    watch("E15"),
+    watch("E16"),
+    watch("E17"),
+    watch("F18"),
+    watch("F19"),
+    watch("F20"),
+    evaluation,
+    qualitativeEvaluation,
+    literalEvaluation,
+  ]);
 
   return (
     <Container>
@@ -314,6 +387,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="A1"
                 control={control}
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -343,7 +417,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="A2"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -373,7 +447,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="A3"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -411,7 +485,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="B4"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -441,7 +515,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="B5"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -474,7 +548,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="B6"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -507,7 +581,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="B7"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -542,7 +616,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="C8"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -575,7 +649,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="C9"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -605,7 +679,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="C10"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -635,7 +709,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="C11"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -665,7 +739,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="C12"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -700,7 +774,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="D13"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -730,7 +804,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="D14"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -765,7 +839,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="E15"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -795,7 +869,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="E16"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -825,7 +899,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="E17"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -863,7 +937,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="F18"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -895,7 +969,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="F19"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -928,7 +1002,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
               <Controller
                 name="F20"
                 control={control}
-                defaultValue=""
+                defaultValue={0}
                 render={({ field: { onChange, value, name } }) => (
                   <RadioGroup
                     label="CALIF."
@@ -959,7 +1033,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
           </Col>
           <Col span={24} md={4}>
             <span>
-              <strong>{totalNotes ? totalNotes : "--"}</strong>
+              <strong>{evaluation || "---"}</strong>
             </span>
           </Col>
           <Col span={24} md={20}>
@@ -969,9 +1043,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
           </Col>
           <Col span={24} md={4}>
             <span>
-              <strong>
-                {validationQualityEvaluation(totalNotes)?.name || "--"}
-              </strong>
+              <strong>{qualitativeEvaluation || "---"}</strong>
             </span>
           </Col>
           <Col span={24} md={20}>
@@ -981,9 +1053,7 @@ const Sheet1 = ({ onSaveSheet1, user, annex4 }) => {
           </Col>
           <Col span={24} md={4}>
             <span>
-              <strong>
-                {validationQualityEvaluation(totalNotes)?.code || "--"}
-              </strong>
+              <strong>{literalEvaluation || "---"}</strong>
             </span>
           </Col>
         </Row>
