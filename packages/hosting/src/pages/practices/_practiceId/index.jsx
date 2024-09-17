@@ -308,11 +308,15 @@ export const PracticeIntegration = () => {
                   styled={{ color: (theme) => theme.colors.primary }}
                   onClick={() => navigate("/practices")}
                 />
-                <Title level={isMobile ? 4 : 3} style={{ margin: "0" }}>
-                  <span className="capitalize">
+                {isMobile ? (
+                  <h5 style={{ margin: "0" }} className="capitalize">
                     Módulo {practice?.moduleNumber}: {practice?.name}
-                  </span>
-                </Title>
+                  </h5>
+                ) : (
+                  <h2 style={{ margin: "0" }} className="capitalize">
+                    Módulo {practice?.moduleNumber}: {practice?.name}
+                  </h2>
+                )}
                 <IconAction
                   icon={faFilePdf}
                   styled={{ color: (theme) => theme.colors.error }}

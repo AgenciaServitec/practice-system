@@ -17,11 +17,14 @@ const global = css`
 
   body {
     background: #e9eef6;
-    font-size: 15px;
     overflow-x: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
       sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     color: ${({ theme }) => theme.colors.font2};
+    font-size: 14px;
+    ${mediaQuery.minDesktop} {
+      font-size: 15px;
+    }
   }
 
   h1,
@@ -39,29 +42,29 @@ const global = css`
 
   h1 {
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 3.4rem;
   }
 
   h2 {
     font-size: 1.7rem;
-    font-weight: bold;
+    font-weight: 600;
     line-height: 2.2rem;
   }
 
   h3 {
     font-size: 1.3rem;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   h4 {
     font-size: 1.1rem;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   h5 {
     font-size: 1rem;
-    font-weight: bold;
+    font-weight: 600;
   }
 
   .link-color {
@@ -190,6 +193,11 @@ const antd = {
     .ant-dropdown-trigger {
       .ant-dropdown-menu-submenu-title {
         padding: 1.7rem 1rem !important;
+      }
+    }
+    .ant-collapse-content {
+      .ant-collapse-content-box {
+        padding: 1em 0.4em !important;
       }
     }
   `,

@@ -42,7 +42,7 @@ const Container = styled(Button)`
     }
     .item-text {
       white-space: normal;
-      font-size: 16px;
+      font-size: 1em;
       font-weight: 400;
       text-transform: uppercase;
       text-shadow: none;
