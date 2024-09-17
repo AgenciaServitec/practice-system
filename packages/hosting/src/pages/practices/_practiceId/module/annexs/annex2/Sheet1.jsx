@@ -101,57 +101,85 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
         <Col span={24}>
           <Form onSubmit={handleSubmit(onConfirmSaveSheet1)}>
             <Row gutter={[16, 16]}>
-              <Col span={24} md={8}>
-                <Controller
-                  name="refreshment"
-                  control={control}
-                  defaultValue=""
-                  render={({ field: { onChange, value, name } }) => (
-                    <Input
-                      label="Refrigerio"
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
+              {user.roleCode === "user" ? (
+                <>
+                  <Col span={24} md={8}>
+                    <Controller
+                      name="refreshment"
+                      control={control}
+                      defaultValue=""
+                      render={({ field: { onChange, value, name } }) => (
+                        <Input
+                          label="Refrigerio"
+                          name={name}
+                          value={value}
+                          onChange={onChange}
+                          error={error(name)}
+                          required={required(name)}
+                          disabled={user.roleCode !== "user"}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Col>
-              <Col span={24} md={8}>
-                <Controller
-                  name="mobility"
-                  control={control}
-                  defaultValue=""
-                  render={({ field: { onChange, value, name } }) => (
-                    <Input
-                      label="Movilidad"
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
+                  </Col>
+                  <Col span={24} md={8}>
+                    <Controller
+                      name="mobility"
+                      control={control}
+                      defaultValue=""
+                      render={({ field: { onChange, value, name } }) => (
+                        <Input
+                          label="Movilidad"
+                          name={name}
+                          value={value}
+                          onChange={onChange}
+                          error={error(name)}
+                          required={required(name)}
+                          disabled={user.roleCode !== "user"}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Col>
-              <Col span={24} md={8}>
-                <Controller
-                  name="others"
-                  control={control}
-                  defaultValue=""
-                  render={({ field: { onChange, value, name } }) => (
-                    <Input
-                      label="Otros (opcional)"
-                      name={name}
-                      value={value}
-                      onChange={onChange}
-                      error={error(name)}
-                      required={required(name)}
+                  </Col>
+                  <Col span={24} md={8}>
+                    <Controller
+                      name="others"
+                      control={control}
+                      defaultValue=""
+                      render={({ field: { onChange, value, name } }) => (
+                        <Input
+                          label="Otros (opcional)"
+                          name={name}
+                          value={value}
+                          onChange={onChange}
+                          error={error(name)}
+                          required={required(name)}
+                          disabled={user.roleCode !== "user"}
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Col>
+                  </Col>
+                </>
+              ) : (
+                <>
+                  <Col span={24} md={8}>
+                    <p>
+                      <strong>Refrigerio</strong>
+                    </p>
+                    <p>{annex2?.refreshment || "-"}</p>
+                  </Col>
+                  <Col span={24} md={8}>
+                    <p>
+                      <strong>Movilidad</strong>
+                    </p>
+                    <p>{annex2?.mobility || "-"}</p>
+                  </Col>
+                  <Col span={24} md={8}>
+                    <p>
+                      <strong>Otros (opcional)</strong>
+                    </p>
+                    <p>{annex2?.others || "-"}</p>
+                  </Col>
+                </>
+              )}
             </Row>
             <ObservationsList annex={annex2} practice={practice} />
             <Acl name="/practices/:practiceId/annex#save">
