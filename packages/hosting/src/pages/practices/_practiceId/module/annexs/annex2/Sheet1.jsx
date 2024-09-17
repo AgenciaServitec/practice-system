@@ -114,6 +114,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                       onChange={onChange}
                       error={error(name)}
                       required={required(name)}
+                      disabled={user.roleCode !== "user"}
                     />
                   )}
                 />
@@ -131,6 +132,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                       onChange={onChange}
                       error={error(name)}
                       required={required(name)}
+                      disabled={user.roleCode !== "user"}
                     />
                   )}
                 />
@@ -148,6 +150,7 @@ const Sheet1 = ({ practice, user, annex2, onConfirmSaveSheet1 }) => {
                       onChange={onChange}
                       error={error(name)}
                       required={required(name)}
+                      disabled={user.roleCode !== "user"}
                     />
                   )}
                 />
