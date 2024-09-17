@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Acl,
   AddButton,
-  Button,
   Col,
   DataEntryModal,
   Legend,
@@ -17,7 +16,6 @@ import { useNavigate } from "react-router";
 import { useDefaultFirestoreProps, useQueriesState } from "../../hooks";
 import { PracticesTable } from "./Practices.Table";
 import { useAuthentication, useGlobalData } from "../../providers";
-import { isEmpty } from "lodash";
 import { Divider } from "antd";
 import { PracticesFilters } from "./Practices.Filters";
 
