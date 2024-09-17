@@ -25,7 +25,7 @@ export const InformationModal = ({
     <DataEntryModal visible={open} onCancel={onCancel}>
       <Container>
         <div className="card-item">
-          <Row gutter={[13, 13]}>
+          <Row gutter={[16, 16]}>
             <Col span={24} md={24}>
               <Title level={5} style={{ margin: "1px 0" }}>
                 DATOS DEL PRACTICANTE:
@@ -113,7 +113,7 @@ export const InformationModal = ({
           </Row>
         </div>
         <div className="card-item">
-          <Row gutter={[13, 13]}>
+          <Row gutter={[16, 16]}>
             <Col span={24}>
               <Title level={5} style={{ margin: "1px 0" }}>
                 DATOS DE LA EMPRESA O INSTITUCIÓN:
@@ -209,7 +209,7 @@ export const InformationModal = ({
           </Row>
         </div>
         <div className="card-item">
-          <Row gutter={[13, 13]}>
+          <Row gutter={[16, 16]}>
             <Col span={24}>
               <Title level={5} style={{ margin: "1px 0" }}>
                 DATOS DE LAS PRÁCTICAS PRE PROFESIONALES:

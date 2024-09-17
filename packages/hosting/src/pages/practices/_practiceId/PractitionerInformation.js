@@ -1,34 +1,35 @@
 import React from "react";
 import { fullName } from "../../../utils";
 import { Col, Row } from "../../../components";
+import styled from "styled-components";
 
 export const PractitionerInformation = ({
   practitioner,
   professionalCareer,
 }) => {
   return (
-    <Row gutter={[16, 16]}>
+    <Container gutter={[16, 16]}>
       <Col span={24} md={8}>
         <div className="item">
-          <label>Código de Matrícula:</label>
+          <p>Código de Matrícula:</p>
           <p>{practitioner?.practitionerData?.tuitionId || "-"}</p>
         </div>
       </Col>
       <Col span={24} md={8}>
         <div className="item">
-          <label>Apellidos y Nombres: </label>
+          <p>Apellidos y Nombres: </p>
           <p className="capitalize">{fullName(practitioner) || "-"}</p>
         </div>
       </Col>
       <Col span={24} md={8}>
         <div className="item">
-          <label>Carrera Profesional: </label>
+          <p>Carrera Profesional: </p>
           <p>{professionalCareer?.label || ""}</p>
         </div>
       </Col>
       <Col span={24} md={8}>
         <div className="item">
-          <label>Teléfonos (Domicilio - Personal):</label>
+          <p>Teléfonos (Domicilio - Personal):</p>
           <p>
             {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
               "-"}
@@ -37,16 +38,38 @@ export const PractitionerInformation = ({
       </Col>
       <Col span={24} md={8}>
         <div className="item">
-          <label>Correo Electrónico:</label>
+          <p>Correo Electrónico:</p>
           <p>{practitioner?.email || "-"}</p>
         </div>
       </Col>
       <Col span={24} md={8}>
         <div className="item">
-          <label>DNI:</label>
+          <p>DNI:</p>
           <p>{practitioner?.dni || "-"}</p>
         </div>
       </Col>
-    </Row>
+    </Container>
   );
 };
+
+const Container = styled(Row)`
+  background: #f2f9ffff;
+  border-radius: 1em;
+  padding: 1em 0;
+
+  .item {
+    p:first-child {
+      font-size: 0.85em;
+      font-weight: 500;
+      color: rgb(55, 79, 93);
+      line-height: 1.1em;
+      margin: 0.3em 0;
+    }
+
+    p:last-child {
+      font-weight: 500;
+      font-size: 1.05em;
+      margin: -4px 0;
+    }
+  }
+`;

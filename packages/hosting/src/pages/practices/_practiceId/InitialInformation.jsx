@@ -30,6 +30,8 @@ export const InitialInformation = ({
       profession.value === practitioner?.practitionerData?.professionalCareer
   );
 
+  console.log(practitioner?.practitionerData?.professionalCareer);
+
   return (
     <>
       <Container>
