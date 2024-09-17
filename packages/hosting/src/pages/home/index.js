@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { fullName } from "../../utils";
 import { orderBy } from "lodash";
+import { mediaQuery } from "../../styles";
 
 export const HomeIntegration = () => {
   const { authUser } = useAuthentication();
@@ -86,7 +87,10 @@ export const HomeIntegration = () => {
                                     {practice.moduleNumber}
                                   </Tag>
                                 </div>
-                                <span>:</span> <div>{practice.name}</div>
+                                <span>:</span>{" "}
+                                <div className="name-practice">
+                                  {practice.name}
+                                </div>
                               </Link>
                             </li>
                           )
@@ -186,11 +190,22 @@ const CardStyled = styled.div`
   min-height: 11em;
   height: auto;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 3em;
+  justify-content: center;
+  ${mediaQuery.minTablet} {
+    justify-content: start;
+    flex-wrap: nowrap;
+  }
 
   .icon {
-    padding-left: 3em;
+    padding-left: 0;
+    font-size: 0.8em;
+    ${mediaQuery.minDesktop} {
+      padding-left: 3em;
+      font-size: 1em;
+    }
   }
 
   .texts {
@@ -206,10 +221,15 @@ const CardStyled = styled.div`
         .list {
           display: grid;
           gap: 0.7em;
+          align-items: center;
           li {
             .item-module {
               display: flex;
+              align-items: center;
               gap: 0.3em;
+              .name-practice {
+                font-size: 0.8em;
+              }
             }
           }
         }
