@@ -18,6 +18,12 @@ export const PracticesSheet5 = ({
       profession.value === practitioner?.practitionerData?.professionalCareer
   )?.label;
 
+  const moduleHours = {
+    1: "265 horas",
+    2: "290 horas",
+    3: "296 horas",
+  };
+
   return (
     <>
       <Container id="annex4">
@@ -72,7 +78,8 @@ export const PracticesSheet5 = ({
               <li>
                 <span> 4.</span>
                 <span>
-                  Duracion de PPP:&nbsp; <strong>{practice.hours}</strong>
+                  Duracion de PPP:&nbsp;{" "}
+                  <strong>{moduleHours?.[practice?.moduleNumber] || 0}</strong>
                 </span>
               </li>
               <li>
@@ -93,7 +100,7 @@ export const PracticesSheet5 = ({
                       : "-"}
                   </strong>
                   &nbsp;&nbsp;&nbsp; Total de horas:&nbsp;
-                  <strong>{practice.hours}</strong>
+                  <strong>{practice.hours} horas</strong>
                 </span>
               </li>
               <li>
