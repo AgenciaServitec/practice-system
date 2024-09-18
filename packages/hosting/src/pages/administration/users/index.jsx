@@ -2,13 +2,7 @@ import React from "react";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import Typography from "antd/lib/typography";
-import {
-  Acl,
-  AddButton,
-  modalConfirm,
-  notification,
-} from "../../../components";
-import { Divider } from "antd";
+import { Acl, modalConfirm, notification } from "../../../components";
 import { useAuthentication, useGlobalData } from "../../../providers";
 import { useNavigate } from "react-router";
 import { useApiUserPatch } from "../../../api";
@@ -66,22 +60,22 @@ export const Users = () => {
   return (
     <Acl name="/users" redirect>
       <Row gutter={[16, 16]}>
-        <Acl name="/users/new">
-          <>
-            <Col span={24}>
-              <AddButton
-                onClick={onAddUser}
-                title={
-                  authUser.roleCode === "company_representative"
-                    ? "Practicante"
-                    : "Usuario"
-                }
-                margin="0"
-              />
-            </Col>
-            <Divider />
-          </>
-        </Acl>
+        {/*<Acl name="/users/new">*/}
+        {/*  <>*/}
+        {/*    <Col span={24}>*/}
+        {/*      <AddButton*/}
+        {/*        onClick={onAddUser}*/}
+        {/*        title={*/}
+        {/*          authUser.roleCode === "company_representative"*/}
+        {/*            ? "Practicante"*/}
+        {/*            : "Usuario"*/}
+        {/*        }*/}
+        {/*        margin="0"*/}
+        {/*      />*/}
+        {/*    </Col>*/}
+        {/*    <Divider />*/}
+        {/*  </>*/}
+        {/*</Acl>*/}
         <Col span={24}>
           <Title level={3}>
             {["super_admin", "admin"].includes(authUser.roleCode)
