@@ -133,9 +133,9 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
 const Container = styled.div`
   .item-sheet {
     width: 100%;
-    background: #f1f0f0;
     padding: 1em;
-    border-radius: 1em;
+    background: #fff;
+    border: 1px solid #dfdfdf;
   }
 
   .ant-space-item {

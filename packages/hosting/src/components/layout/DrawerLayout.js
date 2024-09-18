@@ -62,6 +62,16 @@ export const DrawerLayout = ({
       ],
     },
     {
+      label: "Prácticas",
+      key: "practices",
+      icon: <FontAwesomeIcon icon={faFilePen} size="lg" />,
+      isVisible: existPageAclsInAclsOfUser(["/practices"]),
+      onClick: () => {
+        onNavigateTo("/practices");
+        onSetIsVisibleDrawer(false);
+      },
+    },
+    {
       label: ["super_admin", "admin"].includes(user.roleCode)
         ? "Usuarios"
         : "Practicantes",
@@ -80,16 +90,6 @@ export const DrawerLayout = ({
       isVisible: existPageAclsInAclsOfUser(["/companies"]),
       onClick: () => {
         onNavigateTo("/companies");
-        onSetIsVisibleDrawer(false);
-      },
-    },
-    {
-      label: "Prácticas",
-      key: "practices",
-      icon: <FontAwesomeIcon icon={faFilePen} size="lg" />,
-      isVisible: existPageAclsInAclsOfUser(["/practices"]),
-      onClick: () => {
-        onNavigateTo("/practices");
         onSetIsVisibleDrawer(false);
       },
     },

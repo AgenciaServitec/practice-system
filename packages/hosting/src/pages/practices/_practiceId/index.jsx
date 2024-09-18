@@ -3,7 +3,6 @@ import {
   Acl,
   Alert,
   Button,
-  Card,
   Col,
   Collapse,
   IconAction,
@@ -183,7 +182,7 @@ export const PracticeIntegration = () => {
         ...panelStyle,
         background: isApprovedAnnex(annex2?.status)
           ? "#ecffc2"
-          : "rgba(0, 0, 0, 0.02)",
+          : "rgba(0, 0, 0, 0.03)",
       },
       collapsible: isApprovedAnnex(annex2?.status) ? "disabled" : "visible",
     },
@@ -211,7 +210,7 @@ export const PracticeIntegration = () => {
         ...panelStyle,
         background: isApprovedAnnex(annex3?.status)
           ? "#ecffc2"
-          : "rgba(0, 0, 0, 0.02)",
+          : "rgba(0, 0, 0, 0.03)",
       },
       collapsible: isApprovedAnnex(annex3.status) ? "disabled" : "visible",
     },
@@ -241,7 +240,7 @@ export const PracticeIntegration = () => {
         ...panelStyle,
         background: isApprovedAnnex(annex4?.status)
           ? "#ecffc2"
-          : "rgba(0, 0, 0, 0.02)",
+          : "rgba(0, 0, 0, 0.03)",
       },
       collapsible: isApprovedAnnex(annex4.status) ? "disabled" : "visible",
     },
@@ -269,7 +268,7 @@ export const PracticeIntegration = () => {
         ...panelStyle,
         background: isApprovedAnnex(annex6?.status)
           ? "#ecffc2"
-          : "rgba(0, 0, 0, 0.02)",
+          : "rgba(0, 0, 0, 0.03)",
       },
       collapsible:
         !hasPermissions ||
@@ -359,39 +358,41 @@ export const PracticeIntegration = () => {
               />
             </Col>
           </Row>
+          <br />
           <Row gutter={[16, 16]}>
             <Col span={24}>
-              <Card title="Anexos">
-                <Collapse
-                  bordered={false}
-                  defaultActiveKey={
-                    isCompanyRepresentative
-                      ? [
-                          annex2.status !== "approved" && "annex2",
-                          annex3.status !== "approved" && "annex3",
-                          annex4.status !== "approved" && "annex4",
-                        ]
-                      : [
-                          annex2.status !== "approved" && "annex2",
-                          annex3.status !== "approved" && "annex3",
-                          annex4.status !== "approved" && "annex4",
-                          annex6.status !== "approved" && "annex6",
-                        ]
-                  }
-                  expandIconPosition="end"
-                  size="large"
-                  expandIcon={({ isActive }) => (
-                    <FontAwesomeIcon
-                      icon={isActive ? faMinus : faPlus}
-                      style={{ fontSize: "1.2em" }}
-                    />
-                  )}
-                  items={annexsList(panelStyle)}
-                  style={{
-                    background: "transparent",
-                  }}
-                />
-              </Card>
+              <h2>Anexos</h2>
+            </Col>
+            <Col span={24}>
+              <Collapse
+                bordered={false}
+                defaultActiveKey={
+                  isCompanyRepresentative
+                    ? [
+                        annex2.status !== "approved" && "annex2",
+                        annex3.status !== "approved" && "annex3",
+                        annex4.status !== "approved" && "annex4",
+                      ]
+                    : [
+                        annex2.status !== "approved" && "annex2",
+                        annex3.status !== "approved" && "annex3",
+                        annex4.status !== "approved" && "annex4",
+                        annex6.status !== "approved" && "annex6",
+                      ]
+                }
+                expandIconPosition="end"
+                size="large"
+                expandIcon={({ isActive }) => (
+                  <FontAwesomeIcon
+                    icon={isActive ? faMinus : faPlus}
+                    style={{ fontSize: "1.2em" }}
+                  />
+                )}
+                items={annexsList(panelStyle)}
+                style={{
+                  background: "transparent",
+                }}
+              />
             </Col>
           </Row>
           <br />
