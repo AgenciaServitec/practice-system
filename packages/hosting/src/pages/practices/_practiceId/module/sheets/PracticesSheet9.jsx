@@ -20,7 +20,7 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
       </div>
       <div className="body">
         <div className="body__subtitle1">
-          <h5>III. DATOS DE LA PRACTICA PRE-PROFESIONAL: </h5>
+          <h5>III. DATOS DE LA PRÁCTICA PRE-PROFESIONAL: </h5>
         </div>
         <div className="body__datacompany">
           <ul>

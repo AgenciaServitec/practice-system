@@ -40,7 +40,7 @@ export const CorrespondencesIntegration = () => {
 
   const onConfirmRemovePractice = async (practice) =>
     modalConfirm({
-      content: "La practica se eliminará",
+      content: "La práctica se eliminará",
       onOk: async () => {
         await onDeletePractice(practice);
       },
