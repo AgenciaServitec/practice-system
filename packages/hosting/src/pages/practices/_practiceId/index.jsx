@@ -149,6 +149,10 @@ export const PracticeIntegration = () => {
     </div>
   );
 
+  const isExistsAcademicSupervisorAndCoordinatorInPractice =
+    !isEmpty(practice?.academicSupervisorId) &&
+    !isEmpty(practice?.academicCoordinatorId);
+
   const isApprovedAnnex = (status) => status === "approved";
   const hasPermissions = isCompanyRepresentative || isAcademicSupervisor;
 
@@ -316,16 +320,18 @@ export const PracticeIntegration = () => {
                     Módulo {practice?.moduleNumber}: {practice?.name}
                   </h2>
                 )}
-                <IconAction
-                  icon={faFilePdf}
-                  styled={{ color: (theme) => theme.colors.error }}
-                  onClick={() =>
-                    navigate(
-                      `/practices/${practice.id}/module${practice.moduleNumber}/sheets`
-                    )
-                  }
-                  tooltipTitle="Ver pdf"
-                />
+                {isExistsAcademicSupervisorAndCoordinatorInPractice && (
+                  <IconAction
+                    icon={faFilePdf}
+                    styled={{ color: (theme) => theme.colors.error }}
+                    onClick={() =>
+                      navigate(
+                        `/practices/${practice.id}/module${practice.moduleNumber}/sheets`
+                      )
+                    }
+                    tooltipTitle="Ver pdf"
+                  />
+                )}
               </div>
               <br />
               {practice?.status === "approved" && (
