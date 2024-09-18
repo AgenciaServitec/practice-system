@@ -67,8 +67,11 @@ export const HomeIntegration = () => {
                   </Title>
                   <ul className="list">
                     <li>
+                      <Link to="/practices/new">1. Crear practica</Link>
+                    </li>
+                    <li>
                       <Link to="/practices">
-                        1. Ver toda la lista de mis practicas
+                        2. Ver toda la lista de mis practicas
                       </Link>
                     </li>
                     <li className="my-practices">
