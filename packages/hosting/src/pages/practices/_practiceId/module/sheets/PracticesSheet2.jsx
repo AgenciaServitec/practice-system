@@ -103,14 +103,14 @@ export const PracticesSheet2 = ({
                   ? representativeCompany?.signaturePhoto?.url
                   : null
               }
-              fullName={fullName(representativeCompany)}
+              fullName={fullName(representativeCompany) || ""}
               businessPosition={
                 getBusinessPosition(
-                  representativeCompany.companyRepresentativeData
-                    .businessPosition
-                )?.label
+                  representativeCompany?.companyRepresentativeData
+                    ?.businessPosition
+                )?.label || ""
               }
-              role={findRole(representativeCompany.roleCode)?.name}
+              role={findRole(representativeCompany.roleCode)?.name || ""}
             />
           </Col>
           <div className="footer__company">
@@ -120,7 +120,9 @@ export const PracticesSheet2 = ({
             <span>
               <FontAwesomeIcon icon={faPhone} />
               &nbsp; &nbsp;
-              <strong>{`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}`}</strong>
+              <strong>{`${representativeCompany?.phone?.prefix || ""} ${
+                representativeCompany?.phone?.number || ""
+              }`}</strong>
             </span>
             <span>
               <FontAwesomeIcon icon={faEnvelope} />
