@@ -118,7 +118,7 @@ export const PracticesSheet5 = ({
                 <span>7.</span>
                 <span>
                   Giro de la Empresa o Institución:&nbsp;
-                  <strong>{company?.category}</strong>
+                  <strong className="capitalize">{company?.category}</strong>
                 </span>
               </li>
               <li>
@@ -163,7 +163,7 @@ export const PracticesSheet5 = ({
                 <span> 10.</span>
                 <span>Lugares de Practica:&nbsp;</span>
               </li>
-              <li>
+              <li className="table_center_work">
                 <div className="center_work">
                   <table>
                     <tbody>
@@ -192,7 +192,9 @@ export const PracticesSheet5 = ({
                 <span>
                   Tareas asignadas según el modulo indicado: <br />
                   <br />
-                  <div className="task-box capitalize">{practice?.task}</div>
+                  <div className="task-box capitalize">
+                    <strong>{practice?.task}</strong>
+                  </div>
                 </span>
               </li>
             </ul>
@@ -308,6 +310,11 @@ const Container = styled.div`
         list-style: none;
         line-height: 1.5em;
 
+        .table_center_work {
+          display: flex;
+          justify-content: center;
+        }
+
         li {
           display: grid;
           grid-template-columns: 2em 1fr;
@@ -323,14 +330,14 @@ const Container = styled.div`
 
           .center_work {
             table {
-              font-size: 10px;
+              font-size: 13px;
               margin: 1em;
               width: 400px;
               border-collapse: collapse;
               text-align: center;
-              margin-left: 10em;
 
               td {
+                font-weight: bold;
                 width: 50px;
                 border: 1px solid black;
                 padding: 1px;
@@ -344,13 +351,14 @@ const Container = styled.div`
 
   .table-container {
     width: fit-content;
-    margin: 2em auto;
+    margin: 1.3em auto;
+    font-weight: bold;
 
     table {
       border-collapse: collapse;
       text-align: center;
       margin: auto;
-      font-size: 11px;
+      font-size: 13px;
 
       td {
         border: 1px solid black;
