@@ -44,7 +44,9 @@ export const PracticesSheet7 = ({
             <h4>INFORME N° 001 - 2023 - ELS – CI - IESTP &quot;GLBR&quot;</h4>
             <div className="lbody__title">
               <div className="vertical-align">
-                <p className="capitalize">SEÑOR(A): {fullName(supervisor)}</p>
+                <p className="capitalize">
+                  <strong>SEÑOR(A):</strong> {fullName(supervisor)}
+                </p>
                 <p className="supervisor-rol">
                   <strong>
                     {" "}
@@ -82,8 +84,8 @@ export const PracticesSheet7 = ({
               Mediante el presente me dirijo a usted para saludarla, a la vez
               informar respecto al desarrollo de las Prácticas Pre-profesionales
               efectuadas por el/la estudiante:{" "}
-              <strong>{fullName(practitioner)}</strong> como a continuación
-              detallo:
+              <strong className="capitalize">{fullName(practitioner)}</strong>{" "}
+              como a continuación detallo:
             </div>
           </div>
           <div className="body__subtitle1">
@@ -153,7 +155,7 @@ export const PracticesSheet7 = ({
                   <strong> 6. </strong>
                 </span>
                 <span>
-                  <strong>Teléfonos (domicilio-personal): </strong>
+                  <strong>Teléfonos (Domicilio-Personal): </strong>
                   <br />
                   {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
                     "-"}
@@ -164,7 +166,7 @@ export const PracticesSheet7 = ({
                   <strong> 7. </strong>
                 </span>
                 <span>
-                  <strong>Correo electrónico (e-mail)</strong>
+                  <strong>Correo electrónico (E-mail)</strong>
                   <br />
                   {practitioner.email}{" "}
                 </span>

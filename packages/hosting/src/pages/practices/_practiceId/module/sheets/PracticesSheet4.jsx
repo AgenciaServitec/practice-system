@@ -91,7 +91,7 @@ export const PracticesSheet4 = ({
               <ul>
                 <li>
                   Giro de la Empresa o Institución:{" "}
-                  <strong>DesarrolLo de apps</strong>
+                  <strong className="capitalize">{company?.category}</strong>
                 </li>
                 <li>
                   Dirección: <strong>{company?.address}</strong>
@@ -101,7 +101,8 @@ export const PracticesSheet4 = ({
                   <strong>{`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}`}</strong>
                 </li>
                 <li>
-                  Docente supervisor: <strong>{fullName(supervisor)}</strong>
+                  Docente supervisor:{" "}
+                  <strong className="capitalize">{fullName(supervisor)}</strong>
                 </li>
                 <Table>
                   <tr>
@@ -210,7 +211,7 @@ const Container = styled.div`
   }
 
   .body {
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     &__title {
       margin: auto;
       text-align: center;

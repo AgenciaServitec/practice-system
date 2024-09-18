@@ -87,7 +87,7 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
                 )}`}
               </span>
             </li>
-            <li>
+            <li className="table_center_work">
               <span>
                 <strong> 6. </strong>
               </span>
@@ -241,7 +241,7 @@ const Container = styled.div`
         flex-direction: column;
         gap: 1em;
         list-style: none;
-        margin-top: 2em;
+        margin: 0;
 
         li {
           display: grid;
@@ -267,7 +267,7 @@ const Container = styled.div`
               width: 300px;
               border-collapse: collapse;
               text-align: center;
-              font-size: 11px;
+              font-size: 12px;
 
               td {
                 border: 1px solid black;
