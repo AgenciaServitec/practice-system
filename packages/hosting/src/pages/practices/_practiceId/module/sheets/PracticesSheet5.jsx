@@ -18,14 +18,10 @@ export const PracticesSheet5 = ({
       profession.value === practitioner?.practitionerData?.professionalCareer
   )?.label;
 
-  const moduleNumberValidation = () => {
-    if (practice?.moduleNumber === 1) {
-      return "265 horas";
-    } else if (practice?.moduleNumber === 2) {
-      return "290 horas";
-    } else if (practice?.moduleNumber === 3) {
-      return "296 horas";
-    }
+  const moduleHours = {
+    1: "265 horas",
+    2: "290 horas",
+    3: "296 horas",
   };
 
   return (
@@ -83,7 +79,7 @@ export const PracticesSheet5 = ({
                 <span> 4.</span>
                 <span>
                   Duracion de PPP:&nbsp;{" "}
-                  <strong>{moduleNumberValidation()}</strong>
+                  <strong>{moduleHours?.[practice?.moduleNumber] || 0}</strong>
                 </span>
               </li>
               <li>
