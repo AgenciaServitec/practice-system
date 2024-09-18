@@ -67,6 +67,7 @@ export const postUser = async (
 
     const userId = firestore.collection("users").doc().id;
     const companyId = firestore.collection("companies").doc().id;
+    let __company = null;
 
     if (
       user.roleCode === "company_representative" &&
@@ -90,6 +91,7 @@ export const postUser = async (
 
         await addCompany(postCompanyMapping(company, companyId, userId));
       } else {
+        __company = _company;
         await updateCompany({
           ..._company,
           ...(!_company?.representativeId && { representativeId: userId }),
@@ -111,7 +113,7 @@ export const postUser = async (
           id: userId,
           acls: roleAcls?.acls || ["/profile", "/home", "/practices"],
         },
-        companyId
+        __company ? __company.id : companyId
       )
     );
 
