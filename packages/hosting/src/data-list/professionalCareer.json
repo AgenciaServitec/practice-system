@@ -2,5 +2,9 @@
   {
     "label": "Computación e Informática",
     "value": "computing_and_informatics"
+  },
+  {
+    "label": "Desarrollo de Sistemas",
+    "value": "information_systems_development"
   }
 ]
