@@ -151,7 +151,7 @@ const ObservationForm = ({ onConfirmSaveObservation, visibleForm }) => {
         <Row justify="end" gutter={[16, 16]}>
           <Col span={24}>
             <Button type="primary" size="large" block htmlType="submit">
-              Enviar
+              Agregar observación
             </Button>
           </Col>
         </Row>
