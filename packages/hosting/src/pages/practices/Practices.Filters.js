@@ -57,7 +57,9 @@ export const PracticesFilters = ({
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+`;
 
 const FormContent = styled.div`
   display: grid;

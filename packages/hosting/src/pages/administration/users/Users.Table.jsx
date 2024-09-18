@@ -148,4 +148,3 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
     />
   );
 };
-``;

@@ -11,9 +11,11 @@ import {
 import { Divider } from "antd";
 import { useAuthentication, useGlobalData } from "../../../providers";
 import { useNavigate } from "react-router";
-import { UsersTable } from "./UserTable";
 import { useApiUserPatch } from "../../../api";
 import { assign } from "lodash";
+import { useQueriesState } from "../../../hooks";
+import { UsersTable } from "./Users.Table";
+import { UsersFilters } from "./Users.Filters";
 
 const { Title } = Typography;
 
@@ -22,6 +24,9 @@ export const Users = () => {
   const { authUser } = useAuthentication();
   const { users } = useGlobalData();
   const { patchUser, patchUserResponse } = useApiUserPatch();
+  const [filterFields, setFilterFields] = useQueriesState({
+    roleCode: "all",
+  });
 
   const navigateTo = (userId) => {
     const url = `/users/${userId}`;
@@ -56,6 +61,8 @@ export const Users = () => {
       },
     });
 
+  const usersView = mapUsersView(users).filter(filterFields).users;
+
   return (
     <Acl name="/users" redirect>
       <Row gutter={[16, 16]}>
@@ -83,8 +90,15 @@ export const Users = () => {
           </Title>
         </Col>
         <Col span={24}>
+          <UsersFilters
+            user={authUser}
+            filterFields={filterFields}
+            onFilter={setFilterFields}
+          />
+        </Col>
+        <Col span={24}>
           <UsersTable
-            users={users}
+            users={usersView}
             onEditUser={onEditUser}
             onConfirmRemoveUser={onConfirmRemoveUser}
           />
@@ -93,3 +107,22 @@ export const Users = () => {
     </Acl>
   );
 };
+
+const mapUsersView = (users) => {
+  const mapView = {
+    users: users,
+    filter(filterFields) {
+      mapView.users = filteredUsers(mapView.users, filterFields);
+      return mapView;
+    },
+  };
+
+  return mapView;
+};
+
+const filteredUsers = (users, filterFields) =>
+  users.filter((user) =>
+    filterFields.roleCode === "all"
+      ? true
+      : filterFields.roleCode === user.roleCode
+  );
