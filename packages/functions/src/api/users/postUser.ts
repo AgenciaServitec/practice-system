@@ -5,7 +5,7 @@ import {
   firestore,
 } from "../../_firebase";
 import { NextFunction, Request, Response } from "express";
-import { isEmpty, uniq } from "lodash";
+import { flatten, isEmpty, uniq } from "lodash";
 import { getCompanyDataByRuc } from "../../client-api/apis-net-pe";
 import assert from "assert";
 import { postUserMapping } from "./mappings";
@@ -92,7 +92,8 @@ export const postUser = async (
       } else {
         await updateCompany({
           ..._company,
-          membersIds: uniq([..._company?.membersIds, userId]),
+          ...(!_company?.representativeId && { representativeId: userId }),
+          membersIds: uniq(flatten([...(_company?.membersIds || []), userId])),
         });
       }
     }
