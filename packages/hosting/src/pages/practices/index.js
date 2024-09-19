@@ -103,7 +103,7 @@ const Practices = ({
       case "company_representative":
         return practices.filter(
           (practice) =>
-            practice.companyId === user?.companyRepresentativeData.companyId
+            practice.companyId === user?.companyRepresentativeData?.companyId
         );
       case "user":
         return practices.filter(

@@ -25,6 +25,7 @@ import {
   fetchPracticesByPractitionerId,
   getPracticesId,
   updateUser,
+  addAnnex
 } from "../../../firebase/collections";
 import { useNavigate } from "react-router";
 import { fullName, getNameId } from "../../../utils";
@@ -32,7 +33,6 @@ import { Modules } from "../../../data-list";
 import { capitalize, uniq } from "lodash";
 import dayjs from "dayjs";
 import { Alert } from "antd";
-import { addAnnex } from "../../../firebase/collections/annexs";
 import { useGlobalData } from "../../../providers";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
