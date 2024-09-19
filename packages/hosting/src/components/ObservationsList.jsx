@@ -1,12 +1,15 @@
 import React from "react";
-import Col from "antd/lib/col";
-import { Alert, Row } from "antd";
-import { Acl, Button, modalConfirm } from "../../../../components";
-import { updateAnnex } from "../../../../firebase/collections/annexs";
+import { Acl, Alert, Button, Col, modalConfirm, Row } from "../components";
 import styled from "styled-components";
 import dayjs from "dayjs";
+import { isEmpty } from "lodash";
+import { updateAnnex, updatePractice } from "../firebase/collections";
 
-export const ObservationsList = ({ annex, practice }) => {
+export const ObservationsList = ({
+  annex = {},
+  observationsPractice = [],
+  practice,
+}) => {
   const {
     observationsAcademicSupervisor = [],
     observationsCompanyRepresentative = [],
@@ -15,6 +18,7 @@ export const ObservationsList = ({ annex, practice }) => {
   const observations = {
     observationsAcademicSupervisor: observationsAcademicSupervisor,
     observationsCompanyRepresentative: observationsCompanyRepresentative,
+    observationsPractice: observationsPractice,
   };
 
   const findObservation = (observationId, observationsType) =>
@@ -43,9 +47,17 @@ export const ObservationsList = ({ annex, practice }) => {
       },
     ];
 
-    await updateAnnex(practice.id, annex.id, {
-      [observationsType]: newObservations,
-    });
+    if (isEmpty(annex)) {
+      await updatePractice(practice.id, {
+        [observationsType]: newObservations,
+      });
+    }
+
+    if (isEmpty(observationsPractice)) {
+      await updateAnnex(practice.id, annex.id, {
+        [observationsType]: newObservations,
+      });
+    }
   };
 
   const onResolveObservation = (observationId, observationsType) =>
@@ -79,6 +91,52 @@ export const ObservationsList = ({ annex, practice }) => {
     <Container gutter={[16, 16]}>
       <Acl name="/practices/:practiceId/annex#observations">
         <>
+          {observationsView(observationsPractice).map((observation, index) => (
+            <Col span={24} key={index}>
+              <Alert
+                type={observation.status === "pending" ? "warning" : "success"}
+                showIcon
+                message="Observación"
+                description={observation.value}
+                action={
+                  <>
+                    <Acl name="/practices/:practiceId/annex#observationResolver">
+                      {observation.status === "pending" && (
+                        <Button
+                          size="small"
+                          type="primary"
+                          onClick={() =>
+                            onResolveObservation(
+                              observation.id,
+                              "observationsPractice"
+                            )
+                          }
+                        >
+                          Resolver
+                        </Button>
+                      )}
+                    </Acl>
+                    <Acl name="/practices/:practiceId/annex#observationClose">
+                      {observation.status === "resolved" && (
+                        <Button
+                          size="small"
+                          danger
+                          onClick={() =>
+                            onCloseObservation(
+                              observation.id,
+                              "observationsPractice"
+                            )
+                          }
+                        >
+                          Cerrar
+                        </Button>
+                      )}
+                    </Acl>
+                  </>
+                }
+              />
+            </Col>
+          ))}
           {observationsView(observationsAcademicSupervisor).map(
             (observation, index) => (
               <Col span={24} key={index}>
