@@ -13,7 +13,7 @@ import {
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
 import React, { useEffect } from "react";
-import { updateAnnex } from "../../../firebase/collections/annexs";
+import { updateAnnex } from "../../../firebase/collections";
 import { v1 as uuidv1 } from "uuid";
 import styled from "styled-components";
 import dayjs from "dayjs";
@@ -151,7 +151,7 @@ const ObservationForm = ({ onConfirmSaveObservation, visibleForm }) => {
         <Row justify="end" gutter={[16, 16]}>
           <Col span={24}>
             <Button type="primary" size="large" block htmlType="submit">
-              Enviar
+              Agregar observación
             </Button>
           </Col>
         </Row>

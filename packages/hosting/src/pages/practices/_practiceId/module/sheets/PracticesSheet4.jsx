@@ -179,11 +179,11 @@ export const PracticesSheet4 = ({
               fullName={fullName(representativeCompany)}
               businessPosition={
                 getBusinessPosition(
-                  representativeCompany.companyRepresentativeData
-                    .businessPosition
+                  representativeCompany?.companyRepresentativeData
+                    ?.businessPosition
                 )?.label
               }
-              role={findRole(representativeCompany.roleCode)?.name}
+              role={findRole(representativeCompany?.roleCode)?.name}
             />
           </div>
         </div>

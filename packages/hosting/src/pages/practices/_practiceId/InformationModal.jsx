@@ -159,8 +159,9 @@ export const InformationModal = ({
               <div className="item">
                 <p>Teléfono: </p>
                 <p>
-                  {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
-                    "-"}
+                  {`${representativeCompany?.phone?.prefix || ""} ${
+                    representativeCompany?.phone?.number || "-"
+                  }` || "-"}
                 </p>
               </div>
             </Col>

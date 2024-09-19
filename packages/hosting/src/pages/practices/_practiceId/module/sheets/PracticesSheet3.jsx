@@ -42,7 +42,7 @@ export const PracticesSheet3 = ({
             <ul>
               <li>
                 Razón Social de la Empresa:{" "}
-                <strong className="capitalize">{company.socialReason}</strong>
+                <strong className="capitalize">{company?.socialReason}</strong>
               </li>
               <li>
                 Distrito:{" "}
@@ -166,11 +166,11 @@ export const PracticesSheet3 = ({
               fullName={fullName(representativeCompany)}
               businessPosition={
                 getBusinessPosition(
-                  representativeCompany.companyRepresentativeData
-                    .businessPosition
+                  representativeCompany?.companyRepresentativeData
+                    ?.businessPosition
                 )?.label
               }
-              role={findRole(representativeCompany.roleCode)?.name}
+              role={findRole(representativeCompany?.roleCode)?.name}
             />
           </div>
         </div>

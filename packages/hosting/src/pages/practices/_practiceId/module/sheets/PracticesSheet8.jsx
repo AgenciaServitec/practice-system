@@ -42,7 +42,7 @@ export const PracticesSheet8 = ({
                   </span>
                   <span className="capitalize">
                     {" "}
-                    &quot;{company.socialReason}&quot;
+                    &quot;{company?.socialReason}&quot;
                   </span>
                 </div>
               </li>
@@ -51,7 +51,7 @@ export const PracticesSheet8 = ({
                   <strong> 2. </strong>
                 </span>
                 <span className="capitalize">
-                  <strong>Dirección: </strong> {company.address}
+                  <strong>Dirección: </strong> {company?.address}
                 </span>
               </li>
               <li>
