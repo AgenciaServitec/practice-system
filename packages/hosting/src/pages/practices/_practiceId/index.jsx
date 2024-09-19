@@ -8,6 +8,7 @@ import {
   IconAction,
   modalConfirm,
   notification,
+  ObservationsList,
   Row,
   Spinner,
   Tag,
@@ -419,12 +420,12 @@ export const PracticeIntegration = () => {
                 }}
               />
             </Col>
-            {/*<Col span={24}>*/}
-            {/*  <ObservationsList*/}
-            {/*    observationsPractice={practice?.observations}*/}
-            {/*    practice={practice}*/}
-            {/*  />*/}
-            {/*</Col>*/}
+            <Col span={24}>
+              <ObservationsList
+                observationsPractice={practice?.observations}
+                practice={practice}
+              />
+            </Col>
             <Col span={24}>
               {isAcademicSupervisor && practice?.status !== "approved" && (
                 <Button
