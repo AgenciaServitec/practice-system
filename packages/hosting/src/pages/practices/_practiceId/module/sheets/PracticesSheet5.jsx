@@ -109,7 +109,7 @@ export const PracticesSheet5 = ({
                   Nombre de la Empresa o Institución: &nbsp;
                   <br />
                   <span className="capitalize">
-                    <strong>{company.socialReason}</strong>
+                    <strong>{company?.socialReason}</strong>
                   </span>
                   <br />
                 </span>

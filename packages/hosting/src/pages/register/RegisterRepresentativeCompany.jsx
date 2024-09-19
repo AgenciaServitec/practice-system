@@ -339,7 +339,7 @@ const RegisterCompanyRepresentative = ({
               style={{ display: "flex", justifyContent: "start", gap: "1.5em" }}
             >
               <span>
-                Razón social: <h5>{company.socialReason}</h5>
+                Razón social: <h5>{company?.socialReason}</h5>
               </span>
               <span>
                 RUC:

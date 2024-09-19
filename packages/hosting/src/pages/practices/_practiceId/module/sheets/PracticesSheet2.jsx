@@ -43,7 +43,7 @@ export const PracticesSheet2 = ({
         <div className="header">
           <div className="header__title">
             <h4>REPRESENTANTE LEGAL DE LA EMPRESA</h4>
-            <h4>{`${company.socialReason}`}</h4>
+            <h4>{`${company?.socialReason}`}</h4>
           </div>
           <div className="header__legend">
             <h4>

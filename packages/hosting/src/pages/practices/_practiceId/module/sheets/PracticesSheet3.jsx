@@ -42,7 +42,7 @@ export const PracticesSheet3 = ({
             <ul>
               <li>
                 Razón Social de la Empresa:{" "}
-                <strong className="capitalize">{company.socialReason}</strong>
+                <strong className="capitalize">{company?.socialReason}</strong>
               </li>
               <li>
                 Distrito:{" "}
