@@ -25,7 +25,7 @@ import {
   fetchPracticesByPractitionerId,
   getPracticesId,
   updateUser,
-  addAnnex
+  addAnnex,
 } from "../../../firebase/collections";
 import { useNavigate } from "react-router";
 import { fullName, getNameId } from "../../../utils";
