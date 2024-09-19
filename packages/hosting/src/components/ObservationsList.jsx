@@ -16,9 +16,9 @@ export const ObservationsList = ({
   } = annex;
 
   const observations = {
-    observationsAcademicSupervisor: observationsAcademicSupervisor,
-    observationsCompanyRepresentative: observationsCompanyRepresentative,
-    observationsPractice: observationsPractice,
+    observationsAcademicSupervisor: observationsAcademicSupervisor || [],
+    observationsCompanyRepresentative: observationsCompanyRepresentative || [],
+    observationsPractice: observationsPractice || [],
   };
 
   const findObservation = (observationId, observationsType) =>
@@ -49,7 +49,7 @@ export const ObservationsList = ({
 
     if (isEmpty(annex)) {
       await updatePractice(practice.id, {
-        [observationsType]: newObservations,
+        observations: newObservations,
       });
     }
 
