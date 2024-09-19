@@ -15,19 +15,19 @@ export const ObservationsList = ({
     observationsCompanyRepresentative = [],
   } = annex;
 
-  const observations = {
-    observationsAcademicSupervisor: observationsAcademicSupervisor || [],
-    observationsCompanyRepresentative: observationsCompanyRepresentative || [],
-    observationsPractice: observationsPractice || [],
+  const observationsList = {
+    observationsAcademicSupervisor: observationsAcademicSupervisor,
+    observationsCompanyRepresentative: observationsCompanyRepresentative,
+    observations: observationsPractice,
   };
 
   const findObservation = (observationId, observationsType) =>
-    observations[observationsType].find(
+    observationsList[observationsType].find(
       (observation) => observation?.id === observationId
     );
 
   const excludeObservacion = (observationId, observationsType) =>
-    observations[observationsType].filter(
+    observationsList[observationsType].filter(
       (_observation) => _observation?.id !== observationId
     );
 
@@ -49,7 +49,7 @@ export const ObservationsList = ({
 
     if (isEmpty(annex)) {
       await updatePractice(practice.id, {
-        observations: newObservations,
+        [observationsType]: newObservations,
       });
     }
 
@@ -106,10 +106,7 @@ export const ObservationsList = ({
                           size="small"
                           type="primary"
                           onClick={() =>
-                            onResolveObservation(
-                              observation.id,
-                              "observationsPractice"
-                            )
+                            onResolveObservation(observation.id, "observations")
                           }
                         >
                           Resolver
@@ -122,10 +119,7 @@ export const ObservationsList = ({
                           size="small"
                           danger
                           onClick={() =>
-                            onCloseObservation(
-                              observation.id,
-                              "observationsPractice"
-                            )
+                            onCloseObservation(observation.id, "observations")
                           }
                         >
                           Cerrar
