@@ -8,14 +8,15 @@ import {
   IconAction,
   modalConfirm,
   notification,
+  ObservationsList,
   Row,
   Spinner,
   Tag,
   Title,
 } from "../../../components";
 import {
-  fetchPractice,
   getPracticesId,
+  practicesRef,
   updatePractice,
 } from "../../../firebase/collections";
 import { useNavigate, useParams } from "react-router";
@@ -44,6 +45,7 @@ import { AnnexStatus } from "./AnnexStatus";
 import { ManageCreateProductIntegration } from "./ManageCreatePractice";
 import { InitialInformation } from "./InitialInformation";
 import { isEmpty } from "lodash";
+import { ObservationOfPracticeModal } from "./ObservationOfPracticeModal";
 import { mediaQuery } from "../../../styles";
 
 export const PracticeIntegration = () => {
@@ -58,31 +60,31 @@ export const PracticeIntegration = () => {
   const { annexs, company, practitioner, representativeCompany, supervisor } =
     useGetAllDataByPractice(practice);
   const [loading, setLoading] = useState(false);
+  const [visibleForm, setVisibleForm] = useState(false);
 
   const isNew = practiceId === "new";
   const onGoBack = () => navigate(-1);
 
   useEffect(() => {
-    (async () => await initialFetch())();
-  }, [practiceId, practice?.status]);
+    (async () => {
+      try {
+        setLoading(true);
 
-  const initialFetch = async () => {
-    try {
-      setLoading(true);
+        isNew
+          ? setPractice({ id: getPracticesId() })
+          : await practicesRef
+              .doc(practiceId)
+              .onSnapshot((snapshot) => setPractice(snapshot.data()));
 
-      const _practice = isNew
-        ? { id: getPracticesId() }
-        : await fetchPractice(practiceId);
-
-      if (!_practice) return onGoBack();
-
-      setPractice(_practice);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  };
+        if (!practice) return onGoBack();
+      } catch (e) {
+        onGoBack();
+        console.log(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [practice?.status]);
 
   useEffect(() => {
     (async () => {
@@ -109,7 +111,7 @@ export const PracticeIntegration = () => {
         );
       }
     })();
-  }, [annexs]);
+  }, []);
 
   const onConfirmModuleApproved = () =>
     modalConfirm({
@@ -124,13 +126,31 @@ export const PracticeIntegration = () => {
 
   const [annex2 = {}, annex3 = {}, annex4 = {}, annex6 = {}] = annexs;
 
+  const observations = [
+    ...(annex2?.observationsAcademicSupervisor || []),
+    ...(annex2?.observationsCompanyRepresentative || []),
+    ...(practice?.observations || []),
+  ];
+
+  const isObservationsEmpty =
+    isEmpty(practice?.observations) &&
+    isEmpty(annex2?.observationsAcademicSupervisor) &&
+    isEmpty(annex2?.observationsCompanyRepresentative) &&
+    isEmpty(annex3?.observationsAcademicSupervisor) &&
+    isEmpty(annex3?.observationsCompanyRepresentative);
+
+  const isExistsObservations = (observations || []).some(
+    (observation) => observation?.status === "pending"
+  );
+
   const isValidToApprovedAllModule =
     annex2?.status === "approved" &&
     annex3?.status === "approved" &&
     annex4?.status === "approved" &&
     annex6?.status === "approved" &&
     practice?.status !== "approved" &&
-    authUser.roleCode === "academic_supervisor";
+    authUser.roleCode === "academic_supervisor" &&
+    (isObservationsEmpty || !isExistsObservations);
 
   const isCompanyRepresentative =
     authUser.roleCode === "company_representative";
