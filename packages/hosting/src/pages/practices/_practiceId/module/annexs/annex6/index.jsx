@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { modalConfirm, notification } from "../../../../../../components";
 import Row from "antd/lib/row";
 import styled from "styled-components";
-import { updateAnnex } from "../../../../../../firebase/collections/annexs";
+import { updateAnnex } from "../../../../../../firebase/collections";
 import { AnnexButtons } from "../AnnexButtons";
 import { practicesStatus } from "../../../../../../data-list";
 import { isEmpty } from "lodash";
