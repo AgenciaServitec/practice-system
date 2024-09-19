@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import {
+  Col,
   modalConfirm,
   notification,
+  ObservationsList,
+  Row,
   Title,
 } from "../../../../../../components";
-import Row from "antd/lib/row";
-import Col from "antd/lib/col";
 import { useDefaultFirestoreProps } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
-import { ObservationsList } from "../../ObservationsList";
 import dayjs from "dayjs";
 import { ObservationForSupervisor } from "./ObservationForSupervisor";
 import { ObservationForRepresentativeCompany } from "./ObservationForRepresentativeCompany";

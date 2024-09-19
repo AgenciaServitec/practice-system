@@ -9,7 +9,7 @@ import {
 } from "../../../../../../components";
 import { Sheet1Integration } from "./Sheet1";
 import styled from "styled-components";
-import { updateAnnex } from "../../../../../../firebase/collections/annexs";
+import { updateAnnex } from "../../../../../../firebase/collections";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
 import { isEmpty } from "lodash";
