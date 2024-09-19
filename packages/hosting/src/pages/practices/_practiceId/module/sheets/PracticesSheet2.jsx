@@ -110,7 +110,7 @@ export const PracticesSheet2 = ({
                     ?.businessPosition
                 )?.label || ""
               }
-              role={findRole(representativeCompany.roleCode)?.name || ""}
+              role={findRole(representativeCompany?.roleCode)?.name || ""}
             />
           </Col>
           <div className="footer__company">

@@ -8,7 +8,6 @@ import {
   IconAction,
   modalConfirm,
   notification,
-  ObservationsList,
   Row,
   Spinner,
   Tag,
@@ -57,10 +56,10 @@ export const PracticeIntegration = () => {
   const { isMobile } = useDevice();
 
   const [practice, setPractice] = useState({});
-  const { annexs, company, practitioner, representativeCompany, supervisor } =
-    useGetAllDataByPractice(practice);
   const [loading, setLoading] = useState(false);
   const [visibleForm, setVisibleForm] = useState(false);
+  const { annexs, company, practitioner, representativeCompany, supervisor } =
+    useGetAllDataByPractice(practice);
 
   const isNew = practiceId === "new";
   const onGoBack = () => navigate(-1);
@@ -84,7 +83,7 @@ export const PracticeIntegration = () => {
         setLoading(false);
       }
     })();
-  }, [practice?.status]);
+  }, [practice?.status, annexs.length]);
 
   useEffect(() => {
     (async () => {
@@ -420,12 +419,12 @@ export const PracticeIntegration = () => {
                 }}
               />
             </Col>
-            <Col span={24}>
-              <ObservationsList
-                observationsPractice={practice?.observations}
-                practice={practice}
-              />
-            </Col>
+            {/*<Col span={24}>*/}
+            {/*  <ObservationsList*/}
+            {/*    observationsPractice={practice?.observations}*/}
+            {/*    practice={practice}*/}
+            {/*  />*/}
+            {/*</Col>*/}
             <Col span={24}>
               {isAcademicSupervisor && practice?.status !== "approved" && (
                 <Button
