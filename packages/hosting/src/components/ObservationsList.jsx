@@ -15,19 +15,19 @@ export const ObservationsList = ({
     observationsCompanyRepresentative = [],
   } = annex;
 
-  const observations = {
+  const observationsList = {
     observationsAcademicSupervisor: observationsAcademicSupervisor,
     observationsCompanyRepresentative: observationsCompanyRepresentative,
-    observationsPractice: observationsPractice,
+    observations: observationsPractice,
   };
 
   const findObservation = (observationId, observationsType) =>
-    observations[observationsType].find(
+    observationsList[observationsType].find(
       (observation) => observation?.id === observationId
     );
 
   const excludeObservacion = (observationId, observationsType) =>
-    observations[observationsType].filter(
+    observationsList[observationsType].filter(
       (_observation) => _observation?.id !== observationId
     );
 
@@ -108,7 +108,7 @@ export const ObservationsList = ({
                           onClick={() =>
                             onResolveObservation(
                               observation.id,
-                              "observationsPractice"
+                              "observations"
                             )
                           }
                         >
@@ -124,7 +124,7 @@ export const ObservationsList = ({
                           onClick={() =>
                             onCloseObservation(
                               observation.id,
-                              "observationsPractice"
+                              "observations"
                             )
                           }
                         >
