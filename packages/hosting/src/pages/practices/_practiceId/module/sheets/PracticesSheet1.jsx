@@ -17,7 +17,7 @@ export const PracticesSheet1 = ({ practitioner }) => {
           <h2>COMPUTACIÓN E INFORMÁTICA</h2>
         </Career>
         <h3 style={{ marginTop: "10px", marginBottom: "50px" }}>
-          CARPETA DE PRACTICAS PRE PROFESIONALES
+          CARPETA DE PRÁCTICAS PRE PROFESIONALES
         </h3>
         <Details>
           <div className="atributes">

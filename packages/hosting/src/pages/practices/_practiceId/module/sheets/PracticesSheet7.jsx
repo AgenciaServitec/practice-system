@@ -35,7 +35,7 @@ export const PracticesSheet7 = ({
             }`}
           >
             <h3>ANEXO 6</h3>
-            <h4>INFORME DE PRACTICA PRE- PROFESIONAL</h4>
+            <h4>INFORME DE PRÁCTICA PRE- PROFESIONAL</h4>
           </div>
           <div className="body__subtitle1">
             <div className="rbody__title">
@@ -64,7 +64,7 @@ export const PracticesSheet7 = ({
                 <strong>ASUNTO:</strong>
               </div>
               <div className="item-informe">
-                <p>INFORME DE SUPERVISIÓN DE PRACTICAS PREPROFESIONALES</p>
+                <p>INFORME DE SUPERVISIÓN DE PRÁCTICAS PREPROFESIONALES</p>
                 <p className="capitalize">
                   Estudiante: {fullName(practitioner)}
                 </p>
@@ -74,7 +74,7 @@ export const PracticesSheet7 = ({
                 <strong>REFERENCIA:</strong>
               </div>
               <div className="item-informe">
-                <p>REGLAMENTO DE PRACTICAS PRE-PROFESIONALES</p>
+                <p>REGLAMENTO DE PRÁCTICAS PRE-PROFESIONALES</p>
               </div>
             </div>
             <div>

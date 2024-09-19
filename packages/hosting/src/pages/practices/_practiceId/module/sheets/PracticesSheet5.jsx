@@ -161,7 +161,7 @@ export const PracticesSheet5 = ({
               </li>
               <li>
                 <span> 10.</span>
-                <span>Lugares de Practica:&nbsp;</span>
+                <span>Lugares de Práctica:&nbsp;</span>
               </li>
               <li className="table_center_work">
                 <div className="center_work">
@@ -180,7 +180,7 @@ export const PracticesSheet5 = ({
               <li>
                 <span> 11.</span>
                 <span>
-                  Horario de practicas:{" "}
+                  Horario de prácticas:{" "}
                   <strong>
                     {dayjs(practice?.entryTime, "HH:mm:ss").format("HH:mm")} -{" "}
                     {dayjs(practice?.departureTime, "HH:mm:ss").format("HH:mm")}

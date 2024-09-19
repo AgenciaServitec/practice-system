@@ -118,7 +118,7 @@ export const ManageCreateProductIntegration = ({
       if (existsModule)
         return notification({
           type: "warning",
-          title: "El numero del modulo ya existe en otra practica",
+          title: "El numero del modulo ya existe en otra práctica",
         });
 
       const promises = ["annex2", "annex3", "annex4", "annex6"].map((annex) =>
@@ -195,7 +195,7 @@ const ManageCreateProduct = ({
     entryTime: yup.date().required(),
     departureTime: yup.date().required(),
     practiceArea: yup.string().required(),
-    academicCoordinatorId: yup.string().notRequired(),
+    academicCoordinatorId: yup.string().required(),
     academicSupervisorId: yup.string().required(),
   });
 
@@ -260,11 +260,11 @@ const ManageCreateProduct = ({
   return (
     <Row>
       <DataEntryModal visible={true} onCancel={onGoBack}>
-        <Title level={3}>Nueva practica pre-profesional</Title>
+        <Title level={3}>Nueva práctica pre-profesional</Title>
         <Alert
           type="info"
           showIcon
-          message="Si no encuentras la empresa de tus practicas, hay un boton para Agregar empresa y luego lo selecciones"
+          message="Si no encuentras la empresa de tus prácticas, hay un boton para Agregar empresa y luego lo selecciones"
         />
         <br />
         <Container>
@@ -548,7 +548,7 @@ const ManageCreateProduct = ({
                     size="large"
                     loading={savingPractice}
                   >
-                    Crear Practica
+                    Crear Práctica
                   </Button>
                 </Col>
                 <Col xs={24} sm={12} md={6}>

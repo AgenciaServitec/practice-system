@@ -63,12 +63,15 @@ export const HomeIntegration = () => {
                 </div>
                 <div className="texts">
                   <Title level={3}>
-                    <span className="capitalize">Mis practicas</span>
+                    <span className="capitalize">Mis prácticas</span>
                   </Title>
                   <ul className="list">
                     <li>
+                      <Link to="/practices/new">1. Crear práctica</Link>
+                    </li>
+                    <li>
                       <Link to="/practices">
-                        1. Ver toda la lista de mis practicas
+                        2. Ver toda la lista de mis prácticas
                       </Link>
                     </li>
                     <li className="my-practices">
@@ -107,10 +110,10 @@ export const HomeIntegration = () => {
                   <FontAwesomeIcon icon={faFolderTree} size="4x" />
                 </div>
                 <div className="texts">
-                  <Title level={3}>Practicas</Title>
+                  <Title level={3}>Prácticas</Title>
                   <ul className="list">
                     <li>
-                      <Link to="/practices">1. Lista de practicas</Link>
+                      <Link to="/practices">1. Lista de prácticas</Link>
                     </li>
                   </ul>
                 </div>

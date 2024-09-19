@@ -89,14 +89,14 @@ export const UsersTable = ({ users, onEditUser, onConfirmRemoveUser }) => {
         user?.phone ? `${user.phone.prefix} ${user.phone.number}` : "",
     },
     {
-      title: "Practicas",
+      title: "Prácticas",
       dataIndex: "practices",
       key: "practices",
       render: (_, user) => (
         <Space>
           {user?.hasPractices && (
             <span>
-              <Link to={`/practices?user=${user.id}`}>Ver practicas</Link>
+              <Link to={`/practices?user=${user.id}`}>Ver prácticas</Link>
             </span>
           )}
         </Space>
