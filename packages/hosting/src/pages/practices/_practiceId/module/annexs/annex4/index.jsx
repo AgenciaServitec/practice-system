@@ -10,7 +10,7 @@ import { Space } from "antd";
 import styled from "styled-components";
 import { Sheet1Integration } from "./Sheet1";
 import { AnnexButtons } from "../AnnexButtons";
-import { updateAnnex } from "../../../../../../firebase/collections/annexs";
+import { updateAnnex } from "../../../../../../firebase/collections";
 import { isEmpty } from "lodash";
 
 export const Annex4Integration = ({ practice, user, annex4 }) => {

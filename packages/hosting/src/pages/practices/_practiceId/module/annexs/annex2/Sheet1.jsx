@@ -6,6 +6,7 @@ import {
   Input,
   modalConfirm,
   notification,
+  ObservationsList,
 } from "../../../../../../components";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
@@ -18,7 +19,6 @@ import {
 } from "../../../../../../hooks";
 import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
-import { ObservationsList } from "../../ObservationsList";
 
 export const Sheet1Integration = ({ practice, user, annex2 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
