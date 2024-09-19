@@ -420,6 +420,29 @@ export const PracticeIntegration = () => {
                 }}
               />
             </Col>
+            <Col span={24}>
+              <ObservationsList
+                observationsPractice={practice?.observations}
+                practice={practice}
+              />
+            </Col>
+            <Col span={24}>
+              {isAcademicSupervisor && practice?.status !== "approved" && (
+                <Button
+                  type="primary"
+                  size="large"
+                  block
+                  onClick={() => setVisibleForm(true)}
+                >
+                  Observación de módulo
+                </Button>
+              )}
+              <ObservationOfPracticeModal
+                practice={practice}
+                visibleForm={visibleForm}
+                onSetVisibleForm={setVisibleForm}
+              />
+            </Col>
           </Row>
           <br />
           {isValidToApprovedAllModule && (
@@ -433,7 +456,7 @@ export const PracticeIntegration = () => {
                     block
                     onClick={() => onConfirmModuleApproved()}
                   >
-                    Aprobar el modulo completo
+                    Aprobar el módulo completo
                   </Button>
                 </Col>
               </Acl>
