@@ -106,10 +106,7 @@ export const ObservationsList = ({
                           size="small"
                           type="primary"
                           onClick={() =>
-                            onResolveObservation(
-                              observation.id,
-                              "observations"
-                            )
+                            onResolveObservation(observation.id, "observations")
                           }
                         >
                           Resolver
@@ -122,10 +119,7 @@ export const ObservationsList = ({
                           size="small"
                           danger
                           onClick={() =>
-                            onCloseObservation(
-                              observation.id,
-                              "observations"
-                            )
+                            onCloseObservation(observation.id, "observations")
                           }
                         >
                           Cerrar
