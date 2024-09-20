@@ -174,7 +174,6 @@ export const PracticeIntegration = () => {
     !isEmpty(practice?.academicCoordinatorId);
 
   const isApprovedAnnex = (status) => status === "approved";
-  const hasPermissions = isCompanyRepresentative || isAcademicSupervisor;
 
   const annexsList = () => [
     {
@@ -283,8 +282,12 @@ export const PracticeIntegration = () => {
       ),
       children: !isApprovedAnnex(annex6.status) && (
         <Annex6Integration
-          practice={practice}
           user={authUser}
+          practice={practice}
+          practitioner={practitioner}
+          company={company}
+          representativeCompany={representativeCompany}
+          supervisor={supervisor}
           annex6={annex6}
         />
       ),
@@ -295,9 +298,7 @@ export const PracticeIntegration = () => {
           : "rgba(0, 0, 0, 0.03)",
       },
       collapsible:
-        !hasPermissions ||
-        isApprovedAnnex(annex6.status) ||
-        isCompanyRepresentative
+        isApprovedAnnex(annex6.status) || isCompanyRepresentative
           ? "disabled"
           : "visible",
     },
