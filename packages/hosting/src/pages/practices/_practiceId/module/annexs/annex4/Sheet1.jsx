@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  Col,
   Form,
   modalConfirm,
   notification,
   RadioGroup,
+  Row,
   Title,
 } from "../../../../../../components";
-import Row from "antd/lib/row";
-import Col from "antd/lib/col";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,17 +19,18 @@ import {
 import { firestore } from "../../../../../../firebase";
 import styled from "styled-components";
 import { InstructionsEvaluation } from "./InstructionsEvaluation";
+import { isEmpty } from "lodash";
 
 export const Sheet1Integration = ({ practice, user, annex4 }) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
-  const [evaluation, setEvaluation] = useState(0);
-  const [qualitativeEvaluation, setQualitativeEvaluation] = useState("---");
-  const [literalEvaluation, setLiteralEvaluation] = useState("---");
+  const [totalScore, setTotalScore] = useState(null);
+  const [qualitativeEvaluation, setQualitativeEvaluation] = useState(undefined);
+  const [literalEvaluation, setLiteralEvaluation] = useState(undefined);
 
   useEffect(() => {
-    setEvaluation(annex4?.result?.totalScore);
-    setQualitativeEvaluation(annex4?.result?.qualitativeEvaluation);
-    setLiteralEvaluation(annex4?.result?.literalEvaluation);
+    setTotalScore(annex4?.result?.qualitativeEvaluation);
+    setQualitativeEvaluation(annex4?.result?.literalEvaluation);
+    setLiteralEvaluation(annex4?.result?.totalScore);
   }, [annex4]);
 
   const mapForm = (formData) => ({
@@ -172,7 +173,7 @@ export const Sheet1Integration = ({ practice, user, annex4 }) => {
       },
     ],
     result: {
-      totalScore: evaluation,
+      totalScore: totalScore,
       qualitativeEvaluation: qualitativeEvaluation,
       literalEvaluation: literalEvaluation,
     },
@@ -208,8 +209,8 @@ export const Sheet1Integration = ({ practice, user, annex4 }) => {
       onSaveSheet1={onConfirmSaveSheet1}
       user={user}
       annex4={annex4}
-      evaluation={evaluation}
-      onSetEvaluation={setEvaluation}
+      totalScore={totalScore}
+      onSetTotalScore={setTotalScore}
       qualitativeEvaluation={qualitativeEvaluation}
       onSetQualitativeEvaluation={setQualitativeEvaluation}
       literalEvaluation={literalEvaluation}
@@ -222,8 +223,8 @@ const Sheet1 = ({
   onSaveSheet1,
   user,
   annex4,
-  evaluation,
-  onSetEvaluation,
+  totalScore,
+  onSetTotalScore,
   qualitativeEvaluation,
   onSetQualitativeEvaluation,
   literalEvaluation,
@@ -296,21 +297,23 @@ const Sheet1 = ({
   };
 
   const validationQualityEvaluation = (note = 0) => {
-    if (evaluation === 0) return;
+    if (totalScore === 0) return;
 
     if (note <= 12.5) {
       return qualityEvaluation["D"];
-    } else if (note >= 13.0 && note <= 14.5) {
+    } else if (note >= 13 && note <= 14.5) {
       return qualityEvaluation["C"];
-    } else if (note >= 15.0 && note <= 18.5) {
+    } else if (note >= 15 && note <= 18.5) {
       return qualityEvaluation["B"];
-    } else if (note >= 19.0) {
+    } else if (note >= 19) {
       return qualityEvaluation["A"];
     }
   };
 
   useEffect(() => {
-    const notesRealTime = [
+    if (!isEmpty(annex4?.result)) return;
+
+    const notes = [
       watch("A1"),
       watch("A2"),
       watch("A3"),
@@ -331,11 +334,11 @@ const Sheet1 = ({
       watch("F18"),
       watch("F19"),
       watch("F20"),
-    ].reduce((acc, value) => acc + value, 0.0);
+    ].reduce((acc, value) => acc + value, 0);
 
-    onSetEvaluation(notesRealTime);
-    onSetQualitativeEvaluation(validationQualityEvaluation(evaluation)?.name);
-    onSetLiteralEvaluation(validationQualityEvaluation(evaluation)?.code);
+    onSetTotalScore(notes);
+    onSetQualitativeEvaluation(validationQualityEvaluation(totalScore)?.name);
+    onSetLiteralEvaluation(validationQualityEvaluation(totalScore)?.code);
   }, [
     watch("A1"),
     watch("A2"),
@@ -357,9 +360,7 @@ const Sheet1 = ({
     watch("F18"),
     watch("F19"),
     watch("F20"),
-    evaluation,
-    qualitativeEvaluation,
-    literalEvaluation,
+    totalScore,
   ]);
 
   return (
@@ -1032,7 +1033,7 @@ const Sheet1 = ({
           </Col>
           <Col span={24} md={4}>
             <span>
-              <strong>{evaluation || "---"}</strong>
+              <strong>{totalScore || "---"}</strong>
             </span>
           </Col>
           <Col span={24} md={20}>
