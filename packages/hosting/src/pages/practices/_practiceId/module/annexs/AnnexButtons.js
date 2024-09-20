@@ -44,19 +44,6 @@ export const AnnexButtons = ({
           </Col>
         </Acl>
       )}
-      <Acl name="/practices/:practiceId/annex#refused">
-        <Col span={24} sm={6} md={6}>
-          <Button
-            type="primary"
-            danger
-            size="large"
-            block
-            onClick={() => onRefusedAnnex(practice)}
-          >
-            Rechazar Anexo
-          </Button>
-        </Col>
-      </Acl>
       <Acl name="/practices/:practiceId/annex#approved">
         <Col span={24} sm={6} md={6}>
           <Button

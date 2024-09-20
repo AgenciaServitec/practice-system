@@ -61,28 +61,6 @@ export const Annex6Integration = ({
       },
     });
 
-  const onRefusedAnnex6 = async (practice) =>
-    modalConfirm({
-      title: "Seguro que deseas rechazar el anexo 6?",
-      content: "El anexo 6 pasara al estado de rechazado",
-      onOk: async () => {
-        if (!hasPermissions) {
-          return notification({
-            type: "warning",
-            title: "No tienes permisos para rechazar!",
-          });
-        }
-
-        await updateAnnex(practice.id, "annex6", {
-          ...(user.roleCode === "academic_supervisor" && {
-            approvedByAcademicSupervisor: "refused",
-          }),
-        });
-
-        notification({ type: "success" });
-      },
-    });
-
   return (
     <ContainerRow gutter={[16, 16]}>
       <Col span={24}>
@@ -104,7 +82,6 @@ export const Annex6Integration = ({
         annexName="annex6"
         hasPermissions={hasPermissions}
         practice={practice}
-        onRefusedAnnex={onRefusedAnnex6}
         onApprovedAnnex={onApprovedAnnex6}
       />
     </ContainerRow>
