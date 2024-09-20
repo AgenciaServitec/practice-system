@@ -4,12 +4,15 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 import { updateAnnex, updatePractice } from "../firebase/collections";
+import { useAuthentication } from "../providers";
 
 export const ObservationsList = ({
   annex = {},
   observationsPractice = [],
   practice,
 }) => {
+  const { authUser } = useAuthentication();
+
   const {
     observationsAcademicSupervisor = [],
     observationsCompanyRepresentative = [],
@@ -87,6 +90,8 @@ export const ObservationsList = ({
       (_observation) => _observation.isDeleted === false
     );
 
+  const isAcademicSupervisor = authUser.roleCode === "academic_supervisor";
+
   return (
     <Container gutter={[16, 16]}>
       <Acl name="/practices/:practiceId#observations">
@@ -114,17 +119,18 @@ export const ObservationsList = ({
                       )}
                     </Acl>
                     <Acl name="/practices/:practiceId#observationClose">
-                      {observation.status === "resolved" && (
-                        <Button
-                          size="small"
-                          danger
-                          onClick={() =>
-                            onCloseObservation(observation.id, "observations")
-                          }
-                        >
-                          Cerrar
-                        </Button>
-                      )}
+                      {observation.status === "resolved" &&
+                        isAcademicSupervisor && (
+                          <Button
+                            size="small"
+                            danger
+                            onClick={() =>
+                              onCloseObservation(observation.id, "observations")
+                            }
+                          >
+                            Cerrar
+                          </Button>
+                        )}
                     </Acl>
                   </>
                 }
