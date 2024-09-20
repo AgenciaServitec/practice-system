@@ -36,7 +36,7 @@ export const AnnexButtons = ({
         />
       </Col>
       {onSetVisibleForm && (
-        <Acl name="/practices/:practiceId/annex#observation">
+        <Acl name="/practices/:practiceId#observation">
           <Col span={24} sm={6} md={6}>
             <Button size="large" block onClick={() => onSetVisibleForm(true)}>
               Observación
