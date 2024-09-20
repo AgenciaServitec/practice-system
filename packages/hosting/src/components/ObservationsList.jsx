@@ -89,7 +89,7 @@ export const ObservationsList = ({
 
   return (
     <Container gutter={[16, 16]}>
-      <Acl name="/practices/:practiceId/annex#observations">
+      <Acl name="/practices/:practiceId#observations">
         <>
           {observationsView(observationsPractice).map((observation, index) => (
             <Col span={24} key={index}>
@@ -100,7 +100,7 @@ export const ObservationsList = ({
                 description={observation.value}
                 action={
                   <>
-                    <Acl name="/practices/:practiceId#observationModuleResolver">
+                    <Acl name="/practices/:practiceId#observationResolver">
                       {observation.status === "pending" && (
                         <Button
                           size="small"
@@ -113,7 +113,7 @@ export const ObservationsList = ({
                         </Button>
                       )}
                     </Acl>
-                    <Acl name="/practices/:practiceId#observationModuleClose">
+                    <Acl name="/practices/:practiceId#observationClose">
                       {observation.status === "resolved" && (
                         <Button
                           size="small"
@@ -143,7 +143,7 @@ export const ObservationsList = ({
                   description={observation.value}
                   action={
                     <>
-                      <Acl name="/practices/:practiceId/annex#observationResolver">
+                      <Acl name="/practices/:practiceId#observationResolver">
                         {observation.status === "pending" && (
                           <Button
                             size="small"
@@ -159,7 +159,7 @@ export const ObservationsList = ({
                           </Button>
                         )}
                       </Acl>
-                      <Acl name="/practices/:practiceId/annex#observationClose">
+                      <Acl name="/practices/:practiceId#observationClose">
                         {observation.status === "resolved" && (
                           <Button
                             size="small"
@@ -193,7 +193,7 @@ export const ObservationsList = ({
                   description={observation.value}
                   action={
                     <>
-                      <Acl name="/practices/:practiceId/annex#observationResolver">
+                      <Acl name="/practices/:practiceId#observationResolver">
                         {observation.status === "pending" && (
                           <Button
                             size="small"
@@ -209,7 +209,7 @@ export const ObservationsList = ({
                           </Button>
                         )}
                       </Acl>
-                      <Acl name="/practices/:practiceId/annex#observationClose">
+                      <Acl name="/practices/:practiceId#observationClose">
                         {observation.status === "resolved" && (
                           <Button
                             size="small"
