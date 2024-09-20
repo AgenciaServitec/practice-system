@@ -22,12 +22,10 @@
   "/practices/:practiceId/annex#save": "Guardar anexo",
   "/practices/:practiceId/annex#approved": "Aprobar anexos",
   "/practices/:practiceId/annex#refused": "Rechazar anexos",
-  "/practices/:practiceId/annex#observation": "Agregar observación",
-  "/practices/:practiceId/annex#observations": "Ver observaciones",
-  "/practices/:practiceId/annex#observationResolver": "Resolver observación",
-  "/practices/:practiceId/annex#observationClose": "Cerrar observación",
   "/practices/:practiceId/module#approved": "Aprobar modulos",
-  "/practices/:practiceId#observationModuleResolver": "Módulo: Resolver observación",
-  "/practices/:practiceId#observationModuleClose": "Módulo: Cerrar observación",
-  "/practices/:practiceId/annex3#formObservation": "Revisar Anexo 3"
+  "/practices/:practiceId/annex3#formObservation": "Revisar Anexo 3",
+  "/practices/:practiceId#observation": "Agregar observación",
+  "/practices/:practiceId#observations": "Ver observaciones",
+  "/practices/:practiceId#observationResolver": "Resolver observación",
+  "/practices/:practiceId#observationClose": "Cerrar observación"
 }
