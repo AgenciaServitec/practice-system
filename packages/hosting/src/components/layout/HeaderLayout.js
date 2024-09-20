@@ -9,6 +9,7 @@ import { capitalize } from "lodash";
 import { Dropdown } from "../ui";
 import { Link } from "react-router-dom";
 import { Roles } from "../../data-list";
+import { useDevice } from "../../hooks";
 
 const { useToken } = theme;
 
@@ -22,6 +23,8 @@ export const HeaderLayout = ({
   onLogout,
 }) => {
   const { token } = useToken();
+
+  const { isMobile } = useDevice();
 
   const defaultRole = Roles.find((role) => role?.code === user?.roleCode);
 
@@ -95,7 +98,7 @@ export const HeaderLayout = ({
         >
           <Space key="user-avatar" align="center">
             <h4>{capitalize((user?.firstName || "").split(" ")[0] || "")}</h4>
-            <span>({defaultRole?.name})</span>
+            {!isMobile && <span>({defaultRole?.name})</span>}
             <img
               src={user?.profilePhoto?.thumbUrl || PhotoNoFound}
               alt="user"
