@@ -4,8 +4,8 @@ import assert from "assert";
 import {
   sendMailPracticeApprovedEmail,
   sendMailPracticeObservationsEmail,
-  sendMailPracticeRefusedEmail,
 } from "../mailer/practice-system";
+import { sendMailAnnexObservationsEmail } from "../mailer/practice-system/sendMailAnnexObservationsEmail";
 
 export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
   async (event) => {
@@ -20,21 +20,28 @@ export const onListenPracticeForSendMailConfirmation: OnDocumentUpdated =
 
     await onCheckObservationsAnnexs(practiceAfter.id);
 
-    if (practiceAfter.status === "approved") {
-      await sendMailPracticeApprovedEmail(practiceAfter, user);
-    }
-
-    if (practiceAfter.status === "refused") {
-      await sendMailPracticeRefusedEmail(practiceAfter, user);
-    }
-
     if (
       practiceBefore?.existObservationsInAnnexs !==
       practiceAfter?.existObservationsInAnnexs
     ) {
       if (practiceAfter?.existObservationsInAnnexs) {
+        await sendMailAnnexObservationsEmail(practiceAfter, user);
+      }
+    }
+
+    await onCheckObservationsPractice(practiceAfter);
+
+    if (
+      practiceBefore?.existsObservationsInPractice !==
+      practiceAfter?.existsObservationsInPractice
+    ) {
+      if (practiceAfter?.existsObservationsInPractice) {
         await sendMailPracticeObservationsEmail(practiceAfter, user);
       }
+    }
+
+    if (practiceAfter.status === "approved") {
+      await sendMailPracticeApprovedEmail(practiceAfter, user);
     }
   };
 
@@ -46,6 +53,17 @@ const fetchAnnexs = async (practiceId: string): Promise<Annex[]> => {
   return await fetchCollection(
     firestore.collection("practices").doc(practiceId).collection("annexs")
   );
+};
+
+const onCheckObservationsPractice = async (practice: Practice) => {
+  const existsObservationsInPractice = practice?.observations.some(
+    (observation: ObservationAnnex) => observation?.status === "pending"
+  );
+
+  await firestore
+    .collection("practices")
+    .doc(practice.id)
+    .update({ existsObservationsInPractice: existsObservationsInPractice });
 };
 
 const onCheckObservationsAnnexs = async (practiceId: string) => {
