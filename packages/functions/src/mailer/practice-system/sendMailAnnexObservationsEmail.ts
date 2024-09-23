@@ -22,7 +22,7 @@ interface ObservationByUser {
   list: ObservationAnnex[];
 }
 
-export const sendMailPracticeAnnexObservationsEmail = async (
+export const sendMailAnnexObservationsEmail = async (
   practice: Practice,
   user: User
 ): Promise<void> => {
@@ -33,7 +33,7 @@ export const sendMailPracticeAnnexObservationsEmail = async (
       practice.name
     )}`,
     html: html(
-      template.practiceObservationsEmailTemplate,
+      template.annexObservationsEmailTemplate,
       mapMail(practice, user)
     ),
   });
