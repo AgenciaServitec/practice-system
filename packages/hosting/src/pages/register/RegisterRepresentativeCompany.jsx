@@ -115,6 +115,28 @@ const RegisterCompanyRepresentative = ({
   postUserLoading,
   onSaveUser,
 }) => {
+  const validateRUC20 = (companyRuc) => {
+    if (!companyRuc) return false;
+
+    const regex = {
+      rucCharacter: /^20[0-9]{9}$/,
+    };
+    return regex.rucCharacter.test(companyRuc.trim());
+  };
+
+  const validateRUC20WithNotification = (ruc) => {
+    if (!validateRUC20(ruc)) {
+      notification({
+        type: "error",
+        title: "Debes ingresar un RUC 20",
+      });
+      setValue("companyRuc", "");
+      onSetCompany(null);
+
+      return;
+    }
+  };
+
   const schema = yup.object({
     dni: yup.string().min(8).max(8).required(),
     firstName: yup.string().required(),
@@ -123,7 +145,14 @@ const RegisterCompanyRepresentative = ({
     phoneNumber: yup.string().min(9).max(9).required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
-    companyRuc: yup.string().min(11).max(11).required(),
+    companyRuc: yup
+      .string()
+      .min(11)
+      .max(11)
+      .test("RUC20 validation", "El RUC tiene que ser RUC20", (companyRuc) =>
+        validateRUC20(companyRuc)
+      )
+      .required(),
     businessPosition: yup.string().required(),
   });
 
@@ -145,8 +174,8 @@ const RegisterCompanyRepresentative = ({
 
   useEffect(() => {
     const rucFormData = watch("companyRuc") || "";
-    const existsRuc = rucFormData.length === 11;
-    if (existsRuc) {
+
+    if (validateRUC20(rucFormData)) {
       (async () => {
         try {
           const companies = await fetchCompanyByRuc(rucFormData);
@@ -159,7 +188,7 @@ const RegisterCompanyRepresentative = ({
 
           const _company = await onGetCompanyDataByRuc(rucFormData);
           if (!onGetCompanyDataByRucResponse.ok) {
-            throw new Error(company);
+            throw new Error(_company);
           }
 
           onSetCompany(_company);
@@ -316,7 +345,6 @@ const RegisterCompanyRepresentative = ({
         render={({ field: { onChange, value, name } }) => (
           <Input
             label="RUC de empresa"
-            type="number"
             onChange={onChange}
             value={value}
             name={name}
