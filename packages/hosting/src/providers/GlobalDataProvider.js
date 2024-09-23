@@ -4,7 +4,7 @@ import { firestore } from "../firebase";
 import { useAuthentication } from "./AuthenticationProvider";
 import { notification, Spinner } from "../components";
 import { orderBy } from "lodash";
-import { practicesRef } from "../firebase/collections";
+import { practicesRef, usersRef } from "../firebase/collections";
 
 const GlobalDataContext = createContext({
   rolesAcls: [],
@@ -20,8 +20,26 @@ export const GlobalDataProvider = ({ children }) => {
     authUser ? firestore.collection("roles-acls") : null
   );
 
+  const getUsersByUserType = () => {
+    let queryRef = usersRef.where("isDeleted", "==", false);
+
+    // if (authUser?.roleCode === "user") {
+    //   return queryRef.where("id", "==", authUser.id);
+    // }
+
+    if (authUser?.roleCode === "academic_supervisor") {
+      return queryRef.where("academicSupervisorId", "==", authUser.id);
+    }
+
+    if (authUser?.roleCode === "company_representative") {
+      return queryRef.where("companyRepresentativeId", "==", authUser.id);
+    }
+
+    return queryRef;
+  };
+
   const [users = [], usersLoading, usersError] = useCollectionData(
-    firestore.collection("users").where("isDeleted", "==", false) || null
+    getUsersByUserType()
   );
 
   const getPracticesByUserType = () => {
