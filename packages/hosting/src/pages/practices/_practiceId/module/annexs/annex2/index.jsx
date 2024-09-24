@@ -24,6 +24,15 @@ export const Annex2Integration = ({
 }) => {
   const [visibleForm, setVisibleForm] = useState(false);
 
+  const observations = [
+    ...(annex2?.observationsAcademicSupervisor || []),
+    ...(annex2?.observationsCompanyRepresentative || []),
+  ];
+
+  const isExistsObservations = (observations || []).some(
+    (observation) => observation?.status === "pending"
+  );
+
   useEffect(() => {
     (async () => {
       if (isEmpty(practice) || isEmpty(annex2)) return;
@@ -96,6 +105,7 @@ export const Annex2Integration = ({
         annexName="annex2"
         hasPermissions={hasPermissions}
         practice={practice}
+        annex={annex2}
         onSetVisibleForm={setVisibleForm}
         onApprovedAnnex={onApprovedAnnex2}
       />

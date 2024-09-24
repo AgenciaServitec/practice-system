@@ -6,11 +6,20 @@ export const AnnexButtons = ({
   annexName = "annex2",
   hasPermissions = false,
   practice,
+  annex,
   onSetVisibleForm = undefined,
-  onRefusedAnnex,
   onApprovedAnnex,
 }) => {
   if (practice.status === "approved" || !hasPermissions) return null;
+
+  const observations = [
+    ...(annex?.observationsAcademicSupervisor || []),
+    ...(annex?.observationsCompanyRepresentative || []),
+  ];
+
+  const isExistsObservations = (observations || []).some(
+    (observation) => observation?.status === "pending"
+  );
 
   return (
     <Row
@@ -45,16 +54,18 @@ export const AnnexButtons = ({
         </Acl>
       )}
       <Acl name="/practices/:practiceId/annex#approved">
-        <Col span={24} sm={6} md={6}>
-          <Button
-            type="primary"
-            size="large"
-            block
-            onClick={() => onApprovedAnnex(practice)}
-          >
-            Aprobar Anexo
-          </Button>
-        </Col>
+        {!isExistsObservations && (
+          <Col span={24} sm={6} md={6}>
+            <Button
+              type="primary"
+              size="large"
+              block
+              onClick={() => onApprovedAnnex(practice)}
+            >
+              Aprobar Anexo
+            </Button>
+          </Col>
+        )}
       </Acl>
     </Row>
   );
