@@ -113,6 +113,8 @@ interface Practice extends DefaultFirestoreProps {
   status: string;
   task: string;
   existObservationsInAnnexs: boolean;
+  existsObservationsInPractice: boolean;
+  observations: ObservationAnnex[];
 }
 
 interface Annex {
