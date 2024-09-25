@@ -195,7 +195,7 @@ const ManageCreateProduct = ({
     entryTime: yup.date().required(),
     departureTime: yup.date().required(),
     practiceArea: yup.string().required(),
-    academicCoordinatorId: yup.string().required(),
+    academicCoordinatorId: yup.string(),
     academicSupervisorId: yup.string().required(),
   });
 

@@ -70,6 +70,8 @@ const Practices = ({
 }) => {
   const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
 
+  console.log("Usuarios:", users);
+
   const [filterFields, setFilterFields] = useQueriesState({
     user: "all",
     status: "all",

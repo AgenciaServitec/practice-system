@@ -86,6 +86,7 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         annexName="annex3"
         hasPermissions={hasPermissions}
         practice={practice}
+        annex={annex3}
         onSetVisibleForm={setVisibleForm}
         onApprovedAnnex={onApprovedAnnex3}
       />
