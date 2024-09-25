@@ -6,6 +6,11 @@ import styled from "styled-components";
 import { Button, Row } from "antd";
 import { InformationModal } from "./InformationModal";
 import { PractitionerInformation } from "./PractitionerInformation";
+import { useApiPracticeReviewResubmissionPost } from "../../../api/useApiPracticeReviewResubmissionPost";
+import { updatePractice } from "../../../firebase/collections";
+import { useDefaultFirestoreProps } from "../../../hooks";
+import { now } from "../../../firebase/utils";
+import dayjs from "dayjs";
 
 export const InitialInformation = ({
   practice,
@@ -15,7 +20,30 @@ export const InitialInformation = ({
   supervisor,
   representativeCompany,
 }) => {
+  const {
+    postPracticeReviewResubmission,
+    postPracticeReviewResubmissionLoading,
+  } = useApiPracticeReviewResubmissionPost();
+
+  const { assignUpdateProps } = useDefaultFirestoreProps();
+
   const [visibleModal, setVisibleModal] = useState(false);
+
+  const onReviewResubmissionPractice = async (practice) => {
+    console.log("practiceId: ", practice.id);
+
+    try {
+      await postPracticeReviewResubmission(practice.id);
+
+      await updatePractice(practice.id, {
+        reviewResubmission: {
+          updateAt: now(),
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const onOpenPracticeModal = () => {
     setVisibleModal(true);
@@ -30,25 +58,51 @@ export const InitialInformation = ({
       profession.value === practitioner?.practitionerData?.professionalCareer
   );
 
+  const isPractitioner = user?.roleCode === "user";
+
+  // console.log(isPractitioner);
+  // console.log("Fecha de Envío: ", dayjs(practice?.reviewResubmission.updateAt.toDate()));
+  //
+  // console.log("Fecha de Hoy: ", new Date());
+
   return (
     <>
       <Container>
         <Row gutter={[9, 9]}>
-          <Col span={24} md={21}>
-            <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DEL PRACTICANTE
-            </Title>
+          <Col span={24} md={20}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Title level={5} style={{ margin: "1px 0" }}>
+                  DATOS DEL PRACTICANTE
+                </Title>
+              </Col>
+              <Col span={24}>
+                <PractitionerInformation
+                  practitioner={practitioner}
+                  professionalCareer={professionalCareer}
+                />
+              </Col>
+            </Row>
           </Col>
-          <Col span={24} md={3}>
-            <Button type="primary" block onClick={onOpenPracticeModal}>
-              Ver más
-            </Button>
+          <Col span={24} md={4}>
+            <WrapperButtons>
+              <Button type="primary" block onClick={onOpenPracticeModal}>
+                Ver más
+              </Button>
+              {isPractitioner && (
+                <Button
+                  type="primary"
+                  block
+                  onClick={() => onReviewResubmissionPractice(practice)}
+                  loading={postPracticeReviewResubmissionLoading}
+                  disabled={postPracticeReviewResubmissionLoading}
+                >
+                  Reenviar correo para revisión
+                </Button>
+              )}
+            </WrapperButtons>
           </Col>
         </Row>
-        <PractitionerInformation
-          practitioner={practitioner}
-          professionalCareer={professionalCareer}
-        />
       </Container>
       <InformationModal
         open={visibleModal}
@@ -78,4 +132,12 @@ const Container = styled.div`
       margin: 0.2em 0;
     }
   }
+`;
+
+const WrapperButtons = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem 0;
 `;
