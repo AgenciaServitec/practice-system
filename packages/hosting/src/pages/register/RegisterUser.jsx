@@ -49,6 +49,7 @@ export const RegisterUser = ({ roleCode }) => {
     maternalSurname: yup.string().required(),
     phoneNumber: yup.string().min(9).max(9).required(),
     email: yup.string().email().required(),
+    address: yup.string().required(),
     password: yup.string().min(6).required(),
     tuitionId: yup.string().min(6).required(),
     isGraduate: yup.boolean().required(),
@@ -101,6 +102,7 @@ export const RegisterUser = ({ roleCode }) => {
       number: formData.phoneNumber,
     },
     email: formData.email,
+    address: formData.address,
     password: formData.password,
     practitionerData: {
       isGraduate: formData.isGraduate,
@@ -269,6 +271,21 @@ export const RegisterUser = ({ roleCode }) => {
         render={({ field: { onChange, value, name } }) => (
           <Input
             label="Email"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+          />
+        )}
+      />
+      <Controller
+        name="address"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Input
+            label="Domicilio"
             onChange={onChange}
             value={value}
             name={name}
