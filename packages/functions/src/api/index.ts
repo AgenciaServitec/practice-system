@@ -4,6 +4,7 @@ import { errorHandler, hostingToApi } from "./_middlewares";
 import { body } from "express-validator";
 import { patchUser, postUser, putUser } from "./users";
 import { getEntityDataByDni, getEntityDataByRuc } from "./consults";
+import { onPracticeReviewSubmission } from "./onPracticeReviewSubmission";
 
 const app: express.Application = express();
 
@@ -25,6 +26,11 @@ app.patch("/users/:userId", [body("updateBy").exists()], patchUser);
 
 app.get("/consults/dni/:dni", getEntityDataByDni);
 app.get("/consults/ruc/:ruc", getEntityDataByRuc);
+
+app.post(
+  "/practice-review-resubmission/:practiceId",
+  onPracticeReviewSubmission
+);
 
 app.use(errorHandler);
 
