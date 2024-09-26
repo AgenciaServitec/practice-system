@@ -128,9 +128,10 @@ export const RegisterUser = ({ roleCode }) => {
     try {
       setLoading(true);
 
-      const response = await postUser(mapUser(formData));
+      await postUser(mapUser(formData));
+
       if (!postUserResponse.ok) {
-        throw new Error(response);
+        throw new Error(postUserResponse);
       }
 
       notification({
