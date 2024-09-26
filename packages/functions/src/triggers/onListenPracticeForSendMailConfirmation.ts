@@ -56,7 +56,7 @@ const fetchAnnexs = async (practiceId: string): Promise<Annex[]> => {
 };
 
 const onCheckObservationsPractice = async (practice: Practice) => {
-  const existsObservationsInPractice = practice?.observations.some(
+  const existsObservationsInPractice = (practice?.observations || []).some(
     (observation: ObservationAnnex) => observation?.status === "pending"
   );
 
@@ -86,7 +86,7 @@ const onCheckObservationsAnnexs = async (practiceId: string) => {
     ...observations("observationsCompanyRepresentative"),
   ];
 
-  const existsObservationsInAnnexs = observationsOfAnnexs.some(
+  const existsObservationsInAnnexs = (observationsOfAnnexs || []).some(
     (observation) => observation.status === "pending"
   );
 

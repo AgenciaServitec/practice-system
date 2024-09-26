@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { fetchDocument, firestore } from "../_firebase";
-import { logger } from "../utils";
 import assert from "assert";
-import { sendMailPracticeReviewReSubmissionEmail } from "../mailer/practice-system/sendMailPracticeReviewReSubmissionEmail";
+import { sendMailPracticeReviewReSubmissionEmail } from "../mailer/practice-system";
 
 interface Params {
   practiceId: string;
@@ -35,11 +34,6 @@ export const onPracticeReviewSubmission = async (
       academicSupervisor,
       practitioner
     );
-
-    logger.log("practiceId:", practiceId);
-    logger.log("practitioner:", practitioner);
-    logger.log("academicSupervisor:", academicSupervisor);
-    logger.log("practice:", practice);
 
     res.status(200).end();
   } catch (e) {
