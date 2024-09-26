@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import Col from "antd/lib/col";
-import { Title } from "../../../components";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Row, Title } from "../../../components";
 import { ProfessionalCareer } from "../../../data-list";
 import styled from "styled-components";
-import { Button, Row } from "antd";
 import { InformationModal } from "./InformationModal";
 import { PractitionerInformation } from "./PractitionerInformation";
+import { useApiPracticeReviewResubmissionPost } from "../../../api/useApiPracticeReviewResubmissionPost";
+import { updatePractice } from "../../../firebase/collections";
+import { now } from "../../../firebase/utils";
+import dayjs from "dayjs";
 
 export const InitialInformation = ({
   practice,
@@ -15,7 +17,36 @@ export const InitialInformation = ({
   supervisor,
   representativeCompany,
 }) => {
+  const {
+    postPracticeReviewResubmission,
+    postPracticeReviewResubmissionLoading,
+  } = useApiPracticeReviewResubmissionPost();
+
   const [visibleModal, setVisibleModal] = useState(false);
+
+  useEffect(() => {
+    if (user.roleCode !== "user" && timeDifference < 24) return;
+
+    (async () => {
+      if (timeDifference === 24) {
+        await updatePractice(practice.id, {
+          reviewResubmissionDate: now(),
+        });
+      }
+    })();
+  }, []);
+
+  const onReviewResubmissionPractice = async (practice) => {
+    try {
+      await postPracticeReviewResubmission(practice.id);
+
+      await updatePractice(practice.id, {
+        reviewResubmissionDate: now(),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const onOpenPracticeModal = () => {
     setVisibleModal(true);
@@ -30,25 +61,66 @@ export const InitialInformation = ({
       profession.value === practitioner?.practitionerData?.professionalCareer
   );
 
+  const isPractitioner = user?.roleCode === "user";
+
+  const dateSend = dayjs(practice?.reviewResubmissionDate?.toDate()).format(
+    "YYYY/MM/DD HH:mm"
+  );
+
+  const todayDate = dayjs().format("YYYY/MM/DD HH:mm");
+
+  const timeDifference = dayjs(todayDate).diff(dayjs(dateSend), "hour");
+
+  const resendTime = timeDifference < 24;
+
   return (
     <>
       <Container>
         <Row gutter={[9, 9]}>
-          <Col span={24} md={21}>
-            <Title level={5} style={{ margin: "1px 0" }}>
-              DATOS DEL PRACTICANTE
-            </Title>
+          <Col span={24} xl={20}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Title level={5} style={{ margin: "1px 0" }}>
+                  DATOS DEL PRACTICANTE
+                </Title>
+              </Col>
+              <Col span={24}>
+                <PractitionerInformation
+                  practitioner={practitioner}
+                  professionalCareer={professionalCareer}
+                />
+              </Col>
+            </Row>
           </Col>
-          <Col span={24} md={3}>
-            <Button type="primary" block onClick={onOpenPracticeModal}>
-              Ver más
-            </Button>
+          <Col span={24} xl={4}>
+            <WrapperButtons>
+              <Button type="primary" block onClick={onOpenPracticeModal}>
+                Ver más
+              </Button>
+              {isPractitioner && (
+                <div>
+                  <Button
+                    type="primary"
+                    danger
+                    block
+                    onClick={() => onReviewResubmissionPractice(practice)}
+                    loading={postPracticeReviewResubmissionLoading}
+                    disabled={
+                      postPracticeReviewResubmissionLoading || resendTime
+                    }
+                  >
+                    Reenviar correo para revisión
+                  </Button>
+                  {resendTime && (
+                    <span className="message-review">
+                      Disponible cada 24 hrs
+                    </span>
+                  )}
+                </div>
+              )}
+            </WrapperButtons>
           </Col>
         </Row>
-        <PractitionerInformation
-          practitioner={practitioner}
-          professionalCareer={professionalCareer}
-        />
       </Container>
       <InformationModal
         open={visibleModal}
@@ -77,5 +149,20 @@ const Container = styled.div`
       font-size: 1.1em;
       margin: 0.2em 0;
     }
+  }
+`;
+
+const WrapperButtons = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  text-align: center;
+
+  .message-review {
+    font-size: 0.7rem;
+    color: red;
   }
 `;

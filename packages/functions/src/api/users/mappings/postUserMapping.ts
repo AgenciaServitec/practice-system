@@ -9,6 +9,7 @@ export const postUserMapping = (user: UserBody, companyId: string): User => {
     companiesIds: user.companiesIds,
     roleCode: user.roleCode,
     email: user.email,
+    address: user.address,
     password: user.password,
     dni: user.dni,
     firstName: user.firstName,

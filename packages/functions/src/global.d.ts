@@ -43,6 +43,7 @@ interface User extends DefaultFirestoreProps {
   companiesIds: string[];
   roleCode: RoleCode;
   email: string;
+  address: string;
   password: string;
   profilePhoto?: Image;
   dni: string;

@@ -6,6 +6,9 @@ const htmlTemplate = (url: string): string =>
 
 export const template = {
   newPracticeEmailTemplate: htmlTemplate("./newPracticeEmailTemplate.html"),
+  practiceReviewResubmission: htmlTemplate(
+    "./practiceReviewResubmissionEmailTemplate.html"
+  ),
   annexObservationsEmailTemplate: htmlTemplate(
     "./annexObservationsEmailTemplate.html"
   ),
