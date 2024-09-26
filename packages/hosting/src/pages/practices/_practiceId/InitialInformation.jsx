@@ -30,9 +30,7 @@ export const InitialInformation = ({
     (async () => {
       if (timeDifference === 24) {
         await updatePractice(practice.id, {
-          reviewResubmission: {
-            updateAt: now(),
-          },
+          reviewResubmissionDate: now(),
         });
       }
     })();
@@ -43,9 +41,7 @@ export const InitialInformation = ({
       await postPracticeReviewResubmission(practice.id);
 
       await updatePractice(practice.id, {
-        reviewResubmission: {
-          updateAt: now(),
-        },
+        reviewResubmissionDate: now(),
       });
     } catch (e) {
       console.log(e);
@@ -67,9 +63,9 @@ export const InitialInformation = ({
 
   const isPractitioner = user?.roleCode === "user";
 
-  const dateSend = dayjs(
-    practice?.reviewResubmission?.updateAt.toDate()
-  ).format("YYYY/MM/DD HH:mm");
+  const dateSend = dayjs(practice?.reviewResubmissionDate?.toDate()).format(
+    "YYYY/MM/DD HH:mm"
+  );
 
   const todayDate = dayjs().format("YYYY/MM/DD HH:mm");
 
