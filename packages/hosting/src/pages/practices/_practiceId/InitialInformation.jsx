@@ -81,7 +81,7 @@ export const InitialInformation = ({
     <>
       <Container>
         <Row gutter={[9, 9]}>
-          <Col span={24} md={20}>
+          <Col span={24} xl={20}>
             <Row gutter={[16, 16]}>
               <Col span={24}>
                 <Title level={5} style={{ margin: "1px 0" }}>
@@ -96,22 +96,31 @@ export const InitialInformation = ({
               </Col>
             </Row>
           </Col>
-          <Col span={24} md={4}>
+          <Col span={24} xl={4}>
             <WrapperButtons>
               <Button type="primary" block onClick={onOpenPracticeModal}>
                 Ver más
               </Button>
               {isPractitioner && (
-                <Button
-                  type="primary"
-                  danger
-                  block
-                  onClick={() => onReviewResubmissionPractice(practice)}
-                  loading={postPracticeReviewResubmissionLoading}
-                  disabled={postPracticeReviewResubmissionLoading || resendTime}
-                >
-                  Reenviar correo para revisión
-                </Button>
+                <div>
+                  <Button
+                    type="primary"
+                    danger
+                    block
+                    onClick={() => onReviewResubmissionPractice(practice)}
+                    loading={postPracticeReviewResubmissionLoading}
+                    disabled={
+                      postPracticeReviewResubmissionLoading || resendTime
+                    }
+                  >
+                    Reenviar correo para revisión
+                  </Button>
+                  {resendTime && (
+                    <span className="message-review">
+                      Reenviar correo cada 24 hrs
+                    </span>
+                  )}
+                </div>
               )}
             </WrapperButtons>
           </Col>
@@ -152,5 +161,12 @@ const WrapperButtons = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 1rem;
   padding: 1rem 0;
+  text-align: center;
+
+  .message-review {
+    font-size: 0.7rem;
+    color: red;
+  }
 `;
