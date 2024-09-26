@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Acl,
   IconAction,
@@ -6,13 +6,19 @@ import {
   TableVirtualized,
   Tag,
 } from "../../components/ui";
-import { faEdit, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faFilePdf,
+  faListCheck,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
 import { Link } from "react-router-dom";
 import { fullName } from "../../utils";
 import { practicesStatus } from "../../data-list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import dayjs from "dayjs";
+import { PracticeLogsModal } from "./PracticeLogsModal";
 
 export const PracticesTable = ({
   practices = [],
@@ -22,6 +28,14 @@ export const PracticesTable = ({
   onEditPractice,
   onConfirmRemovePractice,
 }) => {
+  const [visibleModal, setVisibleModal] = useState(false);
+
+  const onClosePracticeModal = () => {
+    setVisibleModal(false);
+  };
+
+  console.log("user:", user);
+
   const getPractitioner = (userId) => users.find((user) => user?.id === userId);
 
   const isAdministratorUser = [
@@ -117,6 +131,16 @@ export const PracticesTable = ({
               }
             />
           </Acl>
+          <IconAction
+            tooltipTitle="Proceso de la Práctica"
+            icon={faListCheck}
+            onClick={() => setVisibleModal(true)}
+          />
+          <PracticeLogsModal
+            open={visibleModal}
+            onCancel={onClosePracticeModal}
+            practice={practice}
+          />
           <Acl name="/practices/:practiceId">
             <IconAction
               tooltipTitle="Revisar práctica"
