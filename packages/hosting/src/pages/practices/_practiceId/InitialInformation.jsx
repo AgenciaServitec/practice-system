@@ -117,7 +117,7 @@ export const InitialInformation = ({
                   </Button>
                   {resendTime && (
                     <span className="message-review">
-                      Reenviar correo cada 24 hrs
+                      Disponible cada 24 hrs
                     </span>
                   )}
                 </div>
