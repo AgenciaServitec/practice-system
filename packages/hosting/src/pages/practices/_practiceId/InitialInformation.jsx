@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import Col from "antd/lib/col";
-import { Title } from "../../../components";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Row, Title } from "../../../components";
 import { ProfessionalCareer } from "../../../data-list";
 import styled from "styled-components";
-import { Button, Row } from "antd";
 import { InformationModal } from "./InformationModal";
 import { PractitionerInformation } from "./PractitionerInformation";
 import { useApiPracticeReviewResubmissionPost } from "../../../api/useApiPracticeReviewResubmissionPost";
 import { updatePractice } from "../../../firebase/collections";
-import { useDefaultFirestoreProps } from "../../../hooks";
 import { now } from "../../../firebase/utils";
 import dayjs from "dayjs";
 
@@ -25,13 +22,23 @@ export const InitialInformation = ({
     postPracticeReviewResubmissionLoading,
   } = useApiPracticeReviewResubmissionPost();
 
-  const { assignUpdateProps } = useDefaultFirestoreProps();
-
   const [visibleModal, setVisibleModal] = useState(false);
 
-  const onReviewResubmissionPractice = async (practice) => {
-    console.log("practiceId: ", practice.id);
+  useEffect(() => {
+    if (user.roleCode !== "user" && timeDifference < 24) return;
 
+    (async () => {
+      if (timeDifference === 24) {
+        await updatePractice(practice.id, {
+          reviewResubmission: {
+            updateAt: now(),
+          },
+        });
+      }
+    })();
+  }, []);
+
+  const onReviewResubmissionPractice = async (practice) => {
     try {
       await postPracticeReviewResubmission(practice.id);
 
@@ -60,10 +67,15 @@ export const InitialInformation = ({
 
   const isPractitioner = user?.roleCode === "user";
 
-  // console.log(isPractitioner);
-  // console.log("Fecha de Envío: ", dayjs(practice?.reviewResubmission.updateAt.toDate()));
-  //
-  // console.log("Fecha de Hoy: ", new Date());
+  const dateSend = dayjs(
+    practice?.reviewResubmission?.updateAt.toDate()
+  ).format("YYYY/MM/DD HH:mm");
+
+  const todayDate = dayjs().format("YYYY/MM/DD HH:mm");
+
+  const timeDifference = dayjs(todayDate).diff(dayjs(dateSend), "hour");
+
+  const resendTime = timeDifference < 24;
 
   return (
     <>
@@ -92,10 +104,11 @@ export const InitialInformation = ({
               {isPractitioner && (
                 <Button
                   type="primary"
+                  danger
                   block
                   onClick={() => onReviewResubmissionPractice(practice)}
                   loading={postPracticeReviewResubmissionLoading}
-                  disabled={postPracticeReviewResubmissionLoading}
+                  disabled={postPracticeReviewResubmissionLoading || resendTime}
                 >
                   Reenviar correo para revisión
                 </Button>
