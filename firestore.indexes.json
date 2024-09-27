@@ -1,9 +1,17 @@
 {
   "indexes": [
     {
-      "collectionGroup": "correspondences",
+      "collectionGroup": "users",
       "queryScope": "COLLECTION",
       "fields": [
+        {
+          "fieldPath": "companyRepresentativeId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "companiesIds",
+          "arrayConfig": "CONTAINS"
+        },
         {
           "fieldPath": "isDeleted",
           "order": "ASCENDING"

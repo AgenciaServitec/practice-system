@@ -3,7 +3,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore } from "../firebase";
 import { useAuthentication } from "./AuthenticationProvider";
 import { notification, Spinner } from "../components";
-import { orderBy } from "lodash";
+import { isEmpty, orderBy } from "lodash";
 import { practicesRef, usersRef } from "../firebase/collections";
 
 const GlobalDataContext = createContext({
@@ -32,7 +32,23 @@ export const GlobalDataProvider = ({ children }) => {
     }
 
     if (authUser?.roleCode === "company_representative") {
-      return queryRef.where("companyRepresentativeId", "==", authUser.id);
+      queryRef.where("companyRepresentativeId", "==", authUser.id);
+
+      if (!isEmpty(authUser?.companiesIds)) {
+        queryRef.where(
+          "companiesIds",
+          "array-contains-any",
+          authUser?.companiesIds || []
+        );
+      }
+    }
+
+    if (authUser?.roleCode === "academic_coordinator") {
+      return queryRef.where(
+        "practitionerData.professionalCareer",
+        "==",
+        authUser.professionalCareer
+      );
     }
 
     return queryRef;
