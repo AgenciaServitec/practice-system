@@ -91,11 +91,6 @@ const RegisterAcademicCoordinator = ({
   postUserLoading,
   onSaveUser,
 }) => {
-  const professionalCareerView = ProfessionalCareer.map((career) => ({
-    label: career.label,
-    value: career.value,
-  }));
-
   const schema = yup.object({
     dni: yup.string().min(8).max(8).required(),
     firstName: yup.string().required(),
@@ -235,10 +230,13 @@ const RegisterAcademicCoordinator = ({
         control={control}
         render={({ field: { onChange, value, name } }) => (
           <Select
-            label="Coordinador(a) del Área de:"
+            label="Área de Coordinación"
             value={value}
             onChange={onChange}
-            options={professionalCareerView}
+            options={ProfessionalCareer.map((career) => ({
+              label: career.label,
+              value: career.value,
+            }))}
             error={error(name)}
             helperText={errorMessage(name)}
             required={required(name)}
