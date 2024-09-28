@@ -11,6 +11,7 @@ export const postUserMapping = (user: UserBody, companyId: string): User => {
     email: user.email,
     address: user.address,
     password: user.password,
+    professionalCareer: user.professionalCareer,
     dni: user.dni,
     firstName: user.firstName,
     paternalSurname: user.paternalSurname,
