@@ -22,6 +22,7 @@ import {
   TimePicker as TimePickerAntd,
   Collapse,
   Steps,
+  Timeline,
 } from "antd";
 
 export * from "./component-container";
@@ -90,4 +91,5 @@ export {
   TimePickerAntd,
   Collapse,
   Steps,
+  Timeline,
 };

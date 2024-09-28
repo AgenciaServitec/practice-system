@@ -1,0 +1,26 @@
+{
+  "register": {
+    "succes": "Tu práctica pre-profesional ha sido creada con éxito.",
+    "pending": "Tu práctica pre-profesional está pendiente de creación."
+  },
+  "annex2Approved": {
+    "succes": "El Anexo 2 ha sido aprobado satisfactoriamente.",
+    "pending": "El Anexo 2 está aún pendiente de aprobación."
+  },
+  "annex3Approved": {
+    "succes": "El Anexo 3 ha sido aprobado satisfactoriamente.",
+    "pending": "El Anexo 3 está aún pendiente de aprobación."
+  },
+  "annex4Approved": {
+    "succes": "El Anexo 4 ha sido aprobado satisfactoriamente.",
+    "pending": "El Anexo 4 está aún pendiente de aprobación."
+  },
+  "annex6Approved": {
+    "succes": "El Anexo 6 ha sido aprobado satisfactoriamente.",
+    "pending": "El Anexo 6 está aún pendiente de aprobación."
+  },
+  "practiceApproved": {
+    "succes": "Tu práctica pre-profesional ha sido aprobada con éxito.",
+    "pending": "La aprobación de tu práctica pre-profesional aún está en proceso."
+  }
+}

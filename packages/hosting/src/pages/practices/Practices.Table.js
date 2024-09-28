@@ -9,7 +9,7 @@ import {
 import {
   faEdit,
   faFilePdf,
-  faListCheck,
+  faHistory,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
@@ -18,7 +18,6 @@ import { fullName } from "../../utils";
 import { practicesStatus } from "../../data-list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import dayjs from "dayjs";
-import { PracticeLogsModal } from "./PracticeLogsModal";
 
 export const PracticesTable = ({
   practices = [],
@@ -27,12 +26,9 @@ export const PracticesTable = ({
   onNavigateTo,
   onEditPractice,
   onConfirmRemovePractice,
+  onOpenPracticeModal,
 }) => {
-  const [visibleModal, setVisibleModal] = useState(false);
-
-  const onClosePracticeModal = () => {
-    setVisibleModal(false);
-  };
+  const [practice, setPractice] = useState({});
 
   console.log("user:", user);
 
@@ -133,13 +129,8 @@ export const PracticesTable = ({
           </Acl>
           <IconAction
             tooltipTitle="Proceso de la Práctica"
-            icon={faListCheck}
-            onClick={() => setVisibleModal(true)}
-          />
-          <PracticeLogsModal
-            open={visibleModal}
-            onCancel={onClosePracticeModal}
-            practice={practice}
+            icon={faHistory}
+            onClick={() => onOpenPracticeModal(practice.id)}
           />
           <Acl name="/practices/:practiceId">
             <IconAction

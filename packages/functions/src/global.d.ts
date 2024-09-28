@@ -56,6 +56,7 @@ interface User extends DefaultFirestoreProps {
   };
   hasPractices: boolean;
   status: string;
+  professionalCareer: string;
   academicCoordinatorId: string;
   academicSupervisorId: string;
   practitionerData?: PractitionerData;
