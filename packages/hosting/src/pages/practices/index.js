@@ -10,7 +10,11 @@ import {
   Row,
   Title,
 } from "../../components/ui";
-import { updatePractice } from "../../firebase/collections";
+import {
+  fetchAnnexs,
+  fetchPractice,
+  updatePractice,
+} from "../../firebase/collections";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
 import { useDefaultFirestoreProps, useQueriesState } from "../../hooks";
@@ -18,12 +22,58 @@ import { PracticesTable } from "./Practices.Table";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { Divider } from "antd";
 import { PracticesFilters } from "./Practices.Filters";
+import { PracticeProgressModal } from "./PracticeProgressModal";
 
 export const CorrespondencesIntegration = () => {
   const navigate = useNavigate();
   const { authUser } = useAuthentication();
   const { assignDeleteProps } = useDefaultFirestoreProps();
   const { users, practices } = useGlobalData();
+
+  const [visibleModal, setVisibleModal] = useState(false);
+  const [practiceProgress, setPracticeProgress] = useState({});
+  const [practiceProgressLoading, setPracticeProgressLoading] = useState(false);
+
+  const onOpenPracticeModal = async (practiceId) => {
+    try {
+      setPracticeProgressLoading(true);
+      setVisibleModal(true);
+      const _practice = await fetchPractice(practiceId);
+      const _annexs = await fetchAnnexs(practiceId);
+
+      const _practiceProgress = {
+        registerPractice: _practice,
+        annex2: _annexs[0],
+        annex3: _annexs[1],
+        annex4: _annexs[2],
+        annex6: _annexs[3],
+        approvedPractice: {
+          practice: _practice,
+          annexs: _annexs,
+        },
+      };
+      setPracticeProgress(_practiceProgress);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPracticeProgressLoading(false);
+    }
+  };
+
+  const onClosePracticeModal = () => {
+    setVisibleModal(false);
+    setPracticeProgress({
+      registerPractice: null,
+      annex2: null,
+      annex3: null,
+      annex4: null,
+      annex6: null,
+      approvedPractice: {
+        practice: null,
+        annexs: null,
+      },
+    });
+  };
 
   const navigateTo = (pathname) => navigate(pathname);
   const onAddPractice = () => navigateTo("new");
@@ -55,6 +105,11 @@ export const CorrespondencesIntegration = () => {
       onEditPractice={onEditPractice}
       onConfirmRemovePractice={onConfirmRemovePractice}
       onAddPractice={onAddPractice}
+      visibleModal={visibleModal}
+      onOpenPracticeModal={onOpenPracticeModal}
+      onClosePracticeModal={onClosePracticeModal}
+      practiceProgress={practiceProgress}
+      practiceProgressLoading={practiceProgressLoading}
     />
   );
 };
@@ -67,6 +122,11 @@ const Practices = ({
   onEditPractice,
   onConfirmRemovePractice,
   onAddPractice,
+  visibleModal,
+  onOpenPracticeModal,
+  onClosePracticeModal,
+  practiceProgress,
+  practiceProgressLoading,
 }) => {
   const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
 
@@ -160,6 +220,7 @@ const Practices = ({
               onNavigateTo={onNavigateTo}
               onEditPractice={onEditPractice}
               onConfirmRemovePractice={onConfirmRemovePractice}
+              onOpenPracticeModal={onOpenPracticeModal}
             />
           </Col>
         </Row>
@@ -173,6 +234,13 @@ const Practices = ({
           voluptates.
         </DataEntryModal>
       </Container>
+
+      <PracticeProgressModal
+        open={visibleModal}
+        onCancel={onClosePracticeModal}
+        practiceProgress={practiceProgress}
+        practiceProgressLoading={practiceProgressLoading}
+      />
     </Acl>
   );
 };

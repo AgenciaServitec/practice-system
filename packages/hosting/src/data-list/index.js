@@ -15,3 +15,4 @@ export { default as Roles } from "./roles";
 export { default as BusinessPosition } from "./businessPosition.json";
 export * from "./practicesStatus.js";
 export * from "./evaluationSheet";
+export { default as PracticeProgress } from "./practiceProgress.json";

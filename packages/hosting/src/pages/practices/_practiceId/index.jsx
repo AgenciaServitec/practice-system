@@ -84,7 +84,7 @@ export const PracticeIntegration = () => {
         setLoading(false);
       }
     })();
-  }, [practice?.status, annexs.length]);
+  }, [practice?.status, annexs?.length]);
 
   useEffect(() => {
     (async () => {
@@ -117,7 +117,10 @@ export const PracticeIntegration = () => {
     modalConfirm({
       title: "¿Estás seguro de que quieres aprobar el modulo completo?",
       onOk: async () => {
-        await updatePractice(practice.id, { status: "approved" });
+        await updatePractice(
+          practice.id,
+          assignUpdateProps({ status: "approved" })
+        );
         notification({ type: "success" });
       },
     });

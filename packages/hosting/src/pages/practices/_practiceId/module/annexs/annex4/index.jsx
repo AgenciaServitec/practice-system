@@ -1,19 +1,22 @@
 import React, { useEffect } from "react";
 import {
+  Col,
   modalConfirm,
   notification,
+  Row,
+  Space,
   Title,
 } from "../../../../../../components";
-import Col from "antd/lib/col";
-import Row from "antd/lib/row";
-import { Space } from "antd";
 import styled from "styled-components";
 import { Sheet1Integration } from "./Sheet1";
 import { AnnexButtons } from "../AnnexButtons";
 import { updateAnnex } from "../../../../../../firebase/collections";
 import { isEmpty } from "lodash";
+import { useDefaultFirestoreProps } from "../../../../../../hooks";
 
 export const Annex4Integration = ({ practice, user, annex4 }) => {
+  const { assignUpdateProps } = useDefaultFirestoreProps();
+
   useEffect(() => {
     (async () => {
       if (isEmpty(practice) || isEmpty(annex4)) return;
@@ -30,6 +33,10 @@ export const Annex4Integration = ({ practice, user, annex4 }) => {
             ? "approved"
             : "pending",
       });
+
+      if (annex4?.status === "approved") {
+        await updateAnnex(practice.id, "annex4", assignUpdateProps(annex4));
+      }
     })();
   }, [annex4]);
 

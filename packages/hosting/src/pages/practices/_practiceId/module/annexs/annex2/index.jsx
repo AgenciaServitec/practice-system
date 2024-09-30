@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {
+  Col,
   modalConfirm,
   notification,
+  Row,
+  Space,
   Title,
 } from "../../../../../../components";
-import Col from "antd/lib/col";
-import Row from "antd/lib/row";
 import { Sheet1Integration } from "./Sheet1";
-import { Space } from "antd";
 import styled from "styled-components";
 import { updateAnnex } from "../../../../../../firebase/collections";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
 import { isEmpty } from "lodash";
+import { now } from "../../../../../../firebase/utils";
+import { useDefaultFirestoreProps } from "../../../../../../hooks";
 
 export const Annex2Integration = ({
   practice,
@@ -22,6 +24,7 @@ export const Annex2Integration = ({
   representativeCompany,
   annex2,
 }) => {
+  const { assignUpdateProps } = useDefaultFirestoreProps();
   const [visibleForm, setVisibleForm] = useState(false);
 
   const observations = [
@@ -48,7 +51,12 @@ export const Annex2Integration = ({
               approvedByAcademicSupervisor === "approved"
             ? "approved"
             : "pending",
+        ...(annex2?.status === "approved" && { updateAt: now() }),
       });
+
+      if (annex2?.status === "approved") {
+        await updateAnnex(practice.id, "annex2", assignUpdateProps(annex2));
+      }
     })();
   }, [annex2]);
 

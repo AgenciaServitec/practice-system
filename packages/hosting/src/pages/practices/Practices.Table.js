@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Acl,
   IconAction,
@@ -6,7 +6,12 @@ import {
   TableVirtualized,
   Tag,
 } from "../../components/ui";
-import { faEdit, faFilePdf, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faFilePdf,
+  faHistory,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { capitalize } from "lodash";
 import { Link } from "react-router-dom";
 import { fullName } from "../../utils";
@@ -21,7 +26,10 @@ export const PracticesTable = ({
   onNavigateTo,
   onEditPractice,
   onConfirmRemovePractice,
+  onOpenPracticeModal,
 }) => {
+  const [practice, setPractice] = useState({});
+
   const getPractitioner = (userId) => users.find((user) => user?.id === userId);
 
   const isAdministratorUser = [
@@ -117,6 +125,11 @@ export const PracticesTable = ({
               }
             />
           </Acl>
+          <IconAction
+            tooltipTitle="Proceso de la Práctica"
+            icon={faHistory}
+            onClick={() => onOpenPracticeModal(practice.id)}
+          />
           <Acl name="/practices/:practiceId">
             <IconAction
               tooltipTitle="Revisar práctica"

@@ -13,8 +13,10 @@ import { updateAnnex } from "../../../../../../firebase/collections";
 import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
 import { isEmpty } from "lodash";
+import { useDefaultFirestoreProps } from "../../../../../../hooks";
 
 export const Annex3Integration = ({ practice, annex3, user }) => {
+  const { assignUpdateProps } = useDefaultFirestoreProps();
   const [visibleForm, setVisibleForm] = useState(false);
 
   useEffect(() => {
@@ -33,6 +35,10 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
             ? "approved"
             : "pending",
       });
+
+      if (annex3?.status === "approved") {
+        await updateAnnex(practice.id, "annex3", assignUpdateProps(annex3));
+      }
     })();
   }, [annex3]);
 

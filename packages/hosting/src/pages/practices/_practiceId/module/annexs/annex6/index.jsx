@@ -13,6 +13,8 @@ import { isEmpty } from "lodash";
 import Col from "antd/lib/col";
 import { Sheet1Integration } from "./Sheet1";
 import { Space } from "antd";
+import { now } from "../../../../../../firebase/utils";
+import { useDefaultFirestoreProps } from "../../../../../../hooks";
 
 export const Annex6Integration = ({
   user,
@@ -23,6 +25,8 @@ export const Annex6Integration = ({
   representativeCompany,
   supervisor,
 }) => {
+  const { assignUpdateProps } = useDefaultFirestoreProps();
+
   useEffect(() => {
     (async () => {
       if (isEmpty(practice) || isEmpty(annex6)) return;
@@ -32,6 +36,10 @@ export const Annex6Integration = ({
       await updateAnnex(practice.id, "annex6", {
         status: practicesStatus?.[approvedByAcademicSupervisor]?.value,
       });
+
+      if (annex6?.status === "approved") {
+        await updateAnnex(practice.id, "annex6", assignUpdateProps(annex6));
+      }
     })();
   }, [annex6]);
 
