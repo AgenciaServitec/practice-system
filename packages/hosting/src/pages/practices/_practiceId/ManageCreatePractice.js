@@ -84,7 +84,6 @@ export const ManageCreateProductIntegration = ({
       ? dayjs(formData.departureTime).format("HH:mm:ss")
       : null,
     practiceArea: formData?.practiceArea.toLowerCase(),
-    academicCoordinatorId: formData?.academicCoordinatorId,
     academicSupervisorId: formData?.academicSupervisorId,
     companyRepresentativeId:
       companies.find((company) => company.id === formData.companyId)
@@ -93,7 +92,6 @@ export const ManageCreateProductIntegration = ({
       formData?.moduleNumber,
       user?.id,
       formData?.companyId,
-      formData?.academicCoordinatorId,
       formData?.academicSupervisorId,
       formData?.companyId,
     ].filter((item) => item),
@@ -135,7 +133,6 @@ export const ManageCreateProductIntegration = ({
       const p0 = updateUser(
         practice.practitionerId,
         assignUpdateProps({
-          academicCoordinatorId: formData.academicCoordinatorId,
           academicSupervisorId: formData.academicSupervisorId,
           companiesIds: uniq([
             formData.companyId,
@@ -195,7 +192,6 @@ const ManageCreateProduct = ({
     entryTime: yup.date().required(),
     departureTime: yup.date().required(),
     practiceArea: yup.string().required(),
-    academicCoordinatorId: yup.string(),
     academicSupervisorId: yup.string().required(),
   });
 
@@ -245,7 +241,6 @@ const ManageCreateProduct = ({
         ? dayjs(practice?.departureTime, "HH:mm:ss")
         : undefined,
       practiceArea: practice?.practiceArea || "",
-      academicCoordinatorId: practice?.academicCoordinatorId || "",
       academicSupervisorId: practice?.academicSupervisorId || "",
       companyRepresentativeId:
         practice?.companyRepresentativeId || company?.representativeId || "",
@@ -485,29 +480,6 @@ const ManageCreateProduct = ({
                           value: "other",
                         },
                       ]}
-                      error={error(name)}
-                      required={required(name)}
-                    />
-                  )}
-                />
-              </Col>
-              <Col span={24} md={9}>
-                <Controller
-                  name="academicCoordinatorId"
-                  control={control}
-                  render={({ field: { onChange, value, name } }) => (
-                    <Select
-                      label="Coordinador(a) Académico(a)"
-                      value={value}
-                      onChange={onChange}
-                      options={users
-                        .filter(
-                          (user) => user.roleCode === "academic_coordinator"
-                        )
-                        .map((user) => ({
-                          label: fullName(user),
-                          value: user.id,
-                        }))}
                       error={error(name)}
                       required={required(name)}
                     />

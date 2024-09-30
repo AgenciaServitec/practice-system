@@ -6,6 +6,7 @@ import {
   Input,
   InputPassword,
   notification,
+  Select,
 } from "../../components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useFormUtils } from "../../hooks";
 import { capitalize } from "lodash";
+import { ProfessionalCareer } from "../../data-list";
 
 export const RegisterAcademicCoordinatorIntegration = ({ roleCode }) => {
   const { loginWithEmailAndPassword } = useAuthentication();
@@ -41,6 +43,7 @@ export const RegisterAcademicCoordinatorIntegration = ({ roleCode }) => {
       prefix: "+51",
       number: formData.phoneNumber,
     },
+    professionalCareer: formData.professionalCareer,
     email: formData.email.toLowerCase(),
     password: formData.password,
   });
@@ -94,6 +97,7 @@ const RegisterAcademicCoordinator = ({
     paternalSurname: yup.string().required(),
     maternalSurname: yup.string().required(),
     phoneNumber: yup.string().min(9).max(9).required(),
+    professionalCareer: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
   });
@@ -215,6 +219,24 @@ const RegisterAcademicCoordinator = ({
             onChange={onChange}
             value={value}
             name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+          />
+        )}
+      />
+      <Controller
+        name="professionalCareer"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Select
+            label="Área de Coordinación"
+            value={value}
+            onChange={onChange}
+            options={ProfessionalCareer.map((career) => ({
+              label: career.label,
+              value: career.value,
+            }))}
             error={error(name)}
             helperText={errorMessage(name)}
             required={required(name)}
