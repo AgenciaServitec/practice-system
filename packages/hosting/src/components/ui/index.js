@@ -21,6 +21,9 @@ import {
   Carousel as CarouselAntd,
   TimePicker as TimePickerAntd,
   Collapse,
+  Steps,
+  Timeline,
+  Skeleton,
 } from "antd";
 
 export * from "./component-container";
@@ -88,4 +91,7 @@ export {
   CarouselAntd,
   TimePickerAntd,
   Collapse,
+  Steps,
+  Timeline,
+  Skeleton,
 };
