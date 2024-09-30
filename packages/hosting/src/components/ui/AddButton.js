@@ -4,9 +4,15 @@ import { Button } from "antd";
 import { Icon } from "./Icon";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-export const AddButton = ({ title, margin, onClick }) => {
+export const AddButton = ({ title, margin, onClick, disabled = false }) => {
   return (
-    <Container type="primary" opacity="1" margin={margin} onClick={onClick}>
+    <Container
+      type="primary"
+      opacity="1"
+      margin={margin}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <div className="content-btn-add">
         <Icon icon={faPlus} fontSize="1.5rem" margin="0 .8rem 0 0" />
         <span className="item-text">
