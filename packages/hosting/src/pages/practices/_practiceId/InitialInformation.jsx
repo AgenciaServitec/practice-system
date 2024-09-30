@@ -8,6 +8,7 @@ import { useApiPracticeReviewResubmissionPost } from "../../../api/useApiPractic
 import { updatePractice } from "../../../firebase/collections";
 import { now } from "../../../firebase/utils";
 import dayjs from "dayjs";
+import { isEmpty } from "lodash";
 
 export const InitialInformation = ({
   practice,
@@ -73,6 +74,9 @@ export const InitialInformation = ({
 
   const resendTime = timeDifference < 24;
 
+  const isButtonReviewResubmissionDateDisabled =
+    resendTime && !isEmpty(practice?.reviewResubmissionDate);
+
   return (
     <>
       <Container>
@@ -106,12 +110,13 @@ export const InitialInformation = ({
                     onClick={() => onReviewResubmissionPractice(practice)}
                     loading={postPracticeReviewResubmissionLoading}
                     disabled={
-                      postPracticeReviewResubmissionLoading || resendTime
+                      postPracticeReviewResubmissionLoading ||
+                      isButtonReviewResubmissionDateDisabled
                     }
                   >
                     Reenviar correo para revisión
                   </Button>
-                  {resendTime && (
+                  {isButtonReviewResubmissionDateDisabled && (
                     <span className="message-review">
                       Disponible cada 24 hrs
                     </span>
