@@ -77,8 +77,6 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
           });
         }
 
-        console.log("Aprobado");
-
         await updateAnnex(practice.id, "annex3", {
           ...(user.roleCode === "company_representative" && {
             approvedByCompanyRepresentative: "approved",
