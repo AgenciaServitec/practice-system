@@ -84,7 +84,7 @@ export const PracticeIntegration = () => {
         setLoading(false);
       }
     })();
-  }, [practice?.status, annexs?.length]);
+  }, [practice?.status, annexs?.length, practiceId]);
 
   useEffect(() => {
     (async () => {
