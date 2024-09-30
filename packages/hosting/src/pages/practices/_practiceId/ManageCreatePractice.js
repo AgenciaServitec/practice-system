@@ -544,6 +544,7 @@ const ManageCreateProduct = ({
                     type="primary"
                     size="large"
                     loading={savingPractice}
+                    disabled={!isCompanyDataComplete}
                   >
                     Crear Práctica
                   </Button>
