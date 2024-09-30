@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
+  Alert,
   Button,
+  Col,
   DataEntryModal,
   DatePicker,
   FixedButtonsWrap,
@@ -9,34 +11,32 @@ import {
   Input,
   InputNumber,
   notification,
+  Row,
   Select,
   TextArea,
   TimePicker,
   Title,
 } from "../../../components";
-import Row from "antd/lib/row";
-import Col from "antd/lib/col";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDefaultFirestoreProps, useFormUtils } from "../../../hooks";
-import styled from "styled-components";
 import {
+  addAnnex,
   addPractice,
   fetchPracticesByPractitionerId,
   getPracticesId,
   updateUser,
-  addAnnex,
 } from "../../../firebase/collections";
 import { useNavigate } from "react-router";
 import { fullName, getNameId } from "../../../utils";
 import { Modules } from "../../../data-list";
-import { capitalize, uniq } from "lodash";
+import { capitalize, isEmpty, uniq } from "lodash";
 import dayjs from "dayjs";
-import { Alert } from "antd";
 import { useGlobalData } from "../../../providers";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NewCompanyModal } from "./NewCompanyModal";
+import styled from "styled-components";
 
 export const ManageCreateProductIntegration = ({
   practice,
@@ -180,6 +180,7 @@ const ManageCreateProduct = ({
 }) => {
   const [isVisibleNewCompanyModal, setIsVisibleNewCompanyModal] =
     useState(false);
+  const [isCompanyDataComplete, setIsCompanyDataComplete] = useState(true);
 
   const schema = yup.object({
     moduleNumber: yup.number().required(),
@@ -216,6 +217,22 @@ const ManageCreateProduct = ({
           ""
       );
   }, [watch("moduleNumber")]);
+
+  useEffect(() => {
+    if (isEmpty(watch("companyId"))) return;
+
+    const company = companies.find(
+      (_company) => _company.id === watch("companyId")
+    );
+
+    const _isCompanyDataComplete =
+      !isEmpty(company?.email) &&
+      !isEmpty(company?.address) &&
+      !isEmpty(company?.category) &&
+      !isEmpty(company?.webSite);
+
+    setIsCompanyDataComplete(_isCompanyDataComplete);
+  }, [watch("companyId")]);
 
   useEffect(() => {
     resetForm();
@@ -319,17 +336,25 @@ const ManageCreateProduct = ({
                   name="companyId"
                   control={control}
                   render={({ field: { onChange, value, name } }) => (
-                    <Select
-                      label="Empresa"
-                      value={value}
-                      onChange={onChange}
-                      options={companies.map((_company) => ({
-                        label: capitalize(_company.socialReason),
-                        value: _company.id,
-                      }))}
-                      error={error(name)}
-                      required={required(name)}
-                    />
+                    <>
+                      <Select
+                        label="Empresa"
+                        value={value}
+                        onChange={onChange}
+                        options={companies.map((_company) => ({
+                          label: capitalize(_company.socialReason),
+                          value: _company.id,
+                        }))}
+                        error={error(name)}
+                        required={required(name)}
+                      />
+                      {!isCompanyDataComplete && (
+                        <p className="message-company">
+                          La empresa seleccionada debe completar sus datos:
+                          Correo, Dirección, Rubro y Sitio Web.
+                        </p>
+                      )}
+                    </>
                   )}
                 />
               </Col>
@@ -519,6 +544,7 @@ const ManageCreateProduct = ({
                     type="primary"
                     size="large"
                     loading={savingPractice}
+                    disabled={!isCompanyDataComplete}
                   >
                     Crear Práctica
                   </Button>
@@ -547,5 +573,10 @@ const Container = styled.section`
 
   form {
     width: 100%;
+  }
+
+  .message-company {
+    font-size: 0.7rem;
+    color: red;
   }
 `;

@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import {
   Acl,
   AddButton,
+  Button,
   Col,
   DataEntryModal,
+  Divider,
   Legend,
   modalConfirm,
   notification,
@@ -20,9 +22,9 @@ import { useNavigate } from "react-router";
 import { useDefaultFirestoreProps, useQueriesState } from "../../hooks";
 import { PracticesTable } from "./Practices.Table";
 import { useAuthentication, useGlobalData } from "../../providers";
-import { Divider } from "antd";
 import { PracticesFilters } from "./Practices.Filters";
 import { PracticeProgressModal } from "./PracticeProgressModal";
+import { isEmpty } from "lodash";
 
 export const CorrespondencesIntegration = () => {
   const navigate = useNavigate();
@@ -75,6 +77,11 @@ export const CorrespondencesIntegration = () => {
     });
   };
 
+  const isUserDataComplete =
+    !isEmpty(authUser?.frontDniPhoto) &&
+    !isEmpty(authUser?.backDniPhoto) &&
+    !isEmpty(authUser?.signaturePhoto);
+
   const navigateTo = (pathname) => navigate(pathname);
   const onAddPractice = () => navigateTo("new");
   const onEditPractice = (practiceId) => navigateTo(practiceId);
@@ -110,6 +117,7 @@ export const CorrespondencesIntegration = () => {
       onClosePracticeModal={onClosePracticeModal}
       practiceProgress={practiceProgress}
       practiceProgressLoading={practiceProgressLoading}
+      isUserDataComplete={isUserDataComplete}
     />
   );
 };
@@ -127,6 +135,7 @@ const Practices = ({
   onClosePracticeModal,
   practiceProgress,
   practiceProgressLoading,
+  isUserDataComplete,
 }) => {
   const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
 
@@ -192,7 +201,14 @@ const Practices = ({
                       onClick={onAddPractice}
                       title="Práctica"
                       margin="0"
+                      disabled={!isUserDataComplete}
                     />
+                    {!isUserDataComplete && (
+                      <p>
+                        Debe completar su documento y firma del perfil para
+                        poder crear una práctica.
+                      </p>
+                    )}
                   </Col>
                   <Divider />
                 </>
@@ -248,6 +264,12 @@ const Practices = ({
 const Container = styled.div`
   .capitalize {
     text-transform: capitalize;
+  }
+
+  p {
+    font-size: 0.7rem;
+    margin-top: 1rem;
+    color: red;
   }
 `;
 
