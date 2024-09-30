@@ -30,8 +30,6 @@ export const PracticesTable = ({
 }) => {
   const [practice, setPractice] = useState({});
 
-  console.log("user:", user);
-
   const getPractitioner = (userId) => users.find((user) => user?.id === userId);
 
   const isAdministratorUser = [

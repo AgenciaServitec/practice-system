@@ -23,6 +23,7 @@ import {
   Collapse,
   Steps,
   Timeline,
+  Skeleton,
 } from "antd";
 
 export * from "./component-container";
@@ -92,4 +93,5 @@ export {
   Collapse,
   Steps,
   Timeline,
+  Skeleton,
 };

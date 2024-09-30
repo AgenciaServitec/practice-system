@@ -32,27 +32,32 @@ export const CorrespondencesIntegration = () => {
 
   const [visibleModal, setVisibleModal] = useState(false);
   const [practiceProgress, setPracticeProgress] = useState({});
+  const [practiceProgressLoading, setPracticeProgressLoading] = useState(false);
 
   const onOpenPracticeModal = async (practiceId) => {
-    setVisibleModal(true);
-    const _practice = await fetchPractice(practiceId);
-    const _annexs = await fetchAnnexs(practiceId);
+    try {
+      setPracticeProgressLoading(true);
+      setVisibleModal(true);
+      const _practice = await fetchPractice(practiceId);
+      const _annexs = await fetchAnnexs(practiceId);
 
-    console.log("annexs:", _annexs);
-
-    const _practiceProgress = {
-      registerPractice: _practice,
-      annex2: _annexs[0],
-      annex3: _annexs[1],
-      annex4: _annexs[2],
-      annex6: _annexs[3],
-      approvedPractice: {
-        practice: _practice,
-        annexs: _annexs,
-      },
-    };
-
-    setPracticeProgress(_practiceProgress);
+      const _practiceProgress = {
+        registerPractice: _practice,
+        annex2: _annexs[0],
+        annex3: _annexs[1],
+        annex4: _annexs[2],
+        annex6: _annexs[3],
+        approvedPractice: {
+          practice: _practice,
+          annexs: _annexs,
+        },
+      };
+      setPracticeProgress(_practiceProgress);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setPracticeProgressLoading(false);
+    }
   };
 
   const onClosePracticeModal = () => {
@@ -104,6 +109,7 @@ export const CorrespondencesIntegration = () => {
       onOpenPracticeModal={onOpenPracticeModal}
       onClosePracticeModal={onClosePracticeModal}
       practiceProgress={practiceProgress}
+      practiceProgressLoading={practiceProgressLoading}
     />
   );
 };
@@ -120,6 +126,7 @@ const Practices = ({
   onOpenPracticeModal,
   onClosePracticeModal,
   practiceProgress,
+  practiceProgressLoading,
 }) => {
   const [isVisiblePracticeEdit, setIsVisiblePracticeEdit] = useState(false);
 
@@ -232,6 +239,7 @@ const Practices = ({
         open={visibleModal}
         onCancel={onClosePracticeModal}
         practiceProgress={practiceProgress}
+        practiceProgressLoading={practiceProgressLoading}
       />
     </Acl>
   );
