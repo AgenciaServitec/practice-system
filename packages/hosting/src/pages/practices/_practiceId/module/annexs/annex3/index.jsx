@@ -46,9 +46,28 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
     user.roleCode === "company_representative" ||
     user.roleCode === "academic_supervisor";
 
-  const onApprovedAnnex3 = async (practice) =>
-    modalConfirm({
-      title: "Seguro que deseas aprovar el anexo 3?",
+  const annex3FieldsSupervisor =
+    user.roleCode === "academic_supervisor" &&
+    isEmpty(
+      annex3?.visitNumber ||
+        annex3?.supervisionDate ||
+        annex3?.progressStatus ||
+        annex3?.observations
+    );
+
+  const annex3FieldsRepresentativeCompany =
+    user.roleCode === "company_representative" &&
+    isEmpty(annex3.difficultiesDetected || annex3.suggestionsRecommendations);
+
+  const onApprovedAnnex3 = async (practice) => {
+    if (annex3FieldsSupervisor || annex3FieldsRepresentativeCompany)
+      return notification({
+        type: "warning",
+        title: "Completar todos los campos antes de aprobar!",
+      });
+
+    return modalConfirm({
+      title: "Seguro que deseas aprobar el anexo 3?",
       content: "El anexo 3 pasara al estado de aprobado",
       onOk: async () => {
         if (!hasPermissions) {
@@ -57,6 +76,8 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
             title: "No tienes permisos para aprobar!",
           });
         }
+
+        console.log("Aprobado");
 
         await updateAnnex(practice.id, "annex3", {
           ...(user.roleCode === "company_representative" && {
@@ -70,6 +91,7 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         notification({ type: "success" });
       },
     });
+  };
 
   return (
     <Container>
