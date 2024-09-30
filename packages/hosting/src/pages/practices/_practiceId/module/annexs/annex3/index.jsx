@@ -63,7 +63,7 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
     if (annex3FieldsSupervisor || annex3FieldsRepresentativeCompany)
       return notification({
         type: "warning",
-        title: "Completar todos los campos antes de aprobar!",
+        title: "Por favor, rellenar todos los campos antes de aprobar",
       });
 
     return modalConfirm({
