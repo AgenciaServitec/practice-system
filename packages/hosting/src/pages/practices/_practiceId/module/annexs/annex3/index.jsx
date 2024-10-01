@@ -14,8 +14,15 @@ import { ObservationOfAnnexIntegration } from "../../../ObservationOfAnnex";
 import { AnnexButtons } from "../AnnexButtons";
 import { isEmpty } from "lodash";
 import { useDefaultFirestoreProps } from "../../../../../../hooks";
+import { scrollStyle } from "../../../../../../styles";
 
-export const Annex3Integration = ({ practice, annex3, user }) => {
+export const Annex3Integration = ({
+  refAnnex3,
+  refAnnex4,
+  practice,
+  annex3,
+  user,
+}) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
   const [visibleForm, setVisibleForm] = useState(false);
 
@@ -88,12 +95,14 @@ export const Annex3Integration = ({ practice, annex3, user }) => {
         });
 
         notification({ type: "success" });
+
+        refAnnex4?.current && refAnnex4.current.scrollIntoView(scrollStyle);
       },
     });
   };
 
   return (
-    <Container>
+    <Container ref={refAnnex3}>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <div className="item-sheet">

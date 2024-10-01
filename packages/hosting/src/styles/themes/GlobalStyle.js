@@ -89,6 +89,12 @@ const global = css`
   }
 `;
 
+export const scrollStyle = {
+  behavior: "smooth",
+  block: "center",
+  top: "10px",
+};
+
 const antd = {
   datePicker: css`
     .ant-calendar-picker-container {

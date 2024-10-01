@@ -15,8 +15,10 @@ import { AnnexButtons } from "../AnnexButtons";
 import { isEmpty } from "lodash";
 import { now } from "../../../../../../firebase/utils";
 import { useDefaultFirestoreProps } from "../../../../../../hooks";
+import { scrollStyle } from "../../../../../../styles";
 
 export const Annex2Integration = ({
+  refAnnex3,
   practice,
   user,
   practitioner,
@@ -101,6 +103,8 @@ export const Annex2Integration = ({
         });
 
         notification({ type: "success" });
+
+        refAnnex3?.current && refAnnex3.current.scrollIntoView(scrollStyle);
       },
     });
   };

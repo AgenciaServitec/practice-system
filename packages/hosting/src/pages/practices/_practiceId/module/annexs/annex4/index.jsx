@@ -13,8 +13,15 @@ import { AnnexButtons } from "../AnnexButtons";
 import { updateAnnex } from "../../../../../../firebase/collections";
 import { isEmpty } from "lodash";
 import { useDefaultFirestoreProps } from "../../../../../../hooks";
+import { scrollStyle } from "../../../../../../styles";
 
-export const Annex4Integration = ({ practice, user, annex4 }) => {
+export const Annex4Integration = ({
+  refAnnex4,
+  refAnnex6,
+  practice,
+  user,
+  annex4,
+}) => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
 
   useEffect(() => {
@@ -80,12 +87,14 @@ export const Annex4Integration = ({ practice, user, annex4 }) => {
         });
 
         notification({ type: "success" });
+
+        refAnnex6?.current && refAnnex6.current.scrollIntoView(scrollStyle);
       },
     });
   };
 
   return (
-    <ContainerRow gutter={[16, 16]}>
+    <ContainerRow gutter={[16, 16]} ref={refAnnex4}>
       <Col span={24}>
         <div className="item-sheet">
           <Space direction="vertical" style={{ width: "100%" }}>
