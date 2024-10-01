@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Acl,
   Alert,
@@ -55,6 +55,10 @@ export const PracticeIntegration = () => {
   const { assignUpdateProps } = useDefaultFirestoreProps();
   const { users, companies } = useGlobalData();
   const { isMobile } = useDevice();
+
+  const refAnnex3 = useRef(null);
+  const refAnnex4 = useRef(null);
+  const refAnnex6 = useRef(null);
 
   const [practice, setPractice] = useState({});
   const [loading, setLoading] = useState(false);
@@ -196,6 +200,7 @@ export const PracticeIntegration = () => {
       ),
       children: !isApprovedAnnex(annex2.status) && (
         <Annex2Integration
+          refAnnex3={refAnnex3}
           practice={practice}
           user={authUser}
           practitioner={practitioner}
@@ -227,6 +232,8 @@ export const PracticeIntegration = () => {
       ),
       children: !isApprovedAnnex(annex3?.status) && (
         <Annex3Integration
+          refAnnex3={refAnnex3}
+          refAnnex4={refAnnex4}
           practice={practice}
           annex3={annex3}
           user={authUser}
@@ -257,6 +264,8 @@ export const PracticeIntegration = () => {
       ),
       children: !isApprovedAnnex(annex4?.status) && (
         <Annex4Integration
+          refAnnex4={refAnnex4}
+          refAnnex6={refAnnex6}
           practice={practice}
           user={authUser}
           annex4={annex4}
