@@ -44,8 +44,22 @@ export const Annex4Integration = ({ practice, user, annex4 }) => {
     user.roleCode === "company_representative" ||
     user.roleCode === "academic_supervisor";
 
-  const onApprovedAnnex4 = async (practice) =>
-    modalConfirm({
+  const annex4ApprovedSupervisor =
+    user.roleCode === "academic_supervisor" && isEmpty(annex4?.evaluationSheet);
+
+  const annex4ApprovedRepresentativeCompany =
+    user.roleCode === "company_representative" &&
+    isEmpty(annex4?.evaluationSheet);
+
+  const onApprovedAnnex4 = async (practice) => {
+    if (annex4ApprovedSupervisor || annex4ApprovedRepresentativeCompany)
+      return notification({
+        type: "warning",
+        title:
+          "Por favor, antes de aprobar el anexo debe verificar que se haya completado la evaluación del practicante.",
+      });
+
+    return modalConfirm({
       title: "Seguro que deseas aprobar el anexo 4?",
       content: "El anexo 4 pasara al estado de aprobado",
       onOk: async () => {
@@ -68,6 +82,7 @@ export const Annex4Integration = ({ practice, user, annex4 }) => {
         notification({ type: "success" });
       },
     });
+  };
 
   return (
     <ContainerRow gutter={[16, 16]}>
