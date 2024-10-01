@@ -64,8 +64,23 @@ export const Annex2Integration = ({
     user.roleCode === "company_representative" ||
     user.roleCode === "academic_supervisor";
 
-  const onApprovedAnnex2 = async (practice) =>
-    modalConfirm({
+  const annex2ValidateSupervisor =
+    user.roleCode === "academic_supervisor" &&
+    isEmpty(annex2?.mobility || annex2?.refreshment);
+
+  const annex2ValidateRepresentativeCompany =
+    user.roleCode === "company_representative" &&
+    isEmpty(annex2?.mobility || annex2?.refreshment);
+
+  const onApprovedAnnex2 = async (practice) => {
+    if (annex2ValidateSupervisor || annex2ValidateRepresentativeCompany)
+      return notification({
+        type: "warning",
+        title:
+          "Por favor, antes de aprobar el anexo debe verificar que los campos no estén vacíos.",
+      });
+
+    return modalConfirm({
       title: "Seguro que deseas aprobar el anexo 2?",
       content: "El anexo 2 pasara al estado de aprobado",
       onOk: async () => {
@@ -88,6 +103,7 @@ export const Annex2Integration = ({
         notification({ type: "success" });
       },
     });
+  };
 
   return (
     <Container>
