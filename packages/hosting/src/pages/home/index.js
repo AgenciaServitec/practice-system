@@ -14,7 +14,7 @@ import { Col, Row, Tag } from "antd";
 import { Link } from "react-router-dom";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { fullName } from "../../utils";
-import { orderBy } from "lodash";
+import { isEmpty, orderBy } from "lodash";
 import { mediaQuery } from "../../styles";
 
 export const HomeIntegration = () => {
@@ -30,6 +30,10 @@ export const HomeIntegration = () => {
     authUser.roleCode === "company_representative";
   const isSupervisor = authUser.roleCode === "academic_supervisor";
   const isCoordinator = authUser.roleCode === "academic_coordinator";
+
+  const isExistThreeModules = practicesOfUser.length === 3;
+
+  console.log("¿Existen 3 módulos?", isExistThreeModules);
 
   return (
     <Container>
@@ -67,7 +71,13 @@ export const HomeIntegration = () => {
                   </Title>
                   <ul className="list">
                     <li>
-                      <Link to="/practices/new">1. Crear práctica</Link>
+                      {!isExistThreeModules ? (
+                        <Link to="/practices/new">1. Crear práctica</Link>
+                      ) : (
+                        <span style={{ color: "gray" }}>
+                          1. Ya has completado tus 3 módulos
+                        </span>
+                      )}
                     </li>
                     <li>
                       <Link to="/practices">
