@@ -49,7 +49,7 @@ export const Annex6Integration = ({
 
   const onApprovedAnnex6 = async (practice) =>
     modalConfirm({
-      title: "Seguro que deseas aprovar el anexo 6?",
+      title: "Seguro que deseas aprobar el anexo 6?",
       content: "El anexo 6 pasara al estado de aprobado",
       onOk: async () => {
         if (!hasPermissions) {
