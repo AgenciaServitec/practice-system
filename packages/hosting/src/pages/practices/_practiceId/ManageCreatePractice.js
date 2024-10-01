@@ -69,7 +69,7 @@ export const ManageCreateProductIntegration = ({
     ...practice,
     id: getPracticesId(),
     nameId: getNameId(formData.name),
-    practitioner: omit(getUserData(user.id), ["acls"]) || null,
+    practitioner: omit(getUserData(user.id, users), ["acls"]) || null,
     practitionerId: user.id,
     moduleNumber: formData?.moduleNumber,
     companyId: formData?.companyId,
@@ -91,12 +91,16 @@ export const ManageCreateProductIntegration = ({
       : null,
     practiceArea: formData?.practiceArea.toLowerCase(),
     academicSupervisor:
-      omit(getUserData(formData?.academicSupervisorId), ["acls"]) || null,
+      omit(getUserData(formData?.academicSupervisorId, users), ["acls"]) ||
+      null,
     academicSupervisorId: formData?.academicSupervisorId || null,
     companyRepresentative:
-      omit(getCompanyRepresentative(formData?.companyId), ["acls"]) || null,
+      omit(getCompanyRepresentative(formData?.companyId, companies, users), [
+        "acls",
+      ]) || null,
     companyRepresentativeId:
-      getCompanyRepresentative(formData?.companyId)?.representativeId || null,
+      getCompanyRepresentative(formData?.companyId, companies, users)
+        ?.representativeId || null,
     searchData: [
       formData?.moduleNumber,
       user?.id,
