@@ -33,8 +33,6 @@ export const HomeIntegration = () => {
 
   const isExistThreeModules = practicesOfUser.length === 3;
 
-  console.log("¿Existen 3 módulos?", isExistThreeModules);
-
   return (
     <Container>
       <Row gutter={[16, 16]}>
