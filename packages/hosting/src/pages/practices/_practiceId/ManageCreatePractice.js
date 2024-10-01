@@ -28,9 +28,14 @@ import {
   updateUser,
 } from "../../../firebase/collections";
 import { useNavigate } from "react-router";
-import { fullName, getNameId } from "../../../utils";
+import {
+  fullName,
+  getCompanyRepresentative,
+  getNameId,
+  getUserData,
+} from "../../../utils";
 import { Modules } from "../../../data-list";
-import { capitalize, isEmpty, uniq } from "lodash";
+import { capitalize, isEmpty, omit, uniq } from "lodash";
 import dayjs from "dayjs";
 import { useGlobalData } from "../../../providers";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -64,6 +69,7 @@ export const ManageCreateProductIntegration = ({
     ...practice,
     id: getPracticesId(),
     nameId: getNameId(formData.name),
+    practitioner: omit(getUserData(user.id), ["acls"]) || null,
     practitionerId: user.id,
     moduleNumber: formData?.moduleNumber,
     companyId: formData?.companyId,
@@ -84,16 +90,19 @@ export const ManageCreateProductIntegration = ({
       ? dayjs(formData.departureTime).format("HH:mm:ss")
       : null,
     practiceArea: formData?.practiceArea.toLowerCase(),
-    academicSupervisorId: formData?.academicSupervisorId,
+    academicSupervisor:
+      omit(getUserData(formData?.academicSupervisorId), ["acls"]) || null,
+    academicSupervisorId: formData?.academicSupervisorId || null,
+    companyRepresentative:
+      omit(getCompanyRepresentative(formData?.companyId), ["acls"]) || null,
     companyRepresentativeId:
-      companies.find((company) => company.id === formData.companyId)
-        ?.representativeId || null,
+      getCompanyRepresentative(formData?.companyId)?.representativeId || null,
     searchData: [
       formData?.moduleNumber,
       user?.id,
       formData?.companyId,
       formData?.academicSupervisorId,
-      formData?.companyId,
+      formData?.practiceArea,
     ].filter((item) => item),
   });
 
@@ -133,7 +142,6 @@ export const ManageCreateProductIntegration = ({
       const p0 = updateUser(
         practice.practitionerId,
         assignUpdateProps({
-          academicSupervisorId: formData.academicSupervisorId,
           companiesIds: uniq([
             formData.companyId,
             ...(user?.companiesIds || []),
@@ -258,9 +266,7 @@ const ManageCreateProduct = ({
         ? dayjs(practice?.departureTime, "HH:mm:ss")
         : undefined,
       practiceArea: practice?.practiceArea || "",
-      academicSupervisorId: practice?.academicSupervisorId || "",
-      companyRepresentativeId:
-        practice?.companyRepresentativeId || company?.representativeId || "",
+      academicSupervisorId: practice?.academicSupervisor?.id || "",
     });
   };
 
