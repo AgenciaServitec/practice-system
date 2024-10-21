@@ -9,17 +9,19 @@ import {
   faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Text, Title } from "../../components";
+import { notification, Text, Title, Button } from "../../components";
 import { Col, Row, Tag } from "antd";
 import { Link } from "react-router-dom";
 import { useAuthentication, useGlobalData } from "../../providers";
 import { fullName } from "../../utils";
 import { isEmpty, orderBy } from "lodash";
 import { mediaQuery } from "../../styles";
+import { useNavigate } from "react-router";
 
 export const HomeIntegration = () => {
+  const navigate = useNavigate();
   const { authUser } = useAuthentication();
-  const { practices } = useGlobalData();
+  const { practices, users } = useGlobalData();
 
   const practicesOfUser = practices.filter(
     (practice) => practice.practitionerId === authUser.id
@@ -32,6 +34,30 @@ export const HomeIntegration = () => {
   const isCoordinator = authUser.roleCode === "academic_coordinator";
 
   const isExistThreeModules = practicesOfUser.length === 3;
+
+  const isCompleteDocumentation = !isEmpty(
+    authUser.backDniPhoto && authUser.frontDniPhoto && authUser.signaturePhoto
+  );
+  console.log("Existe la documentacion", isCompleteDocumentation);
+
+  const validateToCreatePractice = () => {
+    notification({
+      type: "warning",
+      title: "Falta registrar DNI y Firma",
+      description:
+        "Por favor, para continuar debe subir los Documento requeridos (DNI y Firma). Para ello ingrese a su Perfil",
+      btn: (
+        <Button
+          size="small"
+          type="primary"
+          onClick={() => navigate("/profile")}
+        >
+          Click aqui!
+        </Button>
+      ),
+      duration: 3,
+    });
+  };
 
   return (
     <Container>
@@ -70,7 +96,16 @@ export const HomeIntegration = () => {
                   <ul className="list">
                     <li>
                       {!isExistThreeModules ? (
-                        <Link to="/practices/new">1. Crear práctica</Link>
+                        isCompleteDocumentation ? (
+                          <Link to="/practices/new">1. Crear práctica</Link>
+                        ) : (
+                          <a
+                            rel="noreferrer"
+                            onClick={() => validateToCreatePractice()}
+                          >
+                            1. Crear práctica
+                          </a>
+                        )
                       ) : (
                         <span style={{ color: "gray" }}>
                           1. Ya has completado tus 3 módulos
