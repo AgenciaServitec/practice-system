@@ -22,12 +22,12 @@ export const PracticeProgressModal = ({
   const { registerPractice, annex2, annex3, annex4, annex6, approvedPractice } =
     practiceProgress;
 
-  const isRegister = registerPractice?.practice?.status === "pending";
+  const isRegister = registerPractice?.status === "pending";
   const isAnnex2Approved = annex2?.status === "approved";
   const isAnnex3Approved = annex3?.status === "approved";
   const isAnnex4Approved = annex4?.status === "approved";
   const isAnnex6Approved = annex6?.status === "approved";
-  const isPracticeApproved = approvedPractice?.practice?.status === "approved";
+  const isPracticeApproved = approvedPractice?.status === "approved";
 
   const isActive = (condition) =>
     condition ? (

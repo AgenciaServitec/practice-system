@@ -11,6 +11,12 @@ export const PracticesSheet7 = ({
   supervisor,
   annexNumber,
 }) => {
+  const namesInitials =
+    `${supervisor?.paternalSurname} ${supervisor?.maternalSurname} ${supervisor?.firstName}`
+      .split(" ")
+      .map((initial) => initial.slice(0, 1))
+      .join("");
+
   const ProfessionalCareerValue = ProfessionalCareer.find(
     (profession) =>
       profession.value === practitioner?.practitionerData?.professionalCareer
@@ -41,7 +47,10 @@ export const PracticesSheet7 = ({
             <div className="rbody__title">
               San Juan de Miraflores, {dayjs().format("DD MMMM YYYY")}
             </div>
-            <h4>INFORME N° 001 - 2023 - ELS – CI - IESTP &quot;GLBR&quot;</h4>
+            <h4>
+              INFORME N° 001 - {dayjs().format("YYYY")} -{" "}
+              {supervisor ? namesInitials : ""} – CI - IESTP &quot;GLBR&quot;
+            </h4>
             <div className="lbody__title">
               <div className="vertical-align">
                 <p className="capitalize">
@@ -202,8 +211,7 @@ export const PracticesSheet7 = ({
                     <div className="capitalize">
                       {" "}
                       <strong>Turno: </strong>
-                      {practitioner.practitionerData?.studentShift ||
-                        "Egresado"}
+                      {practitioner.practitionerData?.studentShift}
                     </div>
                   </div>
                 </span>
@@ -248,6 +256,10 @@ const Container = styled.div`
     margin-left: 20em;
     margin-top: 2em;
     margin-bottom: 2em;
+  }
+
+  h4 {
+    text-align: center;
   }
 
   .lbody__title {
