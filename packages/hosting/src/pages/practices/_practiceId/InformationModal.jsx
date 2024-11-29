@@ -198,7 +198,7 @@ export const InformationModal = ({
             <Col span={24} md={8}>
               <div className="item">
                 <p>Cargo: </p>
-                <p>{fullName(representativeCompany)}</p>
+                <p>{businessPosition?.label || "-"}</p>
               </div>
             </Col>
             <Col span={24} md={8}>
