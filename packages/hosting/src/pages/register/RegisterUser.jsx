@@ -54,11 +54,7 @@ export const RegisterUser = ({ roleCode }) => {
     tuitionId: yup.string().min(6).required(),
     isGraduate: yup.boolean().required(),
     professionalCareer: yup.string().required(),
-    studentShift: yup.string().when("isGraduate", {
-      is: true,
-      then: yup.string().notRequired(),
-      otherwise: yup.string().required(),
-    }),
+    studentShift: yup.string().required(),
     semester: yup.string().when("isGraduate", {
       is: true,
       then: yup.string().notRequired(),
@@ -383,33 +379,33 @@ export const RegisterUser = ({ roleCode }) => {
           />
         )}
       />
+      <Controller
+        name="studentShift"
+        control={control}
+        render={({ field: { onChange, value, name } }) => (
+          <Select
+            label="Turno"
+            onChange={onChange}
+            value={value}
+            name={name}
+            error={error(name)}
+            helperText={errorMessage(name)}
+            required={required(name)}
+            options={[
+              {
+                label: "Diurno",
+                value: "diurno",
+              },
+              {
+                label: "Nocturno",
+                value: "nocturno",
+              },
+            ]}
+          />
+        )}
+      />
       {!watch("isGraduate") ? (
         <>
-          <Controller
-            name="studentShift"
-            control={control}
-            render={({ field: { onChange, value, name } }) => (
-              <Select
-                label="Turno"
-                onChange={onChange}
-                value={value}
-                name={name}
-                error={error(name)}
-                helperText={errorMessage(name)}
-                required={required(name)}
-                options={[
-                  {
-                    label: "Diurno",
-                    value: "diurno",
-                  },
-                  {
-                    label: "Nocturno",
-                    value: "nocturno",
-                  },
-                ]}
-              />
-            )}
-          />
           <Controller
             name="semester"
             control={control}

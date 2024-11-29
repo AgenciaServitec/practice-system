@@ -4,7 +4,6 @@ import { LogoGilda } from "../../../../../images";
 import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
-import { Col } from "../../../../../components";
 
 export const PracticesSheet4 = ({
   practitioner,
@@ -42,7 +41,7 @@ export const PracticesSheet4 = ({
             <div className="text-item">
               <span>
                 <strong>CARRERA PROFESIONAL : Computación e Informática</strong>
-                (Ingresantes a partir del año 2021)
+                (Ingresantes a partir del año {dayjs().format("YYYY")})
               </span>
             </div>
           </div>
