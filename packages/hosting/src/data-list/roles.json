@@ -7,11 +7,13 @@
   {
     "code": "company_representative",
     "name": "Representante de empresa",
+    "signature": "Representante de la empresa o institución",
     "initialPathname": "/home"
   },
   {
     "code": "academic_supervisor",
     "name": "Supervisor Académico",
+    "signature": "Supervisor de Prácticas IESTP \"GLBR\"",
     "initialPathname": "/home"
   },
   {

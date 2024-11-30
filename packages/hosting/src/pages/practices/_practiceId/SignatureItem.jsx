@@ -51,7 +51,7 @@ const Container = styled.div`
     padding-top: 0.5em;
     margin: auto;
     width: 90%;
-    border-top: 0.2em solid #000000;
+    border-top: 1px solid #000000;
     display: grid;
     gap: 0.5em;
     font-size: 1em;

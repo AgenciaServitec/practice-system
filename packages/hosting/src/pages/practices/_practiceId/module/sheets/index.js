@@ -170,6 +170,7 @@ export const Sheets = () => {
         </Sheet>
         <Sheet layout="portrait">
           <PracticesSheet8
+            practice={practice}
             company={company}
             supervisor={supervisor}
             representativeCompany={representativeCompany}

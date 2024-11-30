@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { fullName } from "../../../../../utils";
-import { BusinessPosition } from "../../../../../data-list";
+import { BusinessPosition, PracticeArea } from "../../../../../data-list";
+import dayjs from "dayjs";
 
 export const PracticesSheet8 = ({
+  practice,
   company,
   supervisor,
   representativeCompany,
@@ -32,98 +34,51 @@ export const PracticesSheet8 = ({
             <h5>II. DATOS DE LA EMPRESA: </h5>
           </div>
           <div className="body__datacompany">
-            <ul>
+            <ol>
               <li>
-                <div>1.</div>
                 <div>
                   <span>
                     Razón Social de la Empresa, Institución o Centro de
                     Prácticas:
                   </span>
                   <span className="capitalize">
-                    {" "}
                     &quot;{company?.socialReason}&quot;
                   </span>
                 </div>
               </li>
               <li>
-                <span>
-                  <strong> 2. </strong>
-                </span>
-                <span className="capitalize">
-                  <strong>Dirección: </strong> {company?.address}
-                </span>
+                <span>Dirección: </span>
+                <span className="capitalize">{company?.address}</span>
               </li>
               <li>
-                <span>
-                  <strong> 3. </strong>
-                </span>
-                <span>
-                  <strong>Distrito: </strong> {company.district}
-                </span>
+                <span>Distrito: </span>
+                <span>{company.district}</span>
               </li>
               <li>
-                <span>
-                  <strong> 4. </strong>
-                </span>
-                <span>
-                  <strong>Ciudad: </strong> {company.province}
-                </span>
+                <span>Ciudad: </span>
+                <span>{company.province}</span>
               </li>
               <li>
-                <span>
-                  <strong> 5. </strong>
-                </span>
-                <span>
-                  <strong>Región: </strong> {company.region}
-                </span>
+                <span>Región: </span>
+                <span>{company.region}</span>
               </li>
               <li>
-                <span>
-                  <strong> 6. </strong>
-                </span>
-                <span>
-                  <strong>Teléfono: </strong>{" "}
-                  {`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}` ||
-                    "-"}
-                </span>
+                <span>Teléfono: </span>
+                <span>{representativeCompany?.phone?.number || "-"}</span>
               </li>
               <li>
-                <span>
-                  <strong> 7. </strong>
-                </span>
-                <span>
-                  <strong>Fax: </strong> {representativeCompany?.fax || "-"}
-                </span>
+                <span>Correo electrónico (e-mail): </span>
+                <span>{company.email}</span>
               </li>
               <li>
-                <span>
-                  <strong> 8. </strong>
-                </span>
-                <span>
-                  <strong>Correo electrónico (e-mail): </strong>
-                  {company.email}
-                </span>
+                <span>Página web: </span>
+                <span>{company.webSite}</span>
               </li>
               <li>
-                <span>
-                  <strong> 9. </strong>
-                </span>
-                <span>
-                  <strong>Página web: </strong>
-                  {company.webSite}
-                </span>
+                <span>R.U.C: </span>
+                <span>{company.ruc}</span>
               </li>
               <li>
-                <span>
-                  <strong> 10. </strong>
-                </span>
-                <span>
-                  <strong>R.U.C: </strong> {company.ruc}
-                </span>
-              </li>
-              <li>
-                <div>11. </div>
                 <div>
                   <span>
                     Nombre y Apellidos del Jefe o Autoridad principal de la
@@ -135,7 +90,6 @@ export const PracticesSheet8 = ({
                 </div>
               </li>
               <li>
-                <div>12.</div>
                 <div>
                   <span>
                     Cargo de la Autoridad principal de la Empresa o Institución:
@@ -144,7 +98,6 @@ export const PracticesSheet8 = ({
                 </div>
               </li>
               <li>
-                <div>13. </div>
                 <div>
                   <span>
                     Cargo del Jefe o Supervisor de Práctica Pre-profesional
@@ -154,7 +107,6 @@ export const PracticesSheet8 = ({
                 </div>
               </li>
               <li>
-                <div>14.</div>
                 <div>
                   <span>
                     Nombre y Apellidos del Docente-Supervisor de Práctica
@@ -164,7 +116,6 @@ export const PracticesSheet8 = ({
                 </div>
               </li>
               <li>
-                <div>15. </div>
                 <div>
                   <span>
                     Rubro y Actividad que realiza la Empresa o Institución:
@@ -173,7 +124,66 @@ export const PracticesSheet8 = ({
                   <span className="capitalize">{company.category}</span>
                 </div>
               </li>
-            </ul>
+            </ol>
+          </div>
+          <div className="body__subtitle1">
+            <h5>III. DATOS DE LA PRÁCTICA PRE-PROFESIONAL: </h5>
+          </div>
+          <div className="body__datacompany">
+            <ol>
+              <li>
+                <span>Módulo del Plan Curricular Vinculado: </span>
+                <span className="capitalize">
+                  N° {practice.moduleNumber} | {practice.name}
+                </span>
+              </li>
+              <li>
+                <div>
+                  <span>
+                    Funciones y/o tareas asignadas de acuerdo al módulo:{" "}
+                  </span>
+                  <p className="capitalize">{practice.task}</p>
+                </div>
+              </li>
+              <li>
+                <span>Total, de horas acumuladas: </span>
+                <span>{practice.hours} horas</span>
+              </li>
+              <li>
+                <span>Período de ejecución de la práctica: </span>
+                <span>
+                  del{" "}
+                  <span className="capitalize">
+                    {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
+                  </span>{" "}
+                  al &nbsp;
+                  <span className="capitalize">
+                    {dayjs(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
+                  </span>{" "}
+                </span>
+              </li>
+              <li>
+                <span>Horario de Prácticas: </span>
+                <span>
+                  {`${dayjs(practice.entryTime, "HH:mm:ss").format(
+                    "HH:mm"
+                  )} - ${dayjs(practice.departureTime, "HH:mm:ss").format(
+                    "HH:mm"
+                  )}`}
+                </span>
+              </li>
+              <li>
+                <span>Lugar de práctica: </span>
+                <div className="table_center_work">
+                  {Object.entries(PracticeArea).map(([key, object]) => (
+                    <div key={key}>
+                      {object.name}:{" "}
+                      {key === practice?.practiceArea ? "x" : " - "}
+                    </div>
+                  ))}
+                </div>
+              </li>
+            </ol>
           </div>
         </div>
       </Container>
@@ -202,10 +212,12 @@ const Container = styled.div`
       margin-right: 3em;
     }
   }
+
   .body {
     &__title {
       margin-bottom: 2em;
       text-align: center;
+
       h3 {
         text-decoration: underline;
         text-decoration-color: black;
@@ -218,34 +230,41 @@ const Container = styled.div`
       width: 605px;
       margin: auto;
     }
+
     &__datacompany,
     &__company {
       width: 570px;
       margin: auto;
 
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-        list-style: none;
-        margin-top: 2em;
+      ol {
+        line-height: 1.5;
 
         li {
-          display: grid;
-          grid-template-columns: 2em 1fr;
-          div:first-child{
-            font-weight: bold;
+          & > span:first-child {
+            font-weight: 700;
           }
-          div:last-child{
-            span:first-child{
-              display: flex;
-              margin-bottom: .8em;
+
+          div {
+            display: flex;
+            flex-direction: column;
+
+            & > span:first-child {
               font-weight: 700;
+            }
+
+            p {
+              font-size: 1.2rem;
             }
           }
         }
       }
+
+      .table_center_work {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
     }
   }
+
   .
 `;

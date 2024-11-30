@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
 import { findRole, fullName } from "../../../../../utils";
-import dayjs from "dayjs";
-import { PracticeArea } from "../../../../../data-list";
 import { SignatureItem } from "../../SignatureItem";
 
 export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
@@ -19,138 +17,37 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
         </div>
       </div>
       <div className="body">
-        <div className="body__subtitle1">
-          <h5>III. DATOS DE LA PRÁCTICA PRE-PROFESIONAL: </h5>
-        </div>
         <div className="body__datacompany">
-          <ul>
-            <li>
-              <span>
-                <strong>1.</strong>
-              </span>
-              <span>
-                <span>
-                  <strong>Módulo del Plan Curricular Vinculado:&nbsp;</strong>
-                </span>
-                <br />
-                <span className="capitalize">
-                  N° {practice.moduleNumber} | {practice.name}
-                </span>
-              </span>
-            </li>
-            <li>
-              <span>
-                <strong> 2. </strong>
-              </span>
-              <span>
-                <strong>
-                  Funciones y/o tareas asignadas de acuerdo al módulo:&nbsp;
-                </strong>
-              </span>
-              <br />
-              <span className="capitalize">{practice.task}</span>
-            </li>
-            <li>
-              <span>
-                <strong> 3. </strong>
-              </span>
-              <span>
-                <strong>Total, de horas acumuladas: </strong> {practice.hours}{" "}
-                horas
-              </span>
-            </li>
-            <li>
-              <span>
-                <strong> 4. </strong>
-              </span>
-              <span>
-                <strong>Período de ejecución de la práctica: </strong> del{" "}
-                <span className="capitalize">
-                  {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
-                </span>{" "}
-                al &nbsp;
-                <span className="capitalize">
-                  {dayjs(practice.endDate, "DD/MM/YYYY").format("LL")}{" "}
-                </span>{" "}
-              </span>
-            </li>
-            <li>
-              <span>
-                <strong> 5. </strong>
-              </span>
-              <span>
-                <strong>Horario de Prácticas: </strong>{" "}
-                {`${dayjs(practice.entryTime, "HH:mm:ss").format(
-                  "HH:mm"
-                )} - ${dayjs(practice.departureTime, "HH:mm:ss").format(
-                  "HH:mm"
-                )}`}
-              </span>
-            </li>
-            <li className="table_center_work">
-              <span>
-                <strong> 6. </strong>
-              </span>
-              <span>
-                <strong>Lugar de práctica: </strong>
-              </span>
-              <div className="center_work">
-                <table>
-                  <tbody>
-                    {Object.entries(PracticeArea).map(([key, object]) => (
-                      <tr key={key}>
-                        <td>{object.name}</td>
-                        <td>{key === practice?.practiceArea ? "x" : ""}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </li>
-            <li>
-              <span>
-                <strong> 7. </strong>
-              </span>
-              <span>
-                <strong>
-                  Aspectos desarrollados referente al módulo del Plan
-                  Curricular:{" "}
-                </strong>
-              </span>
-              <br />
-              <span className="capitalize">{practice.task}</span>
-            </li>
-          </ul>
+          <div>
+            <strong>
+              7. Aspectos desarrollados referente al módulo del Plan Curricular:{" "}
+            </strong>
+            <p className="capitalize practice-task">{practice.task}</p>
+          </div>
           <div className="body__final">
-            <text>
-              Habiendo verificado que el estudiante si ha practicado, informo a
-              la Jefatura de Área Académica de la carrera de: Computación e
-              Informática para los fines pertinentes.
-            </text>
-            <br />
-            <br />
-            <text>
-              Adjunto fichas de Supervisión de los siguientes módulos:
-            </text>
-            <br />
-            <br />
-            <span>
-              ANEXO 2: Ficha de aceptación de prácticas pre-profesional.
-            </span>
-            <br />
-            <span>
-              ANEXO 3: Ficha de supervisión y monitoreo de prácticas
-              pre-profesionales.
-            </span>
-            <br />
-            <span>
-              ANEXO 4: Informe valorativo de evaluación de prácticas
-              pre-profesionales.
-            </span>
-            <br />
-            <span>COPIA DE DNI.</span>
-            <br />
-            <br />
+            <ul>
+              <li>
+                Habiendo verificado que el estudiante si ha practicado, informo
+                a la Jefatura de Área Académica de la carrera de: Computación e
+                Informática para los fines pertinentes.
+              </li>
+              <li>Adjunto fichas de Supervisión de los siguientes módulos:</li>
+              <li>
+                ANEXO 2: Ficha de aceptación de prácticas pre-profesional.
+              </li>
+              <li>
+                ANEXO 3: Ficha de supervisión y monitoreo de prácticas
+                pre-profesionales.
+              </li>
+              <li>
+                ANEXO 4: Informe valorativo de evaluación de prácticas
+                pre-profesionales.
+              </li>
+              <li>Copia de DNI</li>
+              <li>Ubicación de la empresa en Google maps</li>
+              <li>Copia de los espacios de la institución</li>
+              <li>Copia de ficha de matrícula</li>
+            </ul>
           </div>
           <div className="body__observations">
             <span>
@@ -236,51 +133,20 @@ const Container = styled.div`
       width: 570px;
       margin: auto;
 
+      .practice-task {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+      }
+
       ul {
+        list-style: none;
+        line-height: 1.5;
         display: flex;
         flex-direction: column;
-        gap: 1em;
-        list-style: none;
-        margin: 0;
-
-        li {
-          display: grid;
-          grid-template-columns: 2em 1fr;
-
-          div:first-child {
-            font-weight: bold;
-          }
-
-          div:last-child {
-            span:first-child {
-              display: flex;
-              margin-bottom: 0.8em;
-              font-weight: 700;
-            }
-          }
-
-          .center_work {
-            padding-left: 9em;
-
-            table {
-              margin: 1em;
-              width: 300px;
-              border-collapse: collapse;
-              text-align: center;
-              font-size: 12px;
-
-              td {
-                border: 1px solid black;
-                padding: 3px;
-              }
-            }
-          }
-        }
       }
     }
 
     &__final {
-      margin: auto;
       width: 550px;
       font-size: 14px;
     }
