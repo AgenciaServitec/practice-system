@@ -204,7 +204,7 @@ const Company = ({
       representativeId: company?.representativeId || "",
       isotipoImage: company?.isotipoImage || null,
       logotipoImage: company?.logotipoImage || null,
-      sketchCompany: company?.sketchCompany || nul,
+      sketchCompany: company?.sketchCompany || null,
     });
   };
 
