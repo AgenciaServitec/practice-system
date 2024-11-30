@@ -150,6 +150,7 @@ export const ManageCreateProductIntegration = ({
             formData.companyId,
             ...(user?.companiesIds || []),
           ]),
+          academicSupervisorId: formData?.academicSupervisorId || "",
           hasPractices: true,
         })
       );

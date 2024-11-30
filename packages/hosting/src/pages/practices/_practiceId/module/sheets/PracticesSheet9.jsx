@@ -72,7 +72,7 @@ export const PracticesSheet9 = ({ practice, supervisor, annex3 }) => (
                 : null
             }
             fullName={fullName(supervisor)}
-            role={findRole(supervisor.roleCode)?.name}
+            role={findRole(supervisor?.roleCode)?.name}
           />
         </div>
         <div className="footer__tip">

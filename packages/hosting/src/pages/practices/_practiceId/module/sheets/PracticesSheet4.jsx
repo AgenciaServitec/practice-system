@@ -157,7 +157,7 @@ export const PracticesSheet4 = ({
                   : null
               }
               fullName={fullName(supervisor)}
-              role={findRole(supervisor.roleCode)?.signature}
+              role={findRole(supervisor?.roleCode)?.signature}
             />
             <SignatureItem
               signaturePhoto={
@@ -166,7 +166,7 @@ export const PracticesSheet4 = ({
                   : null
               }
               fullName={fullName(practitioner)}
-              role={findRole(practitioner.roleCode)?.name}
+              role={findRole(practitioner?.roleCode)?.name}
             />
           </div>
           <div className="down">

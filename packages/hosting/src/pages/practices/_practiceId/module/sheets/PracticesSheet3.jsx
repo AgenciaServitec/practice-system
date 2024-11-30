@@ -158,7 +158,7 @@ export const PracticesSheet3 = ({
                   : null
               }
               fullName={fullName(supervisor)}
-              role={findRole(supervisor.roleCode)?.signature}
+              role={findRole(supervisor?.roleCode)?.signature}
             />
           </div>
           <div className="asignature2">

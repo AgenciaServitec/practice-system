@@ -21,21 +21,17 @@ export const GlobalDataProvider = ({ children }) => {
   );
 
   const getUsersByUserType = () => {
-    let queryRef = usersRef.where("isDeleted", "==", false);
-
-    // if (authUser?.roleCode === "user") {
-    //   return queryRef.where("id", "==", authUser.id);
-    // }
+    let _usersQueryRef = usersRef.where("isDeleted", "==", false);
 
     if (authUser?.roleCode === "academic_supervisor") {
-      return queryRef.where("academicSupervisorId", "==", authUser.id);
+      return _usersQueryRef.where("academicSupervisorId", "==", authUser.id);
     }
 
     if (authUser?.roleCode === "company_representative") {
-      queryRef.where("companyRepresentativeId", "==", authUser.id);
+      _usersQueryRef.where("companyRepresentativeId", "==", authUser.id);
 
       if (!isEmpty(authUser?.companiesIds)) {
-        queryRef.where(
+        _usersQueryRef.where(
           "companiesIds",
           "array-contains-any",
           authUser?.companiesIds || []
@@ -44,14 +40,14 @@ export const GlobalDataProvider = ({ children }) => {
     }
 
     if (authUser?.roleCode === "academic_coordinator") {
-      return queryRef.where(
+      return _usersQueryRef.where(
         "practitionerData.professionalCareer",
         "==",
         authUser.professionalCareer
       );
     }
 
-    return queryRef;
+    return _usersQueryRef;
   };
 
   const [users = [], usersLoading, usersError] = useCollectionData(
