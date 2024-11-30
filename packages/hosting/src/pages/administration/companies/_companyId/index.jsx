@@ -65,6 +65,7 @@ export const CompanyIntegration = () => {
     representativeId: formData?.representativeId,
     isotipoImage: formData?.isotipoImage || null,
     logotipoImage: formData?.logotipoImage || null,
+    sketchCompany: formData?.sketchCompany || null,
   });
 
   const saveCompany = async (formData) => {
@@ -133,6 +134,7 @@ const Company = ({
     representativeId: yup.string().required(),
     isotipoImage: yup.mixed(),
     logotipoImage: yup.mixed(),
+    sketchCompany: yup.mixed(),
   });
 
   const {
@@ -202,6 +204,7 @@ const Company = ({
       representativeId: company?.representativeId || "",
       isotipoImage: company?.isotipoImage || null,
       logotipoImage: company?.logotipoImage || null,
+      sketchCompany: company?.sketchCompany || nul,
     });
   };
 
@@ -475,7 +478,7 @@ const Company = ({
             </Col>
           </Row>
           <Row gutter={[16, 16]}>
-            <Col span={24} md={12}>
+            <Col span={24} md={8}>
               <Controller
                 control={control}
                 name="isotipoImage"
@@ -497,7 +500,7 @@ const Company = ({
                 )}
               />
             </Col>
-            <Col span={24} md={12}>
+            <Col span={24} md={8}>
               <Controller
                 control={control}
                 name="logotipoImage"
@@ -511,6 +514,27 @@ const Company = ({
                     value={value}
                     name={name}
                     fileName={`logotipoImage-${uuidv4()}`}
+                    filePath={`companies/${company?.id}/images`}
+                    onChange={(file) => onChange(file)}
+                    required={required(name)}
+                    error={error(name)}
+                  />
+                )}
+              />
+            </Col>
+            <Col span={24} md={8}>
+              <Controller
+                control={control}
+                name="sketchCompany"
+                render={({ field: { onChange, value, onBlur, name } }) => (
+                  <Upload
+                    isImage
+                    label="Croquis de la Empresa:"
+                    buttonText="Subir imagen"
+                    withThumbImage={false}
+                    value={value}
+                    name={name}
+                    fileName={`sketchCompany-${uuidv4()}`}
                     filePath={`companies/${company?.id}/images`}
                     onChange={(file) => onChange(file)}
                     required={required(name)}

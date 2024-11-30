@@ -12,6 +12,7 @@ import { PracticesSheet8 } from "./PracticesSheet8";
 import { PracticesSheet9 } from "./PracticesSheet9";
 import { PracticesSheet10 } from "./PracticesSheet10";
 import { PracticesSheet11 } from "./PracticesSheet11";
+import { PracticesSheet12 } from "./PracticesSheet12";
 
 import { useNavigate, useParams } from "react-router";
 import { useGlobalData } from "../../../../../providers";
@@ -188,9 +189,14 @@ export const Sheets = () => {
             <PracticesSheet10 practitioner={practitioner} />
           </Sheet>
         )}
-        {company?.address && (
+        {company?.sketchCompany && (
           <Sheet layout="portrait">
             <PracticesSheet11 company={company} />
+          </Sheet>
+        )}
+        {company?.address && (
+          <Sheet layout="portrait">
+            <PracticesSheet12 company={company} />
           </Sheet>
         )}
       </PDF>
