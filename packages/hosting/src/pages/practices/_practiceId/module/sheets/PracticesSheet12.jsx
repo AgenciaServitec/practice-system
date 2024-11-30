@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { LogoGilda } from "../../../../../images";
+import { ShowStaticMap } from "../../../../../components/ui/showStaticMap";
 
-export const PracticesSheet11 = ({ company }) => {
+export const PracticesSheet12 = ({ company }) => {
   return (
     <Container>
       <div className="header">
@@ -13,13 +14,9 @@ export const PracticesSheet11 = ({ company }) => {
           <h5>INSTITUTO DE EDUCACIÓN SUPERIOR TECNOLÓGICO PÚBLICO</h5>
           <h5>&quot;GILDA LILIANA BALLIVIÁN ROSADO&quot;</h5>
         </div>
-      </div>
+      </div>{" "}
       <div className="body">
-        <div className="description">
-          <h1>CROQUIS DE LA EMPRESA</h1>
-          <h2>{company?.socialReason}</h2>
-        </div>
-        <img src={company?.sketchCompany?.url} alt="Sketch Company" />
+        <ShowStaticMap address={company?.address} />
       </div>
     </Container>
   );
@@ -46,20 +43,10 @@ const Container = styled.div`
   }
 
   .body {
-    text-align: center;
-    margin-top: 4em;
+    margin-top: 10em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4em;
-
-    .description {
-      text-transform: uppercase;
-
-      * {
-        margin: 0;
-        padding: 0;
-      }
-    }
+    gap: 6em;
   }
 `;
