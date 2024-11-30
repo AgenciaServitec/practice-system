@@ -49,7 +49,8 @@ export const PracticesSheet7 = ({
             </div>
             <h4>
               INFORME N° 001 - {dayjs().format("YYYY")} -{" "}
-              {supervisor ? namesInitials : ""} – CI - IESTP &quot;GLBR&quot;
+              {supervisor ? namesInitials.toUpperCase() : ""} – CI - IESTP
+              &quot;GLBR&quot;
             </h4>
             <div className="lbody__title">
               <div className="vertical-align">
@@ -101,127 +102,86 @@ export const PracticesSheet7 = ({
             <h5>I. DATOS GENERALES DEL PRACTICANTE:</h5>
           </div>
           <div className="body__datacompany">
-            <ul>
+            <ol>
               <li>
-                <span>
-                  <strong> 1. </strong>
-                </span>
-                <span>
-                  <strong> Apellidos y Nombres del practicante:</strong> <br />
-                  <span className="capitalize">{fullName(practitioner)} </span>
-                </span>
+                <div>
+                  <span>Apellidos y Nombres del practicante: </span>
+                  <span className="capitalize">{fullName(practitioner)}</span>
+                </div>
               </li>
               <li>
-                <span>
-                  <strong> 2. </strong>
-                </span>
-                <span>
-                  <strong> Carrera profesional:</strong> <br />
-                  {ProfessionalCareerValue}
-                </span>
-              </li>
-              <li>
-                <span>
-                  <strong> 3. </strong>
-                </span>
-                <span>
-                  <strong>
-                    {" "}
+                <div>
+                  <span>Carrera profesional: </span>
+                  <span>{ProfessionalCareerValue}</span>
+                </div>
+                <div>
+                  <span>
                     Módulo (s) Técnico-Profesional(es) ejecutado del Plan
-                    Curricular :
-                  </strong>{" "}
-                  <br />
+                    Curricular:{" "}
+                  </span>
                   <span className="capitalize">
                     N° {practice.moduleNumber}: {practice.name}
                   </span>
-                </span>
+                </div>
               </li>
               <li>
-                <span>
-                  <strong> 4. </strong>
-                </span>
-                <span>
-                  <strong>
-                    Periodo de estudios (Año de ingreso - Año de egreso)
-                  </strong>
-                  <br />
-                  {practitioner?.practitionerData?.entryYear || ""} -&nbsp;
-                  {practitioner?.practitionerData?.yearGraduation || "En Curso"}
-                </span>
+                <div>
+                  <span>
+                    Período de estudios (Año de ingreso - Año de egreso):
+                  </span>
+                  <span>
+                    {practitioner?.practitionerData?.entryYear || ""} -&nbsp;
+                    {practitioner?.practitionerData?.yearGraduation ||
+                      "En Curso"}
+                  </span>
+                </div>
               </li>
               <li>
-                <span>
-                  <strong> 5. </strong>
-                </span>
-                <span>
-                  <strong>Domicilio: </strong>
-                  <br />
-                  {practitioner?.address || "-"}
-                </span>
+                <div>
+                  <span>Domicilio: </span>
+                  <span>{practitioner?.address || "-"}</span>
+                </div>
               </li>
               <li>
-                <span>
-                  <strong> 6. </strong>
-                </span>
-                <span>
-                  <strong>Teléfonos (Domicilio-Personal): </strong>
-                  <br />
-                  {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
-                    "-"}
-                </span>
+                <div>
+                  <span>Teléfonos (Domicilio-Personal)</span>
+                  <span>
+                    {`${practitioner?.phone?.prefix} ${practitioner?.phone?.number}` ||
+                      "-"}
+                  </span>
+                </div>
               </li>
               <li>
-                <span>
-                  <strong> 7. </strong>
-                </span>
-                <span>
-                  <strong>Correo electrónico (E-mail)</strong>
-                  <br />
-                  {practitioner.email}{" "}
-                </span>
+                <div>
+                  <span>Correo electrónico (E-mail)</span>
+                  <span>{practitioner.email}</span>
+                </div>
               </li>
               <li>
-                <span>
-                  <strong> 8. </strong>
-                </span>
-                <span>
-                  <strong>DNI: </strong>
-                  {practitioner.dni}
-                </span>
+                <span>DNI: </span>
+                <span>{practitioner.dni}</span>
               </li>
               <li>
-                <span>
-                  <strong> 9. </strong>
-                </span>
-                <span>
-                  <strong>Código de matrícula: </strong>
-                  {practitioner.practitionerData?.tuitionId}
-                </span>
+                <span>Código de matrícula: </span>
+                <span>{practitioner.practitionerData?.tuitionId}</span>
               </li>
               <li>
-                <span>
-                  <strong> 10.</strong>
-                </span>
-                <span>
-                  <div className="item-grid">
-                    <div>
-                      <strong>Semestre: </strong>
+                <div className="div-row">
+                  <div>
+                    <span>Semestre: </span>
+                    <span>
                       {practitioner.practitionerData?.semester || "Egresado"}
-                    </div>
-                    <div className="capitalize">
-                      {" "}
-                      <strong>Turno: </strong>
-                      {practitioner.practitionerData?.studentShift}
-                    </div>
+                    </span>
                   </div>
-                </span>
+                  <div>
+                    <span>Turno: </span>
+                    <span>{practitioner.practitionerData?.studentShift}</span>
+                  </div>
+                </div>
               </li>
               <li>
+                <span>Periodo de Evaluación: </span>
                 <span>
-                  <strong> 11. </strong>
-                </span>
-                <span>
-                  <strong>Periodo de Evaluación: </strong>
                   del{" "}
                   <span className="capitalize">
                     {dayjs(practice.startDate, "DD/MM/YYYY").format("LL")}{" "}
@@ -233,15 +193,10 @@ export const PracticesSheet7 = ({
                 </span>
               </li>
               <li>
-                <span>
-                  <strong> 12. </strong>
-                </span>
-                <span>
-                  <strong>Total de Horas: </strong>
-                  {practice.hours} horas
-                </span>
+                <span>Total de Horas: </span>
+                <span>{practice.hours} horas</span>
               </li>
-            </ul>
+            </ol>
           </div>
         </div>
       </Container>
@@ -328,6 +283,35 @@ const Container = styled.div`
     &__company {
       width: 570px;
       margin: auto;
+      ol {
+        line-height: 1.5;
+        li {
+          > span:first-child {
+            font-weight: 700;
+          }
+          div {
+            display: flex;
+            flex-direction: column;
+
+            > span:first-child {
+              font-weight: 700;
+            }
+          }
+          .div-row {
+            flex-direction: row;
+            gap: 3rem;
+
+            div {
+              flex-direction: row;
+              gap: 1rem;
+            }
+
+            > span:first-child {
+              font-weight: 700;
+            }
+          }
+        }
+      }
 
       ul {
         list-style: none;

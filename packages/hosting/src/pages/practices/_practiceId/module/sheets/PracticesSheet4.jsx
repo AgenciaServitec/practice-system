@@ -48,60 +48,61 @@ export const PracticesSheet4 = ({
           <div className="body__data">
             <ol>
               <li>
-                &nbsp;Apellidos y Nombres del Practicante:{" "}
-                <strong className="capitalize">{fullName(practitioner)}</strong>
+                <span>Apellidos y Nombres del Practicante: </span>
+                <span className="capitalize">{fullName(practitioner)}</span>
               </li>
               <li>
-                &nbsp;N° y Denominación del Módulo Técnico Profesional:{" "}
-                <strong>
-                  N° {practice?.moduleNumber} |{" "}
-                  <span className="capitalize">{practice?.name}</span>
-                </strong>
+                <span>N° y Denominación del Módulo Técnico Profesional: </span>
+                <span>N° {practice?.moduleNumber} | </span>
+                <span className="capitalize">{practice?.name}</span>
               </li>
               <li>
-                &nbsp;Duración de las PPP:{" "}
-                <strong>{practice?.hours} horas</strong>
-              </li>
-              <li>
-                &nbsp;Fecha de inicio de las PPP:{" "}
-                <strong>
-                  {dayjs(practice?.startDate, "DD/MM/YYYY").format(
-                    "DD [de] MMMM [del] YYYY"
-                  )}
-                </strong>
-              </li>
-              <li>
-                &nbsp;Fecha de término de las PPP:{" "}
-                <strong>
+                <span>Fecha de inicio de las PPP: </span>
+                <span>
+                  del{" "}
+                  <span>
+                    {dayjs(practice?.startDate, "DD/MM/YYYY").format(
+                      "DD [de] MMMM [del] YYYY"
+                    )}
+                  </span>
+                </span>{" "}
+                <strong>Término de las PPP: </strong>
+                <span>
                   {dayjs(practice?.endDate, "DD/MM/YYYY").format(
                     "DD [de] MMMM [del] YYYY"
                   )}
-                </strong>
+                </span>
+                <div className="div-row">
+                  <span>Total de horas: </span>
+                  <span>{practice?.hours} horas</span>
+                </div>
               </li>
               <li>
-                &nbsp;Nombre de la Empresa, Institución o Centro de Prácticas:
-                <br />
-                <strong className="capitalize">
+                <span>
+                  Nombre de la Empresa, Institución o Centro de Prácticas:{" "}
+                </span>
+                <span className="capitalize">
                   &quot;{company?.socialReason}&quot;
-                </strong>
+                </span>
               </li>
             </ol>
             <div className="company">
               <ul>
                 <li>
-                  Giro de la Empresa o Institución:{" "}
-                  <strong className="capitalize">{company?.category}</strong>
+                  <span>Giro de la Empresa o Institución: </span>
+                  <span className="capitalize">{company?.category}</span>
                 </li>
                 <li>
-                  Dirección: <strong>{company?.address}</strong>
+                  <span>Dirección: </span>
+                  <span>{company?.address}</span>
                 </li>
                 <li>
-                  Teléfono:{" "}
-                  <strong>{`${representativeCompany?.phone?.prefix} ${representativeCompany?.phone?.number}`}</strong>
+                  <span>Teléfono: </span>
+                  <span>{representativeCompany?.phone?.number}</span>
                 </li>
                 <li>
-                  Docente supervisor:{" "}
-                  <strong className="capitalize">{fullName(supervisor)}</strong>
+                  <span>Docente supervisor: </span>
+                  <span className="capitalize">{fullName(supervisor)}</span>
                 </li>
                 <Table>
                   <tr>
@@ -156,7 +157,7 @@ export const PracticesSheet4 = ({
                   : null
               }
               fullName={fullName(supervisor)}
-              role={findRole(supervisor.roleCode)?.name}
+              role={findRole(supervisor.roleCode)?.signature}
             />
             <SignatureItem
               signaturePhoto={
@@ -182,7 +183,7 @@ export const PracticesSheet4 = ({
                     ?.businessPosition
                 )?.label
               }
-              role={findRole(representativeCompany?.roleCode)?.name}
+              role={findRole(representativeCompany?.roleCode)?.signature}
             />
           </div>
         </div>
@@ -235,13 +236,42 @@ const Container = styled.div`
       width: 550px;
       margin: auto;
       ol {
-        line-height: 1.4em;
+        line-height: 1.5;
+
+        li {
+          > span:first-child {
+            font-weight: 700;
+          }
+
+          div {
+            display: flex;
+            flex-direction: column;
+
+            > span:first-child {
+              font-weight: 700;
+            }
+          }
+
+          .div-row {
+            flex-direction: row;
+            gap: 1rem;
+
+            > span:first-child {
+              font-weight: 700;
+            }
+          }
+        }
       }
       .company {
         margin: auto;
-        width: 500px;
         ul {
           line-height: 1.4em;
+
+          li {
+            > span:first-child {
+              font-weight: 700;
+            }
+          }
         }
       }
     }

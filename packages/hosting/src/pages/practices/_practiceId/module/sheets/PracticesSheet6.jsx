@@ -68,15 +68,6 @@ export const PracticesSheet6 = ({
           </div>
         </div>
         <div className="body">
-          <div className="body__tip">
-            <span>2. </span>
-            <span>
-              Cada indicador se calificará de 0 a 1, se sumarán las veinte
-              (calificaciones) para obtener el puntaje total, luego se
-              establecerá las equivalencias con la tabla anterior para expresar
-              la evaluación final en forma cualitativa y literal.
-            </span>
-          </div>
           <div className="body__title">
             <h5>FICHA DE EVALUACIÓN: CRITERIOS Y CALIFICACIÓN</h5>
           </div>
@@ -169,7 +160,7 @@ export const PracticesSheet6 = ({
                   ?.businessPosition
               )?.label
             }
-            role={findRole(representativeCompany?.roleCode)?.name}
+            role={findRole(representativeCompany?.roleCode)?.signature}
           />
         </div>
       </Container>

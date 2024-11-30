@@ -4,6 +4,7 @@ import { LogoGilda } from "../../../../../images";
 import { findRole, fullName, getBusinessPosition } from "../../../../../utils";
 import dayjs from "dayjs";
 import { SignatureItem } from "../../SignatureItem";
+import { PracticeArea } from "../../../../../data-list";
 
 export const PracticesSheet3 = ({
   practitioner,
@@ -42,15 +43,17 @@ export const PracticesSheet3 = ({
             <ul>
               <li>
                 Razón Social de la Empresa:{" "}
-                <strong className="capitalize">{company?.socialReason}</strong>
-              </li>
-              <li>
-                Distrito:{" "}
-                <strong className="capitalize">{company.district}</strong>
+                <strong className="capitalize">
+                  {company?.socialReason.toUpperCase()}
+                </strong>
               </li>
               <li>
                 Dirección:{" "}
                 <strong className="capitalize">{company.address}</strong>
+              </li>
+              <li>
+                Distrito:{" "}
+                <strong className="capitalize">{company.district}</strong>
               </li>
               <li>
                 Teléfono:{" "}
@@ -133,7 +136,9 @@ export const PracticesSheet3 = ({
               </li>
               <li>
                 Dpto. Sector o Área de las Prácticas:{" "}
-                <strong className="capitalize">{practice?.practiceArea}</strong>
+                <strong className="capitalize">
+                  {PracticeArea[practice?.practiceArea]?.name}
+                </strong>
               </li>
               <li>Refrigerio: {annex2?.refreshment || `-`}</li>
               <li>Movilidad: {annex2?.mobility || `-`}</li>
@@ -153,7 +158,7 @@ export const PracticesSheet3 = ({
                   : null
               }
               fullName={fullName(supervisor)}
-              role={findRole(supervisor.roleCode)?.name}
+              role={findRole(supervisor.roleCode)?.signature}
             />
           </div>
           <div className="asignature2">
@@ -170,7 +175,7 @@ export const PracticesSheet3 = ({
                     ?.businessPosition
                 )?.label
               }
-              role={findRole(representativeCompany?.roleCode)?.name}
+              role={findRole(representativeCompany?.roleCode)?.signature}
             />
           </div>
         </div>
