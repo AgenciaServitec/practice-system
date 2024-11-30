@@ -220,8 +220,11 @@ export const InformationModal = ({
               <div className="item">
                 <p>Período de la Práctica y Evaluación: </p>
                 <p>
-                  {dayjs(practice?.startDate, "D/MM/YY").format("D MMMM YYYY")}{" "}
-                  - {dayjs(practice?.endDate, "D/MM/YY").format("D MMMM YYYY")}
+                  {dayjs(practice?.startDate, "D/MM/YYYY").format(
+                    "D MMMM YYYY"
+                  )}{" "}
+                  -{" "}
+                  {dayjs(practice?.endDate, "D/MM/YYYY").format("D MMMM YYYY")}
                 </p>
               </div>
             </Col>
