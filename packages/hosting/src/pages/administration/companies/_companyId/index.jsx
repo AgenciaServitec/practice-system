@@ -134,7 +134,7 @@ const Company = ({
     representativeId: yup.string().required(),
     isotipoImage: yup.mixed(),
     logotipoImage: yup.mixed(),
-    sketchCompany: yup.mixed(,
+    sketchCompany: yup.mixed(),
   });
 
   const {
@@ -204,7 +204,7 @@ const Company = ({
       representativeId: company?.representativeId || "",
       isotipoImage: company?.isotipoImage || null,
       logotipoImage: company?.logotipoImage || null,
-      sketchCompany: company?.sketchCompany || null
+      sketchCompany: company?.sketchCompany || nul,
     });
   };
 
