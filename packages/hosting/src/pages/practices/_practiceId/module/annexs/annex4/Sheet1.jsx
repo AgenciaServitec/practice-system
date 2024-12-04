@@ -78,7 +78,7 @@ export const Sheet1Integration = ({ practice, user, annex4 }) => {
           },
           {
             id: 7,
-            name: "Coopera con la conversación, mantenimiento de los equipos de la empresa.",
+            name: "Coopera con la conservación y mantenimiento de los equipos de la empresa.",
             assessment: formData.B7,
           },
         ],
