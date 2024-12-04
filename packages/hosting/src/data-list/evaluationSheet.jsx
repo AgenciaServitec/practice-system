@@ -54,7 +54,7 @@ export const evaluationSheet = [
       {
         id: 7,
         name: "B7",
-        text: "Coopera con la conversación, mantenimiento de los equipos de la empresa.\n",
+        text: "Coopera con la conservación y mantenimiento de los equipos de la empresa.\n",
         options: options,
       },
     ],
